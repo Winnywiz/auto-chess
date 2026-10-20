@@ -1,1 +1,0 @@
-import{n as e}from"./rolldown-runtime-8BhlS34s.js";var t,n,r;function i(){return(i=e((()=>{t=typeof location<`u`?new URLSearchParams(location.search):null,n=((t==null?void 0:t.get(`gl`))??``).toLowerCase().split(`,`).some(e=>e.trim()===`basic`||e.trim()===`lite`),r=(t==null?void 0:t.get(`arenaArt`))!==`v1`&&!n})))()}export{i as n,r as t};

@@ -1,4 +1,4 @@
-outputs/kanto-bis-v2/results.json
-outputs/kanto-bis-v2/search-scores.csv
-outputs/kanto-bis-v2/*.partial.json
-outputs/kanto-comps/smoke-verification.json
+# Website runtime files only. Research remains in the local workspace.
+/outputs/
+/work/
+*.zip

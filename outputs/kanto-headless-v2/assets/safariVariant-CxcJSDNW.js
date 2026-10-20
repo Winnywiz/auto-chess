@@ -1,1 +1,0 @@
-import{n as e}from"./rolldown-runtime-8BhlS34s.js";var t,n,r;function i(){return(i=e((()=>{t=typeof location>`u`?null:new URLSearchParams(location.search).get(`safariv`),n=t===`a`||t===`b`||t===`c`?t:t===`0`?``:`ui`,r=n===`ui`})))()}export{n,i as r,r as t};
