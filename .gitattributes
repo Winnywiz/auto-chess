@@ -1,2 +1,9 @@
 # Preserve exact bytes used by the captured-asset and experiment hash checks.
 outputs/** -text
+
+# Captured public assets and generated HTML preserve original byte streams.
+outputs/kanto-headless-v2/assets/** -whitespace
+outputs/kanto-headless-v2/entry.html -whitespace
+index.html -whitespace
+compositions.html -whitespace
+*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

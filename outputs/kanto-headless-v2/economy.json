@@ -1,0 +1,142 @@
+{
+  "players": 8,
+  "startHp": 100,
+  "startGold": 5,
+  "startLevel": 2,
+  "baseIncome": 5,
+  "winGold": 1,
+  "streakGold": [
+    [
+      2,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      5,
+      3
+    ]
+  ],
+  "interestStep": 10,
+  "interestMax": 5,
+  "odds": {
+    "1": [
+      100,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2": [
+      100,
+      0,
+      0,
+      0,
+      0
+    ],
+    "3": [
+      75,
+      25,
+      0,
+      0,
+      0
+    ],
+    "4": [
+      65,
+      30,
+      5,
+      0,
+      0
+    ],
+    "5": [
+      58,
+      32,
+      9,
+      1,
+      0
+    ],
+    "6": [
+      42,
+      40,
+      15,
+      3,
+      0
+    ],
+    "7": [
+      22,
+      32,
+      34,
+      12,
+      0
+    ],
+    "8": [
+      14,
+      22,
+      32,
+      26,
+      6
+    ],
+    "9": [
+      6,
+      14,
+      27,
+      36,
+      17
+    ]
+  },
+  "rerollCost": 2,
+  "xpPerRound": 2,
+  "xpTable": {
+    "1": 2,
+    "2": 4,
+    "3": 8,
+    "4": 12,
+    "5": 16,
+    "6": 20,
+    "7": 32,
+    "8": 56
+  },
+  "stageDamage": [
+    0,
+    0,
+    2,
+    6,
+    6,
+    8
+  ],
+  "finalFrom": 2,
+  "finalStep": 6,
+  "survivor": {
+    "star": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "costFrom": 4,
+    "costBonus": 1
+  },
+  "pairMemory": 3,
+  "pveDamageK": 1,
+  "carouselPays": false,
+  "oakPays": false,
+  "startMagnets": 1,
+  "planSecs": [
+    0,
+    20,
+    25,
+    30,
+    30,
+    30
+  ],
+  "lateFrom": 34,
+  "lateSecs": 5,
+  "finalSecs": 10,
+  "firstPvpSecs": 20,
+  "boonSecs": 5,
+  "carouselSecs": 20,
+  "oakSecs": 6,
+  "transitionSecs": 3
+}

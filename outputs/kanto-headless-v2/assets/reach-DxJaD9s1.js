@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-8BhlS34s.js";var t,n;function r(){return(r=e((()=>{t=e=>e>2,n=e=>e<=1?`melee`:e<=2?`short`:e<=4?`ranged`:`long`})))()}export{n,t as r,r as t};

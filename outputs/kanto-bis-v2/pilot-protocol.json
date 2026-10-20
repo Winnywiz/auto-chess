@@ -1,0 +1,5300 @@
+{
+  "version": "bis-team-battles-v2",
+  "startedAt": "2026-10-20T19:52:59.984Z",
+  "pilot": true,
+  "workers": 3,
+  "hardware": {
+    "cpu": "AMD Ryzen 5 7500F 6-Core Processor             ",
+    "logicalProcessors": 12,
+    "ramBytes": 33694904320,
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64"
+  },
+  "runtime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51"
+  },
+  "config": {
+    "version": "bis-team-battles-v2",
+    "teamSize": 6,
+    "weather": null,
+    "screen": {
+      "contexts": 4,
+      "seeds": 1,
+      "shortlist": 20
+    },
+    "refine": {
+      "contexts": 6,
+      "seeds": 8,
+      "shortlist": 5
+    },
+    "validation": {
+      "contexts": 8,
+      "seeds": 24
+    },
+    "sides": 2,
+    "objective": "Win + 0.5 draw; ties broken by normalized remaining team HP difference, then target damage, then canonical item key.",
+    "scope": "All 220 unordered three-finished-item multisets, including repeated items. No component availability constraint. Canonical inventory order only."
+  },
+  "excludedStates": [
+    {
+      "line": "eevee",
+      "star": 2,
+      "reason": "Eevee branches occur on native evolution at two stars, not as these synthetic states."
+    },
+    {
+      "line": "eevee",
+      "star": 3,
+      "reason": "Eevee branches occur on native evolution at two stars, not as these synthetic states."
+    },
+    {
+      "line": "vaporeon",
+      "star": 1,
+      "reason": "Eevee branches occur on native evolution at two stars, not as these synthetic states."
+    },
+    {
+      "line": "jolteon",
+      "star": 1,
+      "reason": "Eevee branches occur on native evolution at two stars, not as these synthetic states."
+    },
+    {
+      "line": "flareon",
+      "star": 1,
+      "reason": "Eevee branches occur on native evolution at two stars, not as these synthetic states."
+    }
+  ],
+  "sourceHashes": {
+    "experiment.mjs": "8851e9554560262ce249bd3766189cf4da7d1be7adfe1b3a842078861e1c0866",
+    "worker.mjs": "6cc3e1d58ec4756196ac380a0974c0f443537928fd238a9bc4e867a0b0a9ef33",
+    "run.mjs": "abf61627050df487026709cb78cb58d71ec1b5bcb22e238884735e4be8d6d229"
+  },
+  "engineBuild": "sim-DVnRY1Xk / roster-CpnLcVHu",
+  "archetypes": {
+    "training": [
+      {
+        "id": "physical",
+        "enemy": [
+          "snorlax",
+          "machop",
+          "tauros",
+          "pidgey",
+          "cubone",
+          "squirtle"
+        ],
+        "ally": "mixed-a",
+        "layout": 0
+      },
+      {
+        "id": "spellcasters",
+        "enemy": [
+          "slowpoke",
+          "geodude",
+          "abra",
+          "gastly",
+          "magnemite",
+          "jynx"
+        ],
+        "ally": "synergy",
+        "layout": 1
+      },
+      {
+        "id": "healing",
+        "enemy": [
+          "paras",
+          "bulbasaur",
+          "oddish",
+          "jigglypuff",
+          "chansey",
+          "snorlax"
+        ],
+        "ally": "mixed-b",
+        "layout": 2
+      },
+      {
+        "id": "assassins",
+        "enemy": [
+          "onix",
+          "rhyhorn",
+          "scyther",
+          "aerodactyl",
+          "zubat",
+          "pidgey"
+        ],
+        "ally": "synergy",
+        "layout": 0
+      },
+      {
+        "id": "mixed",
+        "enemy": [
+          "poliwag",
+          "sandshrew",
+          "pikachu",
+          "vulpix",
+          "staryu",
+          "jigglypuff"
+        ],
+        "ally": "mixed-a",
+        "layout": 1
+      },
+      {
+        "id": "ice-control",
+        "enemy": [
+          "seel",
+          "slowpoke",
+          "lapras",
+          "shellder",
+          "jynx",
+          "exeggcute"
+        ],
+        "ally": "mixed-b",
+        "layout": 2
+      }
+    ],
+    "validation": [
+      {
+        "id": "physical-holdout",
+        "enemy": [
+          "tauros",
+          "hitmonlee",
+          "hitmonchan",
+          "rattata",
+          "cubone",
+          "pikachu"
+        ],
+        "ally": "mixed-b",
+        "layout": 1
+      },
+      {
+        "id": "fire-holdout",
+        "enemy": [
+          "growlithe",
+          "ponyta",
+          "charmander",
+          "vulpix",
+          "magmar",
+          "flareon"
+        ],
+        "ally": "synergy",
+        "layout": 2
+      },
+      {
+        "id": "water-holdout",
+        "enemy": [
+          "slowpoke",
+          "seel",
+          "poliwag",
+          "squirtle",
+          "staryu",
+          "lapras"
+        ],
+        "ally": "mixed-a",
+        "layout": 0
+      },
+      {
+        "id": "poison-holdout",
+        "enemy": [
+          "bulbasaur",
+          "weedle",
+          "nidoran",
+          "ekans",
+          "gastly",
+          "oddish"
+        ],
+        "ally": "mixed-b",
+        "layout": 1
+      },
+      {
+        "id": "electric-holdout",
+        "enemy": [
+          "voltorb",
+          "electabuzz",
+          "pikachu",
+          "magnemite",
+          "jolteon",
+          "zapdos"
+        ],
+        "ally": "synergy",
+        "layout": 2
+      },
+      {
+        "id": "psychic-holdout",
+        "enemy": [
+          "slowpoke",
+          "abra",
+          "exeggcute",
+          "staryu",
+          "jynx",
+          "mewtwo"
+        ],
+        "ally": "mixed-a",
+        "layout": 0
+      },
+      {
+        "id": "mixed-high-cost-holdout",
+        "enemy": [
+          "rhyhorn",
+          "dratini",
+          "scyther",
+          "lapras",
+          "chansey",
+          "mew"
+        ],
+        "ally": "mixed-b",
+        "layout": 1
+      },
+      {
+        "id": "ground-rock-holdout",
+        "enemy": [
+          "geodude",
+          "sandshrew",
+          "onix",
+          "rhyhorn",
+          "cubone",
+          "diglett"
+        ],
+        "ally": "synergy",
+        "layout": 2
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "assault-vest",
+      "stat": "spd",
+      "name": "Assault Vest",
+      "kind": "full",
+      "short": "Takes 12% less damage from abilities",
+      "tiny": "−12% ability damage",
+      "tag": "🦺",
+      "color": "#4c6ef5",
+      "parts": [
+        "zinc",
+        "zinc"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 40,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "choice-band",
+      "stat": "atk",
+      "name": "Choice Band",
+      "kind": "full",
+      "short": "+45% Attack",
+      "tiny": "+45% Attack",
+      "tag": "⚔️",
+      "color": "#ff6b6b",
+      "parts": [
+        "protein",
+        "protein"
+      ],
+      "attackWeight": 45,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "choice-scarf",
+      "stat": "as",
+      "name": "Choice Scarf",
+      "kind": "full",
+      "short": "+35% Attack speed",
+      "tiny": "+35% Atk speed",
+      "tag": "💨",
+      "color": "#fcc419",
+      "parts": [
+        "carbos",
+        "carbos"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "choice-specs",
+      "stat": "spa",
+      "name": "Choice Specs",
+      "kind": "full",
+      "short": "+45% Special Attack",
+      "tiny": "+45% Sp. Atk",
+      "tag": "✨",
+      "color": "#4dabf7",
+      "parts": [
+        "calcium",
+        "calcium"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 45,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "eviolite",
+      "stat": "def",
+      "name": "Eviolite",
+      "kind": "full",
+      "short": "While it can still evolve: +35% Defense and Sp. Def",
+      "tiny": "not fully evolved: +35% Def & Sp. Def",
+      "tag": "💎",
+      "color": "#cc5de8",
+      "parts": [
+        "iron",
+        "zinc"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 20,
+        "spd": 20,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "expert-belt",
+      "stat": "atk",
+      "name": "Expert Belt",
+      "kind": "full",
+      "short": "+45% damage on its super effective hits",
+      "tiny": "+45% super effective",
+      "tag": "🥋",
+      "color": "#f76707",
+      "parts": [
+        "protein",
+        "zinc"
+      ],
+      "attackWeight": 12,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 12,
+        "spa": 0,
+        "def": 0,
+        "spd": 20,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "flame-orb",
+      "stat": "hp",
+      "name": "Flame Orb",
+      "kind": "full",
+      "short": "Every second, enemies within 1 hex lose 0.3% of their max HP and suffer Heal Block (−30% healing)",
+      "tiny": "aura: −0.3% HP/s and Heal Block",
+      "tag": "🔥",
+      "color": "#fa5252",
+      "parts": [
+        "hp-up",
+        "iron"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 20,
+        "spd": 0,
+        "hp": 10,
+        "as": 0
+      }
+    },
+    {
+      "id": "focus-sash",
+      "stat": "shield",
+      "name": "Focus Sash",
+      "kind": "full",
+      "short": "Survives a lethal hit with 1 HP: becomes untargetable and inactive for 1s (enemies drop it as a target), is cleansed of damage-over-time effects, and returns with a shield worth 10% of its HP (once)",
+      "tiny": "survives at 1 HP, 1s untargetable + 10% shield",
+      "tag": "🎗️",
+      "color": "#ff922b",
+      "parts": [
+        "hp-up",
+        "carbos"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 10,
+        "as": 8
+      }
+    },
+    {
+      "id": "leftovers",
+      "stat": "hp",
+      "name": "Leftovers",
+      "kind": "full",
+      "short": "Restores 1% of its HP per second",
+      "tiny": "+1% HP/s",
+      "tag": "💚",
+      "color": "#51cf66",
+      "parts": [
+        "hp-up",
+        "hp-up"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 20,
+        "as": 0
+      }
+    },
+    {
+      "id": "life-orb",
+      "stat": "atk",
+      "name": "Life Orb",
+      "kind": "full",
+      "short": "+24% damage on its basic attacks and its ability. Each basic attack costs 2% of its max HP.",
+      "tiny": "+24% dmg (basics & ability), −2% HP/basic",
+      "tag": "🔮",
+      "color": "#b197fc",
+      "parts": [
+        "protein",
+        "calcium"
+      ],
+      "attackWeight": 12,
+      "specialWeight": 12,
+      "axisWeights": {
+        "atk": 12,
+        "spa": 12,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "light-clay",
+      "stat": "shield",
+      "name": "Light Clay",
+      "kind": "full",
+      "short": "Its shields, heals and seeds are 30% stronger",
+      "tiny": "+30% shields & heals",
+      "tag": "🟫",
+      "color": "#94d82d",
+      "parts": [
+        "calcium",
+        "zinc"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 12,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 12,
+        "def": 0,
+        "spd": 20,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "mental-herb",
+      "stat": "spd",
+      "name": "Mental Herb",
+      "kind": "full",
+      "short": "Instantly shakes off the first crowd control (sleep, paralysis, confusion, freeze…; once)",
+      "tiny": "ignores the 1st crowd control",
+      "tag": "🌿",
+      "color": "#69db7c",
+      "parts": [
+        "carbos",
+        "zinc"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 20,
+        "hp": 0,
+        "as": 8
+      }
+    },
+    {
+      "id": "poison-barb",
+      "stat": "as",
+      "name": "Poison Barb",
+      "kind": "full",
+      "short": "Its basic attacks inflict Heal Block for 4s (−30% healing); deals 50% more damage to shields",
+      "tiny": "basics: Heal Block 4s, +50% vs shields",
+      "tag": "🎯",
+      "color": "#40c057",
+      "parts": [
+        "carbos",
+        "iron"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 20,
+        "spd": 0,
+        "hp": 0,
+        "as": 8
+      }
+    },
+    {
+      "id": "protector",
+      "stat": "def",
+      "name": "Protector",
+      "kind": "full",
+      "short": "Takes 12% less damage from basic attacks",
+      "tiny": "−12% basic damage",
+      "tag": "🪖",
+      "color": "#e8b923",
+      "parts": [
+        "iron",
+        "iron"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 40,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "quick-claw",
+      "stat": "mana",
+      "name": "Quick Claw",
+      "kind": "full",
+      "short": "Starts combat with 20% Energy and recovers 8% every time it uses its ability",
+      "tiny": "20% starting Energy, +8% on cast",
+      "tag": "⚡",
+      "color": "#74c0fc",
+      "parts": [
+        "calcium",
+        "carbos"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 12,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 12,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 8
+      }
+    },
+    {
+      "id": "razor-fang",
+      "stat": "atk",
+      "name": "Razor Fang",
+      "kind": "full",
+      "short": "Its basic attacks inflict Wear for 4s (−18% Defense and Sp. Def)",
+      "tiny": "basics: Wear 4s",
+      "tag": "🦷",
+      "color": "#fd7e14",
+      "parts": [
+        "protein",
+        "iron"
+      ],
+      "attackWeight": 12,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 12,
+        "spa": 0,
+        "def": 20,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    },
+    {
+      "id": "rocky-helmet",
+      "stat": "hp",
+      "name": "Rocky Helmet",
+      "kind": "full",
+      "short": "Returns 18% of the basic-attack damage it takes",
+      "tiny": "returns 18% of basic damage",
+      "tag": "🛡️",
+      "color": "#adb5bd",
+      "parts": [
+        "hp-up",
+        "protein"
+      ],
+      "attackWeight": 12,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 12,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 10,
+        "as": 0
+      }
+    },
+    {
+      "id": "scope-lens",
+      "stat": "crit",
+      "name": "Scope Lens",
+      "kind": "full",
+      "short": "+25% Crit chance on basic attacks; its crits deal ×1.9",
+      "tiny": "+25% Crit ×1.9",
+      "tag": "🎯",
+      "color": "#f783ac",
+      "parts": [
+        "protein",
+        "carbos"
+      ],
+      "attackWeight": 12,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 12,
+        "spa": 0,
+        "def": 0,
+        "spd": 0,
+        "hp": 0,
+        "as": 8
+      }
+    },
+    {
+      "id": "shell-bell",
+      "stat": "vamp",
+      "name": "Shell Bell",
+      "kind": "full",
+      "short": "Drain: heals 15% of the damage it deals",
+      "tiny": "Drain 15%",
+      "tag": "🔔",
+      "color": "#e599f7",
+      "parts": [
+        "hp-up",
+        "calcium"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 12,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 12,
+        "def": 0,
+        "spd": 0,
+        "hp": 10,
+        "as": 0
+      }
+    },
+    {
+      "id": "sitrus-berry",
+      "stat": "hp",
+      "name": "Sitrus Berry",
+      "kind": "full",
+      "short": "When it drops below 50% HP, heals 25% (once)",
+      "tiny": "at 50% HP: heals 25%",
+      "tag": "🍈",
+      "color": "#ffd43b",
+      "parts": [
+        "hp-up",
+        "zinc"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 0,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 0,
+        "def": 0,
+        "spd": 20,
+        "hp": 10,
+        "as": 0
+      }
+    },
+    {
+      "id": "twisted-spoon",
+      "stat": "spa",
+      "name": "Twisted Spoon",
+      "kind": "full",
+      "short": "Its ability inflicts Wear for 4s (−18% Defense and Sp. Def) on everyone it hits",
+      "tiny": "ability: Wear 4s",
+      "tag": "🥄",
+      "color": "#9775fa",
+      "parts": [
+        "calcium",
+        "iron"
+      ],
+      "attackWeight": 0,
+      "specialWeight": 12,
+      "axisWeights": {
+        "atk": 0,
+        "spa": 12,
+        "def": 20,
+        "spd": 0,
+        "hp": 0,
+        "as": 0
+      }
+    }
+  ],
+  "notes": [
+    "All calculations are native, synchronous, rendering-free 6v6 battles. No full games or RL training are measured.",
+    "All combatants use the target star level; no weather, boons, boss bonuses, or additional shiny boost.",
+    "The target gets the searched three items, its five allies one heuristic item each, and opponents eight items across six units.",
+    "Mirrored side assignments share each numeric combat seed. Units retain native traits, item effects, AI targeting and combat RNG.",
+    "Candidate order can cause diverging RNG consumption; pairing shares starting seeds, not identical random events.",
+    "Refinement sees additional training compositions and disjoint seeds. Validation has eight unseen enemy lineups and disjoint seeds.",
+    "Best observed is selected among five refinement finalists plus the native heuristic baseline, not among all 1771 on validation.",
+    "The build selected before validation is also recorded to expose selection changes. Intervals are descriptive, unadjusted paired normal intervals over context/seed blocks with both side assignments grouped.",
+    "Results are conditional on these synthetic lineups, gearing and placements. They do not establish global BIS or optimize component allocation/economy."
+  ],
+  "states": [
+    {
+      "line": "pikachu",
+      "star": 2,
+      "name": "Raichu",
+      "role": "marksman",
+      "traits": [
+        "Electric"
+      ]
+    },
+    {
+      "line": "abra",
+      "star": 2,
+      "name": "Kadabra",
+      "role": "mage",
+      "traits": [
+        "Psychic"
+      ]
+    },
+    {
+      "line": "snorlax",
+      "star": 2,
+      "name": "Snorlax",
+      "role": "tank",
+      "traits": [
+        "Normal"
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "line": "pikachu",
+      "star": 2,
+      "name": "Raichu",
+      "role": "marksman",
+      "traits": [
+        "Electric"
+      ],
+      "training": [
+        {
+          "id": "physical",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "poison-barb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "spellcasters",
+          "ally": "synergy",
+          "layout": 1,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 49,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "healing",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "paras",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "leftovers",
+                "light-clay"
+              ]
+            },
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "assassins",
+          "ally": "synergy",
+          "layout": 0,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 42,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "aerodactyl",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed",
+          "ally": "mixed-a",
+          "layout": 1,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ice-control",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "flame-orb",
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "shellder",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        }
+      ],
+      "validation": [
+        {
+          "id": "physical-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "hitmonlee",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "hitmonchan",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "rattata",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fire-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "growlithe",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "ponyta",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "charmander",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magmar",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "flareon",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "water-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "poison-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "weedle",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "nidoran",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "ekans",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "electric-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "psychic-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 13,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "mewtwo",
+              "star": 2,
+              "cell": 7,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed-high-cost-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "dratini",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-scarf",
+                "focus-sash"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ground-rock-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "diglett",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "line": "abra",
+      "star": 2,
+      "name": "Kadabra",
+      "role": "mage",
+      "traits": [
+        "Psychic"
+      ],
+      "training": [
+        {
+          "id": "physical",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "poison-barb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "spellcasters",
+          "ally": "synergy",
+          "layout": 1,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 49,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "healing",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "paras",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "leftovers",
+                "light-clay"
+              ]
+            },
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "assassins",
+          "ally": "synergy",
+          "layout": 0,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 42,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "aerodactyl",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed",
+          "ally": "mixed-a",
+          "layout": 1,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ice-control",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "flame-orb",
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "shellder",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        }
+      ],
+      "validation": [
+        {
+          "id": "physical-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "hitmonlee",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "hitmonchan",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "rattata",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fire-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "growlithe",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "ponyta",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "charmander",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magmar",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "flareon",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "water-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "poison-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "weedle",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "nidoran",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "ekans",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "electric-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "psychic-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 43,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 29,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 13,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "mewtwo",
+              "star": 2,
+              "cell": 7,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed-high-cost-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 51,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 30,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "dratini",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-scarf",
+                "focus-sash"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ground-rock-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 35,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 28,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 36,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "diglett",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "line": "snorlax",
+      "star": 2,
+      "name": "Snorlax",
+      "role": "tank",
+      "traits": [
+        "Normal"
+      ],
+      "training": [
+        {
+          "id": "physical",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 29,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 43,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "poison-barb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "spellcasters",
+          "ally": "synergy",
+          "layout": 1,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 30,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "ditto",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 51,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "healing",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 28,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "paras",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "leftovers",
+                "light-clay"
+              ]
+            },
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "flame-orb",
+                "leftovers"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "assassins",
+          "ally": "synergy",
+          "layout": 0,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 29,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "ditto",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 43,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "aerodactyl",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed",
+          "ally": "mixed-a",
+          "layout": 1,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 30,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 51,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 2,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 6,
+              "items": [
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ice-control",
+          "ally": "mixed-b",
+          "layout": 2,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 28,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 35,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "flame-orb",
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "assault-vest"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "shellder",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        }
+      ],
+      "validation": [
+        {
+          "id": "physical-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 30,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "hitmonlee",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "hitmonchan",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "rattata",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fire-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 28,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "ditto",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 35,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "growlithe",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "ponyta",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "charmander",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "magmar",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "flareon",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "water-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 29,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 43,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "seel",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "rocky-helmet"
+              ]
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-band",
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "poison-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 30,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "bulbasaur",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "eviolite"
+              ]
+            },
+            {
+              "line": "weedle",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "nidoran",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "ekans",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-band",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "gastly",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            },
+            {
+              "line": "oddish",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "choice-specs"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "electric-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 28,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "ditto",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 35,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "voltorb",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "electabuzz",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band",
+                "shell-bell"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "magnemite",
+              "star": 2,
+              "cell": 17,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jolteon",
+              "star": 2,
+              "cell": 14,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "zapdos",
+              "star": 2,
+              "cell": 19,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "psychic-holdout",
+          "ally": "mixed-a",
+          "layout": 0,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 29,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "machop",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "squirtle",
+              "star": 2,
+              "cell": 43,
+              "items": [
+                "poison-barb"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 45,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 47,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "pidgey",
+              "star": 2,
+              "cell": 33,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "slowpoke",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "assault-vest",
+                "protector"
+              ]
+            },
+            {
+              "line": "abra",
+              "star": 2,
+              "cell": 12,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "exeggcute",
+              "star": 2,
+              "cell": 10,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "staryu",
+              "star": 2,
+              "cell": 8,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "jynx",
+              "star": 2,
+              "cell": 13,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "mewtwo",
+              "star": 2,
+              "cell": 7,
+              "items": [
+                "choice-specs",
+                "life-orb"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mixed-high-cost-holdout",
+          "ally": "mixed-b",
+          "layout": 1,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 30,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "poliwag",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "pikachu",
+              "star": 2,
+              "cell": 51,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "vulpix",
+              "star": 2,
+              "cell": 52,
+              "items": [
+                "choice-specs"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 53,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "zubat",
+              "star": 2,
+              "cell": 32,
+              "items": [
+                "choice-band"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 25,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "dratini",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "scyther",
+              "star": 2,
+              "cell": 23,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 4,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 3,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "mew",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "choice-scarf",
+                "focus-sash"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ground-rock-holdout",
+          "ally": "synergy",
+          "layout": 2,
+          "home": [
+            {
+              "line": "snorlax",
+              "star": 2,
+              "cell": 28,
+              "items": [],
+              "ownedId": "bis-target"
+            },
+            {
+              "line": "ditto",
+              "star": 2,
+              "cell": 31,
+              "items": [
+                "choice-scarf"
+              ]
+            },
+            {
+              "line": "tauros",
+              "star": 2,
+              "cell": 34,
+              "items": [
+                "choice-band"
+              ]
+            },
+            {
+              "line": "chansey",
+              "star": 2,
+              "cell": 35,
+              "items": [
+                "leftovers"
+              ]
+            },
+            {
+              "line": "jigglypuff",
+              "star": 2,
+              "cell": 38,
+              "items": [
+                "life-orb"
+              ]
+            },
+            {
+              "line": "lapras",
+              "star": 2,
+              "cell": 41,
+              "items": [
+                "choice-scarf"
+              ]
+            }
+          ],
+          "away": [
+            {
+              "line": "geodude",
+              "star": 2,
+              "cell": 27,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "sandshrew",
+              "star": 2,
+              "cell": 24,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "onix",
+              "star": 2,
+              "cell": 21,
+              "items": [
+                "protector"
+              ]
+            },
+            {
+              "line": "rhyhorn",
+              "star": 2,
+              "cell": 26,
+              "items": [
+                "flame-orb",
+                "protector"
+              ]
+            },
+            {
+              "line": "cubone",
+              "star": 2,
+              "cell": 20,
+              "items": [
+                "choice-scarf",
+                "scope-lens"
+              ]
+            },
+            {
+              "line": "diglett",
+              "star": 2,
+              "cell": 22,
+              "items": [
+                "scope-lens"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

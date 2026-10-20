@@ -1,0 +1,21 @@
+{
+  "passed": 14,
+  "checks": [
+    "Every reachable state completed exactly once",
+    "Measured battle counts equal saved candidate counts",
+    "Stable search results digest matches recorded digest",
+    "All three independent pilot states match the parallel full run",
+    "Search source is unchanged: experiment.mjs",
+    "Search source is unchanged: worker.mjs",
+    "Search source is unchanged: run.mjs",
+    "Search source is unchanged: coverage.mjs",
+    "Search source is unchanged: extend-coverage.mjs",
+    "Confirmation evaluates exactly the frozen search results",
+    "Confirmation battle counts and digest match saved results",
+    "Confirmation source is unchanged: confirm.mjs",
+    "Confirmation source is unchanged: confirm-protocol.mjs",
+    "Final parallel confirmation matches the independent repeatability fixture"
+  ],
+  "searchBattles": 3236808,
+  "confirmationBattles": 341504
+}

@@ -1,0 +1,19 @@
+{
+  "passed": 8,
+  "checks": [
+    "Fixed seeds replay complete native units and events; different seeds differ",
+    "All opponent fixtures have legal unique positions, full item budgets and valid evolved forms",
+    "Combat seeds are disjoint across all phases, levels and contexts",
+    "Enemy lineups are unique within a level and never reused in later phases",
+    "Paired comparison uses side-paired blocks and preserves differences",
+    "A complete composition search replays deterministically",
+    "Core is preserved and equipment budget is fixed for 7781ae44",
+    "Core is preserved and equipment budget is fixed for f227216d"
+  ],
+  "bisDigest": "ac753b79dccd2c9caa9974eb04454841cbcf5ea8673d398a01eea81f8e4032ee",
+  "pilotDigest": "7bf3553b60e9fb1c1c8d3ab67561fa69bef792ead03ab32a55713da1c078590a",
+  "pilotTask": {
+    "category": "reroll-5",
+    "carry": "charmander"
+  }
+}

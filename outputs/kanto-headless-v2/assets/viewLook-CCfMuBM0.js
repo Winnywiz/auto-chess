@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-8BhlS34s.js";import{n as t,t as n}from"./react-Dr--T8UO.js";var r,i,a,o;function s(){return(s=e((()=>{t(),r=n(()=>({sim:null,v:0,bench:null,who:null,items:null})),i=e=>r.getState().sim??e.sim,a=e=>{let t=r.getState();return t.sim?-1-t.v:e.simVersion},o=()=>r.getState().sim!==null})))()}export{a,i,o as n,r,s as t};

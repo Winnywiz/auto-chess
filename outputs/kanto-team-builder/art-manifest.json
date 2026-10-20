@@ -1,0 +1,2648 @@
+[
+  {
+    "path": "icons/1.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/1.png",
+    "bytes": 335,
+    "sha256": "a3bd4708f11413968541a177e5d05363f913b3e961a69f96fc342a419d28aca2"
+  },
+  {
+    "path": "frames/1.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/1.png",
+    "bytes": 5964,
+    "sha256": "60d6f700536cead024ab6e592b1acc2be5e2bdfadbbfc289de28931bfe96ceaf"
+  },
+  {
+    "path": "sprites/1.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/1.gif",
+    "bytes": 28505,
+    "sha256": "447b187118da4dc74ee353835df0ab833bd70866f47836f07c24c082e1f8d4ba"
+  },
+  {
+    "path": "sprites/2.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/2.gif",
+    "bytes": 49345,
+    "sha256": "34eaba93a727a7a000e45ea6fa3bf115f59118ff05eb0a1d08cd3da8e1b21515"
+  },
+  {
+    "path": "icons/2.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/2.png",
+    "bytes": 380,
+    "sha256": "ccceb815ed9fe6efe49b785bac25113b4f1ec54e37f622d5b8f45978f0372286"
+  },
+  {
+    "path": "frames/2.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/2.png",
+    "bytes": 11825,
+    "sha256": "ce993f3a96ea415c0f97a91dd110c0b7ec095c0728c22851b8ce7ab78ed31549"
+  },
+  {
+    "path": "frames/3.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/3.png",
+    "bytes": 21429,
+    "sha256": "1a8821753024e75835316d971abe0cb183f356639b53c82b616bbb173c02be2b"
+  },
+  {
+    "path": "icons/3.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/3.png",
+    "bytes": 1537,
+    "sha256": "3e7e201e452a827eb3d94e28004e0e9f5b31fa63d1c6bd4b7f54e1e8650c0c4a"
+  },
+  {
+    "path": "sprites/3.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/3.gif",
+    "bytes": 110718,
+    "sha256": "2a469af1dfc84087dcc07193ad75ddf5e27bc69bc959417fc7907cd99e86030a"
+  },
+  {
+    "path": "frames/4.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/4.png",
+    "bytes": 6078,
+    "sha256": "75947934e0d0b192e1e6a709df260fdf19cbfe79e18e8febddcc10bf370bcdd7"
+  },
+  {
+    "path": "icons/4.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/4.png",
+    "bytes": 322,
+    "sha256": "beb7e8bf9b24fcf74a1dcdc1b03ee2a85997235a5919544966c827ec8fe27f77"
+  },
+  {
+    "path": "sprites/4.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/4.gif",
+    "bytes": 40257,
+    "sha256": "d1b27ac8e5a9054201b324b99ea29d7c3fbc9ccf64980d78b8583006f065c07d"
+  },
+  {
+    "path": "frames/5.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/5.png",
+    "bytes": 10525,
+    "sha256": "a7a1a9533e07012c3d24516157b75f61499d32673c225538505d4fb11c06e22f"
+  },
+  {
+    "path": "icons/5.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/5.png",
+    "bytes": 374,
+    "sha256": "9a2f815a65b0dfc3bea1c507e6f1e582492e6ae64190eb9d61c325a82e03415f"
+  },
+  {
+    "path": "sprites/5.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/5.gif",
+    "bytes": 45807,
+    "sha256": "8d6c1dd2c93580ff7312379bbd6dc799baccdbf9dc316e87b10e254445988db7"
+  },
+  {
+    "path": "icons/6.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/6.png",
+    "bytes": 731,
+    "sha256": "67331c25eb90a08c0b8114125d67e0fec9f08ca321038a15a01bcb2572d88597"
+  },
+  {
+    "path": "frames/6.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/6.png",
+    "bytes": 32731,
+    "sha256": "ba9093311fa031074da7b5bdded887704fc52f0bc7e9caa02493498629daf0ef"
+  },
+  {
+    "path": "sprites/6.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/6.gif",
+    "bytes": 84175,
+    "sha256": "4127a320075ca2ac222768cacda3b5c4932c5a7a646dae4cdeebe3b2c8264694"
+  },
+  {
+    "path": "frames/7.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/7.png",
+    "bytes": 7435,
+    "sha256": "4486b023a4312cbc6e88f3fb551d317f96b60394dfd846453982503fab78bbbd"
+  },
+  {
+    "path": "sprites/7.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/7.gif",
+    "bytes": 19465,
+    "sha256": "8afe65cd30f30be60bcbb6f293259d3c9ba2fdfc98d7fb599814997da69e0a5d"
+  },
+  {
+    "path": "icons/7.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/7.png",
+    "bytes": 346,
+    "sha256": "b86d6f10fcdef1a54d02647e92d8a28db221f7087076a89c0200b3bffe4100ea"
+  },
+  {
+    "path": "frames/8.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/8.png",
+    "bytes": 12154,
+    "sha256": "58a9f18d3a1a016383d649227a53d2df13527f036c5afcaf227029416a3b1816"
+  },
+  {
+    "path": "icons/8.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/8.png",
+    "bytes": 416,
+    "sha256": "1aa5e6ac6310bbcbc700f9fef7bc51090a9aa4bca325949bad2f3225187504b4"
+  },
+  {
+    "path": "sprites/8.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/8.gif",
+    "bytes": 32503,
+    "sha256": "611e0a0d49b7e594d6d5a836127953b641cf4fbb851de29d8a632a72a38fcf0a"
+  },
+  {
+    "path": "frames/9.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/9.png",
+    "bytes": 24562,
+    "sha256": "bdcf41c74e0580e963bdbdc55a66eb359a5d8344136a54768a135c93c2dd5072"
+  },
+  {
+    "path": "icons/9.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9.png",
+    "bytes": 668,
+    "sha256": "fd60b68fc65b2317f92d7a77f262ce643d27a2237e09a667fea8765d1c598617"
+  },
+  {
+    "path": "sprites/9.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9.gif",
+    "bytes": 129086,
+    "sha256": "9fcb3adef60d42700f3cba8e4335eb68fb6b2d2fe78800ee21ca855e1d3c9582"
+  },
+  {
+    "path": "frames/10.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/10.png",
+    "bytes": 4980,
+    "sha256": "a671faf15911deea83a9c74ec3bab79bd24fcc7ef8c8841ead60cb53e9d92e1c"
+  },
+  {
+    "path": "sprites/10.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/10.gif",
+    "bytes": 22502,
+    "sha256": "c07fb9e800e7d0e410d3ed9b2ef87acb97823dbe0be5d2d1b042d83e121b70d0"
+  },
+  {
+    "path": "icons/10.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/10.png",
+    "bytes": 283,
+    "sha256": "4f81c77a21c860c3295004d1faaa6c16648e463394c6dda1f210971d85d7962b"
+  },
+  {
+    "path": "frames/11.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/11.png",
+    "bytes": 5939,
+    "sha256": "81dbc356ccd66920b7cfbf2e635e7cea70657948dbf2b2900036e706d5ef5c23"
+  },
+  {
+    "path": "icons/11.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/11.png",
+    "bytes": 211,
+    "sha256": "8ca58378734561205016902f0c9eab2615024a8b20b15386ed7f20062c09a72b"
+  },
+  {
+    "path": "sprites/11.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/11.gif",
+    "bytes": 31684,
+    "sha256": "f51c0b67c287f0ece67801f74322960505ce9dc2f9dee23670849959e9d268ce"
+  },
+  {
+    "path": "frames/12.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/12.png",
+    "bytes": 12828,
+    "sha256": "a56e7b9af8e6cbf1561bfed71dcf84f586c050f96ad9dcd6fdc13002a78d5bcf"
+  },
+  {
+    "path": "icons/12.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/12.png",
+    "bytes": 1078,
+    "sha256": "918ee6a34ebec562e45a6daff0573835f1bf4f1c00dc1c6f94002d818c6bd848"
+  },
+  {
+    "path": "sprites/12.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/12.gif",
+    "bytes": 74363,
+    "sha256": "8885e568873bee1e0bf374cc8ca9f65d260a15b376f24a4d83278d7ce3934319"
+  },
+  {
+    "path": "frames/13.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/13.png",
+    "bytes": 5072,
+    "sha256": "0a8538843d41ba810593f8448d10e2c2a81981efeb4f811cb42277b7b127d3f2"
+  },
+  {
+    "path": "icons/13.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/13.png",
+    "bytes": 270,
+    "sha256": "691015ceaa297928d22ef8a6d56ad275f5ac3b73c27e00009c5b1f4c9c304ee2"
+  },
+  {
+    "path": "sprites/13.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/13.gif",
+    "bytes": 25061,
+    "sha256": "ff4d091e7a2d291f4afcb17ecae260f68761f5a40a6626f54c9cf3ffeb8b4378"
+  },
+  {
+    "path": "frames/14.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/14.png",
+    "bytes": 6936,
+    "sha256": "4125c217ba20c5f418f299ddc17e361cabcd30eb105b3ef10d4c85da263bb813"
+  },
+  {
+    "path": "sprites/14.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/14.gif",
+    "bytes": 43704,
+    "sha256": "df609243cc36293960e9a889265915ebb63bee06047981d5946c0a93979bee55"
+  },
+  {
+    "path": "icons/14.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/14.png",
+    "bytes": 241,
+    "sha256": "53b371d624b0d767f0a7cdbc267477adfb4a6c87f5ce58cccf550c277e350c0f"
+  },
+  {
+    "path": "frames/15.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/15.png",
+    "bytes": 11502,
+    "sha256": "92ec1b7ebdf98c59faead9cf18c080501043f01a0b989d2c6209740619940dd5"
+  },
+  {
+    "path": "icons/15.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/15.png",
+    "bytes": 377,
+    "sha256": "d7309a18360f0519c71d058bcc1bd9581b2df18a09da92dd9220466b95dbf749"
+  },
+  {
+    "path": "sprites/15.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/15.gif",
+    "bytes": 116245,
+    "sha256": "130d4d30cecf537c41401a7e17bc897a3249b592491b2b748bf2b1fe1a49a98c"
+  },
+  {
+    "path": "frames/16.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/16.png",
+    "bytes": 6619,
+    "sha256": "70a925a2867fa32f32cfef5f4c274f98a97c0a42e8b6c7c2f63386fb60a0a907"
+  },
+  {
+    "path": "icons/16.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/16.png",
+    "bytes": 324,
+    "sha256": "76085ac9d001075a906ddbf36ba50b23ca5d8d6c68be75ae7a47c2bedad46d6e"
+  },
+  {
+    "path": "sprites/16.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/16.gif",
+    "bytes": 12458,
+    "sha256": "04e89311c868e8012d04550b018a628bac21fc2b2fd3b13836517f7b585bd618"
+  },
+  {
+    "path": "frames/17.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/17.png",
+    "bytes": 19749,
+    "sha256": "ee2f373f3ced937bfe0107563437af3a31f206c4178d6f0054e34426c5220ff2"
+  },
+  {
+    "path": "icons/17.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/17.png",
+    "bytes": 366,
+    "sha256": "2643f87e92a7834cacce9357c86c1290dd86dc17d5ec9bc2a19a66b24a23ba89"
+  },
+  {
+    "path": "sprites/17.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/17.gif",
+    "bytes": 19558,
+    "sha256": "9a9c164716dc30af6c682b38e11852c7d8bcea37f8d8d0d084dfbf959576d761"
+  },
+  {
+    "path": "frames/18.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/18.png",
+    "bytes": 25543,
+    "sha256": "99e2275984c13d74023c7cb69a1bef8685a9e333e4aae98362dd7f8ada3c7ba5"
+  },
+  {
+    "path": "icons/18.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/18.png",
+    "bytes": 594,
+    "sha256": "a5706b4f6342db3ca65c9b8ee2163eb58582ff6952a599c3444702859f0138ab"
+  },
+  {
+    "path": "sprites/18.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/18.gif",
+    "bytes": 68538,
+    "sha256": "87627a7e52808005076edf6aa4631eebeb2cfafbdae26b5590bb54ed901a8eca"
+  },
+  {
+    "path": "frames/19.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/19.png",
+    "bytes": 7186,
+    "sha256": "8827311b085476d2db3fe31e0eaa2a7c87e4a95b70c3a366d3040095d4bdd94a"
+  },
+  {
+    "path": "icons/19.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/19.png",
+    "bytes": 330,
+    "sha256": "1995899e00f7a94429397e9af4287d3a18365a9e066d91688c97f47a11b3da3e"
+  },
+  {
+    "path": "sprites/19.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/19.gif",
+    "bytes": 16397,
+    "sha256": "3f412941f4c49ec09c3403e959ede3321ad10bee61d5321fde246ab5913ee3f4"
+  },
+  {
+    "path": "frames/20.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/20.png",
+    "bytes": 19123,
+    "sha256": "87893bb3ff70ec4b1adb5b15c7877e325d05786ca56a11039bd795dd3a7587de"
+  },
+  {
+    "path": "icons/20.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/20.png",
+    "bytes": 421,
+    "sha256": "6e20926e711ab9f686248fb3363e8547bfa7b5e06c8a6ce78f8eb8c8b2bc6e5e"
+  },
+  {
+    "path": "sprites/20.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/20.gif",
+    "bytes": 159910,
+    "sha256": "1bc27120e3bcc7e6b5ecaf78aca11103fd8fe4c6926bcff94e93d545a7414934"
+  },
+  {
+    "path": "icons/129.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/129.png",
+    "bytes": 410,
+    "sha256": "9be6948be00d3d7ae06a59282b99cc9c9bf1e3b281f12025026b1b151e2a59e0"
+  },
+  {
+    "path": "sprites/shiny-20.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/20.gif",
+    "bytes": 58328,
+    "sha256": "0a3291588da58110902eafb2a818471ecd5ad967836af11735f594feea37bc5d"
+  },
+  {
+    "path": "frames/shiny-20.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/20.png",
+    "bytes": 12462,
+    "sha256": "827c8cfa84f006f2d1fc7ac609d3abb2ee21ba00da58bc0137c6e4671c14a50a"
+  },
+  {
+    "path": "frames/129.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/129.png",
+    "bytes": 8559,
+    "sha256": "7c17d3541dc80e0ec93c53fca14db5df125c594205025f884606f9390c2d9526"
+  },
+  {
+    "path": "sprites/129.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/129.gif",
+    "bytes": 16483,
+    "sha256": "04143fd9914d01b64bef0102d2801c496a317ee9c02fcaa7f6edafe89eecbb7e"
+  },
+  {
+    "path": "icons/130.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/130.png",
+    "bytes": 741,
+    "sha256": "381b42e2dbfd756947b4b052fc516b76bd7104affff65a94f2c9cfe7433e7af9"
+  },
+  {
+    "path": "frames/130.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/130.png",
+    "bytes": 23355,
+    "sha256": "e449c21f1b984cf9b508289d6bd5c66247e5b5a1618e87cee7ea5724e5dde960"
+  },
+  {
+    "path": "sprites/130.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/130.gif",
+    "bytes": 95584,
+    "sha256": "444b71a063b935da5779a59db2474c0582f531b6ae69c88a12ecd06710d9f6f1"
+  },
+  {
+    "path": "sprites/shiny-130.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/130.gif",
+    "bytes": 93973,
+    "sha256": "aaf861410966ab19eebd238d7444a08af2f8c27cd56da21a2847f10958c0e019"
+  },
+  {
+    "path": "icons/74.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/74.png",
+    "bytes": 305,
+    "sha256": "3b375b7140c9d9d202cf75edd38c383238d45d3e8419964ff81c09ec5ecc96e2"
+  },
+  {
+    "path": "sprites/74.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/74.gif",
+    "bytes": 29638,
+    "sha256": "1fb9ed72380533f713659c2b5d4b7e9e8e1a8b2f79b438e34a720a275fa8ec01"
+  },
+  {
+    "path": "frames/shiny-130.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/130.png",
+    "bytes": 22927,
+    "sha256": "1d08734fa7643802d3f2c7d1ce1a0811580b82f6da2ab308d1c6898a6d73541b"
+  },
+  {
+    "path": "frames/74.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/74.png",
+    "bytes": 7768,
+    "sha256": "dcdb9bb06bde3f4660327c1d5faebb6f19d7d62c5b456a9e6a4db9ca64bf9966"
+  },
+  {
+    "path": "icons/75.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/75.png",
+    "bytes": 408,
+    "sha256": "9eba453309df936ed5d23a0f76a7f5b634005d06439ce4e009ab27ade64d15a9"
+  },
+  {
+    "path": "sprites/75.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/75.gif",
+    "bytes": 71807,
+    "sha256": "9148b4643c5bff5e0d961bcedfd6c78b2ca7082432a4a1d24e2bb3a3182cf5b1"
+  },
+  {
+    "path": "frames/75.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/75.png",
+    "bytes": 26353,
+    "sha256": "1d1baaa2d8bf42989a95cc1c8b8c32c6264fe46bd8db684fa2ea943c0cb8568b"
+  },
+  {
+    "path": "icons/76.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/76.png",
+    "bytes": 626,
+    "sha256": "f3bde683085dd15acb618ca095d4642ac22311ce13b62ebb0d2ff8433d7b054c"
+  },
+  {
+    "path": "sprites/76.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/76.gif",
+    "bytes": 103497,
+    "sha256": "c3843c5fe283ff79a1599647d5fcfca20c8f2f0deb7762b8973f8c7c588b47c7"
+  },
+  {
+    "path": "frames/76.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/76.png",
+    "bytes": 25105,
+    "sha256": "8d393b97053596bcb405465af5e7fd9e6511b45eff8b76fca22447e17cc04b39"
+  },
+  {
+    "path": "icons/41.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/41.png",
+    "bytes": 302,
+    "sha256": "8907dbdc250a86cdf9e3fe81f7ee3f125520840999f6e0bb4478fafedde0b41a"
+  },
+  {
+    "path": "sprites/41.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/41.gif",
+    "bytes": 22215,
+    "sha256": "a0b538cf57b295b7bea68937ba03746d5616392272aa8d3dbef2f3899bf6edbe"
+  },
+  {
+    "path": "frames/41.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/41.png",
+    "bytes": 9551,
+    "sha256": "2faf7b22cf522eda46d8afb3cb3be1e7c87570a3ff70e24bb1bee4c493c1d8a5"
+  },
+  {
+    "path": "icons/42.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/42.png",
+    "bytes": 498,
+    "sha256": "be2b24b1452206ff7399fddf91acf456bd8c7ddfffdc17027d6abfa0f40e5444"
+  },
+  {
+    "path": "sprites/42.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/42.gif",
+    "bytes": 48659,
+    "sha256": "7d53696ef8d88bc329ed2c8f002bf91a0f88666109cd7b4a783936982acb335b"
+  },
+  {
+    "path": "frames/42.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/42.png",
+    "bytes": 16135,
+    "sha256": "c8de9cacd47c98649853bab6ef2730e86ad7e8aee4397a74558db3c18bda34f8"
+  },
+  {
+    "path": "frames/shiny-42.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/42.png",
+    "bytes": 14794,
+    "sha256": "176d2a7c303cc29180a0d14d605bf56fa082660f2048e8bf6910a31a08cdde3b"
+  },
+  {
+    "path": "sprites/shiny-42.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/42.gif",
+    "bytes": 43502,
+    "sha256": "08669209256587baff1b50a6efc485123964012df50e4d36f0a6b50b02f810a7"
+  },
+  {
+    "path": "frames/32.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/32.png",
+    "bytes": 8149,
+    "sha256": "024a8d96dd3f82e32d85650283d8807d0377c1b8bc17ea24bf4704f990be7be0"
+  },
+  {
+    "path": "icons/32.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/32.png",
+    "bytes": 331,
+    "sha256": "ff8d7c95501de556ba110cd7a8598372207be9f684755e2b2c9e79b05898cf32"
+  },
+  {
+    "path": "sprites/32.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/32.gif",
+    "bytes": 34813,
+    "sha256": "ba371fda31d98410d638b9f80c3245238387ccd70e9bbd9a6754f5536e69e253"
+  },
+  {
+    "path": "frames/33.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/33.png",
+    "bytes": 12122,
+    "sha256": "cb299a6e5dd2f6f65e33a4a86058ecc3ce4e375c0a40bcd4c7869033e980d767"
+  },
+  {
+    "path": "sprites/33.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/33.gif",
+    "bytes": 47612,
+    "sha256": "54366d2546192e1fe037676072a17a6d8aa31abb725cdac598209ed1f2709723"
+  },
+  {
+    "path": "icons/33.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/33.png",
+    "bytes": 362,
+    "sha256": "16e5e98349beddc801b6db96944768d34f80ada205982273511c8e3405d5404b"
+  },
+  {
+    "path": "frames/34.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/34.png",
+    "bytes": 27170,
+    "sha256": "329e61cbd3a78e369f375827936b18e57545f3eca7e73bd0f3d2371fe23d8127"
+  },
+  {
+    "path": "icons/34.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/34.png",
+    "bytes": 671,
+    "sha256": "d93a7d7437072ab6afd99c6fe20283058364ee519cbfdbaa242211ce897d7b08"
+  },
+  {
+    "path": "sprites/34.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/34.gif",
+    "bytes": 71649,
+    "sha256": "e80c5a1f5d707a024d26677692519bc5f073f0e29f5bbb444282790ce47c33ed"
+  },
+  {
+    "path": "frames/66.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/66.png",
+    "bytes": 7349,
+    "sha256": "64399e4be21160df3284f736c982b0cefa09961f4c017002acc68a4151f4ac20"
+  },
+  {
+    "path": "icons/66.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/66.png",
+    "bytes": 306,
+    "sha256": "3dc29ca60092dcbe6a8ab9577ecd177b8ae189d9ac2fb6d45ee953a56c024a6d"
+  },
+  {
+    "path": "sprites/66.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/66.gif",
+    "bytes": 19596,
+    "sha256": "613eb3997d491f7ca9cff5509d23f07dcf43a8f7b3e969d0d00885f2c257e4d5"
+  },
+  {
+    "path": "frames/67.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/67.png",
+    "bytes": 23628,
+    "sha256": "fc5991f597e7e69f5d11352a32f561fb39ebbbe0de35311359d655391754f642"
+  },
+  {
+    "path": "icons/67.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/67.png",
+    "bytes": 396,
+    "sha256": "bc44c2ceea4d6448d0c1bd9db39acae50725b2e56fb2bf6575162fcd53772b07"
+  },
+  {
+    "path": "sprites/67.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/67.gif",
+    "bytes": 48557,
+    "sha256": "6dcb70f0a7c59b5970fe71eb8b4dbf1ec815e279fe8e78144f7e7e5beab0ac5b"
+  },
+  {
+    "path": "frames/68.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/68.png",
+    "bytes": 28897,
+    "sha256": "2fd9f9609d640f081e8c83505563cab2a5d090a8e1a1d615b73e2a2501a63706"
+  },
+  {
+    "path": "icons/68.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/68.png",
+    "bytes": 736,
+    "sha256": "97ec82ec670f3c9e569ce0ddec75e81eb8609a919dc648461809bd4411c39f2d"
+  },
+  {
+    "path": "sprites/68.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/68.gif",
+    "bytes": 67496,
+    "sha256": "a0d27aa2029cf3cb24aadd54fc79096e7625a26ddcf7cfafe932f09c4f78082d"
+  },
+  {
+    "path": "icons/51.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/51.png",
+    "bytes": 914,
+    "sha256": "e4beb0d158f12410067b744d97495ccbc07e22d5705c21f10f24da59cc474c64"
+  },
+  {
+    "path": "icons/50.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/50.png",
+    "bytes": 266,
+    "sha256": "b21904ecee585cca4eed678b67bfb888bf6a3d3ae812c450d3465fdd77964bd2"
+  },
+  {
+    "path": "sprites/50.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/50.gif",
+    "bytes": 7788,
+    "sha256": "4c8e0b5d22c2eb738fc4971c1e5023c54f7d784727962dab3f85c23b5680fd3d"
+  },
+  {
+    "path": "icons/25.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/25.png",
+    "bytes": 372,
+    "sha256": "9ad1eff7e959dbb1eb6cf07265a3a09e466015dd087cd12f3309c11f126c1634"
+  },
+  {
+    "path": "sprites/51.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/51.gif",
+    "bytes": 80895,
+    "sha256": "1810b3ce06014d2613950e360031939eb74d7aaece50b669b3f26154db52028e"
+  },
+  {
+    "path": "sprites/shiny-51.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/51.gif",
+    "bytes": 74868,
+    "sha256": "572badcc20707bef4788e61958d435f68e4bcb5c03b4ac452170f40af5d6f0d0"
+  },
+  {
+    "path": "frames/25.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/25.png",
+    "bytes": 9803,
+    "sha256": "16275af25a703c844ccba1b8eaee9c7a86078f50ef1fb1df24ea384516e746d0"
+  },
+  {
+    "path": "icons/26.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/26.png",
+    "bytes": 1046,
+    "sha256": "bdc7c0925b86da42bcb3b054307452cebb9d92628b58de6ccf0ecd5019be3fcb"
+  },
+  {
+    "path": "sprites/25.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/25.gif",
+    "bytes": 25987,
+    "sha256": "24bf3c5d81181fce5903b1040ba1f3b235520ebea11679c89ee74dd51961fa4b"
+  },
+  {
+    "path": "sprites/26.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/26.gif",
+    "bytes": 32318,
+    "sha256": "102220149fe438707a68c72a0a76233fef12cd2f460ea60968d1eb37d786713b"
+  },
+  {
+    "path": "frames/26.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/26.png",
+    "bytes": 14275,
+    "sha256": "bb49550dea31524cc3b00f929559bf94555e70f04dbad0e3ac3d4d655b052ab2"
+  },
+  {
+    "path": "sprites/shiny-26.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/26.gif",
+    "bytes": 33926,
+    "sha256": "30dc878c6f52a006b3506ac7d7cefd58d0c7eb710b92e3d96cab8f0280db20c8"
+  },
+  {
+    "path": "frames/shiny-26.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/26.png",
+    "bytes": 14220,
+    "sha256": "7d3e897a2e6751a461c9445e9fc627075753b96fcd0513d4c8ca6c602449fe0d"
+  },
+  {
+    "path": "icons/37.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/37.png",
+    "bytes": 346,
+    "sha256": "55f27f6315cd0ac2ff28f8a78d69f64c7851f5581bb1875455a6f38c0b181dfb"
+  },
+  {
+    "path": "sprites/37.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/37.gif",
+    "bytes": 27960,
+    "sha256": "2397217d20c45b2d0430c81783fb89e727fcb6a3ac2b233ec556a9da84a51479"
+  },
+  {
+    "path": "frames/37.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/37.png",
+    "bytes": 8013,
+    "sha256": "269ef8725c867c4f13bcf351e62e213d611c6de49570d865d06ba615324f489b"
+  },
+  {
+    "path": "icons/38.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/38.png",
+    "bytes": 1101,
+    "sha256": "cfe49ede596e05abff16ef9ecfece5b711a5094fd7287e3d94d674233cf9b0af"
+  },
+  {
+    "path": "sprites/38.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/38.gif",
+    "bytes": 105057,
+    "sha256": "83f396676f5ba634c175cf81013c7c68ce5dc29a8acf070d0e3a7b12a2214c76"
+  },
+  {
+    "path": "frames/38.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/38.png",
+    "bytes": 21119,
+    "sha256": "d9c99656823faf585974ab86f850880a97f76e8966708301eba68010972b4418"
+  },
+  {
+    "path": "frames/shiny-38.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/38.png",
+    "bytes": 18878,
+    "sha256": "6a1c639b948104b1240daf2900275c6d30649b5099e82212c20c8a7f7dce608a"
+  },
+  {
+    "path": "sprites/shiny-38.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/38.gif",
+    "bytes": 94786,
+    "sha256": "bc5200bf55bdb4ed11dae3e4267fe9d5a5417eef220836bbf9d3a142918a99b1"
+  },
+  {
+    "path": "frames/54.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/54.png",
+    "bytes": 6174,
+    "sha256": "c08553bd5b5f7281903d146d6056fb455b680a2969c2de9a2ee4859a032b1fa5"
+  },
+  {
+    "path": "icons/54.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/54.png",
+    "bytes": 330,
+    "sha256": "28864d0fa0d8b9c66d270cd1a0c21c38b7119559ceb324cb4a42c263b9df500a"
+  },
+  {
+    "path": "sprites/54.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/54.gif",
+    "bytes": 22466,
+    "sha256": "a8177ae225739117dc3b2480100b1fd58172e4e79bc1f5737c7567bf3b18a861"
+  },
+  {
+    "path": "frames/55.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/55.png",
+    "bytes": 14391,
+    "sha256": "f685474ef8bf05d805a209afdcf1ee31ee90088f4e126dfc733a8f24f8c505c0"
+  },
+  {
+    "path": "sprites/55.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/55.gif",
+    "bytes": 47075,
+    "sha256": "bc415ccb26944e2388b3a892810dc65759b5a4091264e230ed404193d5c5a4aa"
+  },
+  {
+    "path": "icons/55.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/55.png",
+    "bytes": 988,
+    "sha256": "46dd34746aac388631151d2574d7e6114d2ee86f2aa156746aefb7411e9894de"
+  },
+  {
+    "path": "icons/43.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/43.png",
+    "bytes": 310,
+    "sha256": "9cff69d44118048e2a463c7f9894a1607c9629b8e30736f9d4489d5f5c09b70e"
+  },
+  {
+    "path": "sprites/shiny-55.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/55.gif",
+    "bytes": 50796,
+    "sha256": "a3c9d75a8582730644747f0398fb82531c028276a0780e1948d55fb469186747"
+  },
+  {
+    "path": "frames/shiny-55.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/55.png",
+    "bytes": 15006,
+    "sha256": "30b72192ede671c781b7186e3e4f6d484423f975bf9d57e0443c95b2b0739b20"
+  },
+  {
+    "path": "frames/43.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/43.png",
+    "bytes": 5779,
+    "sha256": "138ff33799d55cb12af5a9d59edbfc0527ef9ca4783935ae2bbb0d922e86381d"
+  },
+  {
+    "path": "sprites/43.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/43.gif",
+    "bytes": 23389,
+    "sha256": "85645ee38bcb97d21b3ea9fa7813066bbc6c3d2f32d10034ce1011327b1af0cf"
+  },
+  {
+    "path": "icons/44.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/44.png",
+    "bytes": 381,
+    "sha256": "6af321e68344232a5274dba33e215e36f373c3cae3d5f328765ddc61bac1dc1f"
+  },
+  {
+    "path": "frames/44.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/44.png",
+    "bytes": 10004,
+    "sha256": "574328c37c462c668a19d3338b1dab1365260809ecbe5e6fb308b092e18c9902"
+  },
+  {
+    "path": "icons/45.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/45.png",
+    "bytes": 577,
+    "sha256": "a3ec7af021f39ed3ab0cfc231f4c6bbbbd3d4ca227718091c8b4c37caad81178"
+  },
+  {
+    "path": "sprites/44.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/44.gif",
+    "bytes": 28291,
+    "sha256": "94718f9b137389791f0e7c8419e9f5de2e02e6346fe4f54bd87c0d23e1af8a1a"
+  },
+  {
+    "path": "sprites/45.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/45.gif",
+    "bytes": 21318,
+    "sha256": "1ccd03a7b3d1be858559f90f4e7ed9a3da7cc062f93a74c564b3489876570265"
+  },
+  {
+    "path": "frames/45.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/45.png",
+    "bytes": 10276,
+    "sha256": "2959771e1b86da34b6e1287cb24fdff276d492a0cca6c124b1578cf9f41e39b5"
+  },
+  {
+    "path": "icons/63.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/63.png",
+    "bytes": 342,
+    "sha256": "d3ec00cb1952b93d08ca3a6250e77187e86ed4fbb598e3a0c71746cdd6775ebb"
+  },
+  {
+    "path": "frames/63.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/63.png",
+    "bytes": 11414,
+    "sha256": "1a8fcd4712e089f965a2642957ed8397a9066341e7ef90d48bb0686717efaaf4"
+  },
+  {
+    "path": "icons/64.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/64.png",
+    "bytes": 732,
+    "sha256": "dffcea7e5613f3580789d1372bfdd661efd31321604746b266b63457ae0cc359"
+  },
+  {
+    "path": "sprites/63.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/63.gif",
+    "bytes": 58628,
+    "sha256": "6722d2dc0b1c257d54ef5b84598d332f79de1a7688af9c6fe91ecc13271c07eb"
+  },
+  {
+    "path": "frames/64.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/64.png",
+    "bytes": 16618,
+    "sha256": "fa97716c6b503b71fed74d083f9986d95d6d0e5acf3d55de5a7154b46dc3db03"
+  },
+  {
+    "path": "icons/65.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/65.png",
+    "bytes": 1141,
+    "sha256": "c2e4765e82e58075779982ee1f12e4f6e6dbd05f3b63c45af14adda043888b41"
+  },
+  {
+    "path": "sprites/64.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/64.gif",
+    "bytes": 69112,
+    "sha256": "7b7da425940929fcf97974893314e235f850dc131e658a80948cdad4a5ff6c74"
+  },
+  {
+    "path": "frames/65.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/65.png",
+    "bytes": 22647,
+    "sha256": "61bca45adcb536d9ee6c90a20a9dc7fb31f435cfba99e4438040ee733bce5e51"
+  },
+  {
+    "path": "icons/92.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/92.png",
+    "bytes": 348,
+    "sha256": "52e03260b043d713b8497d3ded52d5b6c38964ba9873cc39c2e7ebbc7c3e4f93"
+  },
+  {
+    "path": "sprites/65.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/65.gif",
+    "bytes": 107471,
+    "sha256": "553d76f187c01267b624eaa09d80783914569fde2f95164e0f04108b84e515d0"
+  },
+  {
+    "path": "frames/92.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/92.png",
+    "bytes": 7403,
+    "sha256": "badf2f691c2bf0be721da4bab47918d0b6014e33c6251027c4f2a1719c03d78b"
+  },
+  {
+    "path": "icons/93.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/93.png",
+    "bytes": 407,
+    "sha256": "ec8b0345a7d23deee79013e1c28b0354a68aee1edc961af53474b4d0f122650d"
+  },
+  {
+    "path": "sprites/92.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/92.gif",
+    "bytes": 42866,
+    "sha256": "13da08bd2242e213f63656bf9c70ae04de2311a0d72978a92e78ab99de6fb186"
+  },
+  {
+    "path": "frames/93.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/93.png",
+    "bytes": 11690,
+    "sha256": "26e497f37abb6ecf4b39814e61df16b1fe4c7ac8883549725131619f8d6b4b8c"
+  },
+  {
+    "path": "icons/94.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/94.png",
+    "bytes": 535,
+    "sha256": "ece383df4df67b767162a5cee2230e6a765847cd5aeed82792f13905066cc7dc"
+  },
+  {
+    "path": "sprites/93.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/93.gif",
+    "bytes": 61973,
+    "sha256": "c3c346131538b83152aa0fc76a3c4a92ec3ac44145040b4bb1ad2cc633e8a630"
+  },
+  {
+    "path": "frames/94.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/94.png",
+    "bytes": 17562,
+    "sha256": "8358405ce502dc2dc53f85e775836d3a5b70b6e76cfbc2536da4ae746be042b2"
+  },
+  {
+    "path": "icons/60.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/60.png",
+    "bytes": 309,
+    "sha256": "a2c8d2565a56965d99fe80cf9a0c2528d513a836729ba2e0120bc63dfb73e33b"
+  },
+  {
+    "path": "sprites/94.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/94.gif",
+    "bytes": 50496,
+    "sha256": "65e12ea407d7b6da5895dcd451a0f581f3423bdee8b2efc807b65f248defb2b3"
+  },
+  {
+    "path": "frames/60.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/60.png",
+    "bytes": 6915,
+    "sha256": "9006d8573de7cba08e71e5683b6413e16616359c07cd831ab9f26d67cb4f161f"
+  },
+  {
+    "path": "icons/61.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/61.png",
+    "bytes": 330,
+    "sha256": "5373412955fc0635bd077116d2a8f23c903de41bebc15c899e1512e62d4c1ba6"
+  },
+  {
+    "path": "sprites/60.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/60.gif",
+    "bytes": 25166,
+    "sha256": "578747dfc7bab111d11f355fe1054527b8d918975bee22eb04a3c512ec8594da"
+  },
+  {
+    "path": "frames/61.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/61.png",
+    "bytes": 20289,
+    "sha256": "fafea1ef68ac8f2940916ac7d05752102701085707875448e6ca33bcec18544d"
+  },
+  {
+    "path": "icons/62.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/62.png",
+    "bytes": 1010,
+    "sha256": "d992494263487dfd8325a13ad55435354c1a761248101cb37d704c09cfaaf8ea"
+  },
+  {
+    "path": "sprites/61.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/61.gif",
+    "bytes": 102727,
+    "sha256": "a5cd0e4e7ca823d08c7e0305e0fc3002bb966231bccdf94e1510cef206d0b57e"
+  },
+  {
+    "path": "frames/62.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/62.png",
+    "bytes": 15216,
+    "sha256": "c0f7c4089cee77bac5fd44183eaa2ad73c59401605e659654e7620d2f4050ac1"
+  },
+  {
+    "path": "icons/27.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/27.png",
+    "bytes": 338,
+    "sha256": "de313204aa8baa1e93a81b415fabc3106f13bfe1d82c27dd655eabc1e023f9f9"
+  },
+  {
+    "path": "sprites/62.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/62.gif",
+    "bytes": 43473,
+    "sha256": "535addc0bfcc45598f65ffb8ee90f9a44bdec2776f28fd2cac5579eb5026e2e7"
+  },
+  {
+    "path": "icons/28.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/28.png",
+    "bytes": 913,
+    "sha256": "6e1d17c8f953981274ebe1d29e2d353d3c9f0eb420b3a1d8e4e284dcd4bd3cd0"
+  },
+  {
+    "path": "frames/27.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/27.png",
+    "bytes": 7275,
+    "sha256": "38870f59aab6e86f797a3db0ff7118f4713014e48fcdfea6328533474c3e0b60"
+  },
+  {
+    "path": "sprites/27.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/27.gif",
+    "bytes": 19756,
+    "sha256": "2935420131dc43ae472e56d3f921d6285fbb1099cd532ef8415b06430e5b928f"
+  },
+  {
+    "path": "frames/28.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/28.png",
+    "bytes": 12650,
+    "sha256": "e3d101f0349a2da3f37e4b6e14ff4ca0f188cbb3667abbac882326bde9357bc6"
+  },
+  {
+    "path": "sprites/28.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/28.gif",
+    "bytes": 49716,
+    "sha256": "9cdcc623794531f1ae787f3bf8a4d2f63d82e4149eaa737479086c5ed927a564"
+  },
+  {
+    "path": "sprites/shiny-28.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/28.gif",
+    "bytes": 47156,
+    "sha256": "5b9b3084bac8942f9d28e5e0536c1ac63e7ca1a72a184460fa7bfa8561379486"
+  },
+  {
+    "path": "icons/23.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/23.png",
+    "bytes": 346,
+    "sha256": "8fbe1ca6d640941135498c651bdad9b79a851b904d675c7ccdd8ea06a4f5daca"
+  },
+  {
+    "path": "sprites/23.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/23.gif",
+    "bytes": 23091,
+    "sha256": "0c226451bb1bbf203d09558b721d44c2887c1106d2addf618cec429959c21d6d"
+  },
+  {
+    "path": "frames/shiny-28.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/28.png",
+    "bytes": 12480,
+    "sha256": "4dc1e59989edde0e84bb53bf41c10bf112d46e4574b368561928b1c83303b2c3"
+  },
+  {
+    "path": "frames/23.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/23.png",
+    "bytes": 6134,
+    "sha256": "237d1bfa8c3c26ca8cfc5260bce82a9e0e2d94377e8a1b8ef58751939a8dc097"
+  },
+  {
+    "path": "icons/24.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/24.png",
+    "bytes": 460,
+    "sha256": "e1e6013ecbc9f958b49207e41f317a91d6015e1b5f914a0484505b6225d87644"
+  },
+  {
+    "path": "sprites/24.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/24.gif",
+    "bytes": 87543,
+    "sha256": "02744652859882c8d8a8147a01d1ae9ff3f0907f3ac04068a5103692e6ab1e48"
+  },
+  {
+    "path": "frames/24.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/24.png",
+    "bytes": 16420,
+    "sha256": "294939906486cd04de74636e12d385a3127bd42ef2ce06b82dffb3b1f77e23f0"
+  },
+  {
+    "path": "frames/shiny-24.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/24.png",
+    "bytes": 17140,
+    "sha256": "c7f76093ac630b14c6858b22dc867727d8a5f8cd093c0855036c9a8edf5eec0b"
+  },
+  {
+    "path": "sprites/shiny-24.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/24.gif",
+    "bytes": 91558,
+    "sha256": "c3f8ced03b975f49edeafc142e0dc79118f1032b5418dd7f477ed1ce6d43cf7d"
+  },
+  {
+    "path": "frames/39.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/39.png",
+    "bytes": 6716,
+    "sha256": "ca603b202628c4323bea6315d699e6b181400cd9ba197558e5f45ea47eaf7b74"
+  },
+  {
+    "path": "icons/39.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/39.png",
+    "bytes": 311,
+    "sha256": "8fd42ea797ca4e17b15f454e26f81bcc1d7deb9601f0a563459117b7465ff57f"
+  },
+  {
+    "path": "sprites/39.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/39.gif",
+    "bytes": 26929,
+    "sha256": "fd529d29d75a0cc25508a1729feb0426661eb5677c231dcf77df15e9262d7401"
+  },
+  {
+    "path": "frames/40.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/40.png",
+    "bytes": 13157,
+    "sha256": "b552aae391d79a807cab4f8242afced51435a75acb388f4f05f536710198436b"
+  },
+  {
+    "path": "icons/40.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/40.png",
+    "bytes": 826,
+    "sha256": "3dadb98b81c0fd6b4e09743d321e26b92629fbd206b34fc97c971de458b1f179"
+  },
+  {
+    "path": "sprites/40.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/40.gif",
+    "bytes": 57039,
+    "sha256": "f0d897627e54f0ae649179a53a82b46bd177713cb98c7d85eab1d061eeba4b3c"
+  },
+  {
+    "path": "icons/46.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/46.png",
+    "bytes": 374,
+    "sha256": "551906c68bd2b43a176842722cc0e52502121101199156712f37500bd2514d4d"
+  },
+  {
+    "path": "frames/shiny-40.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/40.png",
+    "bytes": 11845,
+    "sha256": "dba611fc598208057d65a36856e86aefac86ae06867bf38561ac74b7440a4e5f"
+  },
+  {
+    "path": "sprites/shiny-40.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/40.gif",
+    "bytes": 51490,
+    "sha256": "919fa6d36e81e501f976939dd32aef62e2a31a88907405033887e651e80ba503"
+  },
+  {
+    "path": "frames/46.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/46.png",
+    "bytes": 5762,
+    "sha256": "a419f09d0db9dca05a3b559a07f7314e268fed263aa4f1ff9bf3a6eb86e58156"
+  },
+  {
+    "path": "sprites/46.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/46.gif",
+    "bytes": 21949,
+    "sha256": "cf2964499149d8abe1dc1f439b9c5f550f933f2d9fc583625b4c636031d0fa6b"
+  },
+  {
+    "path": "icons/47.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/47.png",
+    "bytes": 382,
+    "sha256": "5dde3a52b3dde0fcc7e37b8e22fef102aec67fee0ee3b76301ee558390432126"
+  },
+  {
+    "path": "frames/47.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/47.png",
+    "bytes": 9889,
+    "sha256": "6d3166781e1fb778cbb08eda3ca4347e47786e89a0e2b1d37d87d675c676d51e"
+  },
+  {
+    "path": "sprites/shiny-47.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/47.gif",
+    "bytes": 58170,
+    "sha256": "a38d797fb06d49f9672d2f479fe3f026681d7bef736ac128cecb40e6f582dcab"
+  },
+  {
+    "path": "sprites/47.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/47.gif",
+    "bytes": 55539,
+    "sha256": "7b015bd94e15c5fc159350cdb9dd89c0343f8a342985381d2fbd3c40958dc5b8"
+  },
+  {
+    "path": "icons/100.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/100.png",
+    "bytes": 226,
+    "sha256": "2f37f014fd76692459fb5cd4238b1c73d0371bb5aef848980f599a4384296dbb"
+  },
+  {
+    "path": "frames/shiny-47.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/47.png",
+    "bytes": 10352,
+    "sha256": "89fef9c434ac8e2f29a649c8ea9e9d5246bad1b57145541ddda7ff2f57a6ceae"
+  },
+  {
+    "path": "sprites/100.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/100.gif",
+    "bytes": 14487,
+    "sha256": "15f24756a7611a02d8de700eb72b8f9ff9456d3c74fa789b28dc3629ec4b35d7"
+  },
+  {
+    "path": "icons/101.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/101.png",
+    "bytes": 245,
+    "sha256": "29ff1039075bbfd6009e2e96974ca94bbd95407905e36d9adcf6aa18c78add44"
+  },
+  {
+    "path": "sprites/101.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/101.gif",
+    "bytes": 57875,
+    "sha256": "1382623e8ee270f7b6c14c712b69fbc8795ee2807b35fe6a10bcd9222d7cce56"
+  },
+  {
+    "path": "sprites/shiny-101.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/101.gif",
+    "bytes": 54062,
+    "sha256": "b077eea8fad753aec2e1a8c337ba739305d0e19733bb4a3798a54543d5cfcce3"
+  },
+  {
+    "path": "frames/77.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/77.png",
+    "bytes": 12809,
+    "sha256": "b7e3993dd0d718394e3d73e15bd2999e36f658836a42ec588ee5d99ac3fd1521"
+  },
+  {
+    "path": "icons/77.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/77.png",
+    "bytes": 426,
+    "sha256": "b442df3cc68d0f23a8713e0db602fc9601f11ebf3bad81ec66a32d281cb3fe4c"
+  },
+  {
+    "path": "sprites/77.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/77.gif",
+    "bytes": 227798,
+    "sha256": "c17e471c2460a3ed8199804077f71838e0ce88e127debea8f7b98e1ecd82749e"
+  },
+  {
+    "path": "frames/78.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/78.png",
+    "bytes": 22715,
+    "sha256": "037e2f9de6f148c3a1202e39fad0f5f3ad347b7d67e7ee3c533065c677c6469f"
+  },
+  {
+    "path": "icons/78.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/78.png",
+    "bytes": 618,
+    "sha256": "c5f013b9072e1d05996ab19eaf13210d959c988390f6a414b9ed2a5bdce87018"
+  },
+  {
+    "path": "sprites/78.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/78.gif",
+    "bytes": 110065,
+    "sha256": "c9d4a66e337e94735991b85a18f693533a1d001a5d978834c8a25b9bc68684a2"
+  },
+  {
+    "path": "frames/shiny-78.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/78.png",
+    "bytes": 21994,
+    "sha256": "bcd04c2744261d36aadb30e96437105232f365e6858e9482caf5ba7888906631"
+  },
+  {
+    "path": "icons/58.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/58.png",
+    "bytes": 366,
+    "sha256": "1d14fe0eba1eee042088055adab744fc8f5eeaca5610d6b7d2141de08799e5c1"
+  },
+  {
+    "path": "sprites/shiny-78.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/78.gif",
+    "bytes": 110065,
+    "sha256": "db82f294197f16238c247d1340f21efcbfb4566180e9bae37886a579eb8f56d9"
+  },
+  {
+    "path": "frames/58.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/58.png",
+    "bytes": 8248,
+    "sha256": "4c1bd658f0ab984a908d0d1817ba8110fd9932ba20fd17415f0f3acabbe8b53c"
+  },
+  {
+    "path": "sprites/58.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/58.gif",
+    "bytes": 18202,
+    "sha256": "aab86cd5b13660abb7b8efdb87bcfcaaa9947f5244ba4196ec1c2e077370afaa"
+  },
+  {
+    "path": "icons/59.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/59.png",
+    "bytes": 652,
+    "sha256": "8b09323f34d452a587fa086ef252720790e09669551ae109e01ae58b44fd47a1"
+  },
+  {
+    "path": "frames/59.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/59.png",
+    "bytes": 20158,
+    "sha256": "29b7f3972f0e8e55e16e426a7e1fe3fda5067032d27fcd58c1ea3b602c7031e5"
+  },
+  {
+    "path": "sprites/59.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/59.gif",
+    "bytes": 81789,
+    "sha256": "e5b9e9b5ad9effc49a301796685ad2de4df35ab6935edda54a881047d8bf70fd"
+  },
+  {
+    "path": "sprites/shiny-59.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/59.gif",
+    "bytes": 70856,
+    "sha256": "c879323f447dd15714275c2cc7b950072e3366093d13f6348382ced7db165430"
+  },
+  {
+    "path": "icons/81.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/81.png",
+    "bytes": 297,
+    "sha256": "75c62a536ee6737de484d3ffc8ab7e8ac65d04fec268a0279e93e619a919ace8"
+  },
+  {
+    "path": "sprites/81.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/81.gif",
+    "bytes": 13119,
+    "sha256": "e49be998dd0333b4e1b2a5f2674bfeb25e83c93cbafeda9218fb19ec0e961798"
+  },
+  {
+    "path": "frames/shiny-59.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/59.png",
+    "bytes": 17831,
+    "sha256": "dff7b61b4a341dcd0dc55ca3aa643930c1428cf6795ede39dfbd684a7ac75130"
+  },
+  {
+    "path": "frames/81.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/81.png",
+    "bytes": 5974,
+    "sha256": "afaad6cab5ae98f898c09b533e34f5e2ad002eebc76ba43c18559bdf53c12202"
+  },
+  {
+    "path": "icons/82.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/82.png",
+    "bytes": 1184,
+    "sha256": "53a06eb0bb353c6a2471bf32ecdaf9af05db17a0492ad4d0029cda681f098d4a"
+  },
+  {
+    "path": "sprites/82.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/82.gif",
+    "bytes": 74555,
+    "sha256": "557bbb83c65ed9d6fc240e006c20ed7e1e12575cfcb5958a4b4510508b376c8d"
+  },
+  {
+    "path": "frames/82.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/82.png",
+    "bytes": 20531,
+    "sha256": "ab8e02eadb29ca6e624305e6e50a17431f257382cbf3cbbfe29bead25d1372c0"
+  },
+  {
+    "path": "sprites/shiny-82.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/82.gif",
+    "bytes": 74187,
+    "sha256": "4441c638a3d0e4123f37c08dd63552b4c8869faeff44190c1b110dd6a64f48cb"
+  },
+  {
+    "path": "frames/shiny-82.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/82.png",
+    "bytes": 18874,
+    "sha256": "c03992ed4c82e450b4a4d932dd8c72bf716e0b3ede70ad270057044d37216b6f"
+  },
+  {
+    "path": "frames/79.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/79.png",
+    "bytes": 7013,
+    "sha256": "8c8eeab306f05567a20760e57ab45838e23e474d01aa66a92c5f7d1eea856995"
+  },
+  {
+    "path": "sprites/79.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/79.gif",
+    "bytes": 28409,
+    "sha256": "fc54c644e7eb0e85e2d39a61122f5aedd9fe13601bfcc695b3ca534415fa8d53"
+  },
+  {
+    "path": "icons/79.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/79.png",
+    "bytes": 317,
+    "sha256": "75b8b1611a12bde63375d7fa1147f20cbf5e239412ca661f116bb4cce728cf3d"
+  },
+  {
+    "path": "frames/80.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/80.png",
+    "bytes": 16834,
+    "sha256": "1bb01cf40d57ff0ef4faa0295e3037f5d904298bf20e70a08d0baeafcc5c332b"
+  },
+  {
+    "path": "icons/80.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/80.png",
+    "bytes": 1207,
+    "sha256": "502b62a1c6020840ac480f53e264b3c0ddcb5a5a01d13433f78f1119f3a9f0cf"
+  },
+  {
+    "path": "sprites/80.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/80.gif",
+    "bytes": 85979,
+    "sha256": "fb8ce2c3985a31570b0c8b33d657a0ca2859367126416c9c1c3c227cc21821fd"
+  },
+  {
+    "path": "frames/shiny-80.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/80.png",
+    "bytes": 16610,
+    "sha256": "1738e60821ba1ed678101ac399e05690314a588f7c9361854d62b6aa28d19180"
+  },
+  {
+    "path": "icons/95.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/95.png",
+    "bytes": 545,
+    "sha256": "1f8bf36adc107e0f60bd6e9c8c5ed0e2f1b5d385de6bbb45e4e772386ab763d3"
+  },
+  {
+    "path": "sprites/shiny-80.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/80.gif",
+    "bytes": 80877,
+    "sha256": "dfad2ab6eaa00245113adbdf89e81f76feb7ee37ca0494c496edbe4b916aa609"
+  },
+  {
+    "path": "frames/95.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/95.png",
+    "bytes": 20332,
+    "sha256": "469f093fbf40b1ca2778b36896a771c7265fffd27b25e44119195f05cb618c02"
+  },
+  {
+    "path": "sprites/95.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/95.gif",
+    "bytes": 105151,
+    "sha256": "01de6af46d3fc3275e343d78e927f7cf530bd6f6a01944e47125de49a2c79ab1"
+  },
+  {
+    "path": "sprites/shiny-95.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/95.gif",
+    "bytes": 105525,
+    "sha256": "4075766dc7ea313098e31c7b6341693170a3bf6c73e3139e4f9819ef778b017b"
+  },
+  {
+    "path": "icons/123.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/123.png",
+    "bytes": 1069,
+    "sha256": "1a22434a5beb711ee1f2c6f02414c086e582ec60e78999e4612d4bcc0c3e4ef2"
+  },
+  {
+    "path": "frames/shiny-95.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/95.png",
+    "bytes": 22985,
+    "sha256": "cceb8ac0705b1af3820febd8f72bb8a69479a2988983efed4ef58d53f7b44e44"
+  },
+  {
+    "path": "sprites/123.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/123.gif",
+    "bytes": 74168,
+    "sha256": "937598ed72ccc9864677a3caa9835e0beed14ce1cf8b241b575ab95b8b7069ad"
+  },
+  {
+    "path": "frames/123.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/123.png",
+    "bytes": 21090,
+    "sha256": "4fda52fddb137bb564d4e1d60b6a98393f7e8f3c3487438dd8e2bebca0bfa671"
+  },
+  {
+    "path": "frames/shiny-123.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/123.png",
+    "bytes": 21202,
+    "sha256": "782b03f921bb3a7c2c3de7fced9614c32ac3c956f1945ded98e8b4fc084bc5c6"
+  },
+  {
+    "path": "sprites/shiny-123.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/123.gif",
+    "bytes": 74920,
+    "sha256": "5ca65bbf002cdf22de7fe61a31871956ccedf848aa1ebe5a941f2263babe3765"
+  },
+  {
+    "path": "frames/106.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/106.png",
+    "bytes": 12876,
+    "sha256": "771b143e1419d5eaa621e8bbf7b2cb9ed76f7680e2f059cf5226faf84d2cf9e3"
+  },
+  {
+    "path": "sprites/106.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/106.gif",
+    "bytes": 26318,
+    "sha256": "28625898a956760456883329e17d86d8d2dd9fe92c774b40fb98e20966795d1b"
+  },
+  {
+    "path": "icons/106.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/106.png",
+    "bytes": 894,
+    "sha256": "426230a8d305b3778b308acd09790a955e12678cf8bff1eb01365dd3e7a5d3a0"
+  },
+  {
+    "path": "icons/107.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/107.png",
+    "bytes": 545,
+    "sha256": "dd419fc0f85cb759650fe6301489ee47ad8e79ca36c43b0754ed7989f182e670"
+  },
+  {
+    "path": "frames/shiny-106.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/106.png",
+    "bytes": 11857,
+    "sha256": "52d257eb727e9d9f72d7429d2a6a04ac1e0a9b47191add43c0b12d310319b18b"
+  },
+  {
+    "path": "sprites/shiny-106.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/106.gif",
+    "bytes": 23628,
+    "sha256": "d5b7eb89373c86a09eeac92b9e09a3e9935e91298c35b99842ff7b2e30a166c5"
+  },
+  {
+    "path": "frames/107.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/107.png",
+    "bytes": 11484,
+    "sha256": "0cdfa6543fadb810b954d86cf3b168eac2c019bc126bca9a62de4eeb6fdd660d"
+  },
+  {
+    "path": "sprites/107.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/107.gif",
+    "bytes": 17020,
+    "sha256": "0682a7c5fcb5e73790a67658cbf18c66f83aad6b74d71c6362e7afeed569c8ac"
+  },
+  {
+    "path": "sprites/shiny-107.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/107.gif",
+    "bytes": 15975,
+    "sha256": "aa0220b7f94877a11852fae09add5930467b44c2609b631f6018291eeadf5bb4"
+  },
+  {
+    "path": "icons/124.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/124.png",
+    "bytes": 625,
+    "sha256": "75ed8404422f05e22ba959f7889ea0934eb9606c42c5bc9138df3544af64c107"
+  },
+  {
+    "path": "frames/shiny-107.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/107.png",
+    "bytes": 10830,
+    "sha256": "45312f172e34412585e25dd1c200f7483d92b82e3ebf49671ee80fc8f60c7302"
+  },
+  {
+    "path": "sprites/124.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/124.gif",
+    "bytes": 73402,
+    "sha256": "fea59443487d26db67eff217a88f57813c00f698fcd8f9b2f81d1dd4040f8b44"
+  },
+  {
+    "path": "frames/124.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/124.png",
+    "bytes": 15023,
+    "sha256": "2a7dcaf7c6597f0bb475368f04c117ce95e5cc014fc6ebf439a9de4c4d631f01"
+  },
+  {
+    "path": "frames/shiny-124.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/124.png",
+    "bytes": 14785,
+    "sha256": "19d2589e23c5370d7c5007a469db180cc9b243aad633a0b44dc4c6e2334efca3"
+  },
+  {
+    "path": "sprites/shiny-124.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/124.gif",
+    "bytes": 66709,
+    "sha256": "24ae03c410359df66e54bd2bb97dea0c2f5316eecdb6e4322706742d8fc8b4aa"
+  },
+  {
+    "path": "frames/125.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/125.png",
+    "bytes": 20688,
+    "sha256": "768d0866d382f8c34f4b5f01074cbd0771b8042b14f02424bfeb055dbf00b4ca"
+  },
+  {
+    "path": "icons/125.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/125.png",
+    "bytes": 565,
+    "sha256": "34eab44bb3aa59d1744a12aca9ea5f56610b17dd6b130acb66209bc5e1bc20b2"
+  },
+  {
+    "path": "sprites/125.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/125.gif",
+    "bytes": 50983,
+    "sha256": "29823955c7e86596c2b08970fadbaa17c3fb9d9daba7bdcd4cc137a7e3ac38bc"
+  },
+  {
+    "path": "icons/126.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/126.png",
+    "bytes": 635,
+    "sha256": "9f4d2f5f65f4fbe3450312c5d4fb9dfb429b0b30613bfd93e94ef2f791139db0"
+  },
+  {
+    "path": "frames/shiny-125.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/125.png",
+    "bytes": 22421,
+    "sha256": "f0c1ca5cd3b994192c6f7365111577d8b2bf4168b6de7b469a311cdb6829e331"
+  },
+  {
+    "path": "sprites/shiny-125.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/125.gif",
+    "bytes": 53979,
+    "sha256": "da51e64028c035ae48e260c2e5e85cb1482017f256ff882e4bebb29214f435cf"
+  },
+  {
+    "path": "frames/126.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/126.png",
+    "bytes": 17621,
+    "sha256": "916865f4671662cfcd7f10b2abe4baf7f217dde40607cd08aaf0d7717a9df346"
+  },
+  {
+    "path": "sprites/shiny-126.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/126.gif",
+    "bytes": 68250,
+    "sha256": "5c01ae97e603632cf67c02b1fe9afe55ae6aec5ab0e71bc124f809f2cc9486b4"
+  },
+  {
+    "path": "sprites/126.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/126.gif",
+    "bytes": 64997,
+    "sha256": "5389ac1e875952f94d095ef966e98f30a6480e885e454c04be71cf210936b9ee"
+  },
+  {
+    "path": "frames/shiny-126.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/126.png",
+    "bytes": 15757,
+    "sha256": "1eae4470107593443b41450c5a1ec50c4cb22bb118a2509b30d62bc26103299e"
+  },
+  {
+    "path": "sprites/86.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/86.gif",
+    "bytes": 34110,
+    "sha256": "58d04c1ed4593fbfd96b5c0c6b708eadb083b65323125ab9d27ba02b2de890d4"
+  },
+  {
+    "path": "icons/86.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/86.png",
+    "bytes": 371,
+    "sha256": "5455e45e4dedaf88fd01631a3ffeaae9e158c9db3c7060e475960c553faef1ad"
+  },
+  {
+    "path": "frames/86.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/86.png",
+    "bytes": 8015,
+    "sha256": "c4c1f6f60c6652ed6d03933a163ab727bdd489fa60806ff1b3648895ad9f5a44"
+  },
+  {
+    "path": "icons/87.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/87.png",
+    "bytes": 540,
+    "sha256": "ae624646d12fbb3f40a9437881a09720828298776b6b60511ff94a758d9e9768"
+  },
+  {
+    "path": "sprites/87.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/87.gif",
+    "bytes": 46390,
+    "sha256": "89e6e65778c62e1f81d0e846bdf8c8128b1ee30980575e47ce9d9e257a9980f8"
+  },
+  {
+    "path": "frames/87.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/87.png",
+    "bytes": 14452,
+    "sha256": "2d5a087ec91e3182aa21c49bb343f081db43ecc03a146370a806f87dd9958b0d"
+  },
+  {
+    "path": "frames/shiny-87.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/87.png",
+    "bytes": 14474,
+    "sha256": "d2bc6f63787e97d8664a082cc774c6725dee97efb1285bf1eebff09467edfa76"
+  },
+  {
+    "path": "sprites/shiny-87.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/87.gif",
+    "bytes": 55446,
+    "sha256": "187c41b3b0e497c458cae5f2644e08bbb305ff68ba8be3a5eaca0ea2d55596e9"
+  },
+  {
+    "path": "icons/102.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/102.png",
+    "bytes": 354,
+    "sha256": "5f0ad1c11bf320d852d8a2f8e6b927e21840aa177b61c1eb10e4101081deb51d"
+  },
+  {
+    "path": "sprites/102.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/102.gif",
+    "bytes": 32600,
+    "sha256": "979d4225d8507a1d21f9735bcd1ab1319af12100def5de76e9068ea9e2cbfccd"
+  },
+  {
+    "path": "icons/103.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/103.png",
+    "bytes": 1115,
+    "sha256": "c2884f86b72c7d50fd25b0b007c0afc859e5ddceb4104687d5409492170ff6e8"
+  },
+  {
+    "path": "frames/103.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/103.png",
+    "bytes": 25638,
+    "sha256": "c8aab4079e2a4186c7422f47ea2af9191d642566c4c21ff11fada7028aa3f602"
+  },
+  {
+    "path": "sprites/shiny-103.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/103.gif",
+    "bytes": 71635,
+    "sha256": "747a9b473262b93c16025a50443fc965550cc28d1e89202e1ba7bc263bd44889"
+  },
+  {
+    "path": "sprites/103.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/103.gif",
+    "bytes": 72635,
+    "sha256": "f17d8626b06c227568c093db1eff390e7c0b91093f008fdfe3f37a2629f28ade"
+  },
+  {
+    "path": "icons/104.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/104.png",
+    "bytes": 321,
+    "sha256": "69ae54111ad0677324ff801eccbbf276ac64bc6c33cbdd6b6fed66a037741767"
+  },
+  {
+    "path": "frames/shiny-103.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/103.png",
+    "bytes": 28112,
+    "sha256": "74ab9d915fbbd0432c3b04517936381f2bad87a2cc706b327b94deebb951d2ab"
+  },
+  {
+    "path": "sprites/104.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/104.gif",
+    "bytes": 26459,
+    "sha256": "c99a07b69ed81ece9f5baea23d81295338411ee815dc294578f9834bbcc9ca22"
+  },
+  {
+    "path": "frames/104.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/104.png",
+    "bytes": 6913,
+    "sha256": "d4b2d4b87dcee5fa71b67743c182f0dc33c3bbdfcc5273f285e8ef3875f38115"
+  },
+  {
+    "path": "sprites/105.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/105.gif",
+    "bytes": 32200,
+    "sha256": "fda60e467981f85612ee68cf750bcd14732295611bfc1746663ed27b1f3da1d3"
+  },
+  {
+    "path": "icons/105.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/105.png",
+    "bytes": 814,
+    "sha256": "c31393ca7e1f4cc19dc9f6c2bf3e159a0bccbbef382b10b0147ec16b6b62fb7c"
+  },
+  {
+    "path": "frames/105.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/105.png",
+    "bytes": 8582,
+    "sha256": "f41d144a00028180f07e2a05ba5434cdf38ca04016c82f8e925a991babbf3f70"
+  },
+  {
+    "path": "frames/shiny-105.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/105.png",
+    "bytes": 9180,
+    "sha256": "f03b00321d2dcfe8ec168938fea183184f9e3e5b5a62567d0ea84712d2671c8c"
+  },
+  {
+    "path": "sprites/shiny-105.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/105.gif",
+    "bytes": 31257,
+    "sha256": "02dbbaf1e45728b724299a988e7ac5625b6e779332b7d8cfb2de0c38793c55fd"
+  },
+  {
+    "path": "icons/133.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/133.png",
+    "bytes": 327,
+    "sha256": "c9f60c40232d326c47306dec3c403ae3024ac6a0b93a06c417c47becf7278d23"
+  },
+  {
+    "path": "frames/133.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/133.png",
+    "bytes": 9049,
+    "sha256": "d714d58f09cb616fbee327952149523243eeb6b008ee3e1a35e49b79bd1e529b"
+  },
+  {
+    "path": "sprites/133.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/133.gif",
+    "bytes": 18944,
+    "sha256": "244c533a4d2d96fb89f35195cde1eec7eb06bd3b5f137fa116190cceaec05670"
+  },
+  {
+    "path": "icons/134.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/134.png",
+    "bytes": 874,
+    "sha256": "b8b372d4fbd7ec9eb565a164a62fe3934772ab654cd873c96134afe648647300"
+  },
+  {
+    "path": "sprites/shiny-133.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/133.gif",
+    "bytes": 19246,
+    "sha256": "ff1e2164d1f806e9e2102b614daf754bffcad0d100b4502a40940cc8841f077f"
+  },
+  {
+    "path": "frames/shiny-133.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/133.png",
+    "bytes": 9529,
+    "sha256": "950a0c441670e4fc44178c139591202ddf687a958ca0c8f3d46d3ad1b649b2f3"
+  },
+  {
+    "path": "frames/134.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/134.png",
+    "bytes": 18720,
+    "sha256": "a51023ea8fb1c8b8f39d13abc6ea5492cf97a31e0a476d44dfaad0b594f19d1b"
+  },
+  {
+    "path": "sprites/134.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/134.gif",
+    "bytes": 61128,
+    "sha256": "06a71846732f687afc9ebe5bd33ecdbcd42dc19a46aac4dcb0b86631b4b95143"
+  },
+  {
+    "path": "sprites/shiny-134.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/134.gif",
+    "bytes": 62943,
+    "sha256": "86131e2c7c6816798d8e4c824c26d574e7485a5888136b49cce05240cb526e3a"
+  },
+  {
+    "path": "icons/135.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/135.png",
+    "bytes": 823,
+    "sha256": "021ab8306d60694bda44895d51c9fcc26eb100e691156cc70ed240a7622bbb9e"
+  },
+  {
+    "path": "sprites/135.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/135.gif",
+    "bytes": 36808,
+    "sha256": "dda1587367357d625fad6bc7ee32ceef5218c6e547b1de51b09287ae387ebf84"
+  },
+  {
+    "path": "frames/shiny-134.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/134.png",
+    "bytes": 18810,
+    "sha256": "980de676a50897c391f3b8d8d19ace578027078fe74c01e6d525c3e79a498d38"
+  },
+  {
+    "path": "frames/135.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/135.png",
+    "bytes": 10456,
+    "sha256": "b5b7e9777d44d1717740af056371dc1beb376f2de005baff57bd708479c0560c"
+  },
+  {
+    "path": "frames/shiny-135.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/135.png",
+    "bytes": 10401,
+    "sha256": "6b6a336c40b1befa0981ab91da91a1d13c5365199b13eb2a845d918239009b20"
+  },
+  {
+    "path": "sprites/shiny-135.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/135.gif",
+    "bytes": 35548,
+    "sha256": "5b71803d9289c026d00ef9778cdccacb4dc65213f0080ac17aaae8ae26a11e17"
+  },
+  {
+    "path": "frames/136.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/136.png",
+    "bytes": 12850,
+    "sha256": "488f4e57037f5a939acd480f7a01f6cec176b5fcf4a75da87f2e5e0e14cdaa97"
+  },
+  {
+    "path": "icons/136.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/136.png",
+    "bytes": 825,
+    "sha256": "9fd48f8c45cff500beca3aa300e0e53a691c420a71a605bfcefcf914d01f7ad8"
+  },
+  {
+    "path": "sprites/136.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/136.gif",
+    "bytes": 32906,
+    "sha256": "d0f2be9707bc84c06069fb2901ba9501556b664c7c7b32fa68ef6416d3c19e8c"
+  },
+  {
+    "path": "icons/147.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/147.png",
+    "bytes": 296,
+    "sha256": "84a2ba8e3fe9b11314e64ec3e61e3e2cd25e0897201c2fb2851efa6fe175e6c2"
+  },
+  {
+    "path": "frames/shiny-136.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/136.png",
+    "bytes": 12729,
+    "sha256": "5dacf1c287cbb12d3d48c5989508873fb67805042da7f213c6cab6b6986fee01"
+  },
+  {
+    "path": "sprites/shiny-136.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/136.gif",
+    "bytes": 32457,
+    "sha256": "22d7cf0cf703f2db9e503df7a18dbbfabff418282ce490ce0759297e4263c6a7"
+  },
+  {
+    "path": "frames/147.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/147.png",
+    "bytes": 8165,
+    "sha256": "5aedc420ae7025cf42a5fad5d9088044cd794e6a700ed435d17a3989b10f79f8"
+  },
+  {
+    "path": "sprites/147.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/147.gif",
+    "bytes": 27431,
+    "sha256": "c940e7b3ffb1d92e0511cf6454c54bf5abe13eeb7be66028650234c40df19114"
+  },
+  {
+    "path": "icons/148.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/148.png",
+    "bytes": 374,
+    "sha256": "1803e854e20db19fab7338d641bcfd9f8dab3fc797dd138813e53b90b3ac8122"
+  },
+  {
+    "path": "frames/148.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/148.png",
+    "bytes": 8994,
+    "sha256": "203afade2fd961e7cfb86adf1e749300501dc95eb3826a0dfae40c57392ae1cd"
+  },
+  {
+    "path": "sprites/148.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/148.gif",
+    "bytes": 43694,
+    "sha256": "45be9040dea62340b1bbee630843d30da6b2153770ee93dc405cd45177718c18"
+  },
+  {
+    "path": "icons/149.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/149.png",
+    "bytes": 627,
+    "sha256": "f8cce5906840f434c656f855a6a6afc3d26937675c7e5017289a2fa50f735512"
+  },
+  {
+    "path": "frames/149.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/149.png",
+    "bytes": 17826,
+    "sha256": "8e09a1032371b1b01adbe76f3dcf7ecfcdac8afd63f8853679f3c6b5709d4f5e"
+  },
+  {
+    "path": "icons/131.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/131.png",
+    "bytes": 567,
+    "sha256": "1db4175449a77c1b1c5e2eed162ac748314f5de8686f49b61505f19b095d5e94"
+  },
+  {
+    "path": "sprites/149.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/149.gif",
+    "bytes": 55212,
+    "sha256": "b0f471b3decdd5587dd81e7ef3a910e24532f03b01b12d69c78e92a90c945d99"
+  },
+  {
+    "path": "frames/131.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/131.png",
+    "bytes": 17269,
+    "sha256": "756cc1390bf56a04f035037e41d61ffe02a919ed4376579dcbed804a186e4d1d"
+  },
+  {
+    "path": "sprites/131.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/131.gif",
+    "bytes": 107593,
+    "sha256": "4bc5b1238b0e94d35c5c9dad21e45dd6a63fa6413e2a7f5c5871aed9fad84a13"
+  },
+  {
+    "path": "sprites/shiny-131.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/131.gif",
+    "bytes": 106769,
+    "sha256": "cfe90180a43bb7348e79c8885e990985056a81060903fce6544be8a5bc6dcbe1"
+  },
+  {
+    "path": "icons/143.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/143.png",
+    "bytes": 618,
+    "sha256": "6af2f47cc9cf6d29c971840aa4c4157c3ed666393de84fac16cb8bb3647b8008"
+  },
+  {
+    "path": "frames/shiny-131.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/131.png",
+    "bytes": 18117,
+    "sha256": "2dd3c53ab983acd491d4588ce6d406fc91f0e250f14e4333cdce818b02c60b7d"
+  },
+  {
+    "path": "sprites/143.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/143.gif",
+    "bytes": 113858,
+    "sha256": "4fda3c99113ae30482c3a16a00b3ae5854139a8590e4d2a49497053ba1b21f56"
+  },
+  {
+    "path": "frames/143.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/143.png",
+    "bytes": 14694,
+    "sha256": "b2413fc3cd2565b1963df432aa47ea86118f00ae1f0bdf6ff85dabbeced04f3c"
+  },
+  {
+    "path": "frames/shiny-143.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/143.png",
+    "bytes": 14867,
+    "sha256": "18dbe758cd706d57933de76954c02ebf6e06184045dc4356978c044f4f657659"
+  },
+  {
+    "path": "sprites/shiny-143.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/143.gif",
+    "bytes": 114146,
+    "sha256": "7f96f050291140c319a3a07cf867628ca2162bf5c6c621a256a76b67a155410f"
+  },
+  {
+    "path": "frames/142.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/142.png",
+    "bytes": 33454,
+    "sha256": "ca335a446bf55807ec6b9812afc2187b8d0c1c0ed7233c44da536bd57d615c38"
+  },
+  {
+    "path": "icons/142.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/142.png",
+    "bytes": 592,
+    "sha256": "b0329b738ef4b76e69f75bb91c4edc6657d062020944a8610e4ba8fb7023ead9"
+  },
+  {
+    "path": "sprites/142.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/142.gif",
+    "bytes": 57535,
+    "sha256": "046b7286dac5f1c9121ed09f6c2be7175c2be52bcd3a67a9b66978415370e8d7"
+  },
+  {
+    "path": "icons/113.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/113.png",
+    "bytes": 324,
+    "sha256": "7020b35f99a3ee14d03e41f2b6ca697a589b747d9fd6c8f2c0abf5ac0a76b6c5"
+  },
+  {
+    "path": "sprites/shiny-142.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/142.gif",
+    "bytes": 50730,
+    "sha256": "dba280383ab02b092d83906bcdb95e4c76ab43e89c65feefba3a56a9736a14f1"
+  },
+  {
+    "path": "frames/shiny-142.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/142.png",
+    "bytes": 31143,
+    "sha256": "76488156c0a14e326cc2aa81a27ea644ae4c9b1c1a1c45ae9f40a5141a671dbc"
+  },
+  {
+    "path": "frames/113.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/113.png",
+    "bytes": 9246,
+    "sha256": "d798c3fee66254c5a31a4cf17df30850087886b3127562bbd250ae0a3389d50d"
+  },
+  {
+    "path": "sprites/113.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/113.gif",
+    "bytes": 40295,
+    "sha256": "919ccfcbe4a7ce52877d49b9d25ab493d7bd583d7cc1c5804e189e73d771ddff"
+  },
+  {
+    "path": "sprites/shiny-113.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/113.gif",
+    "bytes": 47565,
+    "sha256": "7843320a850f740c23416d28e50eb26dab542aaaf6887157479ade814c600ca4"
+  },
+  {
+    "path": "icons/120.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/120.png",
+    "bytes": 297,
+    "sha256": "cc316a8aa26750aa5ea92bc4c61f9ce976eed451fbb565c8014d822bfdb0b670"
+  },
+  {
+    "path": "frames/shiny-113.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/113.png",
+    "bytes": 11068,
+    "sha256": "90a7d4b1ab4aa3c8b6186a0d5ee620d9d5b64ee5133222e9e2ba51f80dd96d20"
+  },
+  {
+    "path": "sprites/120.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/120.gif",
+    "bytes": 28519,
+    "sha256": "7c2c02dd9e3b87979c4efd8e638d59cfc0c8c801a2a2e73b8186ac72c0a0a2a1"
+  },
+  {
+    "path": "icons/121.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/121.png",
+    "bytes": 963,
+    "sha256": "be6766bed2ffefe0da26fd13125c4527f4146203afd8f22b34dac2f4be2de771"
+  },
+  {
+    "path": "sprites/shiny-121.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/121.gif",
+    "bytes": 54948,
+    "sha256": "6413b7c17ad625fa6001eed4c84d374573242b9c4a4ce75d3bf9b1e8a395f2c5"
+  },
+  {
+    "path": "sprites/121.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/121.gif",
+    "bytes": 55353,
+    "sha256": "165a463b1876a64c84d293686668101ee1405949c5c03d3583f8370e25377224"
+  },
+  {
+    "path": "frames/111.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/111.png",
+    "bytes": 11355,
+    "sha256": "67c6efa4d6e6f469d4c8fe5dca9679442c61db3046f828ee144342b76b4c8a77"
+  },
+  {
+    "path": "icons/111.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/111.png",
+    "bytes": 326,
+    "sha256": "dddebe1a460c023ef1a4d5b57f86c1c27f8e2860fe5a77fecfb04d9b01995963"
+  },
+  {
+    "path": "sprites/111.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/111.gif",
+    "bytes": 80122,
+    "sha256": "d7eb9a1a9b316cf1ce3ee728e66681d3a3072ed0240b4f38c878bcf98d8dc825"
+  },
+  {
+    "path": "frames/112.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/112.png",
+    "bytes": 22496,
+    "sha256": "bd8bd0ca587d6dc0a51c2eb35bfb4da6db68beef3811426b0fa143ed12821739"
+  },
+  {
+    "path": "icons/112.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/112.png",
+    "bytes": 691,
+    "sha256": "4b346c343373211c83e27780d993b863527da70d4fa497628cf6a233ca0b8db7"
+  },
+  {
+    "path": "sprites/112.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/112.gif",
+    "bytes": 77529,
+    "sha256": "00e3201780e0f682e732ca12b15cc572c5eed83d7fe1b1981a90c71870df425d"
+  },
+  {
+    "path": "icons/132.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/132.png",
+    "bytes": 227,
+    "sha256": "fb387c3529be4f392c17dacecbbc85b13b981b7dc905b696dc7267d1b2f98ac7"
+  },
+  {
+    "path": "frames/shiny-112.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/112.png",
+    "bytes": 22961,
+    "sha256": "f0c12b7d8dfecc8fc523deaf1e8f0140268b05ae9875d6f5fb49d38eae34be64"
+  },
+  {
+    "path": "sprites/shiny-112.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/112.gif",
+    "bytes": 80628,
+    "sha256": "77c65b5b70966b0948885d16e32c4c03ed342cdc57fbea81857dd9846ee7b25e"
+  },
+  {
+    "path": "frames/132.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/132.png",
+    "bytes": 4746,
+    "sha256": "8e63fdaaa8634fe56f246c125d467d4f2eea8732b62bff2094fb4d979143b4ec"
+  },
+  {
+    "path": "sprites/shiny-132.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/132.gif",
+    "bytes": 19135,
+    "sha256": "19496c73b5d3087da3515e381ecd987e5ca99aaaab4f62bba34cb5b0201922a2"
+  },
+  {
+    "path": "sprites/132.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/132.gif",
+    "bytes": 20470,
+    "sha256": "ed2c1b20cebbe2f5a099acb57d43a1f0e8f687c98333dd308c47cdce0e660e02"
+  },
+  {
+    "path": "icons/90.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/90.png",
+    "bytes": 335,
+    "sha256": "b0af8f9edc3069c18a8f98ad3d2ad576ac5e1d5191dbf6460c63f0764e92879d"
+  },
+  {
+    "path": "sprites/90.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/90.gif",
+    "bytes": 46837,
+    "sha256": "ce5277e42922c353860adda50cd150c3e9aa25cc26f71f3843ab472f0bcfe1f4"
+  },
+  {
+    "path": "frames/shiny-132.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/132.png",
+    "bytes": 3950,
+    "sha256": "4005dd41d8e7683b3dc8ebe324370f79e109eef03e27387e3b7efceba71fab47"
+  },
+  {
+    "path": "icons/91.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/91.png",
+    "bytes": 585,
+    "sha256": "30b10fc72dc61a995ae17d83623aec11dd50483e4ddd891ede913c737231f8c3"
+  },
+  {
+    "path": "sprites/91.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/91.gif",
+    "bytes": 87580,
+    "sha256": "ec4fe9ab9b99611a993bfdd7f5f0b6508e45946c35cea6109724c54111549f7c"
+  },
+  {
+    "path": "sprites/shiny-91.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/91.gif",
+    "bytes": 85875,
+    "sha256": "41d46fa3df13d9b0f271f5d50ebbbabb2324f5821dbeb07de1948ea2804a378a"
+  },
+  {
+    "path": "frames/128.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/128.png",
+    "bytes": 15913,
+    "sha256": "119c6e50756c9ee9276b3d17400294a367793cdaedc0f2b7e3953770c78a7e1e"
+  },
+  {
+    "path": "icons/128.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/128.png",
+    "bytes": 1096,
+    "sha256": "7e1604fa1477f83159533383fc4affc3d1c9ccad58bd17cd0cea48c656ada28b"
+  },
+  {
+    "path": "sprites/128.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/128.gif",
+    "bytes": 53056,
+    "sha256": "78356f4260934ed1d035bc4314bb3fc46750301da145de359ad73c6e582db0a1"
+  },
+  {
+    "path": "frames/shiny-128.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/128.png",
+    "bytes": 13382,
+    "sha256": "320d9af7344d526b129458ecf8bf436bb0d07c552073870ecdac8575b8c669cb"
+  },
+  {
+    "path": "icons/144.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/144.png",
+    "bytes": 770,
+    "sha256": "d74f07dbd530e96f9c5757c4a5d5724488599becfee938b799af52022551d205"
+  },
+  {
+    "path": "sprites/shiny-128.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/128.gif",
+    "bytes": 53901,
+    "sha256": "4e638e563cbeec36f397f414619a0d03af162bbfac6cde0f6a46e1a32de31a1b"
+  },
+  {
+    "path": "frames/144.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/144.png",
+    "bytes": 30695,
+    "sha256": "9e289683d257a40259b30cf9a7ce00e093efa1a21e3c26ac8169399f6e45064e"
+  },
+  {
+    "path": "sprites/shiny-144.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/144.gif",
+    "bytes": 62193,
+    "sha256": "0dae6877772dcf0b8afa8d5acaf75dbcee0b0a3d138ff431e958bd06c6033f64"
+  },
+  {
+    "path": "sprites/144.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/144.gif",
+    "bytes": 61266,
+    "sha256": "dbd4943e70b24d7897544868027a819b821ccd355106e97938d555377e8e4ea5"
+  },
+  {
+    "path": "frames/shiny-144.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/144.png",
+    "bytes": 40368,
+    "sha256": "4c7238d1e4e35eef4fb4709cdfec95fef1a01c02c3e2a4f6dfd0dd5ae9fea420"
+  },
+  {
+    "path": "sprites/145.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/145.gif",
+    "bytes": 47396,
+    "sha256": "838f92f99347fd88806dbe10eebbfbec8a79b1df1b2c043941eaf939cbbd8af9"
+  },
+  {
+    "path": "icons/145.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/145.png",
+    "bytes": 725,
+    "sha256": "a67ee66ca19c3ff67fe0043c59735b42e65beec1e687f44ed9823f1206e0a97b"
+  },
+  {
+    "path": "frames/145.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/145.png",
+    "bytes": 32627,
+    "sha256": "7316ebbbefdfee906e55426955830a5852ec3c3f25017ffa1d011f58c8942f7b"
+  },
+  {
+    "path": "frames/shiny-145.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/145.png",
+    "bytes": 27276,
+    "sha256": "063add7e1c01e25f0b8dd4eea8bbd8ecd5ca29aada856f772ca3d73e2219edaf"
+  },
+  {
+    "path": "sprites/shiny-145.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/145.gif",
+    "bytes": 46167,
+    "sha256": "1ee7a410e167fa7181923504a5b21ef1f34821f923d6b419b4fdda7daf7a2b7a"
+  },
+  {
+    "path": "frames/146.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/146.png",
+    "bytes": 37336,
+    "sha256": "d5625acd75f5cd9588249fdf765bbc74775b10dc0ae0a05c6e8919fff3359696"
+  },
+  {
+    "path": "icons/146.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/146.png",
+    "bytes": 653,
+    "sha256": "6bb652aaeb0706ccd03d84e1d2503e34c0d91bee795616055c1d69c874fc4f84"
+  },
+  {
+    "path": "sprites/146.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/146.gif",
+    "bytes": 86658,
+    "sha256": "d022330507f69f42b010a0289ed85519fe03b4577bfa59000a8269bbba645520"
+  },
+  {
+    "path": "icons/150.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/150.png",
+    "bytes": 587,
+    "sha256": "d91c6962b74dbcd802ea5f1000738b7b2e45dcf5844c095ab18efb61bc839267"
+  },
+  {
+    "path": "frames/shiny-146.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/146.png",
+    "bytes": 36883,
+    "sha256": "014e0f5ce018f442ad016426a8ec114f7a2b1b199734e83ac4d5efdfb8419c89"
+  },
+  {
+    "path": "sprites/shiny-146.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/146.gif",
+    "bytes": 86497,
+    "sha256": "973699e2bfc757a5c880f13fac7050c5a2fa2a8754ca70367af1ee3917126317"
+  },
+  {
+    "path": "frames/150.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/150.png",
+    "bytes": 22368,
+    "sha256": "25f29912f81fdb22630169b1d18d47e0f7228141269db9c2e77f9d103afcea2f"
+  },
+  {
+    "path": "sprites/shiny-150.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/150.gif",
+    "bytes": 123761,
+    "sha256": "9f9c599df627b66464603ec59d2679deb0c129ff8cd813b469d5787f572a18e1"
+  },
+  {
+    "path": "sprites/150.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/150.gif",
+    "bytes": 130293,
+    "sha256": "85552147a132b6d07068348c29c41d2763dea666ecd7b255877b2ab7c850d584"
+  },
+  {
+    "path": "frames/shiny-150.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/150.png",
+    "bytes": 20573,
+    "sha256": "967168c4738ec2f1e6f8df32a6406e51fdfa6cdcc2efca28ed57774fb5a59acd"
+  },
+  {
+    "path": "sprites/151.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/151.gif",
+    "bytes": 21912,
+    "sha256": "f34d1b244039ed62378c04c12c9d5f1640cd8388259573b05e4e7a09473dbbaf"
+  },
+  {
+    "path": "icons/151.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/icons/151.png",
+    "bytes": 333,
+    "sha256": "167f615afd36a63f4be4df127184d7262125b03c6a7c4971809afd5a30c5c00d"
+  },
+  {
+    "path": "frames/151.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front/151.png",
+    "bytes": 4318,
+    "sha256": "4cfb63f68a03cd89e695cf1e894e791c831962eca2076bcba79eb9c2322dee53"
+  },
+  {
+    "path": "sprites/shiny-151.gif",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/sd/shiny/151.gif",
+    "bytes": 22973,
+    "sha256": "ea8dc35b26fc693d122f6efafb573b400f36c9a0a5b92c019f47186590d339b5"
+  },
+  {
+    "path": "frames/shiny-151.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/anim/front-shiny/151.png",
+    "bytes": 4586,
+    "sha256": "233093a2a9f690aed15f00fbb1dd314bc3165b84f5a4d0c3e6e0c09a14ffda17"
+  },
+  {
+    "path": "types/fire.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/fire-g.png",
+    "bytes": 514,
+    "sha256": "7b4c55baaa63ef9d50548d5af107d8ca9a658dffce032e31d1646f95c4d22041"
+  },
+  {
+    "path": "types/normal.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/normal-g.png",
+    "bytes": 550,
+    "sha256": "8cef16a4ff478b6a5335292daf5cbf6fe956f39883584c1e36c64c3737faea81"
+  },
+  {
+    "path": "types/water.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/water-g.png",
+    "bytes": 417,
+    "sha256": "5a095854cd5d29dddcf0db5e4ca63158c8232474e86e788dfec7efacbde5f06b"
+  },
+  {
+    "path": "types/grass.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/grass-g.png",
+    "bytes": 576,
+    "sha256": "485f8cab5e8379b1b72f8655f8ed945df2cd2f17f3fe0271ce08db9a77409b25"
+  },
+  {
+    "path": "types/electric.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/electric-g.png",
+    "bytes": 381,
+    "sha256": "e8dce960e5c864caf90094e7888d39df521c020a5b09e853fa8ee8efe0c47c7b"
+  },
+  {
+    "path": "types/ice.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/ice-g.png",
+    "bytes": 404,
+    "sha256": "3581bb050a813ba0061943cfcd28c1937fe3178d819115f0b38d9ea1e9adb3b2"
+  },
+  {
+    "path": "types/poison.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/poison-g.png",
+    "bytes": 475,
+    "sha256": "2ed307cd98e63585abd3874d1b268becf800144a8013347bab6256df67690b18"
+  },
+  {
+    "path": "types/fighting.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/fighting-g.png",
+    "bytes": 400,
+    "sha256": "e6934c46539a29fef00c1d3d553bb229413d5022ac99308404cf9e5961c2136b"
+  },
+  {
+    "path": "types/ground.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/ground-g.png",
+    "bytes": 460,
+    "sha256": "3a91887d5e444ad643c9fffb38f4282f2ea29070ff4456468e2c227c418272bf"
+  },
+  {
+    "path": "types/flying.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/flying-g.png",
+    "bytes": 410,
+    "sha256": "6f3dc3fa24c7b2386ae69e17856fcd071a2f389fb2e960441d5d9c207de97903"
+  },
+  {
+    "path": "types/bug.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/bug-g.png",
+    "bytes": 500,
+    "sha256": "007c88565bd38f115477ba15105d83ef83ffccb177039c235f896ff1068a2100"
+  },
+  {
+    "path": "types/psychic.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/psychic-g.png",
+    "bytes": 383,
+    "sha256": "f5997f1a5c7a51c6af2e699e8b6c94f760a5f5d244589563c71b5d948b43f6b3"
+  },
+  {
+    "path": "types/ghost.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/ghost-g.png",
+    "bytes": 479,
+    "sha256": "2359bdb0a1c452aecc71d4a263c3035e876a7edba1b699fd5bdbf1d4a8f5e109"
+  },
+  {
+    "path": "types/dragon.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/dragon-g.png",
+    "bytes": 620,
+    "sha256": "104b546ffda8ede86dd8b65dcdbd33a660ac76e000f2e6c964152dbbe229729b"
+  },
+  {
+    "path": "types/rock.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/types/rock-g.png",
+    "bytes": 441,
+    "sha256": "aee440086fa354a241c54ff68fa420ad1a1c79e4d1babb82fc6569af7bff1cf7"
+  },
+  {
+    "path": "items/calcium.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/calcium.png",
+    "bytes": 288,
+    "sha256": "88db349a1101fcf9668827dfda16d43eaad04bf14bdafb8d8e3b11c211da9838"
+  },
+  {
+    "path": "items/hp-up.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/hp-up.png",
+    "bytes": 286,
+    "sha256": "9c0f6f1784ad96778e231c0d4c82dd9afbe664701e98a8e56ee59b3c897100da"
+  },
+  {
+    "path": "items/protein.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/protein.png",
+    "bytes": 288,
+    "sha256": "8b5244e3cf15bf3add34428c664032fa64e76b6dd8dcbe069f4672d10095854f"
+  },
+  {
+    "path": "items/carbos.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/carbos.png",
+    "bytes": 288,
+    "sha256": "6edb4ddeb884e50126dcc1147163cfa05c4091bed3d711c8ce70fd827ab87ac7"
+  },
+  {
+    "path": "items/zinc.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/zinc.png",
+    "bytes": 439,
+    "sha256": "cbabad88a9ac5f43c201945c9b1e0a5d6de58558bf5a31cea075f728bfd7fb55"
+  },
+  {
+    "path": "items/iron.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/iron.png",
+    "bytes": 304,
+    "sha256": "86a0fadb0316f53771442de82c36dbdc4c7e3dca923e1adb9f5a9b6b85e5d27c"
+  },
+  {
+    "path": "items/leftovers.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/leftovers.png",
+    "bytes": 264,
+    "sha256": "3ea874aaa17bbcb682131876763ca2f9a896644f7a2b5d9c51ea234f7aace558"
+  },
+  {
+    "path": "items/choice-band.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/choice-band.png",
+    "bytes": 347,
+    "sha256": "17840fdb9791faebc8254396b3b440fc81ca6398f9375701fea526685397d97d"
+  },
+  {
+    "path": "items/choice-specs.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/choice-specs.png",
+    "bytes": 264,
+    "sha256": "296e7f9beb6fca1e6f3f300fc595d855371da2afdda7b8aef4261d98986e9469"
+  },
+  {
+    "path": "items/choice-scarf.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/choice-scarf.png",
+    "bytes": 346,
+    "sha256": "b9e564e71ff8369fca2764f243168655a89ea82444ae1ec367da13405b0d11c7"
+  },
+  {
+    "path": "items/scope-lens.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/scope-lens.png",
+    "bytes": 361,
+    "sha256": "3fe0e87fbb7f1ee70578e7159dbc9fc62d7b7d364f764a20d99a17c1c6746d61"
+  },
+  {
+    "path": "items/life-orb.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/life-orb.png",
+    "bytes": 218,
+    "sha256": "6a9aed6825c88c6ecce1f96c7584c32dc82f18873e6550303d1ae620982c38ef"
+  },
+  {
+    "path": "items/quick-claw.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/quick-claw.png",
+    "bytes": 227,
+    "sha256": "7495a24979a42b3995d079b4e4931580000df56c9105a8380ca2b068b9d5192f"
+  },
+  {
+    "path": "items/shell-bell.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/shell-bell.png",
+    "bytes": 318,
+    "sha256": "82a838e863d883178d77fec09fa6825d4e4cf7144a40d931afb360e71bf76238"
+  },
+  {
+    "path": "items/focus-sash.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/focus-sash.png",
+    "bytes": 278,
+    "sha256": "8a8ab615483640419ca3ddf42c88944cb93b3d5d8286f07717dfbf4f1b562727"
+  },
+  {
+    "path": "items/rocky-helmet.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/rocky-helmet.png",
+    "bytes": 272,
+    "sha256": "6b1f4ed993bfa0d06e3c80b2c9732c621fc4ba69d166fd570e31783f059878e3"
+  },
+  {
+    "path": "items/flame-orb.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/flame-orb.png",
+    "bytes": 235,
+    "sha256": "cba2a8def19286e2bb91969f41672c33ea92c07035567997c01d38889764b62f"
+  },
+  {
+    "path": "items/assault-vest.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/assault-vest.png",
+    "bytes": 252,
+    "sha256": "1460feea1310ecffceb7d3b157f53a4b0f9f38e68db12de880412dc97b2ef3a2"
+  },
+  {
+    "path": "items/razor-fang.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/razor-fang.png",
+    "bytes": 236,
+    "sha256": "a0bf2707c33ed5e936dabe1fad83fb9c08758de0e5f1385c65c0c005af7e5b14"
+  },
+  {
+    "path": "items/poison-barb.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/poison-barb.png",
+    "bytes": 213,
+    "sha256": "01abc73e0c0d9016339cddcdf780969339734a51508003f4c659c5a4e3b7fd46"
+  },
+  {
+    "path": "items/twisted-spoon.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/twisted-spoon.png",
+    "bytes": 223,
+    "sha256": "39c2ef9e5b055f44a43cd8fbbc4fe86658c65477c2c9b323f471b59def1930ea"
+  },
+  {
+    "path": "items/protector.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/protector.png",
+    "bytes": 267,
+    "sha256": "5064bd927ff40b27454bee9b6827d4918e005ba80f0c58a39a2c4624154b0f83"
+  },
+  {
+    "path": "items/eviolite.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/eviolite.png",
+    "bytes": 207,
+    "sha256": "d506d4001770a478cf1ca2b4d60d48dd80bf130ec58a785f8be4a3c7120594b0"
+  },
+  {
+    "path": "items/sitrus-berry.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/sitrus-berry.png",
+    "bytes": 274,
+    "sha256": "934d9dcfdc189fd01987f1e0356e079cf32d4d3aafac89ca3e77158c8f44c10e"
+  },
+  {
+    "path": "items/expert-belt.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/expert-belt.png",
+    "bytes": 262,
+    "sha256": "3811a302b525bce42baed337b6288a7c9687b0741d7ee1a543187c6d11bfcba1"
+  },
+  {
+    "path": "items/mental-herb.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/mental-herb.png",
+    "bytes": 247,
+    "sha256": "7b6aca24bfc6537348931accf7eb06d9e45a836a93758eeade5e8faf76573c06"
+  },
+  {
+    "path": "items/light-clay.png",
+    "url": "https://einoow.com/playables/kanto-tactics/pk/items/light-clay.png",
+    "bytes": 245,
+    "sha256": "54f33c82aa8f6a0f0f323929230ca9663a477092745b5e9e0c1ff1c8bbb247ec"
+  }
+]

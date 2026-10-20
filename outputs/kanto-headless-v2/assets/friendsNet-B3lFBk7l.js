@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-8BhlS34s.js";var t,n,r,i;function a(){return(a=e((()=>{t=`kt_friends`,n={snapshot:`fs`,presence:`fp`,invite:`inv`,inviteAck:`invr`,changed:`chg`,move:`move`},r={off:4430,auth:4431,full:4432},i=12e4})))()}export{a,r as i,i as n,n as r,t};

@@ -1,0 +1,1588 @@
+import { n as e } from "./rolldown-runtime-8BhlS34s.js";
+import { V as t, z as n } from "./store-XUMtg-co.js";
+import {
+  C as r,
+  D as i,
+  Gn as a,
+  Kn as o,
+  L as s,
+  M as c,
+  Nr as l,
+  Pr as u,
+  Qn as d,
+  S as f,
+  Y as p,
+  a as m,
+  f as h,
+  j as ee,
+  l as g,
+  li as _,
+  r as te,
+  s as v,
+  t as ne,
+  v as re,
+  y as ie,
+} from "./shop-B3uxLyVd.js";
+import { d as ae, l as y, p as oe, r as b } from "./roster-CpnLcVHu.js";
+import {
+  A as se,
+  Bt as x,
+  C as ce,
+  Dt as S,
+  E as le,
+  Ht as ue,
+  Rt as de,
+  _t as C,
+  an as fe,
+  cn as pe,
+  ct as me,
+  d as he,
+  it as ge,
+  jt as _e,
+  on as ve,
+  un as ye,
+  v as be,
+  vt as xe,
+  yt as Se,
+} from "./sim-DVnRY1Xk.js";
+import { n as Ce, t as we } from "./defineProperty-CWxpEQeK.js";
+import {
+  $ as Te,
+  A as Ee,
+  J as De,
+  P as Oe,
+  Q as ke,
+  X as w,
+  Y as Ae,
+  _t as je,
+  at as T,
+  ct as Me,
+  et as E,
+  it as Ne,
+  nt as Pe,
+  ot as Fe,
+  rt as Ie,
+  tt as Le,
+  u as Re,
+  ut as ze,
+  vt as Be,
+  xt as Ve,
+} from "./pvpNet-fyWy55om.js";
+import {
+  a as He,
+  c as Ue,
+  i as We,
+  l as Ge,
+  n as Ke,
+  o as qe,
+  r as Je,
+  s as Ye,
+  t as Xe,
+} from "./elite-CIHCskLi.js";
+import { r as Ze } from "./PvpOnline-B5rSvB4W.js";
+function Qe(e, t, n) {
+  let r = _(`${e}|seats`),
+    i = new Set(),
+    a = new Set(),
+    o = [];
+  t && o.push({ id: t, trainer: tt, cls: null, name: null, bot: !1 });
+  for (let t of n) {
+    let n = (l[t.fav] ?? []).filter((e) => !i.has(e.trainer)),
+      s = n.length ? n : D.filter((e) => !i.has(e.trainer)),
+      c = (s.length ? s : D)[Math.floor(r() * (s.length || D.length))];
+    i.add(c.trainer);
+    let u = $e.has(c.trainer) ? et.f : et.m,
+      d = u.filter((e) => !a.has(e)),
+      f = (d.length ? d : u)[Math.floor(r() * (d.length || u.length))];
+    (a.add(f),
+      o.push({
+        id: t.id,
+        trainer: c.trainer,
+        cls: c.who,
+        name: f,
+        bot: !0,
+        look: Ee(`${e}|${t.id}`, c.trainer, t.fav),
+      }));
+  }
+  return o;
+}
+var $e, et, tt, D;
+function nt() {
+  return (nt = e(() => {
+    (u(),
+      Oe(),
+      ($e = new Set([
+        `jrtrainerf-gen1`,
+        `channeler-gen1`,
+        `rocketgruntf`,
+        `lass-gen1`,
+      ])),
+      (et = {
+        m: [
+          `Rick`,
+          `Joey`,
+          `Ben`,
+          `Doug`,
+          `Calvin`,
+          `Sammy`,
+          `Marcos`,
+          `Leo`,
+          `Tony`,
+          `Hugo`,
+          `Iván`,
+          `Pablo`,
+          `Dani`,
+          `Eddie`,
+          `Nico`,
+          `Ramón`,
+        ],
+        f: [
+          `Janice`,
+          `Sally`,
+          `Robin`,
+          `Dana`,
+          `Lucía`,
+          `Marta`,
+          `Elena`,
+          `Nina`,
+          `Clara`,
+          `Irene`,
+        ],
+      }),
+      (tt = `red-gen1`),
+      (D = Object.values(l).flat()));
+  }))();
+}
+function rt(e) {
+  let t = k.indexOf(e),
+    n = (e) => k[Math.max(0, Math.min(k.length - 1, e))];
+  return [n(t - 1), n(t - 1), e, e, e, n(t + 1), n(t + 1)];
+}
+var it, at, O, k, A, ot, st, ct, lt;
+function j() {
+  return (j = e(() => {
+    ((it = {
+      levelPlan: `normal`,
+      reservePlan: `normal`,
+      rerollPlan: `normal`,
+      noise: 0.8,
+      novice: !1,
+      chaos: 0,
+      explore: !1,
+      favWeight: 2,
+      allInHp: 30,
+      itemsRandom: !1,
+    }),
+      (at = {
+        default: {
+          desc: `Entrenador: reserva 10/20/30, nivel por etapa, tira con parejas, objetos por encaje`,
+          cfg: {},
+        },
+        economy: {
+          desc: `Economía: guarda el tope del interés del PvP (40 de oro: +4) desde la 2-3, un nivel por detrás hasta la 4-1; con poca vida gasta`,
+          cfg: { reservePlan: `econ`, levelPlan: `slow` },
+        },
+        reroll: {
+          desc: `Tiradas: nivel ≤5 hasta la 3-4 (≤6 hasta la 4-3), tira por copias de coste 1-2 buscando 3★ (colocación del Élite, RULES 28)`,
+          cfg: {
+            levelPlan: `reroll`,
+            rerollPlan: `hyper`,
+            costBias: [1.5, 1, 0, -0.5, -0.5],
+            place: `smart`,
+          },
+        },
+        fastlevel: {
+          desc: `Nivel rápido: +1 nivel sobre el objetivo desde la 3-1, prioriza coste 4-5 y solo tira a nivel 8+`,
+          cfg: {
+            levelPlan: `fastlate`,
+            rerollPlan: `late`,
+            costBias: [-1, -0.5, 0.3, 1.2, 1.5],
+          },
+        },
+        novice: {
+          desc: `Novato: compra copias o lo más caro, nunca tira, XP solo con oro de sobra`,
+          cfg: { novice: !0 },
+        },
+        "novice-roll": {
+          desc: `Novato que gasta: con más de 30 de oro tira la tienda (hasta 10 veces)`,
+          cfg: { novice: !0, noviceRoll: 30 },
+        },
+        chaos: {
+          desc: `Novato con caos: 35 % de compras/ventas al azar`,
+          cfg: { novice: !0, chaos: 0.35 },
+        },
+        explorer: {
+          desc: `Explorador: plan de nivel y reserva al azar, sus tipos favoritos pesan mucho, más ruido`,
+          cfg: { explore: !0, noise: 1.5, favWeight: 4 },
+        },
+        ace: {
+          desc: `As: el plan del Entrenador jugado con precisión (poco ruido, a todo o nada con 50 PS) y colocación del Élite`,
+          cfg: { place: `smart` },
+        },
+        losestreak: {
+          desc: `Racha de derrotas: aguanta la etapa 2 con el campo flojo (solo parejas, sin XP ni tiradas) guardando el tope del interés, sube a 6 en la 3-1 y a 8 en la 4-1`,
+          cfg: {
+            reservePlan: `interest`,
+            hold: [10, 20, 99, 99],
+            holdHp: 40,
+            loseStreakHp: 40,
+            tankUntil: 26,
+            rerollPlan: `late`,
+            costBias: [-1, -0.5, 0.3, 1.2, 1.5],
+            levelCurve: [
+              [13, 3],
+              [26, 4],
+              [36, 6],
+              [99, 8],
+            ],
+          },
+        },
+        elite: {
+          desc: `Élite: mira la mesa (rival probable, líneas disputadas), se compromete con 1-2 tipos libres, carry en la esquina con escoltas, objetos al carry, interés con rachas`,
+          cfg: {
+            place: `smart`,
+            placeOpts: { fighterAim: !0 },
+            scout: !0,
+            commit: !0,
+            contestK: 2,
+            carry: !0,
+            reservePlan: `interest`,
+            hold: [10, 10, 20, 30],
+            streakSpend: 0.5,
+          },
+        },
+      }),
+      (O = {
+        novato: [`novice`, `novice-roll`],
+        aprendiz: [`chaos`, `explorer`],
+        entrenador: [`default`, `economy`, `fastlevel`],
+        as: [`ace`, `reroll`],
+        elite: [`elite`],
+      }),
+      (k = [`novato`, `aprendiz`, `entrenador`, `as`, `elite`]),
+      (A = (e) => k.find((t) => O[t].includes(e)) ?? `entrenador`),
+      (ot = {
+        novato: {},
+        aprendiz: {},
+        entrenador: { noise: 1.5 },
+        as: { noise: 0.2, allInHp: 50 },
+        elite: { noise: 0.2, allInHp: 50 },
+      }),
+      (st = (e) => {
+        let t = at[e];
+        if (!t) throw Error(`perfil de bot desconocido: ${e}`);
+        return { ...it, ...ot[A(e)], ...t.cfg };
+      }),
+      (ct = {
+        novato: [
+          `novato`,
+          `novato`,
+          `novato`,
+          `novato`,
+          `aprendiz`,
+          `aprendiz`,
+          `entrenador`,
+        ],
+        aprendiz: [
+          `novato`,
+          `novato`,
+          `aprendiz`,
+          `aprendiz`,
+          `entrenador`,
+          `entrenador`,
+          `as`,
+        ],
+        entrenador: [
+          `novato`,
+          `aprendiz`,
+          `aprendiz`,
+          `entrenador`,
+          `entrenador`,
+          `as`,
+          `elite`,
+        ],
+        as: [
+          `aprendiz`,
+          `entrenador`,
+          `entrenador`,
+          `as`,
+          `as`,
+          `elite`,
+          `elite`,
+        ],
+        elite: [`entrenador`, `as`, `as`, `elite`, `elite`, `elite`, `elite`],
+      }),
+      (lt = (e) => [...ct[e]]));
+  }))();
+}
+function M(e) {
+  let t = (e.rng = (e.rng + 1831565813) >>> 0);
+  return (
+    (t = Math.imul(t ^ (t >>> 15), t | 1)),
+    (t ^= t + Math.imul(t ^ (t >>> 7), t | 61)),
+    ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  );
+}
+function ut(e) {
+  var t;
+  let n = st(e.profile),
+    r = {
+      id: e.id,
+      profile: e.profile,
+      level: A(e.profile),
+      cfg: n,
+      fav: [],
+      rng: e.seed >>> 0,
+      exReserve: -1,
+      turn: Tt(-1),
+    };
+  if ((t = e.fav) != null && t.length) r.fav = [...e.fav];
+  else {
+    let e = B[Math.floor(M(r) * B.length)],
+      t = e;
+    for (; t === e;) t = B[Math.floor(M(r) * B.length)];
+    r.fav = M(r) < 0.4 ? [e] : [e, t];
+  }
+  return (
+    Et.keep > 0 &&
+      _(`${e.seed >>> 0}|eevee-normal`)() < Et.keep &&
+      (r.eeveeKeep = !0),
+    n.explore &&
+      ((r.cfg = {
+        ...n,
+        levelPlan: [`normal`, `slow`, `fast`, `reroll`][Math.floor(M(r) * 4)],
+      }),
+      (r.exReserve = [0, 10, 20, 30, 40, 50][Math.floor(M(r) * 6)])),
+    r
+  );
+}
+function N(e, t) {
+  return dt(e, t) + se(e, b[t.line], t.star) + ce(e, b[t.line], t.star);
+}
+function dt(e, t) {
+  var n;
+  let r = b[t.line];
+  if (r.branches && t.star < 2 && !V) {
+    let t = o(e);
+    if (t) return N(e, { line: t, star: 2 });
+  }
+  let i = r.role,
+    a = oe(r, t.star),
+    s = (a.power ?? 0) > 0,
+    c = i === `marksman` || i === `assassin` || i === `fighter`,
+    l = i === `tank` || i === `fighter` || !!oe(r, t.star).store,
+    { atk: u, spa: d } = he(r, t.star),
+    f =
+      (n = r.flex) != null && n.stars.includes(t.star)
+        ? (r.flex.axes ?? [`atk`, `spa`])
+        : null,
+    p = !!(f != null && f.includes(`spa`));
+  f && (f.includes(`atk`) && (u = 1), f.includes(`spa`) && (d = 1));
+  let m = !s && (a.kind === `heal` || a.kind === `shield` || !!a.seed),
+    h = !!a.empower || !!a.frenzy;
+  switch (e) {
+    case `choice-specs`:
+      return p
+        ? 3.1
+        : s
+          ? 0.4 + d * ((i === `mage` ? 3.2 : 2.6) - 0.4)
+          : m
+            ? 0.8 + 1.4 * d
+            : d > 0
+              ? 0.8
+              : 0.4;
+    case `quick-claw`:
+      return h ? 2.6 : s || i === `support` ? (i === `mage` ? 3 : 2.4) : 1.2;
+    case `choice-band`:
+      return c ? 2.2 + 0.9 * u : i === `tank` ? 1.6 : i === `mage` ? 0.7 : 1;
+    case `scope-lens`:
+      return i === `assassin`
+        ? 3.2
+        : i === `marksman`
+          ? 3
+          : i === `fighter`
+            ? 2.2
+            : 0.9;
+    case `choice-scarf`:
+      return i === `marksman` ? 3 : c ? 2.7 : 1.6;
+    case `shell-bell`:
+      return i === `fighter` || i === `assassin`
+        ? 2.9
+        : i === `marksman`
+          ? 2.3
+          : 1.4;
+    case `rocky-helmet`:
+      return i === `tank` ? 3.1 : l ? 2.3 : 0.4;
+    case `leftovers`:
+      return i === `tank` ? 2.9 : l ? 2.5 : 1.4;
+    case `life-orb`:
+      return s || c
+        ? i === `mage` || i === `assassin`
+          ? 3.1
+          : 2.8
+        : i === `tank`
+          ? 0.6
+          : 1.2;
+    case `assault-vest`:
+      return i === `tank` ? 2.8 : l ? 2.3 : 0.6;
+    case `flame-orb`:
+      return i === `tank` ? 3 : l ? 2.5 : 0.5;
+    case `razor-fang`:
+      return c ? 2.2 + 0.6 * u : i === `tank` ? 1.2 : 0.6;
+    case `twisted-spoon`:
+      return s ? 0.4 + d * 2.2 : 0.4;
+    case `poison-barb`:
+      return i === `marksman` ? 2.7 : c ? 2.4 : 1.2;
+    case `protector`:
+      return i === `tank` ? 2.8 : l ? 2.3 : 0.6;
+    case `eviolite`:
+      return t.star < r.stages.length ? (l ? 3 : 1.6) : 0.3;
+    case `sitrus-berry`:
+      return i === `tank` ? 2.6 : l ? 2.2 : 1.4;
+    case `expert-belt`:
+      return s || c ? 2.4 : 0.8;
+    case `light-clay`:
+      return m ? 3 : 0.5;
+    case `mental-herb`:
+      return i === `mage` || i === `marksman` || i === `assassin` ? 2.2 : 1.5;
+    case `hp-up`:
+    case `protein`:
+    case `calcium`:
+    case `carbos`:
+    case `iron`:
+    case `zinc`:
+      return 0.4 * N(S[e][e], t);
+    case `focus-sash`:
+      return i === `mage` || i === `marksman`
+        ? 2.6
+        : i === `assassin`
+          ? 2.5
+          : 1.6;
+    default:
+      return 1;
+  }
+}
+function P(e, t, n, r) {
+  let i = [],
+    a = [...t],
+    o = e.cfg.explore ? 2 : 1;
+  for (; i.length < n && a.length;) {
+    let t = 0,
+      n = -1 / 0,
+      s = Mt(i),
+      c = Ct(e),
+      l = c.map(
+        (e) =>
+          new Set(
+            i.filter((t) => b[t.line].traits.includes(e)).map((e) => e.line),
+          ).size,
+      );
+    for (let e = 0; e < a.length; e++) {
+      let u = a[e],
+        d = i.some((e) => e.line === u.line),
+        f = 0;
+      d ||
+        c.forEach((e, t) => {
+          let n = C[e].thresholds[C[e].thresholds.length - 1];
+          l[t] < n && b[u.line].traits.includes(e) && (f += o);
+        });
+      let p = f + jt(u, r) + (d ? 0 : Mt([...i, u]) - s) - (d ? 0.3 : 0);
+      p > n && ((n = p), (t = e));
+    }
+    i.push(a.splice(t, 1)[0]);
+  }
+  return i;
+}
+function ft(e) {
+  let t = [3, 2, 4, 1, 5, 0, 6],
+    n = [6, 0, 5, 1, 4, 2, 3],
+    r = new Set(),
+    i = new Map(),
+    a = (e) => b[e.line].role,
+    o = [...e].sort(
+      (e, t) => Ot[a(e)] - Ot[a(t)] || H(t) - H(e) || (e.id < t.id ? -1 : 1),
+    );
+  for (let e of o) {
+    let o = b[e.line].entry,
+      s = o === `stealth` || o === `rush`;
+    for (let o of s ? [4, 5, 6, 7] : kt[a(e)]) {
+      let a = (s ? n : t).map((e) => ge(e, o)).find((e) => !r.has(e));
+      if (a !== void 0) {
+        (r.add(a), i.set(e.id, a));
+        break;
+      }
+    }
+  }
+  return i;
+}
+function pt(e, t) {
+  let n = r(t);
+  if (e.cfg.levelCurve)
+    return Math.min(
+      9,
+      (e.cfg.levelCurve.find(([e]) => n <= e) ??
+        e.cfg.levelCurve[e.cfg.levelCurve.length - 1])[1],
+    );
+  let i = Nt(n);
+  switch (e.cfg.levelPlan) {
+    case `slow`:
+      return n < 41 ? Math.max(3, i - 1) : i;
+    case `fast`:
+      return Math.min(9, n < 21 ? i : i + 1);
+    case `fastlate`:
+      return Math.min(9, n < 31 ? i : i + 1);
+    case `reroll`:
+      return n < 35 ? Math.min(i, 5) : n < 44 ? Math.min(i, 6) : i;
+    default:
+      return i;
+  }
+}
+function mt(e, t, n, i = 0) {
+  let a = r(t);
+  if (a < 21) return 0;
+  if (e.exReserve >= 0) return e.exReserve;
+  if (e.cfg.reservePlan === `econ` && n >= 50)
+    return a < 23 ? 20 : v.interestStep * v.interestMax;
+  if (e.cfg.reservePlan === `none`) return 0;
+  if (e.cfg.reservePlan === `interest`) {
+    let t = e.cfg.hold ?? [10, 10, 20, 30];
+    if (n < (e.cfg.holdHp ?? 0)) return 0;
+    let r = Math.min(
+      v.interestStep * v.interestMax,
+      a < 23 ? t[0] : a < 31 ? t[1] : a < 41 ? t[2] : t[3],
+    );
+    return i >= 2 && e.cfg.streakSpend !== void 0
+      ? Math.floor((r * e.cfg.streakSpend) / 10) * 10
+      : r;
+  }
+  return a < 31 ? 10 : a < 41 ? 20 : 30;
+}
+function ht(e, t, n, r) {
+  let i = W(t, n.id),
+    a = 0;
+  (Ct(e).some((e) => n.traits.includes(e)) && (a += e.cfg.favWeight),
+    e.cfg.contestK && i === 0 && (a -= e.cfg.contestK * He(e.scout, n.id)),
+    i > 0 && (a += 3 + i));
+  let o = new Set(r.flatMap((e) => b[e.line].traits));
+  (r.some((e) => e.line === n.id) ||
+    (a += n.traits.filter((e) => o.has(e)).length * 1.2),
+    n.traits.includes(`Electric`) && !o.has(`Electric`) && (a += 1.2));
+  let [s, c] =
+    t.level <= 4
+      ? [1, 2]
+      : t.level <= 6
+        ? [2, 3]
+        : t.level === 7
+          ? [3, 4]
+          : [3, 5];
+  return (
+    n.cost >= s && n.cost <= c && (a += 1),
+    (a += n.cost * 0.3),
+    U(t).length < t.level && (a += 2.5),
+    e.cfg.costBias && (a += e.cfg.costBias[n.cost - 1] ?? 0),
+    e.cfg.rerollPlan === `hyper` && n.cost <= 2 && i > 0 && (a += 2),
+    e.cfg.rerollPlan === `hyper3` && n.cost === 3 && i > 0 && (a += 2),
+    e.cfg.noise && (a += M(e) * e.cfg.noise),
+    a
+  );
+}
+function F(e, t, n) {
+  if (e.bench.includes(null) || n) return { t: `buy`, slot: t };
+  if (Pt(e).length >= e.level) return null;
+  let r = new Set(Object.keys(e.board).map(Number));
+  for (let e of [7, 6, 5, 4])
+    for (let n of [3, 2, 4, 1, 5, 0, 6]) {
+      let i = ge(n, e);
+      if (!r.has(i)) return { t: `buy`, slot: t, cell: i };
+    }
+  return null;
+}
+function gt(e, t, n, r) {
+  let i = P(e, U(t), t.level, r),
+    a = J(e, t),
+    o = null,
+    s = -1 / 0,
+    c = U(t).length;
+  for (let r = 0; r < 5; r++) {
+    let l = t.shop[r];
+    if (!l) continue;
+    let u = b[l];
+    if (t.gold < u.cost) continue;
+    let d = t.bench.includes(null) ? G(t, l) >= 2 : !!m(t, r);
+    if ((c >= K(t) && !d) || (a && (W(t, l) === 0 || t.gold - u.cost < n)))
+      continue;
+    let f = F(t, r, d);
+    if (!f || e.turn.ban.includes(q(f))) continue;
+    let p = ht(e, t, u, i);
+    !(d || c < t.level ? t.gold >= u.cost : t.gold - u.cost >= n) ||
+      p < 2.2 ||
+      (p > s && ((s = p), (o = f)));
+  }
+  return o;
+}
+function _t(e, t) {
+  let n = U(t).length;
+  if (e.cfg.chaos && M(e) < e.cfg.chaos) {
+    let r = [...[, , , , ,].keys()]
+      .filter((e) => t.shop[e] && t.gold >= b[t.shop[e]].cost && n < K(t))
+      .map((e) => F(t, e, !1))
+      .filter((t) => !!t && !e.turn.ban.includes(q(t)));
+    if (r.length) return r[Math.floor(M(e) * r.length)];
+  }
+  let r = null,
+    i = -1;
+  for (let a = 0; a < 5; a++) {
+    let o = t.shop[a];
+    if (!o || t.gold < b[o].cost) continue;
+    let s = t.bench.includes(null) ? G(t, o) >= 2 : !!m(t, a);
+    if ((n >= K(t) && !s) || (W(t, o) === 0 && n >= t.level)) continue;
+    let c = F(t, a, s);
+    c &&
+      !e.turn.ban.includes(q(c)) &&
+      b[o].cost > i &&
+      ((i = b[o].cost), (r = c));
+  }
+  return r;
+}
+function I(e, t, n) {
+  let r = U(t);
+  if (r.length <= K(t) - 1) return null;
+  let i = new Set(P(e, r, t.level, n).map((e) => e.id)),
+    a = r
+      .filter((e) => !i.has(e.id))
+      .sort((e, n) => H(e) + W(t, e.line) * 0.4 - (H(n) + W(t, n.line) * 0.4));
+  for (let t of a) {
+    let n = { t: `sell`, id: t.id };
+    if (!e.turn.ban.includes(q(n))) return n;
+  }
+  return null;
+}
+function vt(e, t, n) {
+  let r = P(e, U(t), t.level, n),
+    i =
+      e.cfg.place === `smart`
+        ? Ue(r, e.cfg.scout ? (e.scout ?? null) : null, e.cfg.placeOpts)
+        : ft(r),
+    a = new Map(Object.entries(t.board).map(([e, t]) => [t, +e]));
+  for (let [n, r] of Object.entries(t.board)) {
+    if (i.has(r) || !t.units[r]) continue;
+    let n = t.bench.indexOf(null);
+    if ((n < 0 && (n = t.bench.findIndex((e) => !!e && i.has(e))), n < 0))
+      continue;
+    let a = { t: `toBench`, id: r, slot: n };
+    if (!e.turn.ban.includes(q(a))) return a;
+  }
+  for (let [t, n] of i) {
+    if (a.get(t) === n) continue;
+    let r = { t: `toBoard`, id: t, cell: n };
+    if (!e.turn.ban.includes(q(r))) return r;
+  }
+  return null;
+}
+function L(e, t, n) {
+  if (ue(e)) return 0;
+  if (x(e)) {
+    let r = n.filter(x),
+      i = (r) => r.reduce((r, i) => Math.max(r, L(S[e][i], t, n)), 0);
+    return r.length % 2
+      ? i(r)
+      : 0.7 * i([`hp-up`, `protein`, `calcium`, `carbos`]);
+  }
+  return (
+    t.reduce((t, n) => Math.max(t, N(e, n) * H(n)), 0) *
+    0.75 ** n.filter((t) => t === e).length
+  );
+}
+function yt(e, t, n) {
+  var r;
+  if (!((r = b[t.line]) != null && r.branches) || t.star >= 2 || V) return 1;
+  let i = o(e);
+  return i ? (i === a([], n).line ? It.match : It.other) : 1;
+}
+function bt(e, t, n) {
+  let r = (t) => e.turn.ban.includes(q(t)),
+    i = new Set(P(e, U(t), t.level, n).map((e) => e.id)),
+    a = U(t).filter((e) => i.has(e.id)),
+    o = t.items.findIndex(ue);
+  if (o >= 0) {
+    let e = 8 - _e(t.items.filter((e, t) => t !== o)),
+      n = null;
+    for (let r of U(t)) {
+      var s, c;
+      let t = ((s = r.items) == null ? void 0 : s.length) ?? 0;
+      i.has(r.id) ||
+        !t ||
+        t > e ||
+        ((!n || t > (((c = n.items) == null ? void 0 : c.length) ?? 0)) &&
+          (n = r));
+    }
+    let l = n ? { t: `magnet`, inv: o, id: n.id } : null;
+    if (l && !r(l)) return l;
+    let u = a
+      .filter((e) => {
+        var t;
+        return (((t = e.items) == null ? void 0 : t.length) ?? 0) <= 1;
+      })
+      .reduce((e, t) => (!e || H(t) > H(e) ? t : e), null);
+    if (u) {
+      let t = null,
+        n = Lt;
+      for (let r of a) {
+        let i = r.items ?? [];
+        if (r === u || i.length < 2 || i.length > e) continue;
+        let a = i.reduce((e, t) => e + N(t, r), 0) * H(r),
+          o = i.reduce((e, t) => e + N(t, u), 0) * H(u);
+        a > 0 && o / a > n && ((n = o / a), (t = r));
+      }
+      let i = t ? { t: `magnet`, inv: o, id: t.id } : null;
+      if (i && !r(i)) return i;
+    }
+  }
+  let l = t.items.map((e, t) => [e, t]).filter(([e]) => x(e));
+  if (l.length >= 2) {
+    let e = null,
+      n = -1 / 0;
+    for (let i = 0; i < l.length; i++)
+      for (let o = i + 1; o < l.length; o++) {
+        let s = L(S[l[i][0]][l[o][0]], a, t.items),
+          c = { t: `combineItems`, from: l[o][1], to: l[i][1] };
+        s > n && !r(c) && ((n = s), (e = c));
+      }
+    if (e) return e;
+  }
+  let u = t.items
+      .map((e, t) => ({ it: e, i: t }))
+      .filter((e) => !ue(e.it))
+      .sort((e, t) => At.indexOf(e.it) - At.indexOf(t.it)),
+    d = e.cfg.carry ? Je(a) : null,
+    f = e.cfg.carry ? Ge(a) : null;
+  for (let { it: e, i: t } of u) {
+    let n = null,
+      i = -1 / 0;
+    for (let o of a) {
+      let s = o.items ?? [],
+        c = s.find(x);
+      if (s.length >= 3 && !(x(e) && c)) continue;
+      let l,
+        u = x(e) && c ? S[c][e] : e,
+        p = d
+          ? o === d
+            ? Ye(u)
+              ? 2.2
+              : 1
+            : o === f
+              ? Ye(u)
+                ? 0.8
+                : 1.8
+              : 1
+          : 1;
+      ((l = x(e)
+        ? (c ? N(u, o) * H(o) : N(e, o) * H(o) * 0.9) * p
+        : d
+          ? N(e, o) * H(o) * (s.includes(e) ? 0.8 : 1) * p
+          : (N(e, o) * H(o) * (s.includes(e) ? 0.8 : 1)) /
+            (1 + s.length * 0.25)),
+        (l *= yt(u, o, a)),
+        l > i && !r({ t: `equip`, inv: t, id: o.id }) && ((i = l), (n = o)));
+    }
+    if (n) return { t: `equip`, inv: t, id: n.id };
+  }
+  return null;
+}
+function R(e, t, n, i, a) {
+  if (t.phase !== `planning`) return null;
+  if (((V = !!t.eeveeKeep), e.eeveeKeep && !t.eeveeKeep))
+    return { t: `eeveeKeep`, on: !0 };
+  if (e.turn.n !== t.round) {
+    e.turn = Tt(t.round);
+    let n = e.cfg;
+    ((e.scout =
+      a && (n.scout || n.commit || n.contestK)
+        ? Ke(typeof a == `function` ? a() : a)
+        : null),
+      n.commit &&
+        r(t.round) >= 21 &&
+        r(t.round) <= wt &&
+        (e.plan = We(t, e.fav, e.scout, e.plan, B)));
+  }
+  if (++e.turn.acts > 160) return null;
+  if (t.itemReward) {
+    let n = t.itemPrice ?? 0;
+    if (n > 0 && !(t.gold - n >= 20 || (r(t.round) >= 41 && t.gold >= n)))
+      return { t: `pickItem`, i: -1 };
+    let a = P(e, U(t), t.level, i);
+    return { t: `pickItem`, i: Ft(t.itemReward.map((e) => L(e, a, t.items))) };
+  }
+  if (t.coins && t.coins.left > 0) return { t: `collectCoins` };
+  let o = e.cfg,
+    s = t.round,
+    c = t.hp <= o.allInHp,
+    l = c ? 0 : mt(e, s, t.hp, t.streak),
+    u = e.turn;
+  for (let n = 0; n < 20; n++)
+    switch (u.stage) {
+      case `start`:
+        if (o.novice && o.chaos && M(e) < o.chaos && U(t).length > 1) {
+          u.stage = `npass`;
+          let n = new Set(P(e, U(t), t.level, i).map((e) => e.id)),
+            r = U(t).filter((e) => !n.has(e.id));
+          if (r.length)
+            return { t: `sell`, id: r[Math.floor(M(e) * r.length)].id };
+        }
+        u.stage = o.novice ? `npass` : `pass1`;
+        break;
+      case `npass`:
+      case `npass2`: {
+        let n = _t(e, t);
+        if (n) return n;
+        u.stage = u.stage === `npass` ? `nxp` : `nroll`;
+        break;
+      }
+      case `nxp`:
+        if (t.gold - 4 >= 10 && t.level < 9 && !u.ban.includes(`xp`))
+          return { t: `buyXp` };
+        u.stage = `nroll`;
+        break;
+      case `nroll`: {
+        let n = I(e, t, i);
+        if (n) return n;
+        let r = te(t);
+        if (
+          o.noviceRoll !== void 0 &&
+          u.nroll < 10 &&
+          t.gold - r >= o.noviceRoll
+        )
+          return (
+            u.nroll++,
+            (u.stage = `npass2`),
+            (u.ban = []),
+            { t: `reroll` }
+          );
+        u.stage = `arrange`;
+        break;
+      }
+      case `pass1`:
+      case `pass2`:
+      case `loopPass`: {
+        let n = gt(e, t, l, i);
+        if (n) return n;
+        u.stage = u.stage === `pass1` ? `xp` : `loop`;
+        break;
+      }
+      case `xp`:
+        if (J(e, t)) {
+          u.stage = `pass2`;
+          break;
+        }
+        if (
+          t.level < pt(e, s) &&
+          t.level < 9 &&
+          t.gold - 4 >= (o.strictHold ? l : l / 2) &&
+          !u.ban.includes(`xp`)
+        )
+          return { t: `buyXp` };
+        u.stage = `pass2`;
+        break;
+      case `loop`: {
+        let n = I(e, t, i);
+        if (n) return n;
+        let r = U(t),
+          a = (e) => v.odds[t.level][b[e.line].cost - 1] >= 15,
+          d =
+            r.some((e) => e.star === 1 && a(e) && G(t, e.line) >= 2) ||
+            r.some(
+              (e) =>
+                e.star === 2 &&
+                a(e) &&
+                r.filter((t) => y(t.line) === y(e.line) && t.star === 2)
+                  .length >= 2,
+            ),
+          f = c ? 15 : 8;
+        o.rerollPlan === `hyper`
+          ? ((d = r.some((e) => b[e.line].cost <= 2 && e.star < 3)), (f = 20))
+          : o.rerollPlan === `hyper3`
+            ? ((d =
+                t.level >= 7 &&
+                r.some((e) => b[e.line].cost === 3 && e.star < 3)),
+              (f = 20))
+            : o.rerollPlan === `late`
+              ? ((d = d && t.level >= 8), (f = c ? 15 : 12))
+              : o.rerollPlan === `never` && (d = !1);
+        let p = te(t);
+        if (
+          o.loseStreakHp !== void 0 &&
+          ((t.streak <= -2 && t.hp >= o.loseStreakHp) || J(e, t))
+        ) {
+          u.stage = `arrange`;
+          break;
+        }
+        if (d && t.gold - p >= l && u.rolls < f)
+          return (
+            u.rolls++,
+            (u.stage = `loopPass`),
+            (u.ban = []),
+            { t: `reroll` }
+          );
+        if (
+          ((o.levelPlan !== `reroll` && o.rerollPlan !== `hyper3`) ||
+            t.level < pt(e, s) ||
+            t.gold > 60) &&
+          t.gold - 4 >= l + 6 &&
+          t.level < 9 &&
+          !u.ban.includes(`xp`)
+        )
+          return ((u.stage = `loopPass`), { t: `buyXp` });
+        u.stage = `arrange`;
+        break;
+      }
+      case `arrange`: {
+        let n = I(e, t, i) ?? vt(e, t, i);
+        if (n) return n;
+        u.stage = `items`;
+        break;
+      }
+      case `items`: {
+        let n = bt(e, t, i);
+        if (n) return n;
+        u.stage = `done`;
+        break;
+      }
+      default:
+        return null;
+    }
+  return null;
+}
+function z(e, t, n) {
+  n && e.turn.ban.push(t.t === `buyXp` ? `xp` : q(t));
+}
+function xt(e, t, n, r) {
+  let i = n.flatMap((e, t) => (e.by ? [] : [t]));
+  if (!i.length) return -1;
+  if (e.cfg.chaos && M(e) < e.cfg.chaos) return i[Math.floor(M(e) * i.length)];
+  if (e.cfg.novice)
+    return i.reduce(
+      (e, t) => (b[n[t].line].cost > b[n[e].line].cost ? t : e),
+      i[0],
+    );
+  let a = P(e, U(t), t.level, r),
+    o = i[0],
+    s = -1 / 0;
+  for (let r of i) {
+    let i =
+      ht(e, t, b[n[r].line], a) +
+      0.5 * L(n[r].item, a.length ? a : U(t), t.items);
+    i > s && ((s = i), (o = r));
+  }
+  return o;
+}
+function St(e, t, n) {
+  if (e.cfg.novice) return Math.floor(M(e) * n.length);
+  let i = r(t.round) <= 31,
+    a = {
+      potion: t.hp <= 60 ? 4 : 1.5,
+      nugget: 3,
+      amulet: i ? 3 : 1.5,
+      candy: 3,
+      expshare: i ? 2.5 : 1,
+      item: 3.5,
+      vitamins: 3.5,
+      egg: 3.5,
+      moonstone: 3,
+      wonder: 2,
+      master: 2,
+      ash: t.hp <= 50 ? 3.5 : 2,
+      coincase: e.cfg.rerollPlan === `hyper` ? 5 : 1.5,
+      flute: 3,
+    };
+  return Ft(n.map((t) => a[t] + M(e) * 1.5));
+}
+var Ct,
+  wt,
+  Tt,
+  B,
+  Et,
+  V,
+  Dt,
+  H,
+  Ot,
+  kt,
+  At,
+  jt,
+  Mt,
+  Nt,
+  U,
+  W,
+  G,
+  K,
+  Pt,
+  q,
+  J,
+  Ft,
+  It,
+  Lt;
+function Y() {
+  return (Y = e(() => {
+    (ae(),
+      de(),
+      ye(),
+      xe(),
+      me(),
+      le(),
+      d(),
+      je(),
+      h(),
+      ne(),
+      j(),
+      qe(),
+      (Ct = (e) => e.plan ?? e.fav),
+      (wt = 41),
+      (Tt = (e) => ({
+        n: e,
+        stage: `start`,
+        rolls: 0,
+        acts: 0,
+        nroll: 0,
+        ban: [],
+      })),
+      (B = Object.keys(C).filter((e) => C[e].thresholds[0] > 1)),
+      (Et = { keep: 0 }),
+      (V = !1),
+      (Dt = [1, 1.9, 3.6]),
+      (H = (e) => (1 + 0.35 * (b[e.line].cost - 1)) * Dt[e.star - 1]),
+      (Ot = {
+        tank: 0,
+        fighter: 1,
+        special: 2,
+        assassin: 3,
+        support: 4,
+        mage: 5,
+        marksman: 6,
+      }),
+      (kt = {
+        tank: [4, 5, 6, 7],
+        fighter: [4, 5, 6, 7],
+        special: [4, 5, 6, 7],
+        assassin: [5, 4, 6, 7],
+        support: [6, 7, 5, 4],
+        mage: [7, 6, 5, 4],
+        marksman: [7, 6, 5, 4],
+      }),
+      (At =
+        `choice-specs.quick-claw.life-orb.choice-band.scope-lens.choice-scarf.shell-bell.rocky-helmet.leftovers.focus-sash.flame-orb.poison-barb.twisted-spoon.razor-fang.assault-vest.expert-belt.mental-herb.sitrus-berry.protector.eviolite.light-clay.calcium.protein.carbos.hp-up.iron.zinc`.split(
+          `.`,
+        )),
+      (jt = (e, t) => {
+        let n = H(e);
+        if (!t) return n;
+        let r = fe[t],
+          i = b[e.line].traits;
+        return (
+          n *
+          ((r.up && i.includes(r.up) ? 1 + pe : 1) *
+            (r.down && i.includes(r.down) ? 1 - ve : 1)) *
+          (r.hurt && !i.some((e) => r.hurt.includes(e)) ? 0.9 : 1)
+        );
+      }),
+      (Mt = (e) => {
+        let t = 0;
+        for (let [n, r] of be([...e])) {
+          t += Se(n, r) * 0.6;
+          let e = C[n].thresholds.find((e) => e > r);
+          e !== void 0 && e - r === 1 && (t += 0.1);
+        }
+        return t;
+      }),
+      (Nt = (e) =>
+        e < 21 ? 3 : e < 31 ? 5 : e < 41 ? 6 : e < 45 ? 7 : e < 54 ? 8 : 9),
+      (U = (e) => Object.values(e.units)),
+      (W = (e, t) =>
+        U(e)
+          .filter((e) => y(e.line) === y(t) && e.star < 3)
+          .reduce((e, t) => e + 3 ** (t.star - 1), 0)),
+      (G = (e, t) => U(e).filter((e) => e.line === t && e.star === 1).length),
+      (K = (e) => 9 + e.level),
+      (Pt = (e) => Object.values(e.board).filter((t) => !!e.units[t])),
+      (q = (e) => JSON.stringify(e)),
+      (J = (e, t) =>
+        e.cfg.tankUntil !== void 0 &&
+        r(t.round) >= 21 &&
+        r(t.round) <= e.cfg.tankUntil &&
+        t.hp >= (e.cfg.loseStreakHp ?? 0)),
+      (Ft = (e) => e.reduce((t, n, r) => (n > e[t] ? r : t), 0)),
+      (It = { match: 1.3, other: 0.75 }),
+      (Lt = 1.6));
+  }))();
+}
+function Rt(e, t) {
+  let n = _(`${e}|fav`),
+    r = [...B];
+  for (let e = r.length - 1; e > 0; e--) {
+    let t = Math.floor(n() * (e + 1));
+    [r[e], r[t]] = [r[t], r[e]];
+  }
+  return Array.from({ length: t }, (e, t) => {
+    let i = r[t % r.length];
+    if (n() < 0.4) return [i];
+    let a = i;
+    for (; a === i;) a = B[Math.floor(n() * B.length)];
+    return [i, a];
+  });
+}
+function zt(e, t) {
+  let n = Rt(e, t.length),
+    r = {};
+  return (
+    t.forEach((t, i) => {
+      r[t.id] = ut({
+        id: t.id,
+        profile: t.profile,
+        seed: Math.floor(_(`${e}|bot|${t.id}`)() * 2 ** 32),
+        fav: t.fav ?? n[i],
+      });
+    }),
+    r
+  );
+}
+function Bt() {
+  return (Bt = e(() => {
+    (h(), E(), qe(), Y());
+  }))();
+}
+var X, Vt, Z, Q, Ht, Ut, Wt;
+function $() {
+  return ($ = e(() => {
+    (h(),
+      E(),
+      nt(),
+      c(),
+      j(),
+      Y(),
+      Bt(),
+      qe(),
+      Be(),
+      Ce(),
+      (X = {
+        transitionMs: v.transitionSecs * 1e3,
+        botFirstMs: [1200, 3200],
+        botStepMs: [380, 1150],
+        botThinkP: 0.1,
+        botThinkMs: [900, 2200],
+        carouselBotMs: [1100, 2600],
+        oakMinMs: 2500,
+        safariTurnMs: 4500,
+        carouselDoneMs: 1400,
+        oakGiftMs: 1200,
+        combatLeadMs: 1500,
+        combatRate: 0.87,
+        combatTailMs: 4e3,
+        combatSafetyMs: 12e4,
+      }),
+      (Vt = (e) =>
+        X.combatLeadMs +
+        Ve(
+          e.reduce((e, t) => Math.max(e, t.simTime), 0),
+          X.combatRate,
+        ) *
+          1e3 +
+        X.combatTailMs),
+      (Z = (e, [t, n]) => t + e() * (n - t)),
+      (Q = (e, t) => e.m.t.players.find((e) => e.id === t)),
+      (Ht = (e) => e.kind === `oak` || e.kind === `safari`),
+      (Ut = class e {
+        constructor(e) {
+          (we(this, `st`, void 0), (this.st = e));
+        }
+        static create(t, n = {}) {
+          let r = n.me ?? `me`,
+            i = n.level ?? `entrenador`,
+            a = _(`${t}|local|profiles`),
+            o = n.ov ? lt(i) : rt(i),
+            s = o.map((e, t) => `b${t + 1}`),
+            c = zt(
+              t,
+              s.map((e, t) => ({
+                id: e,
+                profile: O[o[t]][Math.floor(a() * O[o[t]].length)],
+              })),
+            ),
+            l = Qe(
+              t,
+              r,
+              s.map((e) => ({ id: e, fav: c[e].fav[0] })),
+            ),
+            u = [r, ...s]
+              .map((e) => ({ id: e, k: a() }))
+              .sort((e, t) => e.k - t.k)
+              .map((e) => e.id),
+            d = {
+              v: 1,
+              seed: t,
+              me: r,
+              level: i,
+              seats: l,
+              m: Pe(t, u),
+              bots: c,
+              stage: `carousel`,
+              clock: 0,
+              startsAt: 0,
+              deadline: 0,
+              next: {},
+              k: {},
+              staged: null,
+              last: null,
+              hpBefore: Object.fromEntries(u.map((e) => [e, v.startHp])),
+              opts: { skipWhenAllReady: !!n.skipWhenAllReady },
+              ready: [],
+              ...(n.ov ? { ov: { ...n.ov } } : {}),
+            },
+            f = new e(d);
+          return (f.enterRound(0), f);
+        }
+        static restore(t) {
+          var n;
+          let r = t;
+          return !r ||
+            typeof r != `object` ||
+            r.v !== 1 ||
+            !((n = r.m) != null && (n = n.t) != null && n.players) ||
+            !r.bots ||
+            !Array.isArray(r.seats) ||
+            typeof r.me != `string` ||
+            !r.m.t.players.some((e) => e.id === r.me)
+            ? null
+            : (ee.boons || (r.m = { ...r.m, boons: {} }), new e(r));
+        }
+        get round() {
+          return f(this.st.m.t.n);
+        }
+        get meP() {
+          return Q(this.st, this.st.me);
+        }
+        get me() {
+          return this.meP.s;
+        }
+        get meAlive() {
+          return this.meP.place === null;
+        }
+        get over() {
+          return this.st.stage === `over`;
+        }
+        get myFight() {
+          var e;
+          return (
+            ((e = this.st.staged) == null ? void 0 : e.byPlayer[this.st.me]) ??
+            null
+          );
+        }
+        timeLeft() {
+          let e = this.st;
+          return e.stage !== `planning` && e.stage !== `carousel`
+            ? { left: 0, total: 0 }
+            : {
+                left: Math.max(0, e.deadline - Math.max(e.clock, e.startsAt)),
+                total: Math.max(1, e.deadline - e.startsAt),
+              };
+        }
+        turns() {
+          let e = this.st,
+            t = e.m.carousel;
+          return e.stage !== `carousel` || !(t != null && t.order)
+            ? null
+            : Fe(t.order, e.startsAt, De.safariBatch, X.safariTurnMs);
+        }
+        canPick() {
+          return (
+            this.st.stage === `carousel` &&
+            this.st.clock >= this.st.startsAt &&
+            w(this.st.m, this.st.me)
+          );
+        }
+        act(e) {
+          let t = this.st;
+          if (t.stage !== `planning` && t.stage !== `combat`)
+            return { s: this.me, ev: [], err: `phase` };
+          let n = Ae(t.m, t.me, e);
+          return ((t.m = n.m), n.r);
+        }
+        pickCarousel(e) {
+          if (!this.canPick()) return !1;
+          let t = Ne(this.st.m, this.st.me, e);
+          return !t.err && ((this.st.m = t.m), this.afterCarouselPick(), !0);
+        }
+        pickBoon(e) {
+          let t = this.st;
+          if (t.stage !== `planning` || !t.m.boons[t.me]) return !1;
+          let n = Ie(t.m, t.me, e);
+          return !n.err && ((t.m = n.m), !0);
+        }
+        humans() {
+          return g(this.st.m.t)
+            .filter((e) => !this.st.bots[e.id])
+            .map((e) => e.id);
+        }
+        allReady() {
+          let e = this.st.ready ?? [];
+          return this.humans().every((t) => e.includes(t));
+        }
+        ready(e = this.st.me) {
+          var t, n;
+          let r = this.st,
+            i = Q(r, e);
+          if (r.stage !== `planning` || !i || i.place !== null || r.bots[e])
+            return !1;
+          let a = r.ready ?? (r.ready = []);
+          return a.includes(e) && !((t = r.opts) != null && t.skipWhenAllReady)
+            ? !1
+            : (a.includes(e) || a.push(e),
+              (n = r.opts) != null &&
+                n.skipWhenAllReady &&
+                this.allReady() &&
+                this.startCombat(),
+              !0);
+        }
+        combatDone() {
+          return this.st.stage !== `combat` || !this.meAlive
+            ? !1
+            : (this.closeRound(), !0);
+        }
+        tick(e) {
+          let t = this.st;
+          if (t.stage === `over`) return !1;
+          t.clock += Math.max(0, e);
+          let n = !1;
+          return (
+            t.stage === `planning`
+              ? ((n = this.botsDue() || n),
+                t.clock >= t.deadline && (this.startCombat(), (n = !0)))
+              : t.stage === `carousel`
+                ? (this.round.kind === `oak` &&
+                    !t.m.gifts &&
+                    t.clock >= t.startsAt + X.oakGiftMs &&
+                    ((t.m = Te(t.m)), (n = !0)),
+                  (n = this.carouselDue() || n),
+                  (n = this.turnsDue() || n),
+                  t.clock >= t.deadline && (this.closeRound(), (n = !0)))
+                : t.stage === `combat` &&
+                  t.clock >= t.deadline &&
+                  (this.closeRound(), (n = !0)),
+            n
+          );
+        }
+        enterRound(e) {
+          let t = this.st;
+          if (
+            ((t.staged = null),
+            (t.next = {}),
+            (t.k = {}),
+            (t.ready = []),
+            Le(t.m))
+          ) {
+            t.stage = `over`;
+            return;
+          }
+          let n = this.round;
+          t.startsAt = t.clock + e;
+          let r = _(`${t.seed}|local|start|${t.m.t.n}`);
+          if (Ht(n)) {
+            ((t.stage = `carousel`),
+              (t.deadline = t.startsAt + re(t.m.t.n) * 1e3));
+            for (let e of g(t.m.t)) t.bots[e.id] && (t.next[e.id] = -1);
+            this.scheduleCarousel();
+          } else {
+            ((t.stage = `planning`),
+              (t.deadline = t.startsAt + re(t.m.t.n) * 1e3));
+            for (let [e, n] of Object.entries(t.m.boons)) {
+              let r = t.bots[e];
+              r && (t.m = Ie(t.m, e, St(r, Q(t, e).s, n.ids)).m);
+            }
+            for (let e of g(t.m.t))
+              t.bots[e.id] &&
+                ((t.k[e.id] = 0),
+                (t.next[e.id] = t.startsAt + Z(r, X.botFirstMs)));
+          }
+        }
+        botsDue() {
+          let e = this.st,
+            t = !1;
+          for (let n = 0; n < 64; n++) {
+            let n = null,
+              r = 1 / 0;
+            for (let [t, i] of Object.entries(e.next))
+              i >= 0 && i <= e.clock && i < r && ((r = i), (n = t));
+            if (!n) break;
+            (this.botStep(n), (t = !0));
+          }
+          return t;
+        }
+        botStep(e) {
+          let t = this.st,
+            n = t.bots[e],
+            r = Q(t, e);
+          if (!n || !r || r.place !== null) {
+            t.next[e] = -1;
+            return;
+          }
+          let i = t.m.t,
+            a = R(n, r.s, ie(i, e), T(t.m), () => Xe(i, e));
+          if (!a) {
+            t.next[e] = -1;
+            return;
+          }
+          let o = Ae(t.m, e, a);
+          (z(n, a, o.r.err), (t.m = o.m));
+          let s = (t.k[e] = (t.k[e] ?? 0) + 1),
+            c = _(`${t.seed}|local|pace|${t.m.t.n}|${e}|${s}`),
+            l = Z(c, X.botStepMs);
+          (c() < X.botThinkP && (l += Z(c, X.botThinkMs)),
+            (t.next[e] =
+              t.next[e] >= 0 ? Math.min(t.clock + l, t.deadline + 1) : -1));
+        }
+        flushBots() {
+          let e = this.st,
+            t = Object.keys(e.next).filter((t) => {
+              var n;
+              return (
+                e.next[t] >= 0 ||
+                (e.bots[t] &&
+                  ((n = Q(e, t)) == null ? void 0 : n.place) === null)
+              );
+            });
+          for (let n = 0; t.length && n < 400; n++) {
+            let n = [];
+            for (let r of t) {
+              let t = e.bots[r],
+                i = Q(e, r);
+              if (!t || !i || i.place !== null) continue;
+              let a = e.m.t,
+                o = R(t, i.s, ie(a, r), T(e.m), () => Xe(a, r));
+              if (!o) continue;
+              let s = Ae(e.m, r, o);
+              (z(t, o, s.r.err), (e.m = s.m), n.push(r));
+            }
+            t = n;
+          }
+          for (let t of Object.keys(e.next)) e.next[t] = -1;
+        }
+        startCombat() {
+          let e = this.st;
+          this.flushBots();
+          let t = Me(e.m, { live: !0 });
+          ((e.m = t.m),
+            (e.staged = t.st),
+            (e.stage = `combat`),
+            (e.next = {}),
+            (e.startsAt = e.clock),
+            (e.deadline =
+              e.clock +
+              (this.meAlive && t.st.byPlayer[e.me]
+                ? X.combatSafetyMs
+                : Vt(t.st.fights))),
+            t.st.fights.length || this.closeRound());
+        }
+        closeRound() {
+          let e = this.st,
+            t = e.staged;
+          if (!t) {
+            let n = Me(e.m);
+            ((e.m = n.m), (t = n.st));
+          }
+          e.hpBefore = Object.fromEntries(
+            e.m.t.players.map((e) => [e.id, e.s.hp]),
+          );
+          let n = ke(e.m, t);
+          ((e.m = n.m), (e.last = n.log), this.enterRound(X.transitionMs));
+        }
+        scheduleCarousel() {
+          let e = this.st,
+            t = e.m.carousel;
+          if (!t) return;
+          let n = _(
+            `${e.seed}|local|carousel|${e.m.t.n}|${t.balls.filter((e) => e.by).length}`,
+          );
+          for (let r of g(e.m.t)) {
+            if (
+              !e.bots[r.id] ||
+              e.next[r.id] >= 0 ||
+              t.balls.some((e) => e.by === r.id) ||
+              !w(e.m, r.id)
+            )
+              continue;
+            let i = Math.max(e.clock, e.startsAt + (t.order ? 0 : X.oakMinMs));
+            e.next[r.id] = i + Z(n, X.carouselBotMs);
+          }
+        }
+        carouselDue() {
+          let e = this.st,
+            t = !1;
+          for (let [n, r] of Object.entries(e.next)) {
+            if (r < 0 || r > e.clock || !e.m.carousel || !w(e.m, n)) continue;
+            e.next[n] = -1;
+            let i = Q(e, n),
+              a = xt(e.bots[n], i.s, e.m.carousel.balls, T(e.m));
+            a >= 0 &&
+              ((e.m = Ne(e.m, n, a).m), (t = !0), this.afterCarouselPick());
+          }
+          return t;
+        }
+        turnsDue() {
+          let e = this.st,
+            t = this.turns();
+          if (!t) return !1;
+          let n = !1;
+          for (let r of t) {
+            if (e.clock < r.until) break;
+            for (let t of r.ids) {
+              if (!e.m.carousel || !w(e.m, t)) continue;
+              let r = e.m.carousel.balls.flatMap((e, t) => (e.by ? [] : [t]));
+              if (!r.length) return n;
+              let i = _(`${e.seed}|local|turn|${e.m.t.n}|${t}`);
+              ((e.m = Ne(e.m, t, r[Math.floor(i() * r.length)]).m),
+                (n = !0),
+                this.afterCarouselPick());
+            }
+          }
+          return n;
+        }
+        afterCarouselPick() {
+          let e = this.st,
+            t = e.m.carousel;
+          t &&
+            (!g(e.m.t).filter((e) => !t.balls.some((t) => t.by === e.id))
+              .length || !t.balls.some((e) => !e.by)
+              ? (e.deadline = Math.min(e.deadline, e.clock + X.carouselDoneMs))
+              : this.scheduleCarousel());
+        }
+      }),
+      (Wt = (e) => e.seats.filter((e) => e.bot)));
+  }))();
+}
+function Gt() {
+  return (Gt = e(() => {
+    (t(),
+      je(),
+      p(),
+      ne(),
+      n(),
+      i(),
+      h(),
+      ze(),
+      s(),
+      E(),
+      nt(),
+      $(),
+      Ze(),
+      Re());
+  }))();
+}
+export {
+  $ as a,
+  z as c,
+  Wt as i,
+  Y as l,
+  X as n,
+  Bt as o,
+  Ut as r,
+  R as s,
+  Gt as t,
+  ut as u,
+};

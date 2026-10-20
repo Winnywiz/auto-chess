@@ -1,0 +1,18 @@
+{
+  "passed": 11,
+  "checks": [
+    "BIS and source digests agree",
+    "Every carry has one frozen path and displayed result",
+    "Published selections are validation leaders frozen before confirmation",
+    "All paths preserve core, cells, carry investment and item budgets",
+    "Confirmation counts, score, tags and fixed tiers reproduce",
+    "Battle totals match every searched and confirmed candidate",
+    "UI scores, stars, items, tags and component costs match raw results",
+    "Parallel search matches independently replayed pilot",
+    "Frozen confirmation replays exactly with both gear setups",
+    "Source unchanged: experiment.mjs",
+    "Source unchanged: run.mjs"
+  ],
+  "battles": 276704,
+  "digest": "b10920cfd0bd0296ec8d78532eb938d5e231bd67362daa1acfb461a420d77114"
+}

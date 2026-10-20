@@ -1,0 +1,881 @@
+{
+  "VERSION": "composition-paths-v2-1",
+  "bisDigest": "ac753b79dccd2c9caa9974eb04454841cbcf5ea8673d398a01eea81f8e4032ee",
+  "frozen": [
+    {
+      "category": "reroll-5",
+      "carry": "squirtle",
+      "ids": [
+        "squirtle",
+        "geodude",
+        "sandshrew",
+        "vaporeon",
+        "pidgey",
+        "scyther",
+        "rhyhorn",
+        "articuno"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "diglett",
+      "ids": [
+        "diglett",
+        "geodude",
+        "charmander",
+        "ponyta",
+        "jolteon",
+        "gastly",
+        "tauros",
+        "mewtwo"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-5",
+      "carry": "geodude",
+      "ids": [
+        "geodude",
+        "diglett",
+        "abra",
+        "poliwag",
+        "vaporeon",
+        "hitmonlee",
+        "aerodactyl",
+        "magikarp"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-5",
+      "carry": "charmander",
+      "ids": [
+        "charmander",
+        "jolteon",
+        "pikachu",
+        "geodude",
+        "squirtle",
+        "diglett",
+        "onix",
+        "aerodactyl"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-5",
+      "carry": "machop",
+      "ids": [
+        "machop",
+        "magikarp",
+        "psyduck",
+        "poliwag",
+        "vaporeon",
+        "rattata",
+        "seel",
+        "electabuzz"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-5",
+      "carry": "bulbasaur",
+      "ids": [
+        "bulbasaur",
+        "zubat",
+        "jolteon",
+        "voltorb",
+        "pidgey",
+        "oddish",
+        "aerodactyl",
+        "zapdos"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "zubat",
+      "ids": [
+        "zubat",
+        "diglett",
+        "voltorb",
+        "vaporeon",
+        "nidoran",
+        "sandshrew",
+        "gastly",
+        "zapdos"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "nidoran",
+      "ids": [
+        "nidoran",
+        "diglett",
+        "gastly",
+        "bulbasaur",
+        "magikarp",
+        "oddish",
+        "vaporeon",
+        "rhyhorn"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-5",
+      "carry": "rattata",
+      "ids": [
+        "rattata",
+        "flareon",
+        "abra",
+        "geodude",
+        "pidgey",
+        "exeggcute",
+        "dratini",
+        "charmander"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-5",
+      "carry": "pidgey",
+      "ids": [
+        "pidgey",
+        "flareon",
+        "caterpie",
+        "vulpix",
+        "abra",
+        "growlithe",
+        "ponyta",
+        "aerodactyl"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "magikarp",
+      "ids": [
+        "magikarp",
+        "bulbasaur",
+        "poliwag",
+        "oddish",
+        "abra",
+        "pikachu",
+        "paras",
+        "jolteon"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "caterpie",
+      "ids": [
+        "caterpie",
+        "weedle",
+        "gastly",
+        "geodude",
+        "nidoran",
+        "cubone",
+        "ditto",
+        "dratini"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-5",
+      "carry": "weedle",
+      "ids": [
+        "weedle",
+        "geodude",
+        "ekans",
+        "nidoran",
+        "sandshrew",
+        "pidgey",
+        "zubat",
+        "scyther"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "paras",
+      "ids": [
+        "paras",
+        "bulbasaur",
+        "voltorb",
+        "scyther",
+        "exeggcute",
+        "zubat",
+        "gastly",
+        "snorlax"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-6",
+      "carry": "gastly",
+      "ids": [
+        "gastly",
+        "nidoran",
+        "paras",
+        "bulbasaur",
+        "scyther",
+        "caterpie",
+        "pikachu",
+        "exeggcute"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "pikachu",
+      "ids": [
+        "pikachu",
+        "exeggcute",
+        "nidoran",
+        "bulbasaur",
+        "geodude",
+        "magnemite",
+        "onix",
+        "dratini"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-6",
+      "carry": "eevee",
+      "ids": [
+        "eevee",
+        "geodude",
+        "exeggcute",
+        "jynx",
+        "onix",
+        "sandshrew",
+        "chansey",
+        "poliwag"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "poliwag",
+      "ids": [
+        "poliwag",
+        "vulpix",
+        "growlithe",
+        "paras",
+        "exeggcute",
+        "vaporeon",
+        "magmar",
+        "squirtle"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-6",
+      "carry": "jolteon",
+      "ids": [
+        "jolteon",
+        "hitmonchan",
+        "electabuzz",
+        "pikachu",
+        "gastly",
+        "paras",
+        "vulpix",
+        "abra"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "flareon",
+      "ids": [
+        "flareon",
+        "psyduck",
+        "jynx",
+        "voltorb",
+        "exeggcute",
+        "pikachu",
+        "lapras",
+        "magikarp"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "ponyta",
+      "ids": [
+        "ponyta",
+        "weedle",
+        "magnemite",
+        "scyther",
+        "magmar",
+        "electabuzz",
+        "aerodactyl",
+        "charmander"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "vaporeon",
+      "ids": [
+        "vaporeon",
+        "electabuzz",
+        "growlithe",
+        "voltorb",
+        "geodude",
+        "flareon",
+        "rhyhorn",
+        "zapdos"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-6",
+      "carry": "abra",
+      "ids": [
+        "abra",
+        "geodude",
+        "voltorb",
+        "pikachu",
+        "weedle",
+        "hitmonchan",
+        "diglett",
+        "zapdos"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "voltorb",
+      "ids": [
+        "voltorb",
+        "cubone",
+        "jolteon",
+        "zubat",
+        "paras",
+        "gastly",
+        "oddish",
+        "lapras"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-6",
+      "carry": "sandshrew",
+      "ids": [
+        "sandshrew",
+        "nidoran",
+        "oddish",
+        "cubone",
+        "electabuzz",
+        "gastly",
+        "rhyhorn",
+        "slowpoke"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "vulpix",
+      "ids": [
+        "vulpix",
+        "growlithe",
+        "geodude",
+        "cubone",
+        "hitmonchan",
+        "voltorb",
+        "abra",
+        "zapdos"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "ekans",
+      "ids": [
+        "ekans",
+        "bulbasaur",
+        "exeggcute",
+        "psyduck",
+        "abra",
+        "jynx",
+        "staryu",
+        "moltres"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-6",
+      "carry": "psyduck",
+      "ids": [
+        "psyduck",
+        "poliwag",
+        "magikarp",
+        "vaporeon",
+        "voltorb",
+        "jigglypuff",
+        "hitmonlee",
+        "zapdos"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-6",
+      "carry": "oddish",
+      "ids": [
+        "oddish",
+        "geodude",
+        "hitmonlee",
+        "hitmonchan",
+        "nidoran",
+        "cubone",
+        "aerodactyl",
+        "chansey"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "reroll-6",
+      "carry": "jigglypuff",
+      "ids": [
+        "jigglypuff",
+        "hitmonlee",
+        "squirtle",
+        "jynx",
+        "exeggcute",
+        "paras",
+        "shellder",
+        "poliwag"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "onix",
+      "ids": [
+        "onix",
+        "aerodactyl",
+        "chansey",
+        "geodude",
+        "voltorb",
+        "rhyhorn",
+        "gastly",
+        "zapdos"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "cubone",
+      "ids": [
+        "cubone",
+        "flareon",
+        "slowpoke",
+        "jynx",
+        "aerodactyl",
+        "rhyhorn",
+        "lapras",
+        "jolteon"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-7",
+      "carry": "hitmonchan",
+      "ids": [
+        "hitmonchan",
+        "chansey",
+        "scyther",
+        "onix",
+        "hitmonlee",
+        "jigglypuff",
+        "aerodactyl",
+        "machop"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "magmar",
+      "ids": [
+        "magmar",
+        "voltorb",
+        "dratini",
+        "electabuzz",
+        "staryu",
+        "charmander",
+        "lapras",
+        "slowpoke"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-7",
+      "carry": "exeggcute",
+      "ids": [
+        "exeggcute",
+        "bulbasaur",
+        "diglett",
+        "nidoran",
+        "oddish",
+        "chansey",
+        "cubone",
+        "jigglypuff"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "hitmonlee",
+      "ids": [
+        "hitmonlee",
+        "hitmonchan",
+        "staryu",
+        "tauros",
+        "rhyhorn",
+        "gastly",
+        "vaporeon",
+        "exeggcute"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-7",
+      "carry": "slowpoke",
+      "ids": [
+        "slowpoke",
+        "diglett",
+        "jynx",
+        "magnemite",
+        "jolteon",
+        "exeggcute",
+        "magmar",
+        "caterpie"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-7",
+      "carry": "jynx",
+      "ids": [
+        "jynx",
+        "chansey",
+        "electabuzz",
+        "jigglypuff",
+        "shellder",
+        "slowpoke",
+        "pikachu",
+        "flareon"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "seel",
+      "ids": [
+        "seel",
+        "cubone",
+        "shellder",
+        "geodude",
+        "aerodactyl",
+        "nidoran",
+        "magnemite",
+        "rattata"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "growlithe",
+      "ids": [
+        "growlithe",
+        "electabuzz",
+        "abra",
+        "voltorb",
+        "diglett",
+        "dratini",
+        "onix",
+        "staryu"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "reroll-7",
+      "carry": "electabuzz",
+      "ids": [
+        "electabuzz",
+        "aerodactyl",
+        "machop",
+        "gastly",
+        "onix",
+        "staryu",
+        "poliwag",
+        "voltorb"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "magnemite",
+      "ids": [
+        "magnemite",
+        "flareon",
+        "staryu",
+        "pikachu",
+        "charmander",
+        "geodude",
+        "onix",
+        "seel"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "reroll-7",
+      "carry": "scyther",
+      "ids": [
+        "scyther",
+        "caterpie",
+        "psyduck",
+        "slowpoke",
+        "lapras",
+        "magikarp",
+        "voltorb",
+        "mewtwo"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "fast-8",
+      "carry": "aerodactyl",
+      "ids": [
+        "aerodactyl",
+        "dratini",
+        "lapras",
+        "staryu",
+        "jynx",
+        "psyduck",
+        "slowpoke",
+        "geodude"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "fast-8",
+      "carry": "rhyhorn",
+      "ids": [
+        "rhyhorn",
+        "lapras",
+        "shellder",
+        "aerodactyl",
+        "seel",
+        "dratini",
+        "geodude",
+        "nidoran"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "fast-8",
+      "carry": "staryu",
+      "ids": [
+        "staryu",
+        "jynx",
+        "rhyhorn",
+        "onix",
+        "sandshrew",
+        "diglett",
+        "geodude",
+        "aerodactyl"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "fast-8",
+      "carry": "chansey",
+      "ids": [
+        "chansey",
+        "cubone",
+        "eevee",
+        "vaporeon",
+        "rhyhorn",
+        "staryu",
+        "sandshrew",
+        "shellder"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "fast-8",
+      "carry": "dratini",
+      "ids": [
+        "dratini",
+        "rhyhorn",
+        "gastly",
+        "seel",
+        "magnemite",
+        "aerodactyl",
+        "cubone",
+        "jynx"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "fast-8",
+      "carry": "shellder",
+      "ids": [
+        "shellder",
+        "electabuzz",
+        "rhyhorn",
+        "sandshrew",
+        "pikachu",
+        "jynx",
+        "dratini",
+        "abra"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "fast-8",
+      "carry": "tauros",
+      "ids": [
+        "tauros",
+        "slowpoke",
+        "jynx",
+        "exeggcute",
+        "shellder",
+        "dratini",
+        "chansey",
+        "squirtle"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "fast-8",
+      "carry": "lapras",
+      "ids": [
+        "lapras",
+        "aerodactyl",
+        "nidoran",
+        "rhyhorn",
+        "psyduck",
+        "electabuzz",
+        "jynx",
+        "exeggcute"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "fast-8",
+      "carry": "snorlax",
+      "ids": [
+        "snorlax",
+        "staryu",
+        "cubone",
+        "eevee",
+        "gastly",
+        "rhyhorn",
+        "charmander",
+        "aerodactyl"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "fast-8",
+      "carry": "ditto",
+      "ids": [
+        "ditto",
+        "geodude",
+        "staryu",
+        "aerodactyl",
+        "diglett",
+        "psyduck",
+        "rhyhorn",
+        "rattata"
+      ],
+      "layout": 2
+    },
+    {
+      "category": "legendary",
+      "carry": "mew",
+      "ids": [
+        "mew",
+        "staryu",
+        "dratini",
+        "aerodactyl",
+        "mewtwo",
+        "shellder",
+        "moltres",
+        "slowpoke",
+        "jynx"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "legendary",
+      "carry": "mewtwo",
+      "ids": [
+        "mewtwo",
+        "hitmonlee",
+        "poliwag",
+        "staryu",
+        "slowpoke",
+        "aerodactyl",
+        "zapdos",
+        "articuno",
+        "mew"
+      ],
+      "layout": 1
+    },
+    {
+      "category": "legendary",
+      "carry": "articuno",
+      "ids": [
+        "articuno",
+        "aerodactyl",
+        "magnemite",
+        "moltres",
+        "mewtwo",
+        "jolteon",
+        "growlithe",
+        "ditto",
+        "staryu"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "legendary",
+      "carry": "zapdos",
+      "ids": [
+        "zapdos",
+        "dratini",
+        "rhyhorn",
+        "charmander",
+        "aerodactyl",
+        "nidoran",
+        "magnemite",
+        "mew",
+        "moltres"
+      ],
+      "layout": 0
+    },
+    {
+      "category": "legendary",
+      "carry": "moltres",
+      "ids": [
+        "moltres",
+        "flareon",
+        "mew",
+        "charmander",
+        "aerodactyl",
+        "zapdos",
+        "vulpix",
+        "voltorb",
+        "paras"
+      ],
+      "layout": 1
+    }
+  ]
+}
