@@ -1,0 +1,34 @@
+{
+  "passed": 13,
+  "checks": [
+    "169 reachable line/star states; five synthetic Eevee states excluded",
+    "220 distinct legal three-finished-item multisets including triple duplicates",
+    "All training and validation fixtures have six unique units, legal disjoint cells, and equal eight-item budgets with a full target",
+    "All stage/context seeds are distinct across search and held-out evaluation",
+    "Same seed reproduces complete unit state and native event trace",
+    "A different seed changes native battle trace",
+    "Simulation leaves input fixtures unchanged",
+    "Outcome wrapper agrees with native winner, timeout and target side",
+    "Native duplicate item bonuses stack rather than being silently removed",
+    "Paired comparisons use both orientations as one block and reproduce score differences",
+    "Sampled item-order permutations preserve outcomes and rounded native traces",
+    "Complete three-stage Pikachu case replays identically in a fresh worker",
+    "No browser globals or network access in the evaluator"
+  ],
+  "details": {
+    "distinctSeeds": 248,
+    "replay": {
+      "seed": 1757885648,
+      "digest": "13328f214eaf0a3f543d5fe25e9f3dd98424f256bd39834e6b6c9b1f1f110ee2",
+      "differentSeedDigest": "1de881ce4e9d4e18a0826a57bb9c66234c1e58a906574ddcbcef147222094927",
+      "events": 452
+    },
+    "itemOrder": {
+      "trials": 54,
+      "mismatches": 0,
+      "examples": [],
+      "scope": "Sampled permutations only; search always uses canonical item order."
+    },
+    "freshWorkerDigest": "62b26eea56743a871448144fe7f410cef0a4314a86a16e58957a71eb637c418d"
+  }
+}

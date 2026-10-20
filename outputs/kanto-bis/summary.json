@@ -1,0 +1,23 @@
+{
+  "completed": 169,
+  "total": 169,
+  "battles": 1564320,
+  "stageCounts": {
+    "screen": 594880,
+    "refine": 194400,
+    "validation": 442752,
+    "confirmation": 332288
+  },
+  "battlesPerSecond": 2356.694938669798,
+  "elapsedMinutes": 11.062950733333333,
+  "confirmation": true,
+  "changedOnValidation": 110,
+  "topBuildGapCrossesZero": 109,
+  "confirmationFavorsRunner": 13,
+  "selectedHigherThanRunner": 47,
+  "saturated": 0,
+  "beatsNative": 146,
+  "tiesNative": 9,
+  "meanGainOverNative": 0.06353434726331361,
+  "duplicateItemWinners": 131
+}

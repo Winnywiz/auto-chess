@@ -1,0 +1,2 @@
+# Preserve exact bytes used by the captured-asset and experiment hash checks.
+outputs/** -text
