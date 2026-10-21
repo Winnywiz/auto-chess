@@ -5,8 +5,8 @@
   <meta name="theme-color" content="#101914">
   <meta name="description" content="Compare S and A tier Kanto Tactics compositions with simulated matchups, battle replays, weaknesses and native type interactions.">
   <title>Kanto Tactics | Matchup lab</title>
-  <link rel="stylesheet" href="matchups.css">
-  <script src="matchups.js" type="module"></script>
+  <link rel="stylesheet" href="matchups.css?v=charts-1">
+  <script src="matchups.js?v=charts-1" type="module"></script>
 </head>
 <body>
   <header class="lab-header"><a class="brand" href="index.html">KANTO TACTICS</a><nav aria-label="Pages"><a href="index.html">Builder</a><a href="compositions.html">Compositions</a><a href="matchups.html" aria-current="page">Matchups</a></nav><select id="theme" aria-label="Theme"><option value="viridian">Viridian Forest</option><option value="pallet">Pallet Town</option></select></header>
@@ -32,6 +32,12 @@
           <label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0">
           <details class="unit-detail"><summary>Unit health &amp; energy at this moment</summary><div id="unit-state"></div></details>
         </div><div class="timeline"><h3>Battle timeline</h3><p class="muted">Select an event to jump to it.</p><ol id="events" aria-label="Battle events"></ol></div></div>
+        <section class="battle-stats" aria-labelledby="stats-heading">
+          <div class="section-heading"><div><p class="eyebrow">PER POKÉMON / SELECTED REPLAY</p><h2 id="stats-heading">Battle statistics</h2></div><label>Chart time<select id="stat-scope"><option value="final">Full battle totals</option><option value="current">At replay time</option></select></label></div>
+          <div class="stat-tabs" role="group" aria-label="Battle statistic"><button data-stat="dealt" aria-pressed="true">Damage dealt</button><button data-stat="taken" aria-pressed="false">Damage taken</button><button data-stat="healed" aria-pressed="false">Healing</button><button data-stat="shielded" aria-pressed="false">Shields granted</button><button data-stat="mitigated" aria-pressed="false">Damage prevented</button></div>
+          <p id="stat-description" class="muted"></p><p id="stat-time" class="stat-time"></p>
+          <div class="stat-grid"><div><div class="stat-team-heading home-text"><h3>Your team</h3><output id="stat-total-a"></output></div><ol id="stats-a" class="stat-bars" aria-label="Your team battle statistics"></ol></div><div><div class="stat-team-heading away-text"><h3>Opponent</h3><output id="stat-total-b"></output></div><ol id="stats-b" class="stat-bars" aria-label="Opponent battle statistics"></ol></div></div>
+        </section>
       </section>
       <section class="panel"><div class="section-heading"><div><p class="eyebrow">NATIVE COMBAT TYPES</p><h2>Type interactions</h2></div></div><p class="muted">Potential multipliers for fixed damaging abilities and explicitly typed empowered attacks against the starting evolved forms. Separate from trait bonuses, defenses, items and targeting. Variable abilities and other effects are called out below. A favorable multiplier alone does not establish a counter.</p><div class="type-grid"><div><h3>Your ability types → opponent</h3><div id="types-a"></div></div><div><h3>Opponent ability types → your team</h3><div id="types-b"></div></div></div></section>
       <section class="panel"><div class="section-heading"><div><p class="eyebrow">ALL QUALIFYING OPPONENTS</p><h2>Find a counter</h2></div></div><p class="muted">Opponents are sorted by your lowest battle score. Select a row to inspect that matchup.</p><div class="table-scroll"><table class="counter-table"><thead><tr><th>Opponent build</th><th>Your score</th><th>95% interval</th><th>W / D / L</th></tr></thead><tbody id="counter-list"></tbody></table></div></section>

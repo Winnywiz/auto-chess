@@ -2,6 +2,8 @@ const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>
 const percent=x=>(x*100).toFixed(1)+'%',signed=x=>(x>=0?'+':'')+(x*100).toFixed(1)+' pp',range=x=>x.map(percent).join('–');
 let data,level=9,builds=[],a,b,match,reversed=false,replayFile,replay,clock=0,playing=false,lastTick=0,raf=0,loadVersion=0,lastUnitUpdate=-1;
 const imageCache=new Map(),replayCache=new Map();
+let statMetric='dealt',lastChartKey='';
+const statInfo={dealt:{label:'Damage dealt',note:'Actual enemy HP removed, including damage over time. Excludes overkill and damage absorbed by shields; native source attribution is retained.'},taken:{label:'Damage taken',note:'Actual HP lost, including damage over time. Excludes damage prevented by shields or other mitigation.'},healed:{label:'Healing',note:'Effective HP restored, credited by the native simulator. Excludes overhealing. Includes self-healing, regeneration and item effects where the engine records them.'},shielded:{label:'Shields granted',note:'Shield points created, credited to the granting Pokémon. Includes self-shields and ally shields, whether or not the shield was later consumed. This is not damage absorbed.'},mitigated:{label:'Damage prevented',note:'The native mitigation counter: damage prevented by shields and damage-reduction effects combined, credited to the protected Pokémon. It is not a shield-only absorption statistic.'}};
 const theme=t=>{document.documentElement.dataset.theme=t;$('#theme').value=t;};
 try{theme(localStorage.getItem('kanto-theme')==='pallet'?'pallet':'viridian');}catch{theme('viridian');}
 $('#theme').onchange=e=>{theme(e.target.value);draw();try{localStorage.setItem('kanto-theme',e.target.value);}catch{}};
@@ -54,14 +56,14 @@ function typeRows(from,to){
 }
 function stop(){playing=false;cancelAnimationFrame(raf);if($('#play')){$('#play').textContent='▶ Play';$('#play').setAttribute('aria-label','Play replay');}}
 async function loadReplay(key){
- const version=++loadVersion;stop();replay=null;replayFile=null;clock=0;draw();$('#replay-select').innerHTML='';$('#events').innerHTML='';$('#replay-status').textContent='Loading recorded battle…';$('#play').disabled=true;$('#scrub').disabled=true;$('#replay-note').textContent='';
- try{let file=replayCache.get(key);if(!file){const response=await fetch(`analysis/replays/${encodeURIComponent(key)}.json`);if(!response.ok)throw Error('Replay file unavailable');file=await response.json();replayCache.set(key,file);}if(version!==loadVersion)return;
+ const version=++loadVersion;stop();replay=null;replayFile=null;clock=0;lastChartKey='';$('#stats-a').innerHTML='';$('#stats-b').innerHTML='';$('#stat-total-a').textContent='';$('#stat-total-b').textContent='';$('#stat-time').textContent='Loading selected replay…';draw();$('#replay-select').innerHTML='';$('#events').innerHTML='';$('#replay-status').textContent='Loading recorded battle…';$('#play').disabled=true;$('#scrub').disabled=true;$('#replay-note').textContent='';
+ try{let file=replayCache.get(key);if(!file){const response=await fetch(`analysis/replays/${encodeURIComponent(key)}.json?v=charts-1`);if(!response.ok)throw Error('Replay file unavailable');file=await response.json();replayCache.set(key,file);}if(version!==loadVersion)return;
   replayFile=file;$('#replay-select').innerHTML=file.replays.map((r,i)=>{const value=reversed?1-r.value:r.value;return `<option value="${i}">${value===1?'Your win':value===0?'Your loss':'Draw'} · ${r.duration.toFixed(1)}s</option>`;}).join('');
   $('#replay-status').textContent='';$('#play').disabled=false;$('#scrub').disabled=false;setReplay(0);
  }catch(e){if(version!==loadVersion)return;$('#replay-status').textContent='This replay could not be loaded. Reload the page to try again.';}
 }
 function setReplay(index){
- stop();replay=replayFile.replays[index];clock=0;lastUnitUpdate=-1;$('#scrub').max=replay.duration;$('#scrub').value=0;
+ stop();replay=replayFile.replays[index];clock=0;lastUnitUpdate=-1;lastChartKey='';$('#scrub').max=replay.duration;$('#scrub').value=0;
  const yourTeam=reversed?1-replay.side:replay.side,value=reversed?1-replay.value:replay.value;
  $('#replay-note').textContent=`Median-duration ${value===1?'win':value===0?'loss':'draw'} example · seed ${replay.seed} · your team started ${yourTeam===0?'at the bottom':'at the top'}. One replay illustrates the batch; it does not determine the percentage.`;
  $('#events').innerHTML=replay.events.map((e,i)=>({e,i})).filter(({e})=>['cast','cc','faint','end','transform'].includes(e.k)).map(({e,i})=>`<li data-event-time="${e.t}"><button data-event="${i}"><span class="event-time">${e.t.toFixed(2)}s</span>${esc(eventText(e))}</button></li>`).join('');
@@ -78,6 +80,17 @@ function eventText(e){const own=reversed?1-replay.side:replay.side,name=id=>{con
 }
 const canvas=$('#arena'),ctx=canvas.getContext('2d');
 const xy=cell=>{const row=Math.floor(cell/7),col=cell%7;return {x:80+col*104+(row%2)*52,y:68+row*88};};
+function drawCharts(){
+ if(!replay)return;const info=statInfo[statMetric];$('#stat-description').textContent=info.note;
+ if(!replay.stats?.length){$('#stat-time').textContent='Statistics are unavailable for this older replay. Reload after the site update finishes.';return;}
+ const current=$('#stat-scope').value==='current';let sample=replay.stats.at(-1);
+ if(current){sample=replay.stats[0];for(const frame of replay.stats){if(frame[0]>clock)break;sample=frame;}}
+ const key=[replay.seed,replay.side,statMetric,current,sample[0],reversed].join('/');if(key===lastChartKey)return;lastChartKey=key;
+ const index=replay.statFields.indexOf(statMetric),stride=replay.statFields.length,yourTeam=reversed?1-replay.side:replay.side,rows=replay.units.map((u,i)=>({u,value:sample[1+i*stride+index]})),maximum=Math.max(1,...rows.map(r=>r.value));
+ const format=n=>Math.round(n).toLocaleString();
+ $('#stat-time').textContent=`${info.label} · ${current?'Replay snapshot':'Full battle'} at ${sample[0].toFixed(1)}s · one recorded battle, separate from the matchup average.`;
+ for(const [target,team]of [['a',yourTeam],['b',1-yourTeam]]){const group=rows.filter(r=>r.u.team===team).sort((a,b)=>b.value-a.value||a.u.uid-b.u.uid);$('#stat-total-'+target).textContent=format(group.reduce((sum,r)=>sum+r.value,0));$('#stats-'+target).innerHTML=group.map(({u,value})=>`<li class="stat-row"><img src="media/icons/${u.num}.png" alt=""><div class="stat-unit"><div class="stat-value"><span>${esc(u.name)} <small>${u.star}★</small></span><strong title="${value.toFixed(3)}">${format(value)}</strong></div><div class="stat-track" aria-hidden="true"><span class="${target==='a'?'stat-home':'stat-away'}" style="width:${value/maximum*100}%"></span></div></div></li>`).join('');}
+}
 function hex(x,y,r){ctx.beginPath();for(let i=0;i<6;i++){const t=Math.PI/3*i+Math.PI/6;const px=x+Math.cos(t)*r,py=y+Math.sin(t)*r;i?ctx.lineTo(px,py):ctx.moveTo(px,py);}ctx.closePath();}
 function draw(){
  if(!ctx)return;const style=getComputedStyle(document.documentElement),home=style.getPropertyValue('--home').trim(),away=style.getPropertyValue('--away').trim(),ink=style.getPropertyValue('--ink').trim();
@@ -105,12 +118,15 @@ function draw(){
  $('#battle-outcome').textContent=clock>=replay.duration?(replay.winner===-1?'Draw':replay.winner===yourTeam?'Your team won':'Opponent won'):'';
  const items=[...$('#events').children];let active=-1;for(let i=0;i<items.length;i++)if(Number(items[i].dataset.eventTime)<=clock)active=i;items.forEach((li,i)=>li.classList.toggle('active',i===active));
  if(Math.abs(clock-lastUnitUpdate)>.15||clock===0){lastUnitUpdate=clock;$('#unit-state').innerHTML=replay.units.map((base,i)=>{const change=(replay.changes??[]).filter(c=>c.uid===base.uid&&c.t<=clock).at(-1),u=change?{...base,...change}:base,o=1+i*8;return `<div class="unit-state ${u.team===yourTeam?'home-text':'away-text'}">${esc(u.name)} ${u.star}★ · ${frame[o+6]?`${frame[o+3]} / ${Math.round(u.maxHp)} HP · ${frame[o+4]} / ${u.maxMana} energy`:'Eliminated'}</div>`;}).join('');}
+ drawCharts();
 }
 function tick(time){if(!playing||!replay)return;if(lastTick)clock=Math.min(replay.duration,clock+(time-lastTick)/1000*Number($('#speed').value));lastTick=time;draw();if(clock>=replay.duration)stop();else raf=requestAnimationFrame(tick);}
 $('#play').onclick=()=>{if(!replay)return;if(playing){stop();return;}if(clock>=replay.duration)clock=0;playing=true;lastTick=0;$('#play').textContent='Ⅱ Pause';$('#play').setAttribute('aria-label','Pause replay');raf=requestAnimationFrame(tick);};
 $('#restart').onclick=()=>{stop();clock=0;lastUnitUpdate=-1;draw();};$('#scrub').oninput=e=>{stop();clock=Number(e.target.value);lastUnitUpdate=-1;draw();};
 $('#events').onclick=e=>{const button=e.target.closest('[data-event]');if(!button||!replay)return;stop();clock=replay.events[Number(button.dataset.event)].t;lastUnitUpdate=-1;draw();};
 $('#replay-select').onchange=e=>setReplay(Number(e.target.value));$('#level').onchange=chooseLevel;
+$('.stat-tabs').onclick=e=>{const button=e.target.closest('[data-stat]');if(!button)return;statMetric=button.dataset.stat;for(const tab of document.querySelectorAll('[data-stat]'))tab.setAttribute('aria-pressed',String(tab===button));lastChartKey='';drawCharts();};
+$('#stat-scope').onchange=()=>{lastChartKey='';drawCharts();};
 $('#team-a').onchange=()=>{ensureDifferent('a');render();};$('#team-b').onchange=()=>{ensureDifferent('b');render();};
 $('#swap').onclick=()=>{const id=$('#team-a').value;$('#team-a').value=$('#team-b').value;$('#team-b').value=id;render();};
 $('#counter-list').onclick=e=>{const button=e.target.closest('[data-opponent]');if(!button)return;$('#team-b').value=button.dataset.opponent;render();$('#result').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};

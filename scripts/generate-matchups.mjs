@@ -52,16 +52,17 @@ function aggregate(trials,index){
 }
 export function record(a,b,trial,data){
  const s=setup(a,b,trial.layout,trial.side),fight=new Battle(s.home,s.away,trial.seed,null);fight.pvpClock=true;fight.start();
- const frames=[],changes=[],previousForms=new Map(),statuses=u=>['stun','freezeT','fearT','airborneT','parT','poisonT','burnT','untargetT','rootT'].reduce((s,k,i)=>s+(u[k]>0?2**i:0),0);
+ const frames=[],stats=[],changes=[],previousForms=new Map(),statuses=u=>['stun','freezeT','fearT','airborneT','parT','poisonT','burnT','untargetT','rootT'].reduce((s,k,i)=>s+(u[k]>0?2**i:0),0);
  const frame=()=>{
   for(const u of fight.units){const signature=[u.num,u.maxHp,u.maxMana].join('/');if(previousForms.has(u.uid)&&previousForms.get(u.uid)!==signature)changes.push({t:round(fight.time),uid:u.uid,num:u.num,name:rosterNative.x(u.name,'en'),maxHp:u.maxHp,maxMana:u.maxMana});previousForms.set(u.uid,signature);}
   frames.push([round(fight.time),...fight.units.flatMap(u=>[u.cell,u.from,Math.round(u.moveT*100),Math.max(0,Math.round(u.hp)),Math.round(u.mana),Math.round(u.shield),u.alive?1:0,statuses(u)])]);
+  stats.push([round(fight.time),...fight.units.flatMap(u=>[round(u.dealt),round(u.taken),round(u.healed),round(u.shielded),round(u.mitigated)])]);
  };
  const units=fight.units.map(u=>({uid:u.uid,team:u.team,line:u.line,star:u.star,num:u.num,name:data.roster.find(r=>r.id===u.line).forms[u.star-1].name,types:u.types,traits:u.traits,maxHp:u.maxHp,maxMana:u.maxMana,items:u.items,carry:u.line===(u.team===trial.side?a.carry:b.carry)}));
  frame();let step=0;while(!fight.over){fight.step();if(++step%6===0)frame();if(step>15000)throw Error('Replay guard');}if(frames.at(-1)[0]!==round(fight.time))frame();
  const value=fight.winner===-1?.5:fight.winner===trial.side?1:0;if(value!==trial.value||round(fight.time)!==trial.time)throw Error('Score/replay parity failed');
  const events=fight.events.filter(e=>['attack','charge','cast','dmg','heal','cc','faint','end','shove','burrow','zone','zoneEnd','transform'].includes(e.k)).map(e=>{const o={...e,t:round(e.t)};if(o.amount!==undefined)o.amount=round(o.amount);if(o.name)o.name=rosterNative.x(o.name,'en');return o;});
- return {seed:trial.seed,side:trial.side,value,winner:fight.winner,duration:round(fight.time),units,frames,changes,events};
+ return {seed:trial.seed,side:trial.side,value,winner:fight.winner,duration:round(fight.time),units,frames,stats,statFields:['dealt','taken','healed','shielded','mitigated'],changes,events};
 }
 function execute(job,data,out){
  const {a,b,level}=job,base=[],layouts={};

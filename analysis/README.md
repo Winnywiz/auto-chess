@@ -12,6 +12,12 @@ Pressure points report aggregate observations: starting front-row and carry surv
 
 No weather, boons, economy, shops, contested pools or item drops are modeled. No items or units were optimized or changed. Only the two stated formation adjustments were tested. Static batch data is loaded separately from per-matchup replay files.
 
+## Battle statistics
+
+Each replay includes a parallel `stats` array sampled at the same times as `frames`. `statFields` defines the per-unit field order: `dealt`, `taken`, `healed`, `shielded`, `mitigated`. Values are native cumulative counters rounded to three decimals, not reconstructed from the floating damage numbers. Charts use the same scale for both teams and can show the selected replay's full battle totals or the latest snapshot at the replay time. They do not show averages over the matchup batch.
+
+Damage dealt is actual enemy HP removed, including damage over time; damage taken is actual HP lost. Overkill and shield absorption are excluded from these HP counters. Healing records effective HP restored with native source attribution, excluding overheal. Shields granted counts shield creation credited to its source, including self-shields and unconsumed shields. Damage prevented is native mitigation credited to the protected unit, combining shields and damage-reduction effects; it is not shield-only absorption. The verifier checks all statistics frame shapes and compares the recorded counters at every sampled time in its native replay cases.
+
 ## Reproduction
 
 Use Node 24 or newer. Set `KANTO_NATIVE_ROOT` to the existing pinned `kanto-headless-v3` directory containing `headless.mjs`, `manifest.json` and native `assets/`. Run from the repository root:

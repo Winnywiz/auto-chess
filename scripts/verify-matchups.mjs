@@ -28,6 +28,8 @@ for(const p of D.pairs){
  for(const r of f.replays){
   replays++;assert(p.replays.some(x=>x.seed===r.seed&&x.side===r.side&&x.value===r.value));assert.equal(r.value,r.winner===-1?.5:r.winner===r.side?1:0);
   let t=-1;for(const frame of r.frames){frames++;assert.equal(frame.length,1+r.units.length*8);assert(frame[0]>t);t=frame[0];assert(frame.every(Number.isFinite));}assert.equal(r.frames[0][0],0);assert.equal(r.frames.at(-1)[0],r.duration);
+  assert.deepEqual(r.statFields,['dealt','taken','healed','shielded','mitigated']);assert.equal(r.stats.length,r.frames.length);
+  for(let i=0;i<r.stats.length;i++){assert.equal(r.stats[i][0],r.frames[i][0]);assert.equal(r.stats[i].length,1+r.units.length*r.statFields.length);assert(r.stats[i].every(Number.isFinite));}
   assert(r.events.some(e=>e.k==='end'&&e.winner===r.winner));let previous=-1;for(const e of r.events){assert(e.t>=previous);previous=e.t;}
  }
 }
@@ -38,7 +40,9 @@ const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'../../outputs/kanto-head
 const mirror=team=>team.map(u=>({...u,cell:55-u.cell}));let nativeCases=0;
 for(let i=0;i<D.pairs.length;i+=29){const p=D.pairs[i],a=D.builds[p.level].find(r=>r.id===p.a),b=D.builds[p.level].find(r=>r.id===p.b),f=JSON.parse(fs.readFileSync('analysis/replays/'+p.key+'.json'));
  for(const r of f.replays){let digest;for(let repeat=0;repeat<2;repeat++){
-  const battle=r.side?new Battle(b.team,mirror(a.team),r.seed,null):new Battle(a.team,mirror(b.team),r.seed,null);battle.pvpClock=true;battle.start();while(!battle.over)battle.step();
+  const battle=r.side?new Battle(b.team,mirror(a.team),r.seed,null):new Battle(a.team,mirror(b.team),r.seed,null);battle.pvpClock=true;battle.start();let statIndex=0;
+  const checkStats=()=>{const sample=r.stats[statIndex];if(!sample||sample[0]!==Math.round(battle.time*1000)/1000)return;for(let j=0;j<battle.units.length;j++)for(let k=0;k<r.statFields.length;k++)assert.equal(sample[1+j*r.statFields.length+k],Math.round(battle.units[j][r.statFields[k]]*1000)/1000);statIndex++;};
+  checkStats();while(!battle.over){battle.step();checkStats();}assert.equal(statIndex,r.stats.length);
   assert.equal(battle.winner,r.winner);assert.equal(Math.round(battle.time*1000)/1000,r.duration);
   const final=r.frames.at(-1);for(let j=0;j<battle.units.length;j++){const u=battle.units[j],o=1+j*8;assert.equal(Math.max(0,Math.round(u.hp)),final[o+3]);assert.equal(+u.alive,final[o+6]);}
   const next=hash({winner:battle.winner,time:battle.time,rng:battle.rngState,units:battle.units,events:battle.events});if(repeat)assert.equal(next,digest);digest=next;nativeCases++;
