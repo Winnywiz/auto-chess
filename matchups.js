@@ -4,7 +4,7 @@ let data,level=9,builds=[],a,b,match,reversed=false,replayFile,replay,clock=0,pl
 const imageCache=new Map(),replayCache=new Map();
 let statMetric='dealt',lastChartKey='';
 const statInfo={dealt:{label:'Damage dealt',note:'Enemy HP removed. Overkill and shields excluded.'},taken:{label:'Damage taken',note:'HP lost after shields and damage reduction.'},healed:{label:'Healing',note:'HP restored. Overhealing excluded.'},shielded:{label:'Shields granted',note:'Shields created, including unused shields.'},mitigated:{label:'Damage prevented',note:'Damage blocked by shields and damage reduction.'}};
-const theme=t=>{document.documentElement.dataset.theme=t;$('#theme').value=t;};
+const theme=t=>{document.documentElement.dataset.theme=t;$('#theme').value=t;document.querySelector('meta[name="theme-color"]').content=t==='pallet'?'#171f30':'#101914';};
 try{theme(localStorage.getItem('kanto-theme')==='pallet'?'pallet':'viridian');}catch{theme('viridian');}
 $('#theme').onchange=e=>{theme(e.target.value);draw();try{localStorage.setItem('kanto-theme',e.target.value);}catch{}};
 function pairFor(x,y){return data.pairs.find(p=>p.level===level&&((p.a===x&&p.b===y)||(p.b===x&&p.a===y)));}

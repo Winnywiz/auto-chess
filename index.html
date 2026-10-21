@@ -4504,11 +4504,9 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
           aria-expanded="false"
         >
           Traits
-        </button>
-        <button id="example" class="outline-button">Example team</button
-        ><button id="copy-link" class="text-button">Copy team link ↗</button
+        </button><button id="copy-link" class="text-button">Copy team link ↗</button
         ><button class="text-button" id="guide">Help</button
-        ><button class="save-button" id="save">↓ Save team</button>
+        >
       </nav>
     </header>
     <main aria-label="Team builder">
@@ -5037,7 +5035,7 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
       return `<section class="bis-panel" tabindex="-1" aria-label="BIS candidates"><div class="equipment-heading"><h3>BIS candidates</h3></div><p class="bis-note">This form and star level was not tested.</p>${recommendationHTML(u)}</section>`;
     const percent = (score) => (100 * score).toFixed(1) + "%";
     const cards = (items) => `<div class="suggested-items bis-items">${items.map((id) => `<button data-suggest-item="${id}" data-item="${id}" data-tooltip-item="${id}" draggable="true" aria-label="Equip BIS item ${esc(L.items[id].name)}">${itemIcon(id)}<span>${esc(L.items[id].name)}</span></button>`).join("")}</div>`;
-    return `<section class="bis-panel" tabindex="-1" aria-label="BIS candidates"><div class="equipment-heading"><h3>${esc(formOf(u).name)} BIS</h3><span>${u.star} ${u.star === 1 ? "star" : "stars"}</span></div><div class="bis-build-heading"><span>Search pick</span><b>${percent(result.score)} 6v6 score</b></div><p class="bis-provenance">${result.battles} confirmation battles / 8 fixed opponent lineups / 32 seeds / both sides. Score = (wins + half draws) / battles. Prior 6v6 contexts; composition gear is tested separately.</p>${cards(result.items)}<button class="bis-equip" data-equip-bis="selected" title="Replaces all equipped items">Equip build</button><details class="bis-alternative"><summary>Alternative <b>${percent(result.alternative.score)}${result.confidence === "alternative" ? " / Higher score" : result.confidence === "close" ? " / Similar result" : ""}</b></summary>${cards(result.alternative.items)}<button class="bis-equip" data-equip-bis="alternative" title="Replaces all equipped items">Equip alternative</button></details><details class="bis-native"><summary>Native suggestions</summary>${recommendationHTML(u)}</details></section>`;
+    return `<section class="bis-panel" tabindex="-1" aria-label="BIS candidates"><div class="equipment-heading"><h3>${esc(formOf(u).name)} BIS</h3><span>${u.star} ${u.star === 1 ? "star" : "stars"}</span></div><div class="bis-build-heading"><span>Search pick</span><b>${percent(result.score)}</b></div>${cards(result.items)}<button class="bis-equip" data-equip-bis="selected" title="Replaces all equipped items">Equip build</button><details class="bis-alternative"><summary>Alternative <b>${percent(result.alternative.score)}${result.confidence === "alternative" ? " / Higher score" : result.confidence === "close" ? " / Similar result" : ""}</b></summary>${cards(result.alternative.items)}<button class="bis-equip" data-equip-bis="alternative" title="Replaces all equipped items">Equip alternative</button></details><details class="bis-native"><summary>Native suggestions</summary>${recommendationHTML(u)}</details></section>`;
   }
 
   function skillDescription(m) {
@@ -5671,14 +5669,6 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
     });
     toast("Team cleared. Undo brings it back.");
   };
-  $("#example").onclick = () => {
-    commit(() => {
-      state = example();
-      selected = 1;
-      target = null;
-    });
-    toast("Example team loaded.");
-  };
   $("#guide").onclick = () => $("#help-dialog").showModal();
   document
     .querySelectorAll(".dialog-close")
@@ -5695,18 +5685,6 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
         e.target.close();
     }
   };
-  $("#save").onclick = () => {
-    const blob = new Blob([JSON.stringify(state, null, 2)], {
-        type: "application/json",
-      }),
-      url = URL.createObjectURL(blob),
-      a = document.createElement("a");
-    a.href = url;
-    a.download = "kanto-team.json";
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast("Team saved as kanto-team.json.");
-  };
   $("#copy-link").onclick = async () => {
     const payload = btoa(unescape(encodeURIComponent(JSON.stringify(state)))),
       url = location.href.split("#")[0] + "#team=" + payload;
@@ -5720,7 +5698,7 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
       t.select();
       const ok = document.execCommand("copy");
       t.remove();
-      toast(ok ? "Team link copied." : "Use Save team to keep this formation.");
+      toast(ok ? "Team link copied." : "Select and copy the team link to keep this formation.");
     }
   };
   document.addEventListener("keydown", (e) => {

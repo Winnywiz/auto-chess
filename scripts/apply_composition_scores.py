@@ -52,18 +52,7 @@ def main():
     if count != 1:
         raise ValueError("Could not replace progression guides")
 
-    old_intro = '<p class="cap-context">Browse S, A and B tiers. Open a composition for level 5-8 boards, item holders and pivots.</p>'
-    previous_intro = '<p class="cap-context">Legacy paths and trait breakpoint builds share one Version 33 battle score. Browse every measured tier; open a board for its formation and item plan.</p>'
-    current_intro = '<p class="cap-context">Browse the Version 33 battle scores and trait builds. Open a composition for its level 5-8 boards, item holders and pivot plan.</p>'
-    new_intro = '<p class="cap-context">Each main carry appears once. Open a card to compare its builds, tiers, level 5-8 boards, item holders and pivot plans.</p>'
-    if old_intro in text:
-        text = replace_once(text, old_intro, new_intro)
-    elif previous_intro in text:
-        text = replace_once(text, previous_intro, new_intro)
-    elif current_intro in text:
-        text = replace_once(text, current_intro, new_intro)
-    elif new_intro not in text:
-        raise ValueError("Missing composition introduction")
+    text = re.sub(r'\s*<p class="cap-context">.*?</p>', '', text, flags=re.S)
     start = text.index('    <details class="score-guide">')
     end = text.index('    </div></details>', start) + len('    </div></details>')
     text = text[:start] + '''    <details class="score-guide"><summary>Scores &amp; strategies</summary><div>
@@ -75,29 +64,7 @@ def main():
       <p><strong>Sources</strong>: <a href="https://einoow.com/api/meta/kanto/meta.json" target="_blank" rel="noreferrer">official meta API</a> (rules 33); <a href="https://docs.google.com/spreadsheets/d/1co1O1oqbBiczdMd6ChPzce1xANRDrQj8lyAvWzEfKe0/edit?gid=5" target="_blank" rel="noreferrer">workbook boards</a>; <a href="https://github.com/Winnywiz/auto-chess/commit/c9f164c6c46aae21cfd9538befc395ddc40c9f67" target="_blank" rel="noreferrer">earlier paths</a>. Opponent sources do not set tiers or placement odds.</p>
     </div></details>''' + text[end:]
 
-    audit_path = SEARCH_REPORT if SEARCH_REPORT.exists() else SAVED_SEARCH_REPORT
-    if audit_path.exists():
-        audit = json.loads(audit_path.read_text())
-        if audit.get("gameVersion") == result["gameRules"] and audit.get("confirmationSeeds"):
-            best = {
-                family: max((x for x in audit["confirmations"] if x["family"] == family),
-                            key=lambda x: x["score"]["score"])
-                for family in ("Normal", "Water", "Ice")
-            }
-            discovered = next(row for row in result["rows"] if row["id"] == "ice-dugtrio-search")
-            tiers = ", ".join(f"level {stage['level']} {stage['tier']}" for stage in discovered["stages"])
-            audit_html = f'''    <details class="score-guide" id="search-audit"><summary>Expanded trait search</summary><div>
-      <p>On {audit["generated"][:10]}, a staged CPU search screened {audit["distinctBoards"]:,} distinct level 9 boards for Normal 6, Water 6 and Ice 4. Boards used at most six finished items and {audit["maxGold"]} unit-copy gold. Finalists faced all {audit["holdoutReferences"]} API and workbook reference boards on {len(audit["holdoutSeeds"])} holdout seeds, then {len(audit["confirmationSeeds"])} new confirmation seeds.</p>
-      <p><strong>New Ice 4 / Dugtrio build</strong>: {tiers} after the full composition rescore. On confirmation seeds it scored {best["Ice"]["score"]["api"]:.1%} against API boards and {best["Ice"]["score"]["workbook"]:.1%} against workbook boards. Its cap costs {best["Ice"]["gold"]} unit-copy gold and needs several high-star units.</p>
-      <p><strong>Normal 6 and Water 6</strong>: the best confirmed boards scored {best["Normal"]["score"]["workbook"]:.1%} and {best["Water"]["score"]["workbook"]:.1%} against workbook boards, respectively. Neither passed the workbook part of the S rule in this search.</p>
-      <p>The new Ice result shows that the earlier candidate list missed a strong trait build. This is still a combat-only search. Shop odds, contested pools, item drops, weather and boons were not modeled, so it cannot establish that the game meta is solved.</p>
-    </div></details>'''
-            pattern = r'    <details class="score-guide" id="search-audit">.*?    </div></details>'
-            if re.search(pattern, text, flags=re.S):
-                text = re.sub(pattern, lambda _: audit_html, text, count=1, flags=re.S)
-            else:
-                guide_end = text.index('    </div></details>', text.index('    <details class="score-guide">')) + len('    </div></details>')
-                text = text[:guide_end] + '\n' + audit_html + text[guide_end:]
+    text = re.sub(r'\s*<details class="score-guide" id="search-audit">.*?</details>', '', text, flags=re.S)
 
     # Keep the existing trait names, add missing families and drop stale choices.
     filter_match = re.search(r'<select id="family-filter"[^\n]*</select>', text)

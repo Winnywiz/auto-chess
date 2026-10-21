@@ -7,3 +7,48 @@ html[data-theme=pallet]{--bg:#171f30;--surface:#222c3e;--raised:#2b384e;--line:#
 .lab-header{background:#141f19}html[data-theme=pallet] .lab-header{background:#1c2638}.team-card .unit-detail{position:static}.team-card .unit-detail>div{top:100%}.stars{line-height:1}
 @media(max-width:850px){.team-card.home .unit-detail>div{left:0;right:auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+
+/* Shared page frame with the builder and composition catalogue. */
+.matchups-page{--header-height:68px;font-size:14px;line-height:1.5}
+.matchups-page .topbar{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;align-items:center;gap:16px;min-height:var(--header-height);padding:12px 24px;border-bottom:1px solid var(--line);background:#141f19}
+html[data-theme=pallet] .matchups-page .topbar{background:#1c2638}
+.matchups-page .brand{display:flex;align-items:center;gap:14px;font-size:16px;font-weight:700;letter-spacing:1.5px;white-space:nowrap}
+.matchups-page .theme-picker{min-height:30px;padding:5px 9px;font-size:12px;font-weight:500;letter-spacing:0}
+.matchups-page .topbar nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-left:auto}
+.matchups-page .page-link{display:inline-flex;align-items:center;min-height:36px;padding:7px 12px;border-radius:7px;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap}
+.matchups-page .page-link.current{color:var(--ink);background:var(--raised)}
+.matchups-page .page-link:hover{color:var(--ink);background:var(--raised)}
+.matchups-page main{max-width:1640px;height:calc(100dvh - var(--header-height));min-height:580px;padding:34px 30px 24px;gap:12px}
+.matchups-page .page-heading{min-height:42px;margin-bottom:4px}
+.matchups-page h1{font-size:32px;letter-spacing:-1.1px}
+.matchups-page h1 span{font-size:12px;letter-spacing:0}
+.matchups-page .page-heading>select{min-height:40px;font-size:13px;padding:9px 12px}
+.matchups-page .team-card>label{font-size:11px}
+.matchups-page .team-card>select{min-height:34px;font-size:13px}
+.matchups-page .build-meta{font-size:11px}
+.matchups-page .detail-tabs button{min-height:32px;font-size:12px}
+.matchups-page .workspace{grid-template-rows:36px minmax(0,1fr)}
+@media(max-width:1050px){.matchups-page .brand{font-size:14px}.matchups-page .detail-tabs button{padding:5px 7px;font-size:11px}}
+@media(max-width:850px){
+ .matchups-page main{height:auto;min-height:calc(100dvh - var(--header-height));padding:24px 20px 20px}
+ .matchups-page #lab{flex:initial;min-height:0}
+ .matchups-page .workspace{min-height:520px;grid-template-rows:36px minmax(0,1fr)}
+ .matchups-page .team-card>select{font-size:11px}
+ .matchups-page .build-meta{font-size:9px}
+ .matchups-page .detail-panel,.matchups-page .replay-panel{min-height:0}
+}
+@media(max-width:650px){
+ .matchups-page{--header-height:110px}
+ .matchups-page .topbar{gap:10px;padding:12px 20px;align-content:center}
+ .matchups-page .brand{width:100%;justify-content:space-between}
+ .matchups-page .topbar nav{margin-left:0;gap:6px}
+ .matchups-page .page-link{min-height:32px;padding:6px 10px;font-size:13px}
+ .matchups-page main{padding:24px 20px 20px}
+ .matchups-page h1{font-size:28px}
+ .matchups-page h1 span{font-size:11px;margin-left:6px}
+ .matchups-page .page-heading{gap:10px}
+ .matchups-page .page-heading>select{min-width:90px;padding:8px;font-size:12px}
+ .matchups-page .workspace{min-height:580px}
+ .matchups-page .result-counts{font-size:9px}
+}
