@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" data-theme="viridian">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101914">
+  <title>Kanto Tactics | Seal Database</title>
+  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=compact-replay-1"><link rel="stylesheet" href="seals.css?v=seals-1">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('kanto-theme')==='pallet'?'pallet':'viridian';}catch{}</script>
+  <script defer src="seals-data.js?v=seals-1"></script><script defer src="seals.js?v=seals-1"></script>
+</head>
+<body class="seals-page">
+  <header class="topbar">
+    <div class="brand"><div>KANTO TACTICS</div><select id="theme" class="theme-picker" aria-label="Theme"><option value="viridian">Viridian Forest</option><option value="pallet">Pallet Town</option></select></div>
+    <nav aria-label="Pages"><a class="page-link" href="compositions.html">Compositions</a><a class="page-link" href="builder.html">Builder</a><a class="page-link" href="matchups.html">Matchups</a><a class="page-link current" href="seals.html" aria-current="page">Seals</a></nav>
+  </header>
+  <main>
+    <div class="seal-page-heading"><h1>Seal database</h1><span id="seal-count" role="status" aria-live="polite">136 Seals</span></div>
+    <div class="seal-tools">
+      <label class="sr-only" for="seal-search">Search Seals</label><input id="seal-search" type="search" placeholder="Search Seals, effects or Pokémon" autocomplete="off">
+      <div class="seal-tools-bottom"><div class="segmented" id="seal-round-filters" aria-label="Seal round"><button data-rarity="0" aria-pressed="true">All rounds</button><button data-rarity="1" aria-pressed="false">2-1 <small>Common</small></button><button data-rarity="2" aria-pressed="false">3-2 <small>Rare</small></button><button data-rarity="3" aria-pressed="false">4-2 <small>Mythic</small></button></div><div class="seal-actions"><button id="seal-expand">Expand all</button><button id="seal-collapse">Collapse all</button></div></div>
+    </div>
+    <div id="seal-directory"></div>
+  </main>
+</body>
+</html>
