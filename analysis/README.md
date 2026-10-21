@@ -1,0 +1,25 @@
+# S/A matchup analysis
+
+This dataset compares every distinct pair of existing S- and A-tier builds at each cap: 21 builds at level 8 and 23 at level 9, for 463 matchups. Tier eligibility is taken from the published composition snapshot, not reclassified by the new head-to-head scores.
+
+Each matchup uses 128 deterministic SHA-256-derived seeds, both board sides, native PvP timing, and the exact published units, stars, items and cells. Two column-flip checks use the first 64 seeds on both sides, keeping all other inputs fixed. There are 237,056 scored native battles. Replays add one recorded run per observed outcome; these recording runs are excluded from the scored-battle count.
+
+The headline score is `(wins + 0.5 * draws) / 256`. Confidence intervals are empirical 95% bootstrap intervals with the two side outcomes kept together per seed, 1,200 bootstrap replicates. Formation delta intervals resample paired per-seed differences against the same 64-seed baseline. Intervals describe seed variation for these fixed boards and can collapse if no variation is observed. They do not establish a guaranteed matchup or account for all formations.
+
+Replays select the median-duration published-formation battle separately within each observed win, loss and draw group. They retain native events and unit snapshots every six native steps (0.2 seconds), including sampled form, maximum-health and energy-limit changes. Cast names are translated from the original native event, retaining Mew's variable abilities and Ditto's copied moves. The viewer interpolates positions, visualizes attacks and casts, and displays recorded health, energy, shielding and control states. It does not invent or resimulate combat. Score-only observation and full-event replay outcomes are checked during generation.
+
+Pressure points report aggregate observations: starting front-row and carry survival, no-cast fraction, time to first cast among casting battles, completed casts, carry control time, damage, healing and recorded hit effectiveness. These describe observed battles rather than claiming a causal explanation. Type tables use native effectiveness against actual evolved form types; trait counts are displayed separately. Native damage events can include overkill or shielding and are not interchangeable with final unit damage counters. Abilities can heal, buff or have special effects; potential type multipliers do not imply that every listed ability deals direct damage.
+
+No weather, boons, economy, shops, contested pools or item drops are modeled. No items or units were optimized or changed. Only the two stated formation adjustments were tested. Static batch data is loaded separately from per-matchup replay files.
+
+## Reproduction
+
+Use Node 24 or newer. Set `KANTO_NATIVE_ROOT` to the existing pinned `kanto-headless-v3` directory containing `headless.mjs`, `manifest.json` and native `assets/`. Run from the repository root:
+
+```powershell
+$env:KANTO_NATIVE_ROOT = 'C:/path/to/kanto-headless-v3'
+node scripts/generate-matchups.mjs
+node scripts/verify-matchups.mjs
+```
+
+The native engine is an external captured input, not bundled into the website. Its capture manifest and hashes are in `provenance.json`. The generator reads build definitions directly from `compositions.html`; rerun after changing eligible boards. The verifier checks all pair counts, tier eligibility, stars/items/cells, result counts, replay frames, hashes, and a spread of native deterministic replay cases. `sourceCommit` identifies the checkout used as the base; generation can include local changes, with `sourceHash` recording the exact composition document bytes at generation time.

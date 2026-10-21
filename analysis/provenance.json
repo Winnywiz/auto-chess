@@ -1,0 +1,1266 @@
+{
+  "source": {
+    "generated": "2026-10-21T08:34:05.165Z",
+    "version": "legacy-plus-breakpoints-v1",
+    "sourceCommit": "809f92fc40b450df1b3fe75cd7ce64a4e3955053",
+    "sourceHash": "ee60af0c1c649e2e92906d42eaa66e8a59c9c4f7384320eea62c6a8610fbfb0b",
+    "simulation": "Version 33 / sim-Bm2krZIn.js",
+    "nativeHash": "32cbfa17e84673c407cba5a26e37d101fc9f7d11e04197bbe0571623603973ce",
+    "nativeCaptured": "2026-10-21T01:40:31.114Z",
+    "generatedAt": "2026-10-21T12:08:30.054Z",
+    "seeds": 128,
+    "sides": 2,
+    "battlesPerPair": 256,
+    "formationChecks": "64 paired seeds × both sides per column flip",
+    "totalBattles": 237056,
+    "seconds": 158.54
+  },
+  "nativeManifest": {
+    "base": "https://einoow.com/playables/kanto-tactics/",
+    "downloadedAt": "2026-10-21T01:40:31.114Z",
+    "names": {
+      "sim": [
+        "sim-Bm2krZIn.js"
+      ],
+      "roster": [
+        "roster-DqNAFdJN.js"
+      ],
+      "engine": [
+        "engine-BACeQ4em.js"
+      ],
+      "pvpNet": [
+        "pvpNet-BFglq16V.js",
+        "pvpNet-Ct17u_Ys.js"
+      ]
+    },
+    "assets": [
+      {
+        "name": "index-JrhjV26e.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/index-JrhjV26e.js",
+        "cached": false,
+        "bytes": 45,
+        "sha256": "6f3cfffeed14e597880024404a85832cb91abbd386d39d25106a4bae88e20c93"
+      },
+      {
+        "name": "rolldown-runtime-8BhlS34s.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/rolldown-runtime-8BhlS34s.js",
+        "cached": true,
+        "bytes": 807,
+        "sha256": "1cb5c6ead7e29370203f12e2d5cdf50ec1f02dd70ee2d050d909afbf2406f6b1"
+      },
+      {
+        "name": "initial-css-BdK9b9mJ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/initial-css-BdK9b9mJ.js",
+        "cached": false,
+        "bytes": 1858,
+        "sha256": "70e902e631b6827ca27fa3886970f71fed435512c083b4e83080c7fa7ab94f39"
+      },
+      {
+        "name": "toolsAllowed-BbHZamZY.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/toolsAllowed-BbHZamZY.js",
+        "cached": true,
+        "bytes": 789,
+        "sha256": "7349297ab702c5e4e261a0f6cc9d29654caf0570d7b5e9099b302f2c5d0e7ae1"
+      },
+      {
+        "name": "vanilla-Dkd_w8yT.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/vanilla-Dkd_w8yT.js",
+        "cached": true,
+        "bytes": 423,
+        "sha256": "62143f7cb7643918ee876cb9e3f7433f5d475d90471d2572f62192ce813e85d4"
+      },
+      {
+        "name": "vendor-react-FdNnaCtE.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/vendor-react-FdNnaCtE.js",
+        "cached": true,
+        "bytes": 218929,
+        "sha256": "80db27c3a59d24f5a82ff170f42c7772e5a2de3d449af65a5d390610aa805e55"
+      },
+      {
+        "name": "react-Dr--T8UO.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/react-Dr--T8UO.js",
+        "cached": true,
+        "bytes": 492,
+        "sha256": "37ca09c5fceba7b02d7d65baa66fce6a4a1b9cdd3614a273f63b0c39ed8c0244"
+      },
+      {
+        "name": "preload-helper-Bcz7lVvn.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/preload-helper-Bcz7lVvn.js",
+        "cached": true,
+        "bytes": 1538,
+        "sha256": "34957ef2a26b0e43c3b9befca581e2079df2e53532693c5060b0cfb3dbde4ea5"
+      },
+      {
+        "name": "i18n-B2c28rpB.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/i18n-B2c28rpB.js",
+        "cached": false,
+        "bytes": 260881,
+        "sha256": "4d389ca2e1a6899a4c6f84e8262be25a02a24942097754b4bf013ec5e67d6da4"
+      },
+      {
+        "name": "reach-DxJaD9s1.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/reach-DxJaD9s1.js",
+        "cached": true,
+        "bytes": 180,
+        "sha256": "70e9411c89ecb8237f697f80542781a7451e199635762f2540b6c65f17f516e1"
+      },
+      {
+        "name": "roster-DqNAFdJN.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/roster-DqNAFdJN.js",
+        "cached": false,
+        "bytes": 114101,
+        "sha256": "d1ef58357b72c8e1f6b23880623062392bcb3db7b58bf16b51deb96d0d11d50b"
+      },
+      {
+        "name": "defineProperty-CWxpEQeK.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/defineProperty-CWxpEQeK.js",
+        "cached": true,
+        "bytes": 882,
+        "sha256": "1bff7f4e60f219943d87d495cbbf960808c7c907dcc38b6fca456ad99d2d918b"
+      },
+      {
+        "name": "sim-Bm2krZIn.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/sim-Bm2krZIn.js",
+        "cached": false,
+        "bytes": 167269,
+        "sha256": "32cbfa17e84673c407cba5a26e37d101fc9f7d11e04197bbe0571623603973ce"
+      },
+      {
+        "name": "music-C_ykDJVf.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/music-C_ykDJVf.js",
+        "cached": true,
+        "bytes": 6782,
+        "sha256": "2cb34771a3f06a8fdffd5eb9f5c3869c549533de7bb6924b836208e4b96c64f8"
+      },
+      {
+        "name": "shop-C4rwnWFa.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/shop-C4rwnWFa.js",
+        "cached": false,
+        "bytes": 139267,
+        "sha256": "7cb415365e5f009051a32efb0c5fc20f6f9abb2e1540dd9b77c3f877aa5c98bc"
+      },
+      {
+        "name": "pvpNet-BFglq16V.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpNet-BFglq16V.js",
+        "cached": false,
+        "bytes": 35739,
+        "sha256": "57ae4c383c2967f64e80fb69987825cbe856c035638ff300c140166294092285"
+      },
+      {
+        "name": "elite-CIn8_FPA.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/elite-CIn8_FPA.js",
+        "cached": false,
+        "bytes": 4720,
+        "sha256": "efa87a861a030b0b88d3a25f31f4daf084e5578a4419bb0d6a1c02a661555c0a"
+      },
+      {
+        "name": "audio-CAwo6e-q.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/audio-CAwo6e-q.js",
+        "cached": false,
+        "bytes": 76038,
+        "sha256": "53bd7394deb5e097b1e0987396d33f1a3d7996d8589783f30ca7509e45258018"
+      },
+      {
+        "name": "viewFlip-p9w4rw5h.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/viewFlip-p9w4rw5h.js",
+        "cached": false,
+        "bytes": 512,
+        "sha256": "a01db161e82b112cb7b0705c50068795495fad424431d80ea83cdd7d95fb6fd3"
+      },
+      {
+        "name": "runStats-Crz54YbL.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/runStats-Crz54YbL.js",
+        "cached": false,
+        "bytes": 7329,
+        "sha256": "b1fa38b156626ac94e6cf6e6031617bdf475b0b34da3dfbc447f067c4c969e10"
+      },
+      {
+        "name": "devUnlock-bBIWE15a.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/devUnlock-bBIWE15a.js",
+        "cached": true,
+        "bytes": 618,
+        "sha256": "2d8bc8ed216c542add607d03283f1a101d6cd768fc45e737369cca666ab18043"
+      },
+      {
+        "name": "progress-D80BjR16.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/progress-D80BjR16.js",
+        "cached": false,
+        "bytes": 21024,
+        "sha256": "c7fc47fbcb705fee7112f87d1651822f4bb84a7c44c6fd4ec115cc45735e3c9b"
+      },
+      {
+        "name": "a11y-DQlnvLRd.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/a11y-DQlnvLRd.js",
+        "cached": true,
+        "bytes": 653,
+        "sha256": "827deda748f0bd14208ec17740d7f823e8c0b40fee7c5c6a922073e903fb9708"
+      },
+      {
+        "name": "moments-B7jA4OzO.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/moments-B7jA4OzO.js",
+        "cached": false,
+        "bytes": 3014,
+        "sha256": "aaf2739815d77c26a7cd53ccb7270ad0c7a7d3e304a214dee3cc1376c0cee326"
+      },
+      {
+        "name": "towerRuns-C_dwP0_n.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/towerRuns-C_dwP0_n.js",
+        "cached": false,
+        "bytes": 2652,
+        "sha256": "6261c8d74994a9015224453f8174ff08179d9701e6c28d263760c4a84a475249"
+      },
+      {
+        "name": "towerWeekState-D_lTHtW5.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/towerWeekState-D_lTHtW5.js",
+        "cached": false,
+        "bytes": 1916,
+        "sha256": "50b5cdd0b0adf3ec5a80a7a42a9b5faef4ad5d38aa78fb728f915ed0eb0a4f3d"
+      },
+      {
+        "name": "towerMilestones-CFjGlPzh.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/towerMilestones-CFjGlPzh.js",
+        "cached": false,
+        "bytes": 1955,
+        "sha256": "af6b4c1e9b1a3680ebf66d84d01d2c37dd4b6822fc99208ea70470ede85a7e48"
+      },
+      {
+        "name": "account-BIxkY2sA.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/account-BIxkY2sA.js",
+        "cached": false,
+        "bytes": 45573,
+        "sha256": "e4952b69c952f7c9f0e6a7b8e1399ccaef867d2e21c0f2777877e539dbcb489e"
+      },
+      {
+        "name": "pruebaBuild-CLj3y3jL.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pruebaBuild-CLj3y3jL.js",
+        "cached": true,
+        "bytes": 146,
+        "sha256": "7cc0aa2be7e326455a3ce0e81500ff7e485545d7505deb096242b4e73b98536c"
+      },
+      {
+        "name": "pvpIdentity-Cf5GRX-B.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpIdentity-Cf5GRX-B.js",
+        "cached": false,
+        "bytes": 1217,
+        "sha256": "265e598347890d2fa67af59aee61eb9124355e22a7cb4d9d2560a5fbbee7c985"
+      },
+      {
+        "name": "pvpRankingRemote-D_838HOZ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpRankingRemote-D_838HOZ.js",
+        "cached": false,
+        "bytes": 6110,
+        "sha256": "6af3d70652a6074ac26d07043e0114944e7a0d00f69104eaaeaadf0bd7e06907"
+      },
+      {
+        "name": "leagueTiers-B0h2ZNWB.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/leagueTiers-B0h2ZNWB.js",
+        "cached": false,
+        "bytes": 10987,
+        "sha256": "34fd522c1953fd63de2a6b79a077a9f9862f15ef92ac502cb2a149d1d7c047ef"
+      },
+      {
+        "name": "TierEmblem-DcYNyVvj.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/TierEmblem-DcYNyVvj.js",
+        "cached": false,
+        "bytes": 73739,
+        "sha256": "a645309c8fc3640063b3689bebaea8ff6c08fecc59e928e4455a76a4df60c64b"
+      },
+      {
+        "name": "pvpState-Dwajzo8t.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpState-Dwajzo8t.js",
+        "cached": false,
+        "bytes": 808,
+        "sha256": "c37849fd044ae8e90a6bc6fd3b84ef10039f4689ac32d40c59013c074c5a619c"
+      },
+      {
+        "name": "profileState-CkkCyN2m.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/profileState-CkkCyN2m.js",
+        "cached": false,
+        "bytes": 5656,
+        "sha256": "bd610f95a37295836b411c2fc351069dce0bc63cafe36dcf2e98008680a48e52"
+      },
+      {
+        "name": "RankEmblem-J1tYI1Rm.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RankEmblem-J1tYI1Rm.js",
+        "cached": false,
+        "bytes": 2086,
+        "sha256": "692ea0ce51c72873a3d891bfd326af5cb93ff44fa8a01a0310cb61b54b4e637c"
+      },
+      {
+        "name": "pvpNetLite-M2---HcM.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpNetLite-M2---HcM.js",
+        "cached": true,
+        "bytes": 578,
+        "sha256": "0319d74bdd7ce630cf3df2c81c89d2d07fc42a3d994caaeed2219a929e866ba7"
+      },
+      {
+        "name": "pvpNet-Ct17u_Ys.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpNet-Ct17u_Ys.js",
+        "cached": false,
+        "bytes": 6423,
+        "sha256": "28bcc25883a01dec276a27877bc4ba8171ccc15e34aa4171a600e26f820020c9"
+      },
+      {
+        "name": "pvpMaint-BVdzWhjR.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpMaint-BVdzWhjR.js",
+        "cached": false,
+        "bytes": 1398,
+        "sha256": "b7f8530221908e11869cc6562dd0cbc5a043710abdcb4706ff6ddacd52992d56"
+      },
+      {
+        "name": "MaintNotice-MuB_KZ24.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/MaintNotice-MuB_KZ24.js",
+        "cached": false,
+        "bytes": 2740,
+        "sha256": "4e8f4a10fc4adcccb4860f971f08d90170c5b56da6d464b2ff17889b1d50427a"
+      },
+      {
+        "name": "friendsNet-B3lFBk7l.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/friendsNet-B3lFBk7l.js",
+        "cached": true,
+        "bytes": 275,
+        "sha256": "deda489c58d12d9440c1e59dba3cbd359e96d54d75376f3a46ff06d2024e58b1"
+      },
+      {
+        "name": "friends-COUlG6Hl.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/friends-COUlG6Hl.js",
+        "cached": false,
+        "bytes": 8258,
+        "sha256": "3df3d6c1aa75b180ac07b8fa226827a5a75c0aad2fa9ece57b88ee65b68638da"
+      },
+      {
+        "name": "PvpFriends-BeD6TIea.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/PvpFriends-BeD6TIea.js",
+        "cached": false,
+        "bytes": 10853,
+        "sha256": "f62544ff930d8c5723fe3048154c12a0b4468b46b11008f2f8183941bfa46b77"
+      },
+      {
+        "name": "pvpArenas-CmcBvA1H.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpArenas-CmcBvA1H.js",
+        "cached": true,
+        "bytes": 1783,
+        "sha256": "b715fb884a7f91701cf23d856e9d261f65a472f3f84b1b7e2cb3cee18f356ebc"
+      },
+      {
+        "name": "pvpView-CMVgRstp.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpView-CMVgRstp.js",
+        "cached": false,
+        "bytes": 12226,
+        "sha256": "9e1cb71753323eca6dcbb62f0b38b33b7b193f1152287404c4e68bf051a3f928"
+      },
+      {
+        "name": "BotIcon-BxL0FUfi.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/BotIcon-BxL0FUfi.js",
+        "cached": false,
+        "bytes": 7049,
+        "sha256": "2de11d12c5edf1b6f88d672ba94da51bbcd6586021122ab84c758651931de0b7"
+      },
+      {
+        "name": "PvpOnline-9dUYLt2I.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/PvpOnline-9dUYLt2I.js",
+        "cached": false,
+        "bytes": 28675,
+        "sha256": "a85d310b093a1d552ce33b69d8edafe622604c23830ba1a5e09f78aca0ebece5"
+      },
+      {
+        "name": "engine-BACeQ4em.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/engine-BACeQ4em.js",
+        "cached": false,
+        "bytes": 27029,
+        "sha256": "3f20d4ea88485234f8592c2818391b855a6f51a3e64b6960a2c8d94d12db768b"
+      },
+      {
+        "name": "store-o45GWwiN.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/store-o45GWwiN.js",
+        "cached": false,
+        "bytes": 46417,
+        "sha256": "00e11b77768d47712071d3eb965925c460b1f13619d8a27a471052dcc0412fed"
+      },
+      {
+        "name": "gpuMode-DyE76UUh.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/gpuMode-DyE76UUh.js",
+        "cached": true,
+        "bytes": 4614,
+        "sha256": "c50ff25b55bd4c7decb28fb3b46973d21712bc3788b0bb9ff384d0ed26425cef"
+      },
+      {
+        "name": "stats-Cq7gAsI0.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/stats-Cq7gAsI0.js",
+        "cached": false,
+        "bytes": 19005,
+        "sha256": "e338d022efd6065c9c5ce774fd7d70f9044e88a2d6a304888995e2cb1a405556"
+      },
+      {
+        "name": "funnel-CJ3eOBMs.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/funnel-CJ3eOBMs.js",
+        "cached": false,
+        "bytes": 2426,
+        "sha256": "a75d959be0337304476b56d4a42f40d6171b46f51c24a2c071727e467fbfa48c"
+      },
+      {
+        "name": "idleCalm-BsFmn2tq.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/idleCalm-BsFmn2tq.js",
+        "cached": false,
+        "bytes": 4469,
+        "sha256": "901f5cd79dcbd56689ac977d14262423a2fd56f6d3636bbe5c702f7f3edf0086"
+      },
+      {
+        "name": "titleState-Da1tZRy5.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/titleState-Da1tZRy5.js",
+        "cached": false,
+        "bytes": 525,
+        "sha256": "96fcf9120cebe999b0c142d06d18584a23a2c925811ac1499d58855994f1d884"
+      },
+      {
+        "name": "AdvLevelChip-B1Up3XkP.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/AdvLevelChip-B1Up3XkP.js",
+        "cached": false,
+        "bytes": 2031,
+        "sha256": "d3401c68b879f9c37a6fea6c108965416512088a20c0f7c11dff5ef4d653b9c9"
+      },
+      {
+        "name": "rankBoard-BR9sj-Zf.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/rankBoard-BR9sj-Zf.js",
+        "cached": false,
+        "bytes": 14700,
+        "sha256": "ec31fdf29f3a2d9127ea33c423671df0e9bce6ec06505f2a24534490295aef71"
+      },
+      {
+        "name": "TowerSymbol-M861J9H7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/TowerSymbol-M861J9H7.js",
+        "cached": false,
+        "bytes": 14751,
+        "sha256": "0c2769384e069b670d3b32c5182f7915a95fc858d3c070b5768d8688c89579b4"
+      },
+      {
+        "name": "trainerFaces-BQE3NsFu.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/trainerFaces-BQE3NsFu.js",
+        "cached": true,
+        "bytes": 1083,
+        "sha256": "d2dda38c5480a50a9dd5a5380567a8cb47ef7e17d4ff7e1c52a793c8fa28f0ed"
+      },
+      {
+        "name": "starArt-DrFN_r-4.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/starArt-DrFN_r-4.js",
+        "cached": true,
+        "bytes": 1218,
+        "sha256": "52d693730fe6951d1189eb45f69b6c4780efcfac438e17a840132bda4aec5d13"
+      },
+      {
+        "name": "Stars-By_FiZzE.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Stars-By_FiZzE.js",
+        "cached": false,
+        "bytes": 541,
+        "sha256": "6b82fe9890356e480ed0a721e0fa6191559d08aec0dd8208d32674557aaa6573"
+      },
+      {
+        "name": "TypeIcon-CklcZRUA.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/TypeIcon-CklcZRUA.js",
+        "cached": false,
+        "bytes": 2202,
+        "sha256": "c526da11f069f628d432483b5d604f1c2680db0f37642b6747c47b9e178449b8"
+      },
+      {
+        "name": "spriteTune-DpTuZqkB.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/spriteTune-DpTuZqkB.js",
+        "cached": true,
+        "bytes": 3703,
+        "sha256": "8fd2c16bb6340b7ec446f2748b07af8a4942237bdb19331f879c991ca4a3a7ce"
+      },
+      {
+        "name": "IntSprite-DpUC_kU1.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/IntSprite-DpUC_kU1.js",
+        "cached": true,
+        "bytes": 716,
+        "sha256": "c9a599ec41af81edf638dd3f19cbc505ae0c0408462713a8bd7f1f5a3097ea54"
+      },
+      {
+        "name": "Look-C-DUcmbA.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Look-C-DUcmbA.js",
+        "cached": false,
+        "bytes": 8186,
+        "sha256": "c089e70b4a314ab3cf65d840f9a5668e57464b9e47723d2577b8b6216b0e2fc2"
+      },
+      {
+        "name": "DiscordProfile-D7HOhmA-.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/DiscordProfile-D7HOhmA-.js",
+        "cached": false,
+        "bytes": 7421,
+        "sha256": "fede5519dabbd32064e4bd1b2c4fc46bd72666b2c8d4345c6ccb5c2019b13212"
+      },
+      {
+        "name": "profileOpen-BFUVlBwr.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/profileOpen-BFUVlBwr.js",
+        "cached": true,
+        "bytes": 1690,
+        "sha256": "c83cc3c5b38ab8493ae3986a7b9db889a6991e375ebdbccc3e881a6366998096"
+      },
+      {
+        "name": "RankExtras-DrlWS4La.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RankExtras-DrlWS4La.js",
+        "cached": false,
+        "bytes": 25825,
+        "sha256": "4c37d041f64fd093ce5774aaa7aa9232ae7418e960051a498795fca309f5f960"
+      },
+      {
+        "name": "adventureFlow-ClB7NAV7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/adventureFlow-ClB7NAV7.js",
+        "cached": false,
+        "bytes": 10866,
+        "sha256": "c7f50013a74649a89def2533df720d611efeb5b04573690362e912f82995bc47"
+      },
+      {
+        "name": "AdventurePicker-B4v_yPth.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/AdventurePicker-B4v_yPth.js",
+        "cached": false,
+        "bytes": 27100,
+        "sha256": "cd631f9f9bc79ec46cf193140522cb1029b288b0a357b2262838093adc07789b"
+      },
+      {
+        "name": "tips-CCVJPyNA.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/tips-CCVJPyNA.js",
+        "cached": false,
+        "bytes": 3228,
+        "sha256": "3c59b6f573dbe8df777104ef309c4b7e0ca6cdd24765800cbd8be555c737262d"
+      },
+      {
+        "name": "modalQueue-_ezKuE44.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/modalQueue-_ezKuE44.js",
+        "cached": false,
+        "bytes": 2797,
+        "sha256": "01320b27732555cab6cde38fb060fc6bb3b1b034076b6ba27a663336666378fa"
+      },
+      {
+        "name": "modes-BWPUAZqu.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/modes-BWPUAZqu.js",
+        "cached": false,
+        "bytes": 1876,
+        "sha256": "82080268f5db30fd26c6572d9f12c7aaf4e88b28a0c44b99fd08a62e8a63f50b"
+      },
+      {
+        "name": "StatIcon-DqyD1yHz.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/StatIcon-DqyD1yHz.js",
+        "cached": true,
+        "bytes": 3371,
+        "sha256": "c677b83bcf223da1713346515e0e8250ffd2a3b3f270e43b603aa935d427be3b"
+      },
+      {
+        "name": "Credits-BcNUiDE1.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Credits-BcNUiDE1.js",
+        "cached": false,
+        "bytes": 25324,
+        "sha256": "0ee85a6ffc441c001c4c2cd662b435dbb15e9b598cb3178078f310164e0d7deb"
+      },
+      {
+        "name": "profilePrivacy-DIpTxzL0.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/profilePrivacy-DIpTxzL0.js",
+        "cached": false,
+        "bytes": 2335,
+        "sha256": "3382943f930018c1a7857281d897b5a9114de2a21350290b5fe8251c6ea834b2"
+      },
+      {
+        "name": "teamCode-20ta1n6x.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/teamCode-20ta1n6x.js",
+        "cached": false,
+        "bytes": 1105,
+        "sha256": "f328784a172c3a90b22b20c448adb1fc6b704baa28b3383f18896478c22abcc7"
+      },
+      {
+        "name": "trackSection-Bu4-y8QK.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/trackSection-Bu4-y8QK.js",
+        "cached": false,
+        "bytes": 1390,
+        "sha256": "a00e68c1c11dde6a4789d77dc7740d371716f1c4fc96f0393cee5276e6612ea7"
+      },
+      {
+        "name": "runSummary-COrY5fsn.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/runSummary-COrY5fsn.js",
+        "cached": false,
+        "bytes": 673,
+        "sha256": "30e1f1f42c120746237a19de15237367e2459b12578e737a5506a38b5628a6a7"
+      },
+      {
+        "name": "AdventureScene-DeybKIk3.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/AdventureScene-DeybKIk3.js",
+        "cached": false,
+        "bytes": 8353,
+        "sha256": "fbf3b6c6574112d449a70aef3a4112e5f7ae1ceb5469da920ce6d68a399138ed"
+      },
+      {
+        "name": "entry-COfc1L8P.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/entry-COfc1L8P.js",
+        "cached": false,
+        "bytes": 1820,
+        "sha256": "0f95d367df00a1652ba6bf6d7bd00431cc571c216cf0ab0267de94db3edacd2d"
+      },
+      {
+        "name": "AccountUi-B4WvH0uS.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/AccountUi-B4WvH0uS.js",
+        "cached": false,
+        "bytes": 7567,
+        "sha256": "ef06a6d13abcb0d821744f2295c709e30d438fa0f8244e2edea7f6a76d75fff5"
+      },
+      {
+        "name": "RunMenu-CSgZFMW8.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RunMenu-CSgZFMW8.js",
+        "cached": false,
+        "bytes": 21155,
+        "sha256": "fa597e4f451ea951f5b77fbc099c3538fc6d8c53a4c23cb968f42cb2252adef9"
+      },
+      {
+        "name": "kt-e29-B2cVsmET.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/kt-e29-B2cVsmET.js",
+        "cached": false,
+        "bytes": 133391,
+        "sha256": "fcdb3c383ef1024f84f7c8b15d717f5bc20886ae8fac4d53dae97b30e8bc5370"
+      },
+      {
+        "name": "pt-Cfuht5bl.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pt-Cfuht5bl.js",
+        "cached": false,
+        "bytes": 221798,
+        "sha256": "b962267ac191d757fdbc8b25a66b6d2daf805d6d01445aedf75baa3d3cc33c30"
+      },
+      {
+        "name": "apply-CvDuchyD.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/apply-CvDuchyD.js",
+        "cached": false,
+        "bytes": 784,
+        "sha256": "cd1c7163aec4ce1832345a48c96f6331c0216d296018ab59ea01c2c83d6b1327"
+      },
+      {
+        "name": "ja-S9V3V5qp.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/ja-S9V3V5qp.js",
+        "cached": false,
+        "bytes": 254487,
+        "sha256": "2b2d7f9ee3fed356e69c8286bde2b674113975fbb7ff860af62159ebf08beb8d"
+      },
+      {
+        "name": "fr-BTBJe1YE.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/fr-BTBJe1YE.js",
+        "cached": false,
+        "bytes": 235776,
+        "sha256": "d3fb241637007a2b5714e2d91c4b63e21f00eb1fe6180b64af9c45356bb91620"
+      },
+      {
+        "name": "zh-CoOxhQdw.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/zh-CoOxhQdw.js",
+        "cached": false,
+        "bytes": 213943,
+        "sha256": "6ae1a6c76665e21720e010f31c7898a0df458001b402c529d18e720463e06ca7"
+      },
+      {
+        "name": "pvpMode-CR7m2oW7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpMode-CR7m2oW7.js",
+        "cached": false,
+        "bytes": 21374,
+        "sha256": "baccfe23221768318abf50799ce802b4bbe6d5b31d30c3f1248fcbaf226ef3e1"
+      },
+      {
+        "name": "viewLook-CCfMuBM0.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/viewLook-CCfMuBM0.js",
+        "cached": true,
+        "bytes": 353,
+        "sha256": "4ffa8321905156d186a7a6125f311cb0c1a17bb596743fe38994fd0369a857eb"
+      },
+      {
+        "name": "safariVariant-CxcJSDNW.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/safariVariant-CxcJSDNW.js",
+        "cached": true,
+        "bytes": 257,
+        "sha256": "a5453c605f404ab057455f96ccf48ad27b275cfcc3d626efc470e79b5ca2e9fc"
+      },
+      {
+        "name": "accountMock-Bp9wLETv.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/accountMock-Bp9wLETv.js",
+        "cached": true,
+        "bytes": 7633,
+        "sha256": "33d586329cf07e9383bc15dc43d67380247aadf5f80fff45b8c3a861a7b98c6a"
+      },
+      {
+        "name": "accountSync-CpWwyEdd.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/accountSync-CpWwyEdd.js",
+        "cached": false,
+        "bytes": 15854,
+        "sha256": "18f7f7a8994bd3c632582ce1bc71ae1a909e6937cc2cd846207ee30baf7094c4"
+      },
+      {
+        "name": "profilePub-CfjW0vJ4.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/profilePub-CfjW0vJ4.js",
+        "cached": false,
+        "bytes": 2734,
+        "sha256": "82c5441349ae10d8781b9d3d59b2f9fe26ece89e2c347b64549abf7247d5c551"
+      },
+      {
+        "name": "RunChoice-BO1CfSl9.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RunChoice-BO1CfSl9.js",
+        "cached": false,
+        "bytes": 2046,
+        "sha256": "054da42842bf25c752106a1a7b3d8c245af97e5c613408165e15d503c57c5058"
+      },
+      {
+        "name": "SignInHint-ILMtBTTg.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SignInHint-ILMtBTTg.js",
+        "cached": false,
+        "bytes": 2215,
+        "sha256": "a6d07d0cdeb1f781e62853cdba1f900adbb74e02fc23560c4341111a3e0d90d2"
+      },
+      {
+        "name": "pvpNetClient-DXFtbjkl.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pvpNetClient-DXFtbjkl.js",
+        "cached": false,
+        "bytes": 13797,
+        "sha256": "1bb6273979b2a540fc10b553acc6c021d794faeb10f4c4818b016987d0778397"
+      },
+      {
+        "name": "build-PzsnPvW8.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/build-PzsnPvW8.js",
+        "cached": true,
+        "bytes": 228339,
+        "sha256": "e69475bc4e3088d61844d1f29e43d5168813c8911aa7dd27751ac03fe64ab7c8"
+      },
+      {
+        "name": "friendsLive-DSa7DDkf.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/friendsLive-DSa7DDkf.js",
+        "cached": true,
+        "bytes": 3099,
+        "sha256": "b0a32abac7f5f426ae434892281609b98239ecfb7918ba39184292a53e306531"
+      },
+      {
+        "name": "Wiki-Q7uFiGQu.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Wiki-Q7uFiGQu.js",
+        "cached": false,
+        "bytes": 88792,
+        "sha256": "572e31e6c7a030891f94bd6951027af165eddcf70ecfd8928593bf5eb496517d"
+      },
+      {
+        "name": "feed-DyLxj_7u.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/feed-DyLxj_7u.js",
+        "cached": false,
+        "bytes": 228300,
+        "sha256": "440c7682d171b075381a8cd2cd5980327b0fa39d4bb8ce4cf773db44eb10357b"
+      },
+      {
+        "name": "vfx-DqDJbilh.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/vfx-DqDJbilh.js",
+        "cached": false,
+        "bytes": 42056,
+        "sha256": "a0d01766bc2e712c0e19032ebcac2aae583c8698ff04041e7415a53d226386fb"
+      },
+      {
+        "name": "animBake-CVEvHJhO.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/animBake-CVEvHJhO.js",
+        "cached": true,
+        "bytes": 1668,
+        "sha256": "97ed7b8b89bd51dca2f01a09d89a9e95c9ef286966b377c8a41ae5abf0ed7b14"
+      },
+      {
+        "name": "themes-DOnuDp5L.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/themes-DOnuDp5L.js",
+        "cached": true,
+        "bytes": 25138,
+        "sha256": "b58b43a3ba0eba3a4a1ab2b1ff548cff4ef0d59c13b40df9be7c48a4aa54ae19"
+      },
+      {
+        "name": "arenaFlag-B42VK0I7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/arenaFlag-B42VK0I7.js",
+        "cached": true,
+        "bytes": 340,
+        "sha256": "b44653fea14fbe1a28b1f4e1f41fb3c25c05e21f2ed451e917d9ca0e8739e0b3"
+      },
+      {
+        "name": "itemUrl-48gi4qGf.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/itemUrl-48gi4qGf.js",
+        "cached": true,
+        "bytes": 142,
+        "sha256": "e939aa89a64b385a18810416d20915d06b1ceba5bc6961aa4967a9d957c3d40b"
+      },
+      {
+        "name": "shopIcons-nPEQpT8r.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/shopIcons-nPEQpT8r.js",
+        "cached": true,
+        "bytes": 7285,
+        "sha256": "9c6278cca542adac495e07b20b8fac7eb9f48fe24cc2004fc5671aa24568044c"
+      },
+      {
+        "name": "TowerClassIcon-DtMXwFqK.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/TowerClassIcon-DtMXwFqK.js",
+        "cached": false,
+        "bytes": 916,
+        "sha256": "4ac77d7739e1d378ae7e716736081a307bf7e3b91556cdf69301b0911b4d2b3c"
+      },
+      {
+        "name": "Items-HIqPBMKj.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Items-HIqPBMKj.js",
+        "cached": false,
+        "bytes": 38919,
+        "sha256": "f3341cda52dd18f2d1420a829601975a99036afbd277667c6f49144baff1d84b"
+      },
+      {
+        "name": "dragV2-D7dMVmc3.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/dragV2-D7dMVmc3.js",
+        "cached": false,
+        "bytes": 2169,
+        "sha256": "ca61143bee399a2e0e112c3eeb02f9503679eda6cf25ce3dba40f6953c0ec4ce"
+      },
+      {
+        "name": "itemFly-ZjYSNm67.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/itemFly-ZjYSNm67.js",
+        "cached": true,
+        "bytes": 2073,
+        "sha256": "ad2f13feaeb640782f23e8dcdc65995f2110ee02636e0b0c5e19b295be34367f"
+      },
+      {
+        "name": "RoleIcon-C8xCacKx.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RoleIcon-C8xCacKx.js",
+        "cached": false,
+        "bytes": 18559,
+        "sha256": "86e0484dd36576c85205d9fc47f4f1e364f25dd042e06633f7210cc4cdfae670"
+      },
+      {
+        "name": "profileRemote-CT3XtTHp.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/profileRemote-CT3XtTHp.js",
+        "cached": false,
+        "bytes": 8588,
+        "sha256": "910c64996633829f07fd749e2270425d2ff1db98f0038b5a22ad92b9e5943c51"
+      },
+      {
+        "name": "historyModel-CAhlxGSq.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/historyModel-CAhlxGSq.js",
+        "cached": false,
+        "bytes": 1415,
+        "sha256": "c4ba13f5a1da38f0cbd1ff273e839c6338038c6ce8581cd9301eb4420d4da25a"
+      },
+      {
+        "name": "MetaPortalPanel-Bn49LA6I.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/MetaPortalPanel-Bn49LA6I.js",
+        "cached": false,
+        "bytes": 6189,
+        "sha256": "b8c07dbed850d10187ccd9c61f82795f24c3c584f1323976d3fa34430c438e1b"
+      },
+      {
+        "name": "data-CrsxVGG7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/data-CrsxVGG7.js",
+        "cached": false,
+        "bytes": 4658,
+        "sha256": "c571e480124e9f125bff52fb7e4aaf9943e06b4cf08ac345d655a4271891ca98"
+      },
+      {
+        "name": "LobbyNav-DHcpZGfw.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/LobbyNav-DHcpZGfw.js",
+        "cached": false,
+        "bytes": 37108,
+        "sha256": "d160c60f3d44aed17d202f27f2d603f4c287a5d11f45f27a9695242385152e29"
+      },
+      {
+        "name": "DiscordFeed-9fuD03S2.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/DiscordFeed-9fuD03S2.js",
+        "cached": false,
+        "bytes": 12509,
+        "sha256": "a10ee97442e013953a8429fa6e16058a9f04c90989e57a4b169b9c2dc8b084ef"
+      },
+      {
+        "name": "discordFeed-7kASA6sz.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/discordFeed-7kASA6sz.js",
+        "cached": true,
+        "bytes": 7671,
+        "sha256": "f317eb68f3cb01ea8ae8a635aa20a408961e101e25d22e7d3f2a40b8b83775a1"
+      },
+      {
+        "name": "RankUpCeremony-BpaitlmG.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RankUpCeremony-BpaitlmG.js",
+        "cached": false,
+        "bytes": 5409,
+        "sha256": "f2050b790e8b6765fa6bd868839cbd387e3f39347a00878ea0366d2dc8f5dabc"
+      },
+      {
+        "name": "rankUpCeremony-CWD7LpF7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/rankUpCeremony-CWD7LpF7.js",
+        "cached": true,
+        "bytes": 98,
+        "sha256": "3f79cdbf02f847dfdde36b02b64be6c07bfc52fea1f7a16b86b2d879928ce71a"
+      },
+      {
+        "name": "LobbyB-C17SU5Ya.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/LobbyB-C17SU5Ya.js",
+        "cached": false,
+        "bytes": 29220,
+        "sha256": "ddfae453a9f2ca046f39435d6e07fef2b31397f473d5b02749c0294008b20198"
+      },
+      {
+        "name": "ProfileParts-cX3hyvOd.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/ProfileParts-cX3hyvOd.js",
+        "cached": false,
+        "bytes": 2846,
+        "sha256": "d4d309e40c1416f80c603a44be0f58bb1d581fc303b2f3692fe2e482d8f4db3b"
+      },
+      {
+        "name": "RankUpPreview-COtKItbh.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RankUpPreview-COtKItbh.js",
+        "cached": false,
+        "bytes": 1019,
+        "sha256": "42a502ce3708aac8d5d088942e2781913b4fec90a41d18532fb476ec5651295a"
+      },
+      {
+        "name": "PvpLayer-D1zzNrBt.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/PvpLayer-D1zzNrBt.js",
+        "cached": false,
+        "bytes": 51765,
+        "sha256": "22cc60412cdbc5864501907d2511e09d339f8e740b1eb2c62a46f9d766ea4edc"
+      },
+      {
+        "name": "RoundTrack-BchgFFPh.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RoundTrack-BchgFFPh.js",
+        "cached": false,
+        "bytes": 36967,
+        "sha256": "988eea99957de21c75deda383fa68fea400ecf38034110aad8963a82b417ec7d"
+      },
+      {
+        "name": "eventRound-v8-u3ZR7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/eventRound-v8-u3ZR7.js",
+        "cached": false,
+        "bytes": 1088,
+        "sha256": "1ce0fa3e75c4e27111be6a69c62dcdb618aa73e8878c7c75fc91808ef1f4a592"
+      },
+      {
+        "name": "coinFly-pOSPhu5K.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/coinFly-pOSPhu5K.js",
+        "cached": false,
+        "bytes": 3128,
+        "sha256": "be04b621f6c2fd156aafc15e770a1e81cfbf79000840536f9c35d79e42e1b98e"
+      },
+      {
+        "name": "ShareResultButton-D6ywRd4_.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/ShareResultButton-D6ywRd4_.js",
+        "cached": false,
+        "bytes": 15112,
+        "sha256": "3a752616fcd3816b531602005baf6dc301c5b4df29b2974fbf7f3e14e2c68cee"
+      },
+      {
+        "name": "worldLayers-C3Fi0xzZ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/worldLayers-C3Fi0xzZ.js",
+        "cached": true,
+        "bytes": 125,
+        "sha256": "97a1e6dae54e1efc529aee7ba1e6de5bcb77cfea3534fd6aa429b70287ae703f"
+      },
+      {
+        "name": "TrainerIntro-Bbf4ueKE.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/TrainerIntro-Bbf4ueKE.js",
+        "cached": false,
+        "bytes": 14265,
+        "sha256": "8e29d5d425cd4ba5e102f4939b373b409555821760c1e4caf45707cbbc7eabfb"
+      },
+      {
+        "name": "ShinyMoment-DDBkE2ix.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/ShinyMoment-DDBkE2ix.js",
+        "cached": false,
+        "bytes": 2496,
+        "sha256": "188b5f97e697b9a9f545493b3303d9d03214eb425567bb6dc884e5f78d73ee32"
+      },
+      {
+        "name": "KeyChip-BgHmUREZ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/KeyChip-BgHmUREZ.js",
+        "cached": false,
+        "bytes": 1459,
+        "sha256": "e2f19b005eecdb300441639c79ad564ded7997e064e3552d320ad7339f25f74e"
+      },
+      {
+        "name": "Mate-DqRcMP3t.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Mate-DqRcMP3t.js",
+        "cached": false,
+        "bytes": 4329,
+        "sha256": "6a28806bc05dba65b103fe4275f40c100df13dca450e777e43d0baf779a821da"
+      },
+      {
+        "name": "SafariTray-DnHBgFbX.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SafariTray-DnHBgFbX.js",
+        "cached": false,
+        "bytes": 9081,
+        "sha256": "e0094bb6ddecf48f602bc516674f25c5b103f7d310e1a639e332328e6ddfab20"
+      },
+      {
+        "name": "hudFx-BmRiAmm-.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/hudFx-BmRiAmm-.js",
+        "cached": false,
+        "bytes": 1140,
+        "sha256": "a5f21d3f9fe00ba3ddc421bae528977be0eda05108960ac8d36b35d6dedab135"
+      },
+      {
+        "name": "SafariV2-C86lHJxW.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SafariV2-C86lHJxW.js",
+        "cached": false,
+        "bytes": 6788,
+        "sha256": "1f136d1e910ed7bf3e3c206a01ac9316f713d3b4b3aa8d5b4910590783407940"
+      },
+      {
+        "name": "Boom-dWfkhISi.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Boom-dWfkhISi.js",
+        "cached": false,
+        "bytes": 6631,
+        "sha256": "c14bc1deb6df6dc1ecdc0638acbf4e2ee58d83c013d27cc7d9b009ad6e6c3dd0"
+      },
+      {
+        "name": "LobbyDev-B_E8T2W_.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/LobbyDev-B_E8T2W_.js",
+        "cached": false,
+        "bytes": 2028,
+        "sha256": "f4a3acabea6cd3c9adb6445dca2a18eb9c2a460eb13e29bda3d08067eb192642"
+      },
+      {
+        "name": "PublicProfile-CD_IfBw_.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/PublicProfile-CD_IfBw_.js",
+        "cached": false,
+        "bytes": 20500,
+        "sha256": "b0c16cc2c989458d393bc7be57992522d42305e0a7e0da06ec500a82cab7ca93"
+      },
+      {
+        "name": "MonImg-Db4IaKv7.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/MonImg-Db4IaKv7.js",
+        "cached": true,
+        "bytes": 1089,
+        "sha256": "c32bf81cda6dce5ca2b1b83f82eddf53a3f469972924ac416992d319025b9763"
+      },
+      {
+        "name": "HybridScene-D7isW0OV.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/HybridScene-D7isW0OV.js",
+        "cached": false,
+        "bytes": 27993,
+        "sha256": "8b353282d8e245acae482a7c97889607d71023c71ea49c0ba0b4a8c34923f796"
+      },
+      {
+        "name": "common-BCWeno4T.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/common-BCWeno4T.js",
+        "cached": false,
+        "bytes": 379770,
+        "sha256": "0bed5a740ba3a03817797a6cf29fe5cbe1654deb92c161b6440fcd61d99d9c5d"
+      },
+      {
+        "name": "pcGrab-vMcjV4Wl.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/pcGrab-vMcjV4Wl.js",
+        "cached": false,
+        "bytes": 3993,
+        "sha256": "d795969b9cfa414b41d7649155cd6f64baec81392f11c0454c0d30df0d606306"
+      },
+      {
+        "name": "shopPeek-DAtWOiy0.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/shopPeek-DAtWOiy0.js",
+        "cached": false,
+        "bytes": 951,
+        "sha256": "870386b89a5dc97c8998a187a64aa6341da59a6f860a1d4111e0fc967352b6c9"
+      },
+      {
+        "name": "CylinderGeometry-BwJug9-T.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/CylinderGeometry-BwJug9-T.js",
+        "cached": true,
+        "bytes": 5657,
+        "sha256": "ae13bc80fba5796a42d6d185bd1551fb61b1e5cd5041aa270489d5d859a01ccf"
+      },
+      {
+        "name": "DirectionalLight-B4staDQj.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/DirectionalLight-B4staDQj.js",
+        "cached": true,
+        "bytes": 3359,
+        "sha256": "b6e3c8b64fb0ada0199cb64c33bad94f0ebed22a31a5340eb840b50ce3d3e5c4"
+      },
+      {
+        "name": "arenaArt-mhPaItb9.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/arenaArt-mhPaItb9.js",
+        "cached": true,
+        "bytes": 9485,
+        "sha256": "5c40033376b49d2fcaa14f1bebb1a918c68ed5ad318ced52023e6077f34ed219"
+      },
+      {
+        "name": "arenas-BUPfWuXn.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/arenas-BUPfWuXn.js",
+        "cached": false,
+        "bytes": 83577,
+        "sha256": "d57b663d93fe5c75d38602ef6f2d6fa66d87a24a52ff4ffe9b890a3661ddec1e"
+      },
+      {
+        "name": "placeVariants-B2ThmmPm.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/placeVariants-B2ThmmPm.js",
+        "cached": true,
+        "bytes": 37347,
+        "sha256": "3e58b90524fdd87f95e51fad6c1f3d84f319be124b3683904050961fc058f63f"
+      },
+      {
+        "name": "GameLayer-6NGX7-ED.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/GameLayer-6NGX7-ED.js",
+        "cached": false,
+        "bytes": 167750,
+        "sha256": "e289b63e1e84a0caf0ee2e3af6268445643525f05e90971615bc2fe693caa5ae"
+      },
+      {
+        "name": "HallOfFame-BzWziHdw.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/HallOfFame-BzWziHdw.js",
+        "cached": false,
+        "bytes": 8062,
+        "sha256": "82b034c999a0e0226f639104bc94658e7ddd4d0ed37b6b1862fc4fa7de87c4e9"
+      },
+      {
+        "name": "EventRound-2FnK1FDx.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/EventRound-2FnK1FDx.js",
+        "cached": false,
+        "bytes": 40105,
+        "sha256": "556f158017a80a4818fd8fb5b1f1472c958a02f5ecb9e87b95afb0a3e5526bf8"
+      },
+      {
+        "name": "GymPick-B1oE4_k8.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/GymPick-B1oE4_k8.js",
+        "cached": false,
+        "bytes": 5257,
+        "sha256": "342462876e1019d1d03a6e626cee0e79a514fb6b210ddd2540565b1f0ab6209e"
+      },
+      {
+        "name": "SneakPick-CkjhcGS2.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SneakPick-CkjhcGS2.js",
+        "cached": false,
+        "bytes": 3369,
+        "sha256": "a9b1313f9fa25027e2ee78c2c2f7b5d8a415c0645048e4ee5cf21e01bed3eff1"
+      },
+      {
+        "name": "Evolution-s3aqJkq1.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/Evolution-s3aqJkq1.js",
+        "cached": false,
+        "bytes": 8863,
+        "sha256": "c913d95c7d08fbeb37bef6839ad8f45c2a719d78f82d3ba643d54de550a43412"
+      },
+      {
+        "name": "SpecialMoves-HUsj0G8J.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SpecialMoves-HUsj0G8J.js",
+        "cached": false,
+        "bytes": 3007,
+        "sha256": "51e99a0e174700e11b7bb727795ca6ce12c0c2bbe6aebd5e8ab79b5875941458"
+      },
+      {
+        "name": "introPreload-jdthcAiF.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/introPreload-jdthcAiF.js",
+        "cached": false,
+        "bytes": 1329,
+        "sha256": "9bdae6918fb3096e4b7f32a7752ae1affb77593ca7b1d02c612a7e0d0b1e41cb"
+      },
+      {
+        "name": "PveMate-C_fh8-WB.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/PveMate-C_fh8-WB.js",
+        "cached": false,
+        "bytes": 1362,
+        "sha256": "71545c046b0d15b157cfaa784cd26d80762e24edd95ab5ddfc7d66d373315e77"
+      },
+      {
+        "name": "AdminTools-3K_xpOTj.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/AdminTools-3K_xpOTj.js",
+        "cached": false,
+        "bytes": 21676,
+        "sha256": "88fa6f899c34bcc2a2abf23a229df095d3f06522fcf13aeea1e5c526cee5a9ac"
+      },
+      {
+        "name": "mount-DvdDZz2V.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/mount-DvdDZz2V.js",
+        "cached": false,
+        "bytes": 4482,
+        "sha256": "23b2e1281bf51b5fefdda10294d345b100b60fedeaae81afe5c41f6c0bc40396"
+      },
+      {
+        "name": "howText-Bp6qtOfE.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/howText-Bp6qtOfE.js",
+        "cached": false,
+        "bytes": 1333,
+        "sha256": "e1649e7c8c35011c2adcf42b3e3a823c3b649452edbc11b59f99ab561f8e4498"
+      },
+      {
+        "name": "CoinLab-DlaZ0b_n.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/CoinLab-DlaZ0b_n.js",
+        "cached": false,
+        "bytes": 20606,
+        "sha256": "5d0ebf6d5f411081acdc1cb661cecef73f2cbf55ec22e97474147f695582def2"
+      },
+      {
+        "name": "sceneShot-BtrI4TDO.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/sceneShot-BtrI4TDO.js",
+        "cached": false,
+        "bytes": 3435,
+        "sha256": "12cc3cb97f1e49ad4495018a92a363d28fd9168a63ca1fa27272f60083224b1b"
+      },
+      {
+        "name": "MoveLab-BmWaZWQZ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/MoveLab-BmWaZWQZ.js",
+        "cached": false,
+        "bytes": 12978,
+        "sha256": "67329c78c133f47eacdc3572b71763b9467c86e7f7122abc2dd3a83105fdb83e"
+      },
+      {
+        "name": "mount-CLWP4Z3w.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/mount-CLWP4Z3w.js",
+        "cached": false,
+        "bytes": 15610,
+        "sha256": "9c2867450c31e4f35d4ea2fa2c87d2919bc4b189bc80b1ed627f8101b01a1030"
+      },
+      {
+        "name": "historyMock-CKZLPKF6.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/historyMock-CKZLPKF6.js",
+        "cached": false,
+        "bytes": 5856,
+        "sha256": "57333bfdd2949c6b6dd873285d2f5595e49e01d0c74c7dcde2f91f63d5481dbc"
+      },
+      {
+        "name": "entry-qjcBoSJT.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/entry-qjcBoSJT.js",
+        "cached": false,
+        "bytes": 24726,
+        "sha256": "f6a72a4798ce8fb21c20bf856cb1152ba601f521806f0fac7a9e320a02a0561d"
+      },
+      {
+        "name": "RankMockPc-C3QCewYb.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/RankMockPc-C3QCewYb.js",
+        "cached": false,
+        "bytes": 21058,
+        "sha256": "a7539b220232c1e6543298bc5e149a1226812f891bde8c69a7e6f589e5e0af26"
+      },
+      {
+        "name": "discordFeedMock-CmyOZoei.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/discordFeedMock-CmyOZoei.js",
+        "cached": true,
+        "bytes": 7435,
+        "sha256": "6537cefdd69b5c5a51e44f179a2f8dc036958d7a27cb39cd9ed7170150d94d40"
+      },
+      {
+        "name": "vfxLab-BSDInT2E.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/vfxLab-BSDInT2E.js",
+        "cached": false,
+        "bytes": 1105,
+        "sha256": "e6a04de93b370023d68553fa07941925448a62462de21062a1dfa7b537066253"
+      },
+      {
+        "name": "propsLab-D7qmJcjw.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/propsLab-D7qmJcjw.js",
+        "cached": false,
+        "bytes": 25240,
+        "sha256": "d4a14d2022627b7bcd824117f604b4b25f39a5375bade7edab376721b82c6b24"
+      },
+      {
+        "name": "SafariScreen-CM0QydQZ.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/SafariScreen-CM0QydQZ.js",
+        "cached": false,
+        "bytes": 11931,
+        "sha256": "17391c5f695f644e7595e98559f04150a06054dbdf2d624411368bd8fc3992b8"
+      },
+      {
+        "name": "ProfilePanel--kV7Mffc.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/ProfilePanel--kV7Mffc.js",
+        "cached": false,
+        "bytes": 11099,
+        "sha256": "391e8892cfaf344f56381ea327e959f935e2a5110807b3d63c4fbe03806d62c1"
+      },
+      {
+        "name": "lobbyArtSets-C_PmQ2b2.js",
+        "url": "https://einoow.com/playables/kanto-tactics/assets/lobbyArtSets-C_PmQ2b2.js",
+        "cached": true,
+        "bytes": 10140,
+        "sha256": "8a3f6a7803e7c4be92c12c5a19378e53608275a80f13f12a91b04db6631032d3"
+      }
+    ]
+  },
+  "sourceBuilds": "11f639e4469cf2116be0acfb40db36cd0c08557494622eca13073b0889c7974d",
+  "pairResults": "2265859500192d5369b51f1c33b9f685ca25e2ef00a9413af3f203243e1c9312"
+}

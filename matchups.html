@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="viridian">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101914">
+  <meta name="description" content="Compare S and A tier Kanto Tactics compositions with simulated matchups, battle replays, weaknesses and native type interactions.">
+  <title>Kanto Tactics | Matchup lab</title>
+  <link rel="stylesheet" href="matchups.css">
+  <script src="matchups.js" type="module"></script>
+</head>
+<body>
+  <header class="lab-header"><a class="brand" href="index.html">KANTO TACTICS</a><nav aria-label="Pages"><a href="index.html">Builder</a><a href="compositions.html">Compositions</a><a href="matchups.html" aria-current="page">Matchups</a></nav><select id="theme" aria-label="Theme"><option value="viridian">Viridian Forest</option><option value="pallet">Pallet Town</option></select></header>
+  <main>
+    <div class="page-heading"><div><p class="eyebrow">S &amp; A TIER / BATTLE ANALYSIS</p><h1>Know your matchup.</h1><p class="intro">Compare exact builds. Find the pressure points. Watch the battle unfold.</p></div><label class="level-label">Team level<select id="level"><option value="9">Level 9 cap</option><option value="8">Level 8 cap</option></select></label></div>
+    <p id="status" role="status">Loading measured matchups…</p>
+    <div id="lab" hidden>
+      <section class="versus" aria-label="Choose compositions">
+        <article class="team-card home"><div class="team-heading"><span class="side-dot"></span><h2>Your composition</h2></div><label class="sr-only" for="team-a">Your composition</label><select id="team-a"></select><div id="roster-a"></div></article>
+        <button id="swap" class="swap" aria-label="Swap compositions" title="Swap compositions">⇄</button>
+        <article class="team-card away"><div class="team-heading"><span class="side-dot"></span><h2>Opponent</h2></div><label class="sr-only" for="team-b">Opponent composition</label><select id="team-b"></select><div id="roster-b"></div></article>
+      </section>
+      <section id="result" class="result-panel" aria-label="Measured matchup result" aria-live="polite"></section>
+      <div class="analysis-grid">
+        <section class="panel"><p class="eyebrow">WHAT THE BATTLES SHOW</p><h2>Pressure points</h2><div id="weaknesses"></div></section>
+        <section class="panel"><p class="eyebrow">SAME SEEDS / SAME EQUIPMENT</p><h2>Formation check</h2><div id="formation"></div></section>
+      </div>
+      <section class="panel replay-panel" aria-labelledby="replay-heading">
+        <div class="section-heading"><div><p class="eyebrow">RECORDED SIMULATION</p><h2 id="replay-heading">Watch the matchup</h2></div><label>Replay example<select id="replay-select" aria-label="Replay example"></select></label></div>
+        <p id="replay-note" class="muted"></p><p id="replay-status" role="status"></p>
+        <div class="replay-grid"><div><div class="arena-wrap"><canvas id="arena" width="840" height="780" aria-label="Recorded battle replay. Unit details and battle events are available below."></canvas><div class="arena-legend"><span class="home-text">● Your team</span><span class="away-text">● Opponent</span><span id="battle-outcome"></span></div></div>
+          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay">↺</button><output id="clock">0.0 / 0.0s</output><label class="sr-only" for="speed">Playback speed</label><select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+          <label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0">
+          <details class="unit-detail"><summary>Unit health &amp; energy at this moment</summary><div id="unit-state"></div></details>
+        </div><div class="timeline"><h3>Battle timeline</h3><p class="muted">Select an event to jump to it.</p><ol id="events" aria-label="Battle events"></ol></div></div>
+      </section>
+      <section class="panel"><div class="section-heading"><div><p class="eyebrow">NATIVE COMBAT TYPES</p><h2>Type interactions</h2></div></div><p class="muted">Potential multipliers for fixed damaging abilities and explicitly typed empowered attacks against the starting evolved forms. Separate from trait bonuses, defenses, items and targeting. Variable abilities and other effects are called out below. A favorable multiplier alone does not establish a counter.</p><div class="type-grid"><div><h3>Your ability types → opponent</h3><div id="types-a"></div></div><div><h3>Opponent ability types → your team</h3><div id="types-b"></div></div></div></section>
+      <section class="panel"><div class="section-heading"><div><p class="eyebrow">ALL QUALIFYING OPPONENTS</p><h2>Find a counter</h2></div></div><p class="muted">Opponents are sorted by your lowest battle score. Select a row to inspect that matchup.</p><div class="table-scroll"><table class="counter-table"><thead><tr><th>Opponent build</th><th>Your score</th><th>95% interval</th><th>W / D / L</th></tr></thead><tbody id="counter-list"></tbody></table></div></section>
+      <details class="panel methodology"><summary>How these results were measured</summary><div id="methodology"></div><p>A battle score is (wins + half draws) ÷ battles, not a ranked match win rate or placement prediction. Intervals use a paired-seed bootstrap: both sides of a seed stay together. They describe seed variation for these fixed boards, not uncertainty across every possible formation. Near-0% and 100% empirical intervals can collapse when no seed variation was observed; they are not guarantees.</p><p>Replays are median-duration examples within each observed outcome from the published-formation batch. Missing outcomes were not observed. Snapshots are sampled every 0.2 seconds; attacks, abilities, damage, healing, control and eliminations come from the native event stream. Rendering interpolates between snapshots and does not run a second combat engine.</p><p>Stars, items and formations are fixed. No shops, contested pools, component drops, weather or boons are simulated. Tier eligibility follows the existing composition list at each selected level. B-tier builds and self-matchups are excluded. Changing levels can change eligibility.</p><p><a href="analysis/provenance.json">Download provenance</a> · <a href="analysis/matchups.json">Download matchup data</a> · <a href="https://github.com/Winnywiz/auto-chess">Source code</a></p></details>
+    </div>
+  </main>
+  <footer>KANTO TACTICS <span>Study the battle. Adapt the formation.</span></footer>
+</body>
+</html>
