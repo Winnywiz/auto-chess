@@ -6,6 +6,7 @@ import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cache = path.join(root, 'work', 'composition-run');
@@ -13,6 +14,7 @@ const assets = path.join(cache, 'game-assets');
 const assetBase = 'https://einoow.com/playables/kanto-tactics/assets/';
 const simName = 'sim-Bm2krZIn.js'; // Frozen Version 33 battle implementation.
 const seeds = [11, 23, 37, 53, 71, 97, 131, 173];
+const matchCachePath = path.join(cache, 'match-cache.json');
 
 function ensureGameAssets() {
   fs.mkdirSync(assets, { recursive: true });
@@ -119,18 +121,35 @@ if (isMainThread) {
   const input = JSON.parse(fs.readFileSync(path.join(cache, 'input.json')));
   const moduleUrl = ensureGameAssets();
   const tasks = tasksFor(input);
-  const concurrency = Math.min(Number(process.env.COMPOSITION_WORKERS || 4), os.availableParallelism(), 8);
+  const engineHash = createHash('sha256').update(fs.readFileSync(path.join(assets, simName))).digest('hex');
+  const cacheHeader = { version: 1, engine: simName, engineHash, matchRules: 'pvp-clock-both-sides-v1', seeds };
+  const existing = fs.existsSync(matchCachePath) ? JSON.parse(fs.readFileSync(matchCachePath)) : null;
+  const scores = existing?.version === cacheHeader.version && existing?.engineHash === cacheHeader.engineHash
+    && existing?.matchRules === cacheHeader.matchRules && existing?.scores
+    && JSON.stringify(existing?.seeds) === JSON.stringify(seeds) ? existing.scores : {};
+  const keyFor = task => createHash('sha256').update(JSON.stringify([task.teamA, task.teamB])).digest('hex');
+  const pending = new Map();
+  for (const task of tasks) {
+    task.cacheKey = keyFor(task);
+    if (scores[task.cacheKey] === undefined && !pending.has(task.cacheKey)) pending.set(task.cacheKey, task);
+  }
+  const concurrency = Math.min(Number(process.env.COMPOSITION_WORKERS || 8), os.availableParallelism(), 8);
   const batches = Array.from({ length: concurrency }, () => []);
-  tasks.forEach((task, index) => batches[index % concurrency].push(task));
-  console.log(`Scoring ${input.candidates.length} candidates with ${tasks.length} pairs, ${seeds.length} seeds and ${concurrency} workers`);
-  const results = [];
-  await Promise.all(batches.map(batch => new Promise((resolve, reject) => {
+  [...pending.values()].forEach((task, index) => batches[index % concurrency].push(task));
+  console.log(`Scoring ${input.candidates.length} candidates with ${tasks.length} pairs: ${tasks.length - pending.size} cached, ${pending.size} new, ${concurrency} workers`);
+  const computed = [];
+  await Promise.all(batches.filter(batch => batch.length).map(batch => new Promise((resolve, reject) => {
     const worker = new Worker(fileURLToPath(import.meta.url), { workerData: { batch, moduleUrl, seeds } });
-    worker.on('message', message => { if (message.type === 'result') results.push(...message.results); });
+    worker.on('message', message => { if (message.type === 'result') computed.push(...message.results); });
     worker.on('error', reject);
     worker.on('exit', code => code === 0 ? resolve() : reject(new Error(`Worker exited ${code}`)));
   })));
-  if (results.length !== tasks.length) throw new Error(`Only ${results.length}/${tasks.length} results received`);
+  if (computed.length !== pending.size) throw new Error(`Only ${computed.length}/${pending.size} new pair scores received`);
+  for (const result of computed) scores[result.cacheKey] = result.score;
+  fs.writeFileSync(matchCachePath, JSON.stringify({ ...cacheHeader, scores }));
+  const results = tasks.map(task => ({ kind: task.kind, level: task.level, a: task.a, b: task.b,
+    group: task.group, score: scores[task.cacheKey] }));
+  if (results.some(result => result.score === undefined)) throw new Error('Missing pair score in cache');
   writeResults(input, results);
 } else {
   const sim = await import(workerData.moduleUrl);
@@ -154,7 +173,7 @@ if (isMainThread) {
   }
   const chunk = [];
   for (const task of workerData.batch) {
-    chunk.push({ kind: task.kind, level: task.level, a: task.a, b: task.b, group: task.group, score: match(task.teamA, task.teamB) });
+    chunk.push({ cacheKey: task.cacheKey, score: match(task.teamA, task.teamB) });
     if (chunk.length >= 100) parentPort.postMessage({ type: 'result', results: chunk.splice(0) });
   }
   if (chunk.length) parentPort.postMessage({ type: 'result', results: chunk });
