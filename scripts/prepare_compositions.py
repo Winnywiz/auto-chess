@@ -154,6 +154,9 @@ def main():
     for origin, source_rows in (("trait", trait_rows), ("legacy", old["rows"])):
         for row in source_rows:
             candidate = {k: row.get(k) for k in ("id", "name", "carry", "category", "strategy", "rollLevel", "locked", "boards")}
+            if candidate["id"] == "adapt-sheet-2":
+                # Gengar is the two-cost reroll target. Venusaur 3★ must be found earlier.
+                candidate.update(category="reroll-6", strategy="Reroll 6", rollLevel=6)
             candidate["origin"] = origin
             candidate["source"] = row.get("source", "Trait breakpoint search")
             candidate["family"] = trait_family(row, roster, data["traits"])
