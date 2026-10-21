@@ -13,6 +13,8 @@ The preparation step loads the 23 candidate paths from commit
 paths already in `compositions.html`. It verifies that the trait set still
 includes Normal 6, Water 6, and Ice 4. The current official meta API and
 workbook are read only as opponent sources in this scoring run.
+The apply step also restores each legacy path's level 5-8 bridge boards,
+item holders, pivot advice, and variants from that same earlier commit.
 
 The scorer uses the frozen Version 33 game module `sim-Bm2krZIn.js`, eight
 fixed seeds, and both board sides. Pair results are reused in both directions

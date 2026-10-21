@@ -9,12 +9,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 HTML = ROOT / "compositions.html"
 RESULTS = ROOT / "work" / "composition-run" / "scored.json"
+LEGACY = ROOT / "work" / "composition-run" / "legacy.html"
 
 
 def replace_once(text, old, new):
     if text.count(old) != 1:
         raise ValueError(f"Expected exactly one match for {old[:70]!r}, got {text.count(old)}")
     return text.replace(old, new)
+
+
+def embedded(text, name):
+    marker = "window." + name + "="
+    start = text.index(marker) + len(marker)
+    return json.JSONDecoder().raw_decode(text[start:])[0]
 
 
 def main():
@@ -24,6 +31,20 @@ def main():
     text, count = re.subn(r"window\.KANTO_COMPS=\{[^\n]*?\};", lambda _: script, text, count=1)
     if count != 1:
         raise ValueError("Could not replace composition snapshot")
+
+    guides = embedded(text, "KANTO_GUIDES")
+    legacy_guides = embedded(LEGACY.read_text(), "KANTO_GUIDES")
+    combined = {**guides["guides"], **legacy_guides["guides"]}
+    missing_guides = {row["id"] for row in result["rows"]} - combined.keys()
+    if missing_guides:
+        raise ValueError(f"Missing progression guides: {sorted(missing_guides)}")
+    guides["version"] = result["version"]
+    guides["note"] = "Suggested level 5-8 bridge boards, item holders and pivots for both legacy and breakpoint paths. Cap boards are battle-scored separately."
+    guides["guides"] = combined
+    guide_script = "window.KANTO_GUIDES=" + json.dumps(guides, ensure_ascii=False, separators=(",", ":")) + ";"
+    text, count = re.subn(r"window\.KANTO_GUIDES=\{[^\n]*?\};", lambda _: guide_script, text, count=1)
+    if count != 1:
+        raise ValueError("Could not replace progression guides")
 
     old_intro = '<p class="cap-context">Browse S, A and B tiers. Open a composition for level 5-8 boards, item holders and pivots.</p>'
     new_intro = '<p class="cap-context">Legacy paths and trait breakpoint builds share one Version 33 battle score. Browse every measured tier; open a board for its formation and item plan.</p>'
@@ -66,7 +87,7 @@ def main():
         if obsolete in text:
             text = replace_once(text, obsolete, '')
     HTML.write_text(text)
-    print(f"Embedded {len(result['rows'])} rescored paths in {HTML}")
+    print(f"Embedded {len(result['rows'])} rescored paths and {len(combined)} progression guides in {HTML}")
 
 
 if __name__ == "__main__":
