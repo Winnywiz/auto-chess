@@ -128,7 +128,7 @@ $('.detail-tabs').onclick=e=>{const button=e.target.closest('button[data-view]')
 matchMedia('(min-width:851px)').addEventListener('change',e=>{if(e.matches&&$('.workspace').dataset.view==='replay')selectView('stats');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 async function init(){try{const response=await fetch('analysis/matchups.json');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));$('#level').value=params.get('level')==='8'?'8':'9';
- $('#lab').hidden=false;$('#status').textContent='';chooseLevel();
+ $('#lab').hidden=false;$('#status').textContent='';chooseLevel();if(params.get('view')==='replay')selectView('replay');
  }catch(e){$('#status').textContent='Could not load matchups. Reload to try again.';}}
 init();
 document.fonts.ready.then(()=>draw());

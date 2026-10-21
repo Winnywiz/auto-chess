@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / "media"
-PAGES = (ROOT / "index.html", ROOT / "compositions.html")
+PAGES = (ROOT / "builder.html", ROOT / "compositions.html")
 
 
 def main():

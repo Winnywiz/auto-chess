@@ -1,0 +1,130 @@
+/* Composition guides share the builder's Viridian and Pallet theme tokens. */
+.comp-details { display: block; padding: 24px 28px 28px; }
+.detail-context { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; margin-bottom: 16px; }
+.detail-context b { font-size: 18px; }
+.detail-context > span { font-size: 13px; color: var(--muted); }
+.composition-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.composition-tabs button { min-height: 43px; border: 1px solid transparent; border-radius: 7px; padding: 10px 15px; background: transparent; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; }
+.composition-tabs button:hover { color: var(--ink); background: var(--raised); }
+.composition-tabs button[aria-selected="true"] { color: var(--lime); background: var(--raised); border-color: var(--green); }
+.composition-panel { min-width: 0; }
+.overview-grid { display: grid; grid-template-columns: minmax(190px, .9fr) minmax(340px, 1.8fr) minmax(190px, .9fr); gap: 28px; }
+.overview-grid > * { min-width: 0; }
+.overview-grid .comp-board-panel { grid-row: auto; }
+.overview-grid .comp-variants { grid-row: auto; }
+.comp-trait { cursor: help; }
+:is(.comp-trait, .composition-tabs button, .usage-row, .mini-hex, .comp-item, .equipment-card):focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.formation-edge { text-align: center; font-size: 10px; letter-spacing: 1.6px; color: var(--muted); margin: 17px 0 8px; }
+.mini-board { gap: 7px; padding-right: 6px; }
+.mini-board-row { gap: 5px; }
+.board-cell { display: block; position: relative; min-width: 0; padding-bottom: 9px; }
+.board-cell .mini-hex { width: 100%; }
+.mini-hex.geared { background: color-mix(in srgb, var(--green) 23%, var(--raised)); }
+.board-cell .mini-hex > img { width: 82%; height: 76%; margin-top: -4px; }
+.mini-hex .mini-star { bottom: 9%; font-size: 10px; }
+.board-equipment { display: flex; align-items: center; justify-content: center; gap: 1px; position: absolute; z-index: 2; left: 50%; bottom: 0; transform: translateX(-50%); width: max-content; }
+.board-equipment .comp-item { display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 1px; }
+.board-equipment .comp-item img { width: clamp(12px, 1.4vw, 19px); height: clamp(12px, 1.4vw, 19px); }
+.build-options { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 16px; }
+.build-options > summary { width: fit-content; color: var(--green); font-size: 14px; cursor: pointer; padding: 6px 0; }
+.build-options > summary span { color: var(--muted); margin-left: 8px; }
+.build-options .carry-variants { margin-top: 16px; border: 0; padding-bottom: 0; }
+.insight-layout { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.5fr); gap: 32px; }
+.insight-list { min-width: 0; }
+.insight-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+.insight-heading h3, .counter-columns h3, .counter-empty h3 { font-size: 17px; margin: 0; }
+.insight-heading > span { font-size: 12px; color: var(--muted); }
+.usage-row { width: 100%; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 10px; position: relative; text-align: left; align-items: center; padding: 10px 12px 14px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); color: var(--ink); cursor: pointer; margin-bottom: 7px; overflow: hidden; }
+.usage-row:hover, .usage-row.selected { background: var(--raised); border-color: var(--green); }
+.usage-row > img { width: 43px; height: 42px; object-fit: contain; image-rendering: pixelated; }
+.usage-row b { font-size: 14px; font-weight: 600; }
+.usage-row small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+.usage-row > strong { color: var(--lime); font-size: 16px; font-weight: 600; }
+.usage-track { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--line); }
+.usage-track > i { display: block; height: 100%; background: var(--green); }
+.usage-source { font-size: 12px; line-height: 1.7; color: var(--muted); margin: 16px 0 0; }
+.usage-source a { color: var(--green); }
+.insight-hero { display: flex; flex-wrap: wrap; align-items: center; gap: 17px; border: 1px solid var(--line); border-radius: 10px; padding: 20px; background: var(--surface); margin-bottom: 22px; }
+.insight-hero > img { width: 75px; height: 75px; object-fit: contain; image-rendering: pixelated; }
+.insight-hero h3 { margin: 5px 0; font-size: 24px; }
+.insight-hero p { margin: 0; color: var(--muted); font-size: 14px; }
+.eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); }
+.insight-number { margin-left: auto; color: var(--lime); font-size: 30px; }
+.insight-number small { display: block; font-size: 12px; color: var(--muted); margin-top: 5px; }
+.insight-block { margin: 22px 0; }
+.insight-block h4 { margin: 0 0 12px; font-size: 15px; }
+.insight-block p, .counter-empty p { font-size: 14px; line-height: 1.8; margin: 8px 0 14px; color: var(--muted); }
+.equipment-cards { display: flex; flex-wrap: wrap; gap: 9px; }
+.equipment-card { display: flex; align-items: center; gap: 9px; border: 1px solid var(--line); border-radius: 7px; padding: 12px; background: var(--surface); cursor: help; }
+.equipment-card img { width: 27px; height: 27px; image-rendering: pixelated; }
+.equipment-card b { font-size: 13px; font-weight: 500; }
+.star-distribution { display: grid; gap: 13px; }
+.star-distribution > div { display: grid; grid-template-columns: 38px minmax(45px, 1fr) 60px 65px; gap: 10px; align-items: center; font-size: 13px; }
+.star-distribution > div > span { color: var(--gold); }
+.star-distribution i { display: block; height: 8px; background: var(--raised); border-radius: 4px; overflow: hidden; }
+.star-distribution i > i { background: var(--green); }
+.star-distribution b { font-weight: 500; text-align: right; }
+.star-distribution small { color: var(--muted); font-size: 12px; text-align: right; }
+.trait-choice { grid-template-columns: 34px minmax(0, 1fr); padding: 13px; }
+.trait-choice > img { width: 27px; height: 27px; }
+.trait-hero > img { width: 45px; height: 45px; }
+.trait-breakpoints { display: grid; gap: 9px; }
+.trait-step { display: flex; align-items: flex-start; gap: 13px; border: 1px solid var(--line); border-radius: 7px; padding: 14px; background: var(--surface); }
+.trait-step.current { border-color: var(--green); background: color-mix(in srgb, var(--raised) 80%, var(--green) 6%); }
+.trait-step-count { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); font-size: 15px; flex-shrink: 0; }
+.trait-step.current .trait-step-count { background: var(--green); color: var(--paper); border-color: var(--green); }
+.trait-step b { font-size: 13px; color: var(--muted); font-weight: 600; }
+.trait-step.current b { color: var(--lime); }
+.trait-step p { font-size: 14px; line-height: 1.7; margin: 5px 0 0; color: var(--ink); }
+.trait-step small { display: block; margin-top: 9px; font-size: 12px; color: var(--muted); }
+.trait-contributors { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 25px; }
+.tooltip-trait-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.tooltip-trait-heading > img { width: 30px; height: 30px; }
+.compositions-page #skill-tooltip .tooltip-trait-heading h3 { margin: 0 0 4px; font-size: 18px; }
+.compositions-page #skill-tooltip { max-width: min(420px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); overflow: hidden; }
+.compositions-page #skill-tooltip .trait-step { padding: 9px; gap: 10px; }
+.compositions-page #skill-tooltip .trait-step p { font-size: 12px; line-height: 1.5; margin: 3px 0 0; }
+.compositions-page #skill-tooltip .trait-step b { font-size: 12px; }
+.compositions-page #skill-tooltip .trait-next { margin: 12px 0 0; color: var(--green); font-size: 12px; }
+.panel-note { margin: 0 0 22px; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.counter-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px; }
+.counter-columns h3 { margin-bottom: 15px; }
+.counter-card { display: block; padding: 17px; margin: 0 0 12px; color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.counter-card:hover { border-color: var(--green); background: var(--raised); }
+.counter-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.counter-heading h4 { margin: 0; font-size: 15px; line-height: 1.6; }
+.counter-heading strong { font-size: 24px; text-align: right; color: var(--ink); }
+.counter-card.favored .counter-heading strong { color: var(--green); }
+.counter-card.unfavored .counter-heading strong { color: #ee9f9c; }
+.counter-heading strong small { display: block; font-size: 10px; font-weight: 400; max-width: 160px; margin-top: 4px; color: var(--muted); }
+.counter-roster { display: flex; flex-wrap: wrap; gap: 3px; margin: 16px 0; }
+.counter-roster img { width: 37px; height: 36px; object-fit: contain; image-rendering: pixelated; }
+.counter-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+.counter-footer b { color: var(--green); font-weight: 600; }
+.counter-empty { padding: 12px 0 20px; }
+@media (max-width: 1150px) {
+  .overview-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 24px; }
+  .overview-grid .comp-resources { grid-column: 1 / -1; }
+  .insight-layout { grid-template-columns: minmax(220px, .9fr) minmax(0, 1.5fr); gap: 22px; }
+}
+@media (max-width: 720px) {
+  .comp-details { padding: 20px 16px; }
+  .overview-grid, .insight-layout, .counter-columns { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .overview-grid .comp-board-panel { grid-row: 1; }
+  .overview-grid .comp-plan { grid-row: 2; }
+  .overview-grid .comp-resources { grid-row: 3; }
+  .composition-tabs { gap: 5px; margin-bottom: 20px; padding-bottom: 14px; }
+  .composition-tabs button { flex: 1 1 calc(50% - 5px); font-size: 13px; padding: 10px 7px; }
+  .insight-hero { padding: 16px; gap: 12px; }
+  .insight-hero h3 { font-size: 22px; }
+  .insight-number { font-size: 25px; }
+  .insight-number small { font-size: 11px; }
+  .mini-board-row { gap: 3px; }
+  .mini-board { gap: 6px; padding-right: 5px; }
+  .board-equipment .comp-item { padding: 0; }
+  .board-equipment .comp-item img { width: 12px; height: 12px; }
+  .mini-hex .mini-star { font-size: 8px; bottom: 15%; }
+  .equipment-card { padding: 10px; }
+  .trait-step { padding: 12px; }
+  .trait-step p { font-size: 13px; }
+}
