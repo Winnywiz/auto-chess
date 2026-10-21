@@ -52,11 +52,14 @@ def main():
 
     old_intro = '<p class="cap-context">Browse S, A and B tiers. Open a composition for level 5-8 boards, item holders and pivots.</p>'
     previous_intro = '<p class="cap-context">Legacy paths and trait breakpoint builds share one Version 33 battle score. Browse every measured tier; open a board for its formation and item plan.</p>'
-    new_intro = '<p class="cap-context">Browse the Version 33 battle scores and trait builds. Open a composition for its level 5-8 boards, item holders and pivot plan.</p>'
+    current_intro = '<p class="cap-context">Browse the Version 33 battle scores and trait builds. Open a composition for its level 5-8 boards, item holders and pivot plan.</p>'
+    new_intro = '<p class="cap-context">Each main carry appears once. Open a card to compare its builds, tiers, level 5-8 boards, item holders and pivot plans.</p>'
     if old_intro in text:
         text = replace_once(text, old_intro, new_intro)
     elif previous_intro in text:
         text = replace_once(text, previous_intro, new_intro)
+    elif current_intro in text:
+        text = replace_once(text, current_intro, new_intro)
     elif new_intro not in text:
         raise ValueError("Missing composition introduction")
     start = text.index('    <details class="score-guide">')
@@ -65,6 +68,7 @@ def main():
       <p><strong>Reference score</strong>: wins plus half draws. Half is the average against the official meta API and workbook opponent groups, weighted equally; half is the cross-trait candidate score. <strong>Cross-tag score</strong> weights each opposing trait family equally. Level 8 faces level 8; level 9 faces level 9. These are local battle scores, not ranked match win rates.</p>
       <p><strong>S</strong>: reference at least 65%, cross-tag at least 55%, and both API and workbook scores at least 50%. <strong>A</strong>: reference at least 50%. <strong>B</strong>: below 50%. Every composition keeps its measured tier; trait families are not removed to fill a quota.</p>
       <p><strong>Strategy labels</strong> describe when to roll or level: Reroll 5, Reroll 6, Reroll 7, Fast 8, or Legendary. Gengar / Venusaur is a Reroll 6 path only when Venusaur 3★ was found earlier. The collection includes Normal 6, Water 6, Ice 4, and other trait builds.</p>
+      <p><strong>Grouped cards</strong> show the strongest matching build for each main carry. Open a card to choose another build; each variant keeps its own tier, score, board, items and progression guide.</p>
       <p><strong>Method</strong>: the frozen Version 33 game simulation module runs eight fixed seeds and both sides for each pair. Each board has at most six finished items. API teams are reconstructed from aggregate cores and item shares; workbook boards are used as opponents with the same item cap. No shops, contested pools, component drops, weather or boons are simulated. Small score gaps may change with more seeds.</p>
       <p><strong>Sources</strong>: <a href="https://einoow.com/api/meta/kanto/meta.json" target="_blank" rel="noreferrer">official meta API</a> (rules 33); <a href="https://docs.google.com/spreadsheets/d/1co1O1oqbBiczdMd6ChPzce1xANRDrQj8lyAvWzEfKe0/edit?gid=5" target="_blank" rel="noreferrer">workbook boards</a>; <a href="https://github.com/Winnywiz/auto-chess/commit/c9f164c6c46aae21cfd9538befc395ddc40c9f67" target="_blank" rel="noreferrer">earlier paths</a>. Opponent sources do not set tiers or placement odds.</p>
     </div></details>''' + text[end:]
