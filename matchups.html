@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#101914"><meta name="description" content="Kanto Tactics matchups, battle replays and statistics.">
   <title>Kanto Tactics | Matchups</title>
   <script>try{const t=localStorage.getItem('kanto-theme');if(t==='pallet'||t==='viridian')document.documentElement.dataset.theme=t;}catch{}</script>
-  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=matchup-refresh-1"><script src="matchups.js?v=matchup-refresh-1" type="module"></script>
+  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=compact-replay-1"><script src="matchups.js?v=compact-replay-1" type="module"></script>
 </head>
 <body class="matchups-page">
   <header class="topbar">
@@ -26,9 +26,8 @@
         <nav class="detail-tabs" aria-label="Matchup details"><button class="replay-tab" data-view="replay" aria-pressed="false">Replay</button><button data-view="stats" aria-pressed="true">Statistics</button><button data-view="weaknesses" aria-pressed="false">Weaknesses</button><button data-view="types" aria-pressed="false">Types</button><button data-view="counters" aria-pressed="false">Counters</button><button data-view="events" aria-pressed="false">Events</button></nav>
         <section class="panel replay-panel" aria-labelledby="replay-heading">
           <div class="section-heading"><h2 id="replay-heading">Replay</h2><div id="replay-select" class="segmented" role="group" aria-label="Replay example"></div></div><p id="replay-status" role="status"></p>
-          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay" title="Restart">↺</button><output id="clock">0.0 / 0.0s</output><div id="speed" class="segmented" role="group" aria-label="Playback speed"><button data-speed="0.5" aria-pressed="false">0.5×</button><button data-speed="1" aria-pressed="true">1×</button><button data-speed="2" aria-pressed="false">2×</button><button data-speed="4" aria-pressed="false">4×</button></div></div>
-          <label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0">
-          <div class="arena-wrap"><canvas id="arena" width="840" height="850" aria-label="Battle replay with stars and equipped items for each Pokémon."></canvas><div class="arena-legend"><span class="home-text">Your team</span><span class="away-text">Opponent</span><span id="battle-outcome"></span></div></div>
+          <div class="arena-wrap"><canvas id="arena" width="840" height="780" aria-label="Battle replay with stars and equipped items for each Pokémon."></canvas><div id="battle-outcome" class="battle-outcome" role="status" hidden></div><div class="arena-legend"><span class="home-text">Your team</span><span class="away-text">Opponent</span></div></div>
+          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay" title="Restart">↺</button><div id="speed" class="segmented" role="group" aria-label="Playback speed"><button data-speed="0.5" aria-pressed="false">0.5×</button><button data-speed="1" aria-pressed="true">1×</button><button data-speed="2" aria-pressed="false">2×</button><button data-speed="4" aria-pressed="false">4×</button></div><label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0"><output id="clock">0.0 / 0.0s</output></div>
         </section>
         <div class="panel detail-panel">
           <section class="battle-stats" data-panel="stats" aria-labelledby="stats-heading">
