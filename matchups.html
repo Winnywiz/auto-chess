@@ -2,10 +2,10 @@
 <html lang="en" data-theme="viridian">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#101914"><meta name="description" content="S and A tier Kanto Tactics matchups, battle replays and statistics.">
+  <meta name="theme-color" content="#101914"><meta name="description" content="Kanto Tactics matchups, battle replays and statistics.">
   <title>Kanto Tactics | Matchups</title>
   <script>try{const t=localStorage.getItem('kanto-theme');if(t==='pallet'||t==='viridian')document.documentElement.dataset.theme=t;}catch{}</script>
-  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=shared-layout-2"><script src="matchups.js?v=composition-guide-1" type="module"></script>
+  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=matchup-refresh-1"><script src="matchups.js?v=matchup-refresh-1" type="module"></script>
 </head>
 <body class="matchups-page">
   <header class="topbar">
@@ -13,38 +13,42 @@
     <nav aria-label="Pages"><a class="page-link" href="compositions.html">Compositions</a><a class="page-link" href="builder.html">Builder</a><a class="page-link current" href="matchups.html" aria-current="page">Matchups</a></nav>
   </header>
   <main>
-    <div class="page-heading"><h1>Matchups <span>S / A tier</span></h1><label class="sr-only" for="level">Team level</label><select id="level"><option value="9">Level 9</option><option value="8">Level 8</option></select></div>
+    <div class="page-heading"><h1>Matchups</h1><div id="level" class="segmented" role="group" aria-label="Team level"><button data-level="8" aria-pressed="false">Level 8</button><button data-level="9" aria-pressed="true">Level 9</button></div></div>
     <p id="status" role="status">Loading matchups…</p>
     <div id="lab" hidden>
       <section class="versus" aria-label="Choose compositions">
-        <article class="team-card home"><label for="team-a">Your team</label><select id="team-a"></select><div id="roster-a"></div></article>
+        <article class="team-card home"><span class="team-label">Your team</span><button id="team-a" class="team-choice" aria-haspopup="dialog" aria-controls="team-picker"></button><div id="roster-a"></div></article>
         <button id="swap" class="swap" aria-label="Swap compositions" title="Swap teams">⇄</button>
-        <article class="team-card away"><label for="team-b">Opponent</label><select id="team-b"></select><div id="roster-b"></div></article>
+        <article class="team-card away"><span class="team-label">Opponent</span><button id="team-b" class="team-choice" aria-haspopup="dialog" aria-controls="team-picker"></button><div id="roster-b"></div></article>
       </section>
       <section id="result" class="result-panel" aria-label="Matchup result" aria-live="polite"></section>
       <div class="workspace" data-view="stats">
         <nav class="detail-tabs" aria-label="Matchup details"><button class="replay-tab" data-view="replay" aria-pressed="false">Replay</button><button data-view="stats" aria-pressed="true">Statistics</button><button data-view="weaknesses" aria-pressed="false">Weaknesses</button><button data-view="types" aria-pressed="false">Types</button><button data-view="counters" aria-pressed="false">Counters</button><button data-view="events" aria-pressed="false">Events</button></nav>
         <section class="panel replay-panel" aria-labelledby="replay-heading">
-          <div class="section-heading"><h2 id="replay-heading">Replay</h2><label class="sr-only" for="replay-select">Replay example</label><select id="replay-select" aria-label="Replay example"></select></div><p id="replay-status" role="status"></p>
-          <div class="arena-wrap"><canvas id="arena" width="840" height="780" aria-label="Battle replay. Health and energy are available in the unit details."></canvas><div class="arena-legend"><span class="home-text">Your team</span><span class="away-text">Opponent</span><span id="battle-outcome"></span></div></div>
-          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay" title="Restart">↺</button><output id="clock">0.0 / 0.0s</output><label class="sr-only" for="speed">Playback speed</label><select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+          <div class="section-heading"><h2 id="replay-heading">Replay</h2><div id="replay-select" class="segmented" role="group" aria-label="Replay example"></div></div><p id="replay-status" role="status"></p>
+          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay" title="Restart">↺</button><output id="clock">0.0 / 0.0s</output><div id="speed" class="segmented" role="group" aria-label="Playback speed"><button data-speed="0.5" aria-pressed="false">0.5×</button><button data-speed="1" aria-pressed="true">1×</button><button data-speed="2" aria-pressed="false">2×</button><button data-speed="4" aria-pressed="false">4×</button></div></div>
           <label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0">
-          <div class="replay-bottom"><p id="replay-note"></p><details class="unit-detail live-units"><summary>Health / energy</summary><div id="unit-state"></div></details></div>
+          <div class="arena-wrap"><canvas id="arena" width="840" height="850" aria-label="Battle replay with stars and equipped items for each Pokémon."></canvas><div class="arena-legend"><span class="home-text">Your team</span><span class="away-text">Opponent</span><span id="battle-outcome"></span></div></div>
         </section>
         <div class="panel detail-panel">
           <section class="battle-stats" data-panel="stats" aria-labelledby="stats-heading">
-            <div class="section-heading"><h2 id="stats-heading">Statistics</h2><label class="sr-only" for="stat-scope">Chart time</label><select id="stat-scope" aria-label="Chart time"><option value="final">Full battle</option><option value="current">Replay time</option></select></div>
+            <div class="section-heading"><h2 id="stats-heading">Statistics</h2><div id="stat-scope" class="segmented" role="group" aria-label="Chart time"><button data-scope="final" aria-pressed="true">Full battle</button><button data-scope="current" aria-pressed="false">Replay time</button></div></div>
             <div class="stat-tabs" role="group" aria-label="Battle statistic"><button data-stat="dealt" aria-pressed="true">Damage</button><button data-stat="taken" aria-pressed="false">Taken</button><button data-stat="healed" aria-pressed="false">Healing</button><button data-stat="shielded" aria-pressed="false">Shields</button><button data-stat="mitigated" aria-pressed="false">Prevented</button></div>
-            <p id="stat-description" class="muted"></p><p id="stat-time" class="stat-time"></p>
+            <p id="stat-time" class="stat-time"></p>
             <div class="stat-grid"><div><div class="stat-team-heading home-text"><h3>Your team</h3><output id="stat-total-a"></output></div><ol id="stats-a" class="stat-bars" aria-label="Your team battle statistics"></ol></div><div><div class="stat-team-heading away-text"><h3>Opponent</h3><output id="stat-total-b"></output></div><ol id="stats-b" class="stat-bars" aria-label="Opponent battle statistics"></ol></div></div>
           </section>
           <section data-panel="weaknesses" hidden><h2>Weaknesses</h2><div id="weaknesses"></div><h3 class="subheading">Positioning</h3><div id="formation"></div></section>
-          <section data-panel="types" hidden><h2>Types</h2><p class="muted">Ability damage against starting forms. Trait bonuses are separate.</p><div class="type-grid"><div><h3>Your team → opponent</h3><div id="types-a"></div></div><div><h3>Opponent → your team</h3><div id="types-b"></div></div></div></section>
-          <section data-panel="counters" hidden><h2>Counters</h2><div class="table-scroll"><table class="counter-table"><thead><tr><th>Opponent</th><th>Your score</th><th>95% range</th></tr></thead><tbody id="counter-list"></tbody></table></div></section>
+          <section data-panel="types" hidden><h2>Types</h2><div class="type-grid"><div><h3>Your attacks</h3><div id="types-a"></div></div><div><h3>Enemy attacks</h3><div id="types-b"></div></div></div></section>
+          <section data-panel="counters" hidden><h2>Counters</h2><div class="table-scroll"><table class="counter-table"><thead><tr><th>Opponent</th><th>Score</th><th>95%</th></tr></thead><tbody id="counter-list"></tbody></table></div></section>
           <section class="timeline" data-panel="events" hidden><h2>Events</h2><ol id="events" aria-label="Battle events"></ol></section>
         </div>
       </div>
     </div>
   </main>
+  <dialog id="team-picker" aria-labelledby="picker-title">
+    <div class="picker-heading"><h2 id="picker-title">Choose a composition</h2><button id="close-picker" aria-label="Close composition picker">✕</button></div>
+    <label class="sr-only" for="picker-search">Search compositions</label><input id="picker-search" type="search" placeholder="Search compositions" autocomplete="off">
+    <div id="picker-list" class="picker-list"></div><p id="picker-empty" hidden>No matching compositions.</p>
+  </dialog>
 </body>
 </html>
