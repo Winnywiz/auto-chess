@@ -2,6 +2,8 @@
 import {createHash} from 'node:crypto';
 globalThis.fetch=()=>{throw Error('Network disabled in headless harness');};
 globalThis.WebSocket=class{constructor(){throw Error('WebSocket disabled');}};
+// Report English so the game does not try to load the system language file (it needs a browser).
+try{Object.defineProperty(globalThis,'navigator',{value:{language:'en',languages:['en']},configurable:true});}catch{}
 const realRandom=Math.random;
 export const route=await import('./assets/route-k2DWeEO1.js');route.hi();
 export const roster=await import('./assets/roster-BrG7EKy8.js');

@@ -45,6 +45,12 @@ export function optionsFor(final,level,prevTeam,{locked=[],rollLevel=null}={}){
   const fillers=lines.filter(r=>!finalLines.has(r.id)&&!core.some(u=>u.line===r.id)&&availableAt(r.id,level)&&(r.traits.some(t=>active.has(t))||UTILITY.includes(r.id)))
     .map(r=>({line:r.id,star:starAt(r.id,level),items:[],shared:r.traits.filter(t=>active.has(t)).length}))
     .sort((a,b)=>b.shared-a.shared||roster[b.line].cost-roster[a.line].cost).slice(0,7);
+  // Fallback when too few trait-sharing units exist at this level: the strongest other available units.
+  if(core.length+fillers.length<level+2)for(const r of [...lines].sort((a,b)=>b.cost-a.cost||a.id.localeCompare(b.id))){
+    if(core.length+fillers.length>=level+2)break;
+    if(finalLines.has(r.id)||core.some(u=>u.line===r.id)||fillers.some(u=>u.line===r.id)||!availableAt(r.id,level)||r.cost===5)continue;
+    fillers.push({line:r.id,star:starAt(r.id,level),items:[],shared:0});
+  }
   const boards=[];
   if(core.length>=level){
     const base=core.slice(0,level);boards.push(base);
@@ -71,6 +77,7 @@ export async function buildTransitions(candidates,refs){
     const agg={};scores.forEach((s,i)=>(agg[index[i]]??=[]).push(s));
     for(const c of candidates){
       const scored=opts[c.id].map((o,k)=>({...o,score:agg[c.id+'/'+k].reduce((a,b)=>a+b,0)/agg[c.id+'/'+k].length}));
+      if(!scored.length)throw Error(`No transition option for ${c.id} at level ${level}`);
       const best=scored.reduce((a,b)=>b.score>a.score+0.01||(Math.abs(b.score-a.score)<=0.01&&b.fromFinal>a.fromFinal)?b:a,scored[0]);
       result[c.id][level]={...best,options:scored.length};
     }
