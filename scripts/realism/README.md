@@ -74,7 +74,7 @@ conditional snapshot fights must not be substituted for population-ranked statis
 ```sh
 node scripts/realism/site-odds.mjs   # 132 exact carry conditions, 512 seeds each
 node scripts/realism/export-site.mjs # compact composition-guidance.js, no raw match logs
-node scripts/verify-guidance.mjs    # all 48 compositions, 288 board views and builder links
+node scripts/verify-guidance.mjs    # all 48 compositions, progression/cap views and builder links
 ```
 
 The practical boards are editorial suggestions adapted from the existing level 5 to 8 guides.
@@ -89,3 +89,10 @@ probabilities to other lines. Each condition uses 40 gold, six or eight starting
 carry three-stars, one or two for two-star leveling targets, and zero or six enemy-held copies. Gold includes purchases.
 The source fingerprint makes the guidance verifier fail after changing the source compositions or
 guides; regenerate the compact export before publishing. Full raw simulation outputs stay ignored.
+
+`progression-plans.mjs` contains editorial overrides for particular paths. The Exeggutor / Psychic 5,
+Grass 3 reroll guide uses Slowbro and Jynx to complete Psychic 5 at level 7, adds Chansey at 8, then
+Ditto at 9. Mew 1★ replaces Kadabra 2★ and Mewtwo 1★ replaces Jynx 2★ immediately when found.
+Independent UI switches show either replacement, both, or the holders while waiting. The level 9
+suggestion starts with both legendary replacements selected. These are unscored suggested boards;
+the original cap lineups, their scores, and recorded matchups remain unchanged.
