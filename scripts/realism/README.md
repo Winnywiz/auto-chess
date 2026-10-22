@@ -94,5 +94,6 @@ guides; regenerate the compact export before publishing. Full raw simulation out
 Grass 3 reroll guide uses Slowbro and Jynx to complete Psychic 5 at level 7, adds Chansey at 8, then
 Ditto at 9. Mew 1★ replaces Kadabra 2★ and Mewtwo 1★ replaces Jynx 2★ immediately when found.
 Independent UI switches show either replacement, both, or the holders while waiting. The level 9
-suggestion starts with both legendary replacements selected. These are unscored suggested boards;
-the original cap lineups, their scores, and recorded matchups remain unchanged.
+suggestion starts with both legendary replacements selected. The revised level 8 and 9 tabs are
+labeled "8 capped" and "9 capped"; the older cap tabs are removed from this guide. These remain
+unscored suggested boards. Historical combat data and recorded matchups are not reassigned to them.

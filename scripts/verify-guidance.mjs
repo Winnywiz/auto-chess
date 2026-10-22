@@ -25,8 +25,8 @@ let boards=0,odds=0;
 for(const r of comps.rows){
   const g=guide.rows[r.id];assert(g.plan&&g.stop);assert.equal(g.stages.length,r.id==='v34-search-2'?5:4);assert(g.odds.length);
   // Default view is the practical level-8 board, with no borrowed cap score.
-  const defaultMarkup=ui.overviewDetails(r);assert(defaultMarkup.includes('Level 8 progression'));assert(defaultMarkup.includes('Suggested / unscored'));
-  for(const key of [...g.stages.map(s=>s.key),'cap-8','cap-9']){
+  const defaultMarkup=ui.overviewDetails(r);assert(defaultMarkup.includes(r.id==='v34-search-2'?'Level 8 capped':'Level 8 progression'));assert(defaultMarkup.includes('Suggested / unscored'));
+  for(const key of [...g.stages.map(s=>s.key),...(r.id==='v34-search-2'?[]:['cap-8','cap-9'])]){
     ui.views.set(r.id,key);const m=ui.overviewDetails(r),practical=key.startsWith('level-');
     const b=practical?g.stages.find(x=>x.key===key):r.boards.find(x=>'cap-'+x.level===key);
     assert.equal(new Set(b.team.map(u=>u.cell)).size,b.level);assert.equal(b.team.length,b.level);
@@ -47,6 +47,14 @@ for(const r of comps.rows){
   const tip=element('#skill-tooltip');assert(!tip.hidden);assert(tip.innerHTML.includes('512 trials'));assert(tip.innerHTML.includes('Six enemy-held copies'));assert(tip.innerHTML.includes('not a full-game success rate'));
 }
 const exegg=comps.rows.find(r=>r.id==='v34-search-2'),path=guide.rows[exegg.id];
+for(const level of [8,9]){
+  ui.views.set(exegg.id,'cap-'+level);
+  const markup=ui.overviewDetails(exegg);
+  assert(markup.includes('Level '+level+' capped'));
+  assert(markup.includes('>8 capped</button>'));assert(markup.includes('>9 capped</button>'));
+  assert(!markup.includes('data-guide-stage="cap-8"'));assert(!markup.includes('data-guide-stage="cap-9"'));
+  assert(markup.includes('Suggested / unscored'));assert(!markup.includes('cap combat</span>'));
+}
 for(const level of [7,8,9]){
   const b=path.stages.find(s=>s.level===level);
   assert(b.team.some(u=>u.line==='slowpoke'&&u.star===2));
