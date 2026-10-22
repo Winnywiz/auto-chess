@@ -97,3 +97,7 @@ Independent UI switches show either replacement, both, or the holders while wait
 suggestion starts with both legendary replacements selected. The revised level 8 and 9 tabs are
 labeled "8 capped" and "9 capped"; the older cap tabs are removed from this guide. These remain
 unscored suggested boards. Historical combat data and recorded matchups are not reassigned to them.
+The summary row, unit and trait panels, and board value use the selected revised cap as well.
+Selecting a different build or changing a legendary swap refreshes the summary with the details.
+The revised build is unscored until new combat tests exist; historical replay scores are excluded
+from its counters and from other builds' counter lists for this revised opponent.
