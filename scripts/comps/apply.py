@@ -23,6 +23,12 @@ def clean(text):
     return str(text).replace("—", ", ").replace("–", "-").replace("·", "/")
 
 
+ENTRIES = {
+    "v34-search-1": "Roll at 7 for Exeggutor, Jynx and Venusaur 3★. Slowbro holds Mew's tank items until Mew arrives, then level to 9 for Mewtwo and Zapdos.",
+    "v34-search-2": "Roll at 7 for Exeggutor, Alakazam, Venusaur and Parasect 3★. Parasect tanks with the Leftovers set; add Mewtwo, Mew and Starmie as you level.",
+}
+
+
 def main():
     final = json.loads((WORK / "final.json").read_text())
     refs = json.loads((WORK / "references.json").read_text())
@@ -73,7 +79,7 @@ def main():
         if p and p.get("adopt"):
             a = p["adopt"]
             pivots.insert(0, clean(f"Version 34 test: {name(a['in'])} replaces {name(a['out'])} in this board (+{100 * a.get('confirmedGain', a['gain']):.1f} points against the reference boards)."))
-        entry = old.get("entry") or f"Build around {name(c['carry'])}. Add the final units as they appear and keep the item holders shown."
+        entry = ENTRIES.get(c["id"]) or old.get("entry") or f"Build around {name(c['carry'])}. Add the final units as they appear and keep the item holders shown."
         guides[c["id"]] = {"family": c["family"], "entry": clean(entry), "pivots": pivots, "locked": c.get("locked") or [],
                            "stages": gstages, "alternatives": old.get("alternatives", [])}
     ref_list = refs["references"]
