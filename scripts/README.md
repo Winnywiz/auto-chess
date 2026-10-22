@@ -91,4 +91,9 @@ Its local-bot results do not replace the website's capped-combat tiers.
 
 After editing composition data, regenerate `composition-guidance.js` using
 `node scripts/realism/export-site.mjs`, then run `node scripts/verify-guidance.mjs`.
-The UI defaults to suggested practical progression; only unchanged cap boards display combat scores.
+The UI defaults to suggested practical progression; combat scores require an exact scored board.
+
+The restored Exeggutor caps use independent exact-board results. Reproduce with
+`node scripts/comps/score-restored.mjs`, then republish them with
+`node scripts/realism/export-site.mjs`. The 64-seed confirmation scores, reference weights and
+same-family diagnostic fights remain distinct from full-match acquisition/placement results.

@@ -96,10 +96,20 @@ builder link supplied by the user, with only Golduck replaced by Chansey at the 
 The level 9 cap restores the original published nine-unit board with the same Golduck-to-Chansey
 replacement. Other stars, equipment and positions are preserved. The tabs are labeled "8 capped"
 and "9 capped"; older duplicate cap tabs and legendary-swap controls are removed from this guide.
-These remain unscored suggested boards. Historical combat data and recorded matchups are not
-reassigned to them. This variant is the default Exeggutor selection, including without a deep link,
+Historical combat data and recorded matchups are not reassigned to them. This variant is the
+default Exeggutor selection, including without a deep link,
 so the separate Onix variant cannot silently take its place.
 The summary row, unit and trait panels, and board value use the selected revised cap as well.
 Selecting a different build refreshes the summary with the details.
-The revised build is unscored until new combat tests exist; historical replay scores are excluded
-from its counters and from other builds' counter lists for this revised opponent.
+The restored caps now have separately measured scores from `scripts/comps/score-restored.mjs`.
+It freezes both exact boards, tests 12 original seeds and 64 fresh confirmation seeds on both sides,
+and compares an otherwise identical Golduck control. There are 50,160 scored battles and 780
+additional deterministic repeat battles. Publishing uses only confirmation results: 25% workbook,
+25% historical rules-33 API and 50% opposing trait families equally weighted. Other Psychic boards
+are tested separately. Neutral weather, six items, no Seals, and no economy apply.
+
+Run `node scripts/comps/score-restored.mjs`, then `node scripts/realism/export-site.mjs` to publish
+the matching results. The exporter requires the same native engine, source fingerprint and exact
+board key. The UI also rejects a combat score if any unit, star, item or position has changed.
+The level 8 and 9 scores describe different exact upgrades and must not be interpreted as the gain
+from leveling alone. Counter panels show measured peer scores without reusing old replay records.

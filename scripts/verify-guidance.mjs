@@ -13,11 +13,11 @@ for(const s of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g))if(s[2]&&!s
 vm.runInContext(fs.readFileSync('composition-guidance.js','utf8'),context);
 context.KantoSeals={sidebar:()=>'<aside class="comp-seals"></aside>'};
 let source=fs.readFileSync('compositions.js','utf8');
-source=source.replace("window.addEventListener('scroll',hide,{passive:true});", "window.addEventListener('scroll',hide,{passive:true});window.checkUI={overviewDetails,views,tooltip,progressionBoard,legendChoices,selectedVariants,summaryMarkup,syncSummary,board,stage,unitsPanel,traitsPanel,countersPanel};");
+source=source.replace("window.addEventListener('scroll',hide,{passive:true});", "window.addEventListener('scroll',hide,{passive:true});window.checkUI={overviewDetails,views,tooltip,progressionBoard,legendChoices,selectedVariants,summaryMarkup,syncSummary,board,stage,unitsPanel,traitsPanel,countersPanel,combatFor};");
 vm.runInContext(source,context);
 const {KANTO_COMPS:comps,KANTO_GUIDES:guides,KANTO_GUIDANCE:guide,KANTO_DATA:data,checkUI:ui}=context;
 assert.equal(ui.selectedVariants.get('exeggcute'),'v34-search-2');
-assert(element('#comps-list').innerHTML.includes('class="comp-card tier-U" data-comp="exeggcute" open'));
+assert(element('#comps-list').innerHTML.includes('class="comp-card tier-'+ui.stage(comps.rows.find(r=>r.id==='v34-search-2')).tier+'" data-comp="exeggcute" open'));
 const roster=Object.fromEntries(data.roster.map(r=>[r.id,r]));
 assert.equal(guide.sourceHash,createHash('sha256').update(JSON.stringify([comps,guides.guides])).digest('hex'),'Guidance needs regeneration after changing source compositions');
 assert.equal(Object.keys(guide.rows).length,comps.rows.length);
@@ -25,7 +25,7 @@ let boards=0,odds=0;
 for(const r of comps.rows){
   const g=guide.rows[r.id];assert(g.plan&&g.stop);assert.equal(g.stages.length,r.id==='v34-search-2'?5:4);assert(g.odds.length);
   // Default view is the practical level-8 board, with no borrowed cap score.
-  const defaultMarkup=ui.overviewDetails(r);assert(defaultMarkup.includes(r.id==='v34-search-2'?'Level 8 capped':'Level 8 progression'));assert(defaultMarkup.includes('Suggested / unscored'));
+  const defaultMarkup=ui.overviewDetails(r),defaultScore=g.stages.find(s=>s.level===8).combat;assert(defaultMarkup.includes(r.id==='v34-search-2'?'Level 8 capped':'Level 8 progression'));assert(defaultMarkup.includes(defaultScore?(defaultScore.score*100).toFixed(1)+'% cap combat':'Suggested / unscored'));
   for(const key of [...g.stages.map(s=>s.key),...(r.id==='v34-search-2'?[]:['cap-8','cap-9'])]){
     ui.views.set(r.id,key);const m=ui.overviewDetails(r),practical=key.startsWith('level-');
     const b=practical?g.stages.find(x=>x.key===key):r.boards.find(x=>'cap-'+x.level===key);
@@ -36,7 +36,7 @@ for(const r of comps.rows){
     const payload=JSON.parse(Buffer.from(url.split('#team=')[1],'base64').toString('utf8'));
     assert.equal(payload.level,b.level);assert.equal(Object.keys(payload.board).length,b.level);
     for(const u of b.team){const built=payload.board[u.cell-28];assert.equal(built.line,u.line);assert.equal(built.star,u.star);assert.deepEqual(built.items,Array.from(u.items));}
-    if(practical){assert(m.includes('Suggested / unscored'));assert(!m.includes('cap combat</span>'));assert(!m.includes('matchups.html#'));assert(!('score' in b));
+    if(practical){assert(m.includes(b.combat?(b.combat.score*100).toFixed(1)+'% cap combat':'Suggested / unscored'));if(!b.combat)assert(!m.includes('cap combat</span>'));assert(!m.includes('matchups.html#'));assert(!('score' in b));
       for(const h of b.holders){const u=b.team.find(u=>u.line===h.holder);assert(u);assert.equal(h.holderStar,u.star);assert.deepEqual(Array.from(h.items),Array.from(u.items));}
     }else{assert(m.includes('conditional cap'));assert(m.includes((r.stages.find(s=>s.level===b.level).score*100).toFixed(1)+'% cap combat'));}
     boards++;
@@ -53,7 +53,8 @@ for(const level of [8,9]){
   assert(markup.includes('Level '+level+' capped'));
   assert(markup.includes('>8 capped</button>'));assert(markup.includes('>9 capped</button>'));
   assert(!markup.includes('data-guide-stage="cap-8"'));assert(!markup.includes('data-guide-stage="cap-9"'));
-  assert(markup.includes('Suggested / unscored'));assert(!markup.includes('cap combat</span>'));
+  const measured=path.stages.find(s=>s.level===level).combat;
+  assert(markup.includes(measured?(measured.score*100).toFixed(1)+'% cap combat':'Suggested / unscored'));
 }
 // Exact linked board, including original cells, star levels and equipment.
 const expectedEight=[
@@ -73,13 +74,19 @@ for(const level of [8,9]){
   const markup=ui.overviewDetails(exegg);
   const payload=JSON.parse(Buffer.from(markup.match(/builder.html#team=([^\"]+)/)[1],'base64').toString('utf8'));
   for(const u of b.team){assert.equal(payload.board[u.cell-28].line,u.line);assert.equal(payload.board[u.cell-28].star,u.star);}
-  assert(markup.includes('Suggested / unscored'));assert(!markup.includes('data-legend-swap='));
+  assert(markup.includes(b.combat?(b.combat.score*100).toFixed(1)+'% cap combat':'Suggested / unscored'));assert(!markup.includes('data-legend-swap='));
   const summary=ui.summaryMarkup(exegg),shown=ui.board(exegg);
-  assert(summary.includes('Not scored'));assert(summary.includes('Chansey'));assert(!summary.includes('Golduck'));assert(!summary.includes('Onix'));
+  const measuredSummary=ui.stage(exegg);assert(summary.includes(Number.isFinite(measuredSummary.score)?(measuredSummary.score*100).toFixed(1)+'%':'Not scored'));assert(summary.includes('Chansey'));assert(!summary.includes('Golduck'));assert(!summary.includes('Onix'));
   const units=Array.from(summary.matchAll(/data-hover-unit='([^']+)'/g)).map(m=>JSON.parse(m[1].replaceAll('&quot;','"')));
   assert.deepEqual(compact(units),compact(shown.team));
   const value=shown.team.reduce((n,u)=>n+roster[u.line].cost*3**(u.star-1),0);
   assert.equal(ui.stage(exegg).purchaseGold,value);
+  if(b.combat){
+    const c=b.combat;assert.equal(c.rules,34);assert.equal(c.seeds,64);assert.equal(c.sides,2);
+    assert(Math.abs(c.score-(.25*c.groups.workbook+.25*c.groups.api+.5*c.peerScore))<1e-12);
+    assert.equal(c.opponents.length,47);assert(ui.countersPanel(exegg).includes('Best matchups'));
+    assert.equal(ui.combatFor({...b,team:b.team.map((u,i)=>i?u:{...u,star:u.star===1?2:1})}),null,'Changed stars must invalidate the score');
+  }
   restoredBoards++;
 }
 assert(!/[\u2014\u00b7]/.test(JSON.stringify(guide)), 'Avoid em dashes and middle dots in new guidance');
@@ -98,4 +105,4 @@ for(const id of ['v34-search-1','v34-search-2']){
 // Loading without a deep link must not silently pick the Onix alternative.
 context.location.hash='';vm.runInContext(source,context);
 assert.equal(context.checkUI.selectedVariants.get('exeggcute'),'v34-search-2');
-console.log(JSON.stringify({passed:true,compositions:comps.rows.length,renderedBoards:boards,restoredBoards,carryOddsConditions:odds,defaultUnscored:true,builderExports:true,hoverAssumptions:true}));
+console.log(JSON.stringify({passed:true,compositions:comps.rows.length,renderedBoards:boards,restoredBoards,carryOddsConditions:odds,unscoredGuidesRemainUnscored:true,builderExports:true,hoverAssumptions:true}));
