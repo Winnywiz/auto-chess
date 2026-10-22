@@ -72,7 +72,7 @@ def main():
         p = passive.get(c["id"])
         if p and p.get("adopt"):
             a = p["adopt"]
-            pivots.insert(0, clean(f"Version 34 test: {name(a['in'])} replaces {name(a['out'])} in this board (+{100 * a['gain']:.1f} points against the reference boards)."))
+            pivots.insert(0, clean(f"Version 34 test: {name(a['in'])} replaces {name(a['out'])} in this board (+{100 * a.get('confirmedGain', a['gain']):.1f} points against the reference boards)."))
         entry = old.get("entry") or f"Build around {name(c['carry'])}. Add the final units as they appear and keep the item holders shown."
         guides[c["id"]] = {"family": c["family"], "entry": clean(entry), "pivots": pivots, "locked": c.get("locked") or [],
                            "stages": gstages, "alternatives": old.get("alternatives", [])}

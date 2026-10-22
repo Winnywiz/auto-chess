@@ -22,7 +22,15 @@ log('Re-gear: '+g.report.filter(r=>r.chosen!=='published').length+' boards chang
 // 2. Passive traits and utility units on the strongest boards
 const pre=await scoreAll(candidates,refs,{levels:[9],seeds:seedList(4,'v34-prescreen'),label:'prescreen'});
 const strong=candidates.filter(c=>pre[c.id][9].score>=.5).sort((a,b)=>pre[b.id][9].score-pre[a.id][9].score).slice(0,quick?3:16);
-const passive=await passiveStudy(strong,refs);writeJSON('step2-passive.json',passive.map(({adopt,...p})=>({...p,adopt:adopt&&{...adopt,team:undefined}})));
+const passive=await passiveStudy(strong,refs);
+// Confirm each proposed swap on twelve new seeds before adopting it.
+{const confirmSeeds=seedList(12,'v34-passive-confirm'),l9refs=refs.filter(r=>r.level===9),pairs=[],idx=[];
+  for(const p of passive)if(p.adopt){const c=candidates.find(x=>x.id===p.id),base=c.boards.find(b=>b.level===9).team;
+    for(const r of l9refs){pairs.push({a:capItems(base),b:r.team});idx.push([p.id,0]);pairs.push({a:capItems(p.adopt.team),b:r.team});idx.push([p.id,1]);}}
+  const sc=await scorePairs(pairs,confirmSeeds,{label:'passive confirm'}),acc={};
+  sc.forEach((s,i)=>{const [id,k]=idx[i];(acc[id]??=[[],[]])[k].push(s);});
+  for(const p of passive)if(p.adopt){const [b,a]=acc[p.id].map(v=>v.reduce((x,y)=>x+y,0)/v.length);p.adopt.confirmedGain=a-b;
+    if(a-b<.02){log(`Swap rejected on confirmation for ${p.id}: ${p.adopt.out} -> ${p.adopt.in} (${(100*(a-b)).toFixed(1)} points)`);p.rejected={...p.adopt,team:undefined};p.adopt=null;}}}writeJSON('step2-passive.json',passive.map(({adopt,...p})=>({...p,adopt:adopt&&{...adopt,team:undefined}})));
 for(const p of passive)if(p.adopt){
   const c=candidates.find(x=>x.id===p.id);
   c.boards=c.boards.map(b=>{
@@ -30,7 +38,7 @@ for(const p of passive)if(p.adopt){
     const slot=b.team.find(u=>u.line===p.adopt.out&&!u.items?.length);
     return slot&&!b.team.some(u=>u.line===p.adopt.in)?{...b,team:b.team.map(u=>u===slot?{line:p.adopt.in,star:2,items:[],cell:u.cell}:u),swap:{out:p.adopt.out,in:p.adopt.in}}:b;
   });
-  log(`Swap adopted for ${p.id}: ${p.adopt.out} -> ${p.adopt.in} (+${(100*p.adopt.gain).toFixed(1)} points)`);
+  log(`Swap adopted for ${p.id}: ${p.adopt.out} -> ${p.adopt.in} (+${(100*p.adopt.confirmedGain).toFixed(1)} points confirmed)`);
 }
 
 // 3. Search for a new board against the S tier

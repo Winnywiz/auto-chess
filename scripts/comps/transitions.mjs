@@ -40,6 +40,8 @@ export function optionsFor(final,level,prevTeam,{locked=[],rollLevel=null}={}){
   const carry=final.find(u=>u.assignment==='Carry')??final.reduce((a,b)=>(b.items?.length??0)>(a.items?.length??0)?b:a);
   const prio=u=>(u.line===carry.line?100:0)+(u.items?.length?50:0)+(locked.includes(u.line)?40:0)+roster[u.line].traits.filter(t=>active.has(t)).length*10+roster[u.line].cost;
   const core=prevTeam.filter(u=>availableAt(u.line,level)).map(u=>({line:u.line,star:starAt(u.line,level,{finalStar:(final.find(f=>f.line===u.line)?.star)??u.star,locked,rollLevel}),items:[]})).sort((a,b)=>prio(b)-prio(a));
+  // Legendaries are rare before level 9: at most one 1-star five-cost unit at level 8 (the highest priority).
+  {let fives=0;const kept=[];for(const u of core){if(roster[u.line].cost===5){if(level<8||fives>=1)continue;fives++;}kept.push(u);}core.splice(0,core.length,...kept);}
   const fillers=lines.filter(r=>!finalLines.has(r.id)&&!core.some(u=>u.line===r.id)&&availableAt(r.id,level)&&(r.traits.some(t=>active.has(t))||UTILITY.includes(r.id)))
     .map(r=>({line:r.id,star:starAt(r.id,level),items:[],shared:r.traits.filter(t=>active.has(t)).length}))
     .sort((a,b)=>b.shared-a.shared||roster[b.line].cost-roster[a.line].cost).slice(0,7);
