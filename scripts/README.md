@@ -1,77 +1,71 @@
-# Rebuild the composition tiers
+# Rebuilding the site data (Version 34)
 
-Run from the repository root:
+Everything runs on Node 22 or newer with no npm packages. Simulations use every logical CPU
+(`KANTO_WORKERS` overrides the worker count). Large intermediate files go to `work/`, which Git ignores.
 
-```sh
-python3 scripts/prepare_compositions.py
-node scripts/score_compositions.mjs
-python3 scripts/apply_composition_scores.py
-```
+## 1. Game data
 
-The preparation step loads the 23 candidate paths from commit
-`c9f164c6c46aae21cfd9538befc395ddc40c9f67` and the trait-first
-paths already in `compositions.html`, including the confirmed Ice 4 search
-result. It verifies that the trait set still
-includes Normal 6, Water 6, and Ice 4. The current official meta API and
-workbook are read only as opponent sources in this scoring run.
-The apply step also restores each legacy path's level 5-8 bridge boards,
-item holders, pivot advice, and variants from that same earlier commit.
-The page groups paths by their main carry; each path keeps its own tier,
-board, items, and progression guide inside that carry's card.
-
-The scorer uses the frozen Version 33 game module `sim-Bm2krZIn.js`, eight
-fixed seeds, and both board sides. Pair results are reused in both directions
-for candidate-vs-candidate scoring. Up to eight CPU workers are used by default; set
-`COMPOSITION_WORKERS` to change this. Data and downloaded game modules are
-cached under `work/composition-run`, which is ignored by Git. Reusing the
-cache keeps later runs fast. Delete it to fetch fresh references; the
-preparation step rejects a meta API rules version other than 33.
-Battle pair scores are also stored in `work/composition-run/match-cache.json`
-under hashes of both full boards, the simulation module and the seed list.
-On later runs, unchanged pairs are reused; changing one candidate board only
-recomputes its affected matchups.
-
-API records contain aggregate unit and item shares, so their full boards are
-reconstructed deterministically. Workbook board positions are approximated
-from its front/middle/back labels. Both references and candidates have at
-most six finished items. The resulting scores are local combat estimates,
-not ranked match win rates. The eight-seed pass is intended for screening;
-increase `seeds` in `score_compositions.mjs` before treating a close tier
-boundary as settled.
-
-## Expanded trait search
-
-Run after preparation to search level 9 Normal 6, Water 6 and Ice 4 boards:
+`work/native-v34/` holds the unmodified public Version 34 game modules and a small harness
+(`headless.mjs`) that runs native battles with seeded randomness and no network. Rebuild the website
+data (unit stats, abilities, traits, item text and native item fit) and write it into both pages:
 
 ```sh
-node scripts/search_compositions.mjs
-node scripts/search_compositions.mjs --confirm
+python3 scripts/native/download.py   # fetch the public game modules and install the harness
+node work/native-v34/extract-data.mjs
+python3 scripts/update_game_data.py
 ```
 
-The search batches about 1,500 distinct boards through CPU workers. It uses
-two seeds and ten API/workbook opponents to screen boards, then checks the
-finalists against every level 9 reference with eight new seeds. The second
-command adds 32 separate confirmation seeds. The score run above then places
-confirmed candidates in the normal tier system, including the cross-family
-score. Results stay in ignored `work/composition-run/search-results.json`.
-The confirmed 21 October 2026 run is saved in
-`research/kanto-search-2026-10-21.json` for inspection without rerunning.
-`python3 scripts/add_ice_search_build.py` adds its confirmed Ice 4 board and
-level 5-8 guide to a copy of the page that does not already contain it; run
-the preparation, scoring and apply commands above afterward.
-The search excludes its own previously discovered Ice board from the seed
-pool, so rerunning it still searches from the earlier candidate set. GPU
-execution is not used because the battle module is JavaScript and CPU worker
-batches complete the search without a port.
+## 2. Best-in-slot items
 
-The search and tier runs model capped combat. They do not simulate shop odds,
-contested pools, item drops, weather or boons. A confirmed S result is a
-combat result for the specified board, not a ranked placement estimate.
+```sh
+node scripts/bis/run.mjs          # about 3.7 million battles; resumes from work/bis-v4/results.partial.json
+node scripts/bis/export.mjs       # writes window.KANTO_BIS into builder.html and compositions.html
+```
 
-## Website media
+Each reachable unit and star tests all 1,771 three-item builds in 6v6 battles: a screen on four lineups,
+a refinement on eight, held-out validation on eight unseen lineups, then a frozen confirmation on eight
+more lineups with new seeds. Opponent lineups include the most used units of the top official meta
+compositions. The site recommends the better of the two finalists over their 896 held-out battles and
+shows the other as the alternative.
 
-`media/` holds the 441 shared images extracted from the two HTML pages.
-Both pages now load images by relative path, so browsers cache one copy and
-the initial HTML is much smaller. `scripts/extract_media.py` is the one-time
-extractor for any copy of the old inline pages. The composition page also
-creates each expanded guide only when its card is opened.
+## 3. Compositions
+
+```sh
+python3 scripts/comps/prepare_refs.py     # reference boards: community Version 34 workbook and official meta API
+node scripts/comps/pipeline.mjs           # items, passive/utility tests, new board search, scores, transitions
+python3 scripts/comps/apply.py            # writes KANTO_COMPS and KANTO_GUIDES into compositions.html
+```
+
+The pipeline runs these steps:
+
+1. **Items**: each board's carry and tank are re-tested with their Version 34 best-in-slot sets; a change is
+   kept only when it scores better against the reference boards.
+2. **Passive traits and utility**: on the strongest boards, every item-less slot is tested with one-unit
+   trait activators (Ghost: Mean Look, Dragon: Dragon Dance) and utility units (Chansey and others), and
+   against higher-cost units that share a trait. A swap is adopted when it gains at least 2.5 points.
+3. **Search**: an evolutionary search over level 9 boards (at most 135 Board Value, six items) plays a
+   gauntlet of the strongest published and reference boards, then checks finalists on new seeds. Only
+   boards that differ by at least three units from every published and reference board are added.
+4. **Scores**: twelve seeds and both sides for every pair. Reference score is half reference boards (two
+   groups weighted equally) and half cross-tag score (each opposing trait family weighted equally).
+5. **Transitions**: level 8 down to level 5 boards are built from the final board. Final units come first;
+   a temporary unit must share a final trait or add utility. Options are tested against reference boards
+   reduced to what is usually available at that level.
+
+Pair results are cached in `work/comps-v34/pair-cache.json` under hashes of both boards and the seeds, so
+reruns only simulate changed boards.
+
+## 4. Matchup replays
+
+```sh
+node scripts/generate-matchups.mjs
+node scripts/verify-matchups.mjs
+```
+
+These replay every pair of S and A boards with 128 seeds on both sides, plus column-flip checks, and store
+one replay per observed outcome in `analysis/`.
+
+## Limits
+
+Battles are combat only: no shops, contested pools, item drops, weather or Seals. Scores are combat
+estimates for the exact boards shown, not ranked placement rates.

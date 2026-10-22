@@ -1,16 +1,16 @@
-// Run from the repository with KANTO_NATIVE_ROOT pointing to the pinned kanto-headless-v3 folder.
+// Run from the repository. KANTO_NATIVE_ROOT defaults to work/native-v34 (the Version 34 headless harness).
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import os from 'node:os';
 import {pathToFileURL,fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import {execFileSync} from 'node:child_process';
 
-const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'../../outputs/kanto-headless-v3');
-const {Battle}=await import(pathToFileURL(path.join(root,'headless.mjs')));
-const native=await import(pathToFileURL(path.join(root,'assets/sim-Bm2krZIn.js')));
-const rosterNative=await import(pathToFileURL(path.join(root,'assets/roster-DqNAFdJN.js')));
+const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v34');
+const harness=await import(pathToFileURL(path.join(root,'headless.mjs')));
+const {Battle}=harness,rosterNative=harness.roster,typeEffect=harness.route.ps;
 const hash=x=>createHash('sha256').update(typeof x==='string'?x:JSON.stringify(x)).digest('hex');
 const seedFor=(level,a,b,i)=>parseInt(hash(['sa-matchups-v1',level,a,b,i]).slice(0,8),16);
 const flip=team=>team.map(u=>({...u,cell:Math.floor(u.cell/7)*7+6-u.cell%7}));
@@ -84,12 +84,12 @@ else if(path.resolve(process.argv[1]??'')===fileURLToPath(import.meta.url)){
  const {KANTO_DATA:data,KANTO_COMPS:C}=ctx.window,sets={},jobs=[];
  for(const level of [8,9]){sets[level]=C.rows.filter(r=>['S','A'].includes(r.stages.find(s=>s.level===level)?.tier)).map(r=>({...r,...r.boards.find(b=>b.level===level),tier:r.stages.find(s=>s.level===level).tier,purchaseGold:r.stages.find(s=>s.level===level).purchaseGold}));for(let i=0;i<sets[level].length;i++)for(let j=i+1;j<sets[level].length;j++)jobs.push({level,a:sets[level][i],b:sets[level][j]});}
  const out=path.resolve('analysis');fs.mkdirSync(path.join(out,'replays'),{recursive:true});
- const start=performance.now(),results=[];let next=0;const workers=Array.from({length:5},()=>new Worker(new URL(import.meta.url),{workerData:{data,out}}));
+ const start=performance.now(),results=[];let next=0;const workers=Array.from({length:Math.min(os.availableParallelism(),Number(process.env.KANTO_WORKERS)||64)},()=>new Worker(new URL(import.meta.url),{workerData:{data,out}}));
  console.log(JSON.stringify({pairs:jobs.length,builds:Object.fromEntries(Object.entries(sets).map(([k,v])=>[k,v.length])),battles:jobs.length*512}));
  try{await Promise.all(workers.map(w=>new Promise((resolve,reject)=>{const send=()=>{if(next===jobs.length){resolve();return;}w.postMessage(jobs[next++]);};w.on('message',m=>{if(m.error)return reject(Error(m.error));results.push(m.result);if(results.length%25===0)console.log(`Completed ${results.length}/${jobs.length} matchups`);send();});w.on('error',reject);send();})));}finally{await Promise.all(workers.map(w=>w.terminate()));}
  results.sort((a,b)=>a.key.localeCompare(b.key));
- const types=Object.keys(data.traits),typeChart=Object.fromEntries(types.map(type=>[type,Object.fromEntries(types.map(def=>[def,native.J(type,[def])]))]));
- const manifest=JSON.parse(fs.readFileSync(path.join(root,'manifest.json'))),sourceHash=hash(html),source={generated:C.generated,version:C.version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceHash,simulation:'Version 33 / sim-Bm2krZIn.js',nativeHash:hash(fs.readFileSync(path.join(root,'assets/sim-Bm2krZIn.js'),'utf8')),nativeCaptured:manifest.downloadedAt,generatedAt:new Date().toISOString(),seeds:128,sides:2,battlesPerPair:256,formationChecks:'64 paired seeds × both sides per column flip',totalBattles:jobs.length*512,seconds:round((performance.now()-start)/1000)};
+ const types=Object.keys(data.traits),typeChart=Object.fromEntries(types.map(type=>[type,Object.fromEntries(types.map(def=>[def,typeEffect(type,[def])]))]));
+ const manifest={build:harness.build,rules:harness.rules,files:Object.fromEntries(fs.readdirSync(path.join(root,'assets')).filter(f=>f.endsWith('.js')).sort().map(f=>[f,hash(fs.readFileSync(path.join(root,'assets',f),'utf8'))])),downloadedAt:'2026-10-22'},sourceHash=hash(html),source={generated:C.generated,version:C.version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceHash,simulation:'Version 34 / route-k2DWeEO1.js',nativeHash:hash(fs.readFileSync(path.join(root,'assets/route-k2DWeEO1.js'),'utf8')),nativeCaptured:manifest.downloadedAt,generatedAt:new Date().toISOString(),seeds:128,sides:2,battlesPerPair:256,formationChecks:'64 paired seeds × both sides per column flip',totalBattles:jobs.length*512,seconds:round((performance.now()-start)/1000)};
  const catalogue=Object.fromEntries(Object.entries(sets).map(([level,rows])=>[level,rows.map(r=>({id:r.id,name:r.name,carry:r.carry,tier:r.tier,strategy:r.strategy,gold:r.purchaseGold,team:r.team.map(u=>{const line=data.roster.find(r=>r.id===u.line),f=line.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:line.traits,skill:f.skill};})}))]));
  fs.writeFileSync(path.join(out,'matchups.json'),JSON.stringify({source,builds:catalogue,types,typeChart,pairs:results}));
  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify({source,nativeManifest:manifest,sourceBuilds:hash(catalogue),pairResults:hash(results)},null,2));
