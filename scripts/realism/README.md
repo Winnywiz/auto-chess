@@ -91,13 +91,15 @@ The source fingerprint makes the guidance verifier fail after changing the sourc
 guides; regenerate the compact export before publishing. Full raw simulation outputs stay ignored.
 
 `progression-plans.mjs` contains editorial overrides for particular paths. The Exeggutor / Psychic 5,
-Grass 3 reroll guide uses Slowbro and Jynx to complete Psychic 5 at level 7, adds Chansey at 8, then
-Ditto at 9. Mew 1★ replaces Kadabra 2★ and Mewtwo 1★ replaces Jynx 2★ immediately when found.
-Independent UI switches show either replacement, both, or the holders while waiting. The level 9
-suggestion starts with both legendary replacements selected. The revised level 8 and 9 tabs are
-labeled "8 capped" and "9 capped"; the older cap tabs are removed from this guide. These remain
-unscored suggested boards. Historical combat data and recorded matchups are not reassigned to them.
+Grass 3 reroll guide keeps its level 7 Psychic bridge. Its level 8 cap restores the exact eight-unit
+builder link supplied by the user, with only Golduck replaced by Chansey at the same cell and star.
+The level 9 cap restores the original published nine-unit board with the same Golduck-to-Chansey
+replacement. Other stars, equipment and positions are preserved. The tabs are labeled "8 capped"
+and "9 capped"; older duplicate cap tabs and legendary-swap controls are removed from this guide.
+These remain unscored suggested boards. Historical combat data and recorded matchups are not
+reassigned to them. This variant is the default Exeggutor selection, including without a deep link,
+so the separate Onix variant cannot silently take its place.
 The summary row, unit and trait panels, and board value use the selected revised cap as well.
-Selecting a different build or changing a legendary swap refreshes the summary with the details.
+Selecting a different build refreshes the summary with the details.
 The revised build is unscored until new combat tests exist; historical replay scores are excluded
 from its counters and from other builds' counter lists for this revised opponent.

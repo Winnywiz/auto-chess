@@ -15,6 +15,7 @@
  const revised=r=>r?.id==='v34-search-2'&&!!P[r.id];
  const board=r=>revised(r)?progressionBoard(r,P[r.id].stages.find(b=>b.level===cap)):r.boards.find(b=>b.level===cap);
  const stage=r=>revised(r)?{level:cap,tier:'U',score:null,peerScore:null,bisDependent:false,unscored:true,purchaseGold:board(r).team.reduce((n,u)=>n+L.lines[u.line].cost*3**(u.star-1),0)}:r.stages.find(s=>s.level===cap);
+ if(!selectedVariants.has('exeggcute')&&P['v34-search-2'])selectedVariants.set('exeggcute','v34-search-2');
  const item=id=>`<span class="comp-item" tabindex="0" data-hover-item="${esc(id)}" aria-label="${esc(L.items[id].name)}"><img src="${media('items/'+id+'.png')}" alt="" loading="lazy"></span>`;
  function unit(u,carry){return `<span class="comp-unit ${carry?'carry':''}"><span class="comp-stars" aria-label="${u.star} stars">${'★'.repeat(u.star)}</span><span class="comp-unit-image" tabindex="0" data-hover-unit='${esc(JSON.stringify(u))}' aria-label="${esc(form(u).name)} skill"><img src="${media('sprites/'+form(u).num+'.gif')}" alt="${esc(form(u).name)}" loading="lazy"></span><span class="comp-items">${u.items.map(item).join('')}</span><span class="comp-unit-name">${esc(form(u).name)}</span>${u.items.length?`<span class="unit-assignment">${esc(u.assignment||'Support')}</span>`:''}</span>`;}
  function teamTraits(team){return L.traits(Object.fromEntries(team.map((u,i)=>[i,u]))).filter(t=>t.count).sort((a,b)=>b.tier-a.tier||b.count-a.count);}

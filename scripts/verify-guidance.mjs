@@ -55,42 +55,32 @@ for(const level of [8,9]){
   assert(!markup.includes('data-guide-stage="cap-8"'));assert(!markup.includes('data-guide-stage="cap-9"'));
   assert(markup.includes('Suggested / unscored'));assert(!markup.includes('cap combat</span>'));
 }
-for(const level of [7,8,9]){
-  const b=path.stages.find(s=>s.level===level);
-  assert(b.team.some(u=>u.line==='slowpoke'&&u.star===2));
-  assert(b.team.some(u=>u.line==='bulbasaur'&&u.star===2));
-  assert.equal(b.team.some(u=>u.line==='chansey'),level>=8);
-  assert.equal(b.team.some(u=>u.line==='ditto'),level===9);
-  assert(!b.team.some(u=>u.line==='psyduck'));
-}
-let swapBoards=0;
-for(const level of [8,9])for(const mew of [false,true])for(const mewtwo of [false,true]){
-  ui.legendChoices.set(exegg.id,{mew,mewtwo});ui.views.set(exegg.id,'level-'+level);
-  const b=ui.progressionBoard(exegg,path.stages.find(s=>s.level===level));
-  for(const [found,from,to]of [[mew,'abra','mew'],[mewtwo,'jynx','mewtwo']]){
-    assert(b.team.some(u=>u.line===(found?to:from)&&u.star===(found?1:2)));
-    assert(!b.team.some(u=>u.line===(found?from:to)));
-  }
-  const traits=context.TeamLogic.traits(Object.fromEntries(b.team.map((u,i)=>[i,u])));
-  for(const [name,count]of [['Psychic',5],['Grass',3],['Water',2],...(level===9?[['Normal',2]]:[])]){
-    assert(traits.some(t=>t.name===name&&t.count===count&&t.active));
-  }
+// Exact linked board, including original cells, star levels and equipment.
+const expectedEight=[
+  ['paras',2,28,['focus-sash','leftovers','leftovers']],['bulbasaur',2,29,[]],['ditto',2,33,[]],
+  ['staryu',2,49,[]],['abra',2,50,[]],['exeggcute',2,52,['choice-specs','focus-sash','quick-claw']],
+  ['chansey',2,53,[]],['mewtwo',1,54,[]]
+];
+const compact=team=>Array.from(team,u=>[u.line,u.star,u.cell,Array.from(u.items)]);
+assert.deepEqual(compact(path.stages.find(s=>s.level===8).team),expectedEight);
+const originalNine=comps.rows.find(r=>r.id===exegg.id).boards.find(b=>b.level===9).team;
+assert.deepEqual(compact(path.stages.find(s=>s.level===9).team),compact(originalNine).map(u=>u[0]==='psyduck'?['chansey',...u.slice(1)]:u));
+let restoredBoards=0;
+for(const level of [8,9]){
+  const b=path.stages.find(s=>s.level===level);ui.views.set(exegg.id,'level-'+level);
+  assert(!b.team.some(u=>u.line==='onix'||u.line==='psyduck'));
+  assert(b.team.some(u=>u.line==='chansey'&&u.star===2));
   const markup=ui.overviewDetails(exegg);
   const payload=JSON.parse(Buffer.from(markup.match(/builder.html#team=([^\"]+)/)[1],'base64').toString('utf8'));
-  for(const u of b.team)assert.equal(payload.board[u.cell-28].line,u.line);
-  assert(markup.includes('Suggested / unscored'));assert(!markup.includes('cap combat</span>'));
-  assert(markup.includes('data-legend-swap="mew"'));assert(markup.includes('data-legend-swap="mewtwo"'));
+  for(const u of b.team){assert.equal(payload.board[u.cell-28].line,u.line);assert.equal(payload.board[u.cell-28].star,u.star);}
+  assert(markup.includes('Suggested / unscored'));assert(!markup.includes('data-legend-swap='));
   const summary=ui.summaryMarkup(exegg),shown=ui.board(exegg);
-  assert(summary.includes('Not scored'));assert(!summary.includes('98.8%'));assert(!summary.includes('99.0%'));
-  assert(summary.includes('Chansey'));assert(summary.includes('Slowbro'));
-  assert(!summary.includes('Golduck'));assert(!summary.includes('Alakazam'));assert(!summary.includes('Venusaur'));
-  assert.equal(ui.stage(exegg).score,null);assert.equal(ui.stage(exegg).peerScore,null);assert.equal(ui.stage(exegg).tier,'U');
-  const value=shown.team.reduce((n,u)=>n+roster[u.line].cost*3**(u.star-1),0);
-  assert.equal(ui.stage(exegg).purchaseGold,value);assert(summary.includes('>'+value+'<small>Board Value'));
+  assert(summary.includes('Not scored'));assert(summary.includes('Chansey'));assert(!summary.includes('Golduck'));assert(!summary.includes('Onix'));
   const units=Array.from(summary.matchAll(/data-hover-unit='([^']+)'/g)).map(m=>JSON.parse(m[1].replaceAll('&quot;','"')));
-  assert.deepEqual(units.map(u=>[u.line,u.star,u.items]),Array.from(shown.team,u=>[u.line,u.star,Array.from(u.items)]));
-  assert(ui.countersPanel(exegg).includes('Matchups have not been scored for this lineup yet'));
-  swapBoards++;
+  assert.deepEqual(compact(units),compact(shown.team));
+  const value=shown.team.reduce((n,u)=>n+roster[u.line].cost*3**(u.star-1),0);
+  assert.equal(ui.stage(exegg).purchaseGold,value);
+  restoredBoards++;
 }
 assert(!/[\u2014\u00b7]/.test(JSON.stringify(guide)), 'Avoid em dashes and middle dots in new guidance');
 // Regression: changing a build previously refreshed its detail panel but left the old summary.
@@ -105,4 +95,7 @@ for(const id of ['v34-search-1','v34-search-2']){
   assert(card.querySelector('.comp-details').innerHTML.includes(row.name));
   assert(classes.has('tier-'+ui.stage(row).tier));
 }
-console.log(JSON.stringify({passed:true,compositions:comps.rows.length,renderedBoards:boards,swapBoards,carryOddsConditions:odds,defaultUnscored:true,builderExports:true,hoverAssumptions:true}));
+// Loading without a deep link must not silently pick the Onix alternative.
+context.location.hash='';vm.runInContext(source,context);
+assert.equal(context.checkUI.selectedVariants.get('exeggcute'),'v34-search-2');
+console.log(JSON.stringify({passed:true,compositions:comps.rows.length,renderedBoards:boards,restoredBoards,carryOddsConditions:odds,defaultUnscored:true,builderExports:true,hoverAssumptions:true}));
