@@ -6,7 +6,7 @@ import {passiveStudy} from './passive.mjs';
 import {search} from './search.mjs';
 import {scoreAll} from './score.mjs';
 import {buildTransitions} from './transitions.mjs';
-import {seedList} from './common.mjs';
+import {seedList,carryByGear} from './common.mjs';
 const quick=process.argv.includes('--quick');
 const t0=performance.now(),log=m=>console.log(`[${Math.round((performance.now()-t0)/1000)}s] ${m}`);
 const {comps}=readPage(),refs=readJSON('references.json').references;
@@ -52,10 +52,10 @@ writeJSON('step3-search.json',{tried:found.tried,gauntlet:gauntlet.map(x=>x.id),
 log(`Search tried ${found.tried} boards; best novel holdout ${found.finalists[0]?(100*found.finalists[0].holdout).toFixed(1)+'%':'none'}`);
 const familyOf=team=>{const a=activeTraits(team).sort((x,y)=>y.tier-x.tier||y.n-x.n)[0];if(!a)return 'mixed';const t=a.t.toLowerCase();if(t==='flying')return a.n>=6?'flying-six':'flying-four';if(t==='water'&&a.n<6)return 'water-utility';return t;};
 const strategyOf=team=>{const three=team.filter(u=>u.star===3).map(u=>roster[u.line].cost);if(three.length){const c=Math.max(...three);return c<=1?['reroll-5','Reroll 5',5]:c===2?['reroll-6','Reroll 6',6]:['reroll-7','Reroll 7',7];}const carry=team.reduce((a,b)=>(b.items?.length??0)>(a.items?.length??0)?b:a);return roster[carry.line].cost>=5?['legendary','Legendary',null]:['fast-8','Fast 8',null];};
-let added=0;
+let added=0,nextSearchId=Math.max(0,...candidates.map(c=>Number(c.id.match(/^v34-search-(\d+)$/)?.[1]??0)));
 for(const f of found.finalists){
   if(added>=2||f.holdout<.5)break;
-  const team=f.team.map(u=>({...u}));const carry=team.reduce((a,b)=>(b.items?.length??0)>(a.items?.length??0)?b:a);carry.assignment='Carry';
+  const team=f.team.map(({assignment,...u})=>({...u}));const carry=carryByGear(team);carry.assignment='Carry';
   const tank=team.find(u=>u!==carry&&u.items?.length);if(tank)tank.assignment='Tank';
   // Level 8 board: drop the item-less unit whose removal hurts least against level 8 references.
   const l8refs=refs.filter(r=>r.level===8),drops=team.filter(u=>!u.items?.length);
@@ -64,11 +64,14 @@ for(const f of found.finalists){
   const best=drops.map((d,i)=>({d,s:sc.slice(i*l8refs.length,(i+1)*l8refs.length).reduce((a,b)=>a+b,0)/l8refs.length})).sort((a,b)=>b.s-a.s)[0];
   const [category,strategy,rollLevel]=strategyOf(team);
   const name=`${roster[carry.line].forms[carry.star-1].name} / ${activeTraits(team).sort((a,b)=>b.tier-a.tier||b.n-a.n).slice(0,2).map(t=>t.t+' '+t.n).join(', ')}`;
-  candidates.push({id:`v34-search-${++added}`,name,family:familyOf(team),origin:'search',source:'Version 34 search',carry:carry.line,category,strategy,rollLevel,locked:team.filter(u=>u.star===3).map(u=>u.line),
+  added++;const id=`v34-search-${++nextSearchId}`;
+  candidates.push({id,name,family:familyOf(team),origin:'search',source:'Version 34 search',carry:carry.line,category,strategy,rollLevel,locked:team.filter(u=>u.star===3).map(u=>u.line),
     boards:[{level:8,team:team.filter(u=>u!==best.d)},{level:9,team}],searchHoldout:f.holdout});
-  log(`Added new board v34-search-${added}: ${name} (holdout ${(100*f.holdout).toFixed(1)}%)`);
+  log(`Added new board ${id}: ${name} (holdout ${(100*f.holdout).toFixed(1)}%)`);
 }
 
+// Persist exactly the equipment used for scoring, including unchanged published boards.
+candidates=candidates.map(c=>({...c,boards:c.boards.map(b=>({...b,team:capItems(b.team)}))}));
 // 4. Final scores
 const scores=await scoreAll(candidates,refs,{label:'final'});
 log('Final scores done');

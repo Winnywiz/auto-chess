@@ -38,7 +38,7 @@ def main():
     fetch(SHEET, WORK / "workbook.csv", refresh)
     fetch(SITE, WORK / "community.html", refresh)
     fetch("https://einoow.com/api/meta/kanto/meta.json", WORK / "meta.json", refresh)
-    data = json.loads((NATIVE / "data.json").read_text())
+    data = json.loads((NATIVE / "data.json").read_text(encoding="utf-8"))
     roster = {r["id"]: r for r in data["roster"]}
     rows = list(csv.reader((WORK / "workbook.csv").open(encoding="utf-8")))
     version_note = rows[1][0] if len(rows) > 1 else ""
@@ -64,7 +64,7 @@ def main():
         cap(ref["team"])
         ref["name"] = comp["sub"]
         ref["tier"] = comp["tier"]
-    api = json.loads((WORK / "meta.json").read_text())
+    api = json.loads((WORK / "meta.json").read_text(encoding="utf-8"))
     api_refs = P.api_refs(api, roster)
     for r in api_refs:
         cap(r["team"])

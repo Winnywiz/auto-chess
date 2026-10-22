@@ -1,9 +1,11 @@
 // Version 34 best-in-slot experiment: every three-item build per unit and star, scored by 6v6 team battles.
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {engineIdentity} from '../native/identity.mjs';
 const nativeRoot=new URL(process.env.KANTO_NATIVE_ROOT?`file://${process.env.KANTO_NATIVE_ROOT.replaceAll('\\','/').replace(/\/?$/,'/')}`:'../../work/native-v34/',import.meta.url);
 const {fight,build:engineBuild}=await import(new URL('headless.mjs',nativeRoot));
 export {engineBuild};
+export const engineFingerprint=engineIdentity(nativeRoot);
 export const VERSION='bis-team-battles-v4-rules34';
 const source=JSON.parse(readFileSync(new URL('data.json',nativeRoot)));
 export const roster=source.roster;

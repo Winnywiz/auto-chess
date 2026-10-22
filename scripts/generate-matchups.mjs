@@ -82,6 +82,7 @@ else if(path.resolve(process.argv[1]??'')===fileURLToPath(import.meta.url)){
  const html=fs.readFileSync('compositions.html','utf8'),ctx=vm.createContext({window:{}});
  for(const key of ['KANTO_DATA','KANTO_COMPS']){const s=[...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].find(m=>m[1].trim().startsWith('window.'+key+'='));if(!s)throw Error('Missing '+key);vm.runInContext(s[1],ctx);}
  const {KANTO_DATA:data,KANTO_COMPS:C}=ctx.window,sets={},jobs=[];
+ for(const r of C.rows)for(const b of r.boards)if(b.team.reduce((n,u)=>n+u.items.length,0)>6)throw Error('Board exceeds scored six-item budget: '+r.id+' L'+b.level);
  for(const level of [8,9]){sets[level]=C.rows.filter(r=>['S','A'].includes(r.stages.find(s=>s.level===level)?.tier)).map(r=>({...r,...r.boards.find(b=>b.level===level),tier:r.stages.find(s=>s.level===level).tier,purchaseGold:r.stages.find(s=>s.level===level).purchaseGold}));for(let i=0;i<sets[level].length;i++)for(let j=i+1;j<sets[level].length;j++)jobs.push({level,a:sets[level][i],b:sets[level][j]});}
  const out=path.resolve('analysis');fs.mkdirSync(path.join(out,'replays'),{recursive:true});
  const start=performance.now(),results=[];let next=0;const workers=Array.from({length:Math.min(os.availableParallelism(),Number(process.env.KANTO_WORKERS)||64)},()=>new Worker(new URL(import.meta.url),{workerData:{data,out}}));

@@ -1,6 +1,7 @@
 // Turn work/bis-v4/results.json into window.KANTO_BIS for the builder and composition pages.
 // The recommended build is the better of the frozen validation leader and runner-up over all of their
-// held-out battles (validation plus confirmation, 896 each).
+// combined validation and confirmation battles (896 each). Validation selected the finalists,
+// so the pooled score is not an independent held-out estimate.
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 const root=new URL('../../',import.meta.url);
@@ -12,12 +13,16 @@ for(const r of input.results){
   const leaderWins=L.score>=R.score,pick=leaderWins?L:R,alt=leaderWins?R:L;
   const pickItems=(leaderWins?r.frozenLeader:r.frozenRunner).split('|'),altItems=(leaderWins?r.frozenRunner:r.frozenLeader).split('|');
   if(!leaderWins)flipped++;
-  const cmp=r.confirmation.comparison,gap=pick.score-alt.score,ci=leaderWins?[cmp.low,cmp.high]:[-cmp.high,-cmp.low];
+  const cmp=r.confirmation.comparison,pc=leaderWins?r.confirmation.leader:r.confirmation.runner,ac=leaderWins?r.confirmation.runner:r.confirmation.leader;
+  const gap=pc.score-ac.score,ci=leaderWins?[cmp.low,cmp.high]:[-cmp.high,-cmp.low];
   states[r.line+':'+r.star]={line:r.line,star:r.star,name:r.name,items:pickItems,score:pick.score,wins:pick.wins,draws:pick.draws,losses:pick.losses,battles:pick.n,
-    alternative:{items:altItems,score:alt.score},confidence:ci[0]>0?'lead':'close',gap,interval:ci,
-    native:{items:r.nativeItems,score:r.confirmation.native.score},noItems:r.confirmation.empty.score};
+    validationScore:(leaderWins?r.validation.leader:r.validation.runner).score,validationBattles:r.validation.leader.n,
+    confirmationScore:pc.score,confirmationBattles:pc.n,
+    alternative:{items:altItems,score:alt.score,confirmationScore:ac.score,confirmationBattles:ac.n},
+    confidence:ci[0]>0?'lead':ci[1]<0?'alternative':'close',gap,pooledGap:pick.score-alt.score,interval:ci,intervalSource:'confirmation-only; paired seed blocks',
+    native:{items:r.nativeItems,score:r.confirmation.native.score,battles:r.confirmation.native.n},noItems:r.confirmation.empty.score,noItemsBattles:r.confirmation.empty.n};
 }
-const result={build:input.engineBuild,rules:34,method:'Every three-item build screened in 6v6 battles; finalists checked on unseen lineups and seeds; recommendation is the better finalist over 896 held-out battles.',states,digest:createHash('sha256').update(JSON.stringify(states)).digest('hex')};
+const result={build:input.engineBuild,rules:34,method:'Every three-item build screened in 6v6 battles. Recommendations use pooled validation (384 battles, used for selection) and confirmation (512 battles) scores. Gaps and intervals use confirmation only. Pooled scores are selection-dependent, not independent held-out estimates.',states,digest:createHash('sha256').update(JSON.stringify(states)).digest('hex')};
 const blob='window.KANTO_BIS='+JSON.stringify(result)+';';
 for(const name of ['builder.html','compositions.html']){
   const p=new URL(name,root);let html=fs.readFileSync(p,'utf8');

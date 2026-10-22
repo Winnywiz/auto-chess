@@ -145,6 +145,17 @@
 .board-game-plan{margin:21px 0 18px}
 .board-game-plan h3{font-size:15px;margin:0 0 9px}
 .board-game-plan p{font-size:14px;line-height:1.75;color:var(--muted);margin:0}
+.board-game-plan .level-plan{margin-top:10px}
+.board-game-plan .cap-reminder{margin-top:12px;color:var(--gold);font-size:13px}
+.guidance-method{display:inline-block;margin-top:16px;font-size:12px;color:var(--green);text-underline-offset:4px}
+.upgrade-odds{border-top:1px solid var(--line);padding-top:20px;margin-top:24px}
+.odds-context{display:block;color:var(--muted);font-size:12px;margin-bottom:12px}
+.upgrade-odds>div{display:grid;gap:8px}
+.odds-chip{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);padding:11px 10px;font:inherit;font-size:13px;cursor:help}
+.odds-chip:hover,.odds-chip:focus-visible{border-color:var(--green);outline:2px solid var(--green);outline-offset:2px}
+.odds-chip b{color:var(--lime);white-space:nowrap}
+.formation-caption{flex-wrap:wrap;gap:10px}
+.stage-kind{white-space:normal;line-height:1.5}
 @media(max-width:1050px){.overview-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"board board" "resources seals";gap:25px}.overview-grid>.comp-board-panel{grid-area:board}.overview-grid>.comp-resources{grid-area:resources}.overview-grid>.comp-seals{grid-area:seals}.overview-grid .mini-board{max-width:640px}}
 @media(max-width:650px){.comp-details{scroll-margin-top:115px}.overview-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"board" "resources" "seals";gap:27px}.overview-grid .mini-board{padding-right:8px;gap:6px}.overview-grid .mini-board-row{gap:3px}.overview-grid .board-game-plan p{font-size:14px}.overview-grid .board-actions{display:grid;gap:9px}.overview-grid .board-actions .load-comp{width:100%;justify-content:center}.overview-grid>.comp-resources{padding-top:20px;border-top:1px solid var(--line)}}
 

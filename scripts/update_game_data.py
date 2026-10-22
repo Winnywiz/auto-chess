@@ -15,5 +15,5 @@ for name in ("builder.html", "compositions.html"):
     blob = "window.KANTO_DATA=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";"
     html, n = re.subn(r"window\.KANTO_DATA=\{[^\n]*\};", lambda _: blob, html, count=1)
     assert n == 1, name
-    path.write_text(html, encoding="utf-8")
+    path.write_text(html, encoding="utf-8", newline="\n")
     print(f"{name}: KANTO_DATA updated to {data['build']}")

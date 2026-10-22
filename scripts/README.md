@@ -20,13 +20,17 @@ python3 scripts/update_game_data.py
 ```sh
 node scripts/bis/run.mjs          # about 3.7 million battles; resumes from work/bis-v4/results.partial.json
 node scripts/bis/export.mjs       # writes window.KANTO_BIS into builder.html and compositions.html
+node scripts/bis/verify.mjs       # reproduce six stored confirmation builds (3,072 battles)
 ```
 
 Each reachable unit and star tests all 1,771 three-item builds in 6v6 battles: a screen on four lineups,
 a refinement on eight, held-out validation on eight unseen lineups, then a frozen confirmation on eight
 more lineups with new seeds. Opponent lineups include the most used units of the top official meta
-compositions. The site recommends the better of the two finalists over their 896 held-out battles and
-shows the other as the alternative.
+compositions. The site recommends the better of the two finalists over 384 validation plus 512
+confirmation battles and shows the other as the alternative. Validation selected the finalists, and
+the pooled score selects the recommendation: neither is an independent held-out estimate. The exported
+gap, interval and confidence use confirmation only; `pooledGap` uses the combined score. Native and
+unequipped scores have 512 confirmation battles each. A close result does not establish a universal BIS.
 
 ## 3. Compositions
 
@@ -38,6 +42,9 @@ python3 scripts/comps/apply.py            # writes KANTO_COMPS and KANTO_GUIDES 
 
 The pipeline runs these steps:
 
+The exporter preserves editorial carry labels and refined progression guides when cap combat inputs
+are unchanged. Use `apply.py --replace-guides` only to deliberately publish freshly generated transitions.
+
 1. **Items**: each board's carry and tank are re-tested with their Version 34 best-in-slot sets; a change is
    kept only when it scores better against the reference boards.
 2. **Passive traits and utility**: on the strongest boards, every item-less slot is tested with one-unit
@@ -46,14 +53,18 @@ The pipeline runs these steps:
 3. **Search**: an evolutionary search over level 9 boards (at most 135 Board Value, six items) plays a
    gauntlet of the strongest published and reference boards, then checks finalists on new seeds. Only
    boards that differ by at least three units from every published and reference board are added.
-4. **Scores**: twelve seeds and both sides for every pair. Reference score is half reference boards (two
-   groups weighted equally) and half cross-tag score (each opposing trait family weighted equally).
+4. **Scores**: twelve seeds and both sides for every pair. The composite combat score is 25% workbook,
+   25% historical official API and 50% cross-tag score (each opposing trait family weighted equally).
+   At this snapshot the official API still reports rules 33, while all battles execute rules 34.
+   Every exported cap is limited to the same six items used by the scorer and replay generator.
 5. **Transitions**: level 8 down to level 5 boards are built from the final board. Final units come first;
    a temporary unit must share a final trait or add utility. Options are tested against reference boards
    reduced to what is usually available at that level.
 
-Pair results are cached in `work/comps-v34/pair-cache.json` under hashes of both boards and the seeds, so
-reruns only simulate changed boards.
+Pair results are cached in `work/comps-v34/pair-cache.json` under hashes of the native modules, harness,
+roster data, both boards and seeds. Legacy cache keys are not reused. BIS checkpoints additionally
+require a matching experiment fingerprint; incompatible or legacy checkpoints must be preserved
+separately before starting a fresh run.
 
 ## 4. Matchup replays
 
@@ -69,3 +80,15 @@ one replay per observed outcome in `analysis/`.
 
 Battles are combat only: no shops, contested pools, item drops, weather or Seals. Scores are combat
 estimates for the exact boards shown, not ranked placement rates.
+
+`node scripts/comps/audit-v34.mjs` reproduces the targeted upgrade-sensitivity check on the two new
+Exeggutor caps with 32 fresh seeds on both sides. It does not reclassify tiers or estimate acquisition odds.
+`node scripts/verify-site-data.mjs` checks page consistency, item budgets, trait labels, and BIS arithmetic.
+
+The native acquisition and full-match rerun is documented in [realism/README.md](realism/README.md).
+It separates conditional shop odds, complete eight-seat matches, and combat between attained boards.
+Its local-bot results do not replace the website's capped-combat tiers.
+
+After editing composition data, regenerate `composition-guidance.js` using
+`node scripts/realism/export-site.mjs`, then run `node scripts/verify-guidance.mjs`.
+The UI defaults to suggested practical progression; only unchanged cap boards display combat scores.

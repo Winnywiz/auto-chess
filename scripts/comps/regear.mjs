@@ -33,7 +33,7 @@ export async function regear(candidates,refs){
     const opts=options(b.team,bis).map((o,k)=>({...o,score:agg[[c.id,b.level,k].join('/')].reduce((x,y)=>x+y,0)/agg[[c.id,b.level,k].join('/')].length}));
     const best=opts.reduce((x,y)=>y.score>x.score+0.01?y:x,opts[0]);
     report.push({id:c.id,level:b.level,chosen:best.label,gain:best.score-opts[0].score,options:opts.map(o=>({label:o.label,score:o.score}))});
-    return {...b,team:best.team,gear:best.label};
+    return {...b,team:capItems(best.team),gear:best.label};
   })}));
   return {candidates:out,report};
 }

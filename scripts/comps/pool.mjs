@@ -4,15 +4,17 @@ import os from 'node:os';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {engineIdentity} from '../native/identity.mjs';
 export const nativeRoot=new URL(process.env.KANTO_NATIVE_ROOT?`file:///${process.env.KANTO_NATIVE_ROOT.replaceAll('\\','/').replace(/^\//,'').replace(/\/?$/,'/')}`:'../../work/native-v34/',import.meta.url);
 export const workDir=new URL('../../work/comps-v34/',import.meta.url);
 const cachePath=new URL('pair-cache.json',workDir);
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,32);
 const clean=team=>team.map(u=>({line:u.line,star:u.star,items:[...(u.items??[])],cell:u.cell}));
+const identity=engineIdentity(nativeRoot);
 let cache=null;
 function loadCache(){if(cache)return cache;fs.mkdirSync(workDir,{recursive:true});try{cache=JSON.parse(fs.readFileSync(cachePath));}catch{cache={};}return cache;}
 export function saveCache(){if(cache)fs.writeFileSync(cachePath,JSON.stringify(cache));}
-export const pairKey=(a,b,seeds)=>hash([clean(a),clean(b),seeds]);
+export const pairKey=(a,b,seeds)=>hash(['combat-cache-v2',identity,clean(a),clean(b),seeds]);
 // pairs: [{a:team,b:team}] -> scores for team a (wins + half draws), both sides per seed.
 export async function scorePairs(pairs,seeds,{workers=Number(process.env.KANTO_WORKERS)||os.availableParallelism(),label='pairs'}={}){
   const c=loadCache(),keys=pairs.map(p=>pairKey(p.a,p.b,seeds)),todo=new Map();

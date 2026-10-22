@@ -15,6 +15,12 @@ export function readPage(){
   return {html,comps:get('KANTO_COMPS'),guides:get('KANTO_GUIDES'),bis:get('KANTO_BIS')};
 }
 export const itemCount=team=>team.reduce((s,u)=>s+(u.items?.length??0),0);
+const offense=new Set(['choice-band','choice-specs','choice-scarf','scope-lens','life-orb','quick-claw','shell-bell','twisted-spoon','poison-barb','expert-belt']);
+// Editorial role inference for newly searched boards. Equal item counts alone can label the tank a carry.
+export function carryByGear(team){
+  const geared=team.filter(u=>u.items?.length);
+  return [...(geared.length?geared:team)].sort((a,b)=>(b.items??[]).filter(i=>offense.has(i)).length-(a.items??[]).filter(i=>offense.has(i)).length||(b.items?.length??0)-(a.items?.length??0)||roster[b.line].cost-roster[a.line].cost)[0];
+}
 export function capItems(team,cap=6){
   // Keep items on the strongest holders first (most items, then highest cost).
   const order=team.map((u,i)=>({i,n:u.items?.length??0,cost:roster[u.line].cost})).sort((a,b)=>b.n-a.n||b.cost-a.cost||a.i-b.i);

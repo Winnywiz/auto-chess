@@ -16,7 +16,7 @@ for(const level of [8,9]){
  const eligible=ctx.window.KANTO_COMPS.rows.filter(r=>['S','A'].includes(r.stages.find(s=>s.level===level).tier));
  assert.deepEqual([...D.builds[level].map(r=>r.id)].sort(),[...eligible.map(r=>r.id)].sort());
  expectedPairs+=eligible.length*(eligible.length-1)/2;
- for(const r of D.builds[level]){const original=eligible.find(x=>x.id===r.id).boards.find(b=>b.level===level);assert.equal(JSON.stringify(r.team.map(({line,star,items,cell})=>({line,star,items,cell}))),JSON.stringify(original.team.map(({line,star,items,cell})=>({line,star,items,cell}))));}
+ for(const r of D.builds[level]){const original=eligible.find(x=>x.id===r.id).boards.find(b=>b.level===level);assert(r.team.reduce((n,u)=>n+u.items.length,0)<=6,'Replay exceeds the scored six-item budget: '+r.id);assert.equal(JSON.stringify(r.team.map(({line,star,items,cell})=>({line,star,items,cell}))),JSON.stringify(original.team.map(({line,star,items,cell})=>({line,star,items,cell}))));}
 }
 assert.equal(D.pairs.length,expectedPairs);
 for(const p of D.pairs){

@@ -2,17 +2,23 @@
 import {Worker} from 'node:worker_threads';
 import os from 'node:os';
 import {writeFile,readFile,rename,mkdir} from 'node:fs/promises';
-import {config,states,items,archetypes,VERSION,digest,engineBuild} from './experiment.mjs';
+import {config,states,items,archetypes,VERSION,digest,engineBuild,engineFingerprint} from './experiment.mjs';
 const out=new URL('../../work/bis-v4/',import.meta.url);await mkdir(out,{recursive:true});
 const pilot=process.argv.includes('--pilot');
 const requested=Number(process.argv.find(x=>x.startsWith('--workers='))?.split('=')[1]??os.availableParallelism());
 const selected=pilot?['pikachu','chansey','snorlax'].map(line=>states.find(s=>s.line===line&&s.star===2)):states;
 const workerCount=Math.min(selected.length,Math.max(1,requested));
 const resultsPath=new URL(pilot?'pilot.json':'results.json',out),partialPath=new URL(pilot?'pilot.partial.json':'results.partial.json',out);
-let done=[];try{done=JSON.parse(await readFile(partialPath)).results??[];}catch{}
+const experimentFingerprint=digest({engineFingerprint,config,states:selected,items,archetypes,
+  experimentSource:await readFile(new URL('./experiment.mjs',import.meta.url),'utf8'),
+  workerSource:await readFile(new URL('./worker.mjs',import.meta.url),'utf8')});
+let checkpoint;
+try{checkpoint=JSON.parse(await readFile(partialPath));}catch(e){if(e.code!=='ENOENT')throw e;}
+if(checkpoint&&checkpoint.experimentFingerprint!==experimentFingerprint)throw Error('BIS checkpoint is incompatible with this engine or experiment. Preserve it in a separate directory and start a fresh run.');
+let done=checkpoint?.results??[];
 const doneKeys=new Set(done.map(r=>r.line+':'+r.star));
 const queue=selected.filter(s=>!doneKeys.has(s.line+':'+s.star));
-const meta={version:VERSION,engineBuild,workers:workerCount,hardware:{cpu:os.cpus()[0]?.model,logicalProcessors:os.availableParallelism(),platform:os.platform()},node:process.version,config,archetypes,items:items.map(i=>i.id)};
+const meta={version:VERSION,engineBuild,engineFingerprint,experimentFingerprint,workers:workerCount,hardware:{cpu:os.cpus()[0]?.model,logicalProcessors:os.availableParallelism(),platform:os.platform()},node:process.version,config,archetypes,items:items.map(i=>i.id)};
 const results=[...done],start=performance.now();let battles=0;
 console.log(JSON.stringify({event:'start',states:selected.length,resumed:done.length,workers:workerCount}));
 const save=async path=>{const temp=new URL(path.href+'.tmp');await writeFile(temp,JSON.stringify({...meta,completed:results.length,total:selected.length,results}));await rename(temp,path);};

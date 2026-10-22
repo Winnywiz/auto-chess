@@ -1,6 +1,6 @@
 // Evolutionary search for a new level 9 board that competes with the S tier.
 import {scorePairs} from './pool.mjs';
-import {seedList,capItems,roster,front,boardValue,traitCounts,traitRules} from './common.mjs';
+import {seedList,capItems,roster,front,boardValue,traitCounts,traitRules,carryByGear} from './common.mjs';
 import {arrange,isNovel} from './boards.mjs';
 const SCREEN=seedList(2,'v34-search-screen'),HOLDOUT=seedList(16,'v34-search-holdout');
 const MAX_VALUE=135;
@@ -17,7 +17,7 @@ function legal(t){
 }
 function mutate(team,bis){
   let t=team.map(u=>({...u,items:[...(u.items??[])]}));
-  const carry=t.reduce((a,b)=>(b.items.length>a.items.length?b:a),t[0]);
+  const carry=carryByGear(t);
   const op=rand();
   if(op<.45){ // replace a non-item unit
     const slots=t.filter(u=>!u.items.length);if(!slots.length)return t;
@@ -56,7 +56,7 @@ export async function search(seedBoards,gauntlet,existing,{bis=null,generations=
     const scored=await evaluate(kids);
     // Keep diversity: at most 4 boards per carry line.
     const all=[...pop,...scored].sort((a,b)=>b.screen-a.screen),perCarry={};pop=[];
-    for(const b of all){const c=b.team.reduce((a,x)=>(x.items?.length??0)>(a.items?.length??0)?x:a,b.team[0]).line;if((perCarry[c]=(perCarry[c]??0)+1)<=4)pop.push(b);if(pop.length>=population)break;}
+    for(const b of all){const c=carryByGear(b.team).line;if((perCarry[c]=(perCarry[c]??0)+1)<=4)pop.push(b);if(pop.length>=population)break;}
     console.log(`  ${label} generation ${g+1}/${generations}: best ${(100*pop[0].screen).toFixed(1)}%, ${seen.size} boards tried`);
   }
   // Holdout: new seeds against the full gauntlet, only for boards that differ from every published board.

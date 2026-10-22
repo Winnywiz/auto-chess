@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Write work/comps-v34/final.json into compositions.html (KANTO_COMPS and KANTO_GUIDES)."""
-import json, re
+import json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,24 +24,50 @@ def clean(text):
 
 
 ENTRIES = {
-    "v34-search-1": "Roll at 7 for Exeggutor, Jynx and Venusaur 3★. Slowbro holds Mew's tank items until Mew arrives, then level to 9 for Mewtwo and Zapdos.",
-    "v34-search-2": "Roll at 7 for Exeggutor, Alakazam, Venusaur and Parasect 3★. Parasect tanks with the Leftovers set; add Mewtwo, Mew and Starmie as you level.",
+    "v34-search-1": "Choose this cap when you already have Venusaur 3★ from an early Bulbasaur reroll. At 7, prioritize Exeggutor and Jynx. Slowbro holds Mew's tank items until Mew arrives; add Mewtwo and Zapdos later. Do not chase Bulbasaur at 7.",
+    "v34-search-2": "Choose this cap after an early Venusaur 3★. Collect Abra and Paras while leveling through 6; only finish their upgrades if close. Prioritize Exeggutor at 7, then add Mewtwo and Mew. Parasect holds the tank items. The shown score requires every displayed upgrade.",
 }
 
 
+def cap_items(team, roster, cap=6):
+    """Exactly mirror common.mjs: export the equipment used by scoreAll."""
+    out = [dict(u, items=list(u.get("items", []))) for u in team]
+    order = sorted(range(len(out)), key=lambda i: (-len(out[i]["items"]), -roster[out[i]["line"]]["cost"], i))
+    for i in order:
+        out[i]["items"] = out[i]["items"][:max(0, cap)]
+        cap -= len(out[i]["items"])
+    return out
+
+
 def main():
-    final = json.loads((WORK / "final.json").read_text())
-    refs = json.loads((WORK / "references.json").read_text())
+    final = json.loads((WORK / "final.json").read_text(encoding="utf-8"))
+    refs = json.loads((WORK / "references.json").read_text(encoding="utf-8"))
     data_html = PAGE.read_text(encoding="utf-8")
     data = embedded(data_html, "KANTO_DATA")
     roster = {r["id"]: r for r in data["roster"]}
     old_guides = embedded(data_html, "KANTO_GUIDES")["guides"]
+    old_rows = {r["id"]: r for r in embedded(data_html, "KANTO_COMPS")["rows"]}
+    def combat_boards(boards):
+        return [{"level": b["level"], "team": [{k: u[k] for k in ("line", "star", "items", "cell")} for u in cap_items(b["team"], roster)]} for b in boards]
     name = lambda line, star=2: roster[line]["forms"][star - 1]["name"]
     copies = {1: 1, 2: 3, 3: 9}
     value = lambda team: sum(roster[u["line"]]["cost"] * copies[u["star"]] for u in team)
     rows, guides = [], {}
     passive = {p["id"]: p for p in final["passive"]}
     for c in final["candidates"]:
+        old_row = old_rows.get(c["id"])
+        unchanged = old_row and combat_boards(old_row["boards"]) == combat_boards(c["boards"])
+        # Manual carry labels and refined progression guides can be newer than final.json.
+        # Preserve them while the actual cap inputs are unchanged.
+        if unchanged:
+            c["carry"], c["name"] = old_row["carry"], old_row["name"]
+            for b in c["boards"]:
+                assignments = {u["line"]: u.get("assignment") for u in next(x for x in old_row["boards"] if x["level"] == b["level"])["team"]}
+                for u in b["team"]:
+                    if assignments.get(u["line"]):
+                        u["assignment"] = assignments[u["line"]]
+                    else:
+                        u.pop("assignment", None)
         sc = final["scores"][c["id"]]
         stages = []
         for level in (8, 9):
@@ -52,7 +78,9 @@ def main():
                            "n": s["n"], "peerN": s["peerN"],
                            "groups": [{"group": k, "score": v} for k, v in s["groups"].items()] + [{"group": "diverse", "score": s["peerScore"]}],
                            "purchaseGold": value(board["team"]), "gearImpact": None, "bisDependent": False})
-        boards = [{"level": b["level"], "team": b["team"]} for b in c["boards"]]
+        boards = [{"level": b["level"], "team": cap_items(b["team"], roster)} for b in c["boards"]]
+        if c["id"] == "ice-dugtrio-search":
+            c["name"] = "Ice support / Dugtrio"
         rows.append({k: c.get(k) for k in ("id", "name", "family", "origin", "source", "carry", "category", "strategy", "rollLevel")} |
                     {"locked": c.get("locked") or [], "boards": boards, "stages": stages})
         old = old_guides.get(c["id"], {})
@@ -80,17 +108,20 @@ def main():
             a = p["adopt"]
             pivots.insert(0, clean(f"Version 34 test: {name(a['in'])} replaces {name(a['out'])} in this board (+{100 * a.get('confirmedGain', a['gain']):.1f} points against the reference boards)."))
         entry = ENTRIES.get(c["id"]) or old.get("entry") or f"Build around {name(c['carry'])}. Add the final units as they appear and keep the item holders shown."
-        guides[c["id"]] = {"family": c["family"], "entry": clean(entry), "pivots": pivots, "locked": c.get("locked") or [],
+        guides[c["id"]] = {"family": c["family"], "entry": clean(entry), "pivots": list(dict.fromkeys(pivots)), "locked": c.get("locked") or [],
                            "stages": gstages, "alternatives": old.get("alternatives", [])}
+        if unchanged and old and "--replace-guides" not in sys.argv:
+            guides[c["id"]] = old | {"entry": clean(entry), "pivots": list(dict.fromkeys(old.get("pivots", [])))}
     ref_list = refs["references"]
     comps = {"version": "v34-rerun-1", "generated": final["generated"], "gameRules": 34, "gameModule": "route-k2DWeEO1.js",
              "apiGenerated": refs["apiGenerated"], "apiRules": refs["apiRules"], "workbookVersion": refs["workbookVersion"],
              "workbookReferences": sum(r["group"] == "workbook" for r in ref_list), "apiReferences": sum(r["group"] == "api" for r in ref_list),
-             "seeds": 12, "scoreMethod": "Twelve seeds, both sides; 50% reference boards (workbook and official API, weighted equally) and 50% cross-tag candidates",
+             "seeds": 12, "itemBudget": 6, "seals": False, "economySimulated": False,
+             "scoreMethod": "Twelve seeds, both sides; 25% workbook, 25% historical rules-33 API boards, 50% cross-family candidates (opposing trait families weighted equally). Exact capped combat boards, not ranked win rates.",
              "rows": rows}
     html = replace(data_html, "KANTO_COMPS", comps)
     html = replace(html, "KANTO_GUIDES", {"version": "v34-rerun-1", "note": "Level 5 to 8 boards are built downward from the final board and battle-tested at each level.", "guides": guides})
-    PAGE.write_text(html, encoding="utf-8")
+    PAGE.write_text(html, encoding="utf-8", newline="\n")
     tiers = {}
     for r in rows:
         t = r["stages"][1]["tier"]
