@@ -194,3 +194,11 @@
 .lobby-card .lobby-m1 { grid-area: m1; }
 .lobby-card .lobby-m2 { grid-area: m2; }
 @media (max-width: 1050px) { .pivot-grid { grid-template-columns: minmax(0, 1fr); } .lobby-card { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "traits" "units" "m1" "m2"; } }
+.overview-grid { grid-template-columns: minmax(180px, .8fr) minmax(380px, 2.2fr) minmax(200px, .9fr); grid-template-areas: "resources board guide" "seals board guide"; grid-template-rows: auto 1fr; }
+.overview-grid > .comp-guide { grid-area: guide; }
+.overview-grid > .comp-resources { grid-area: resources; }
+.overview-grid > .comp-board-panel { grid-area: board; }
+.overview-grid > .comp-seals { grid-area: seals; }
+.progression-tabs .cap-tab { border-style: dashed; }
+@media (max-width: 1050px) { .overview-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "board board" "resources guide" "seals guide"; grid-template-rows: auto; } }
+@media (max-width: 650px) { .overview-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "board" "guide" "resources" "seals"; } }

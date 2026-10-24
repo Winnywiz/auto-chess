@@ -10,6 +10,8 @@ node scripts/fivetwo/budget-study.mjs      # gold audit + how many 3★ targets 
 node scripts/fivetwo/search.mjs            # 5-2 boards, seven items, scored vs the ranked lobby
 node scripts/fivetwo/analyze.mjs           # acquisition, low-roll holders, frontline fallbacks, alt builds
 node scripts/fivetwo/export-site.mjs       # writes KANTO_COMPS and data/compositions-52.json
+node scripts/fivetwo/progression.mjs       # level 5-8 transitions, optional level-9 cap, Seal picks
+node scripts/fivetwo/export-site.mjs       # re-export to merge them (and seals-data.js recommendations)
 python3 scripts/fivetwo/private-table.py   # private gold / roll workbook (work/fiveTwo/, not published)
 node scripts/verify-site-data.mjs          # board legality, item split, no economy fields, exact replays
 ```
@@ -35,3 +37,13 @@ node scripts/verify-site-data.mjs          # board legality, item split, no econ
 
 Gold, roll and hit-rate figures are kept out of the website by design; the verifier fails if any
 economy field is published.
+
+## Progression, cap and Seals
+
+Transition boards for levels 5 up to the 5-2 level reuse the final units (carry and tank first, no
+four-costs at level 5, no five-costs before 8) with stars available at that level; 3★ targets appear
+from the roll level. They are scored against the stage-3 lobby. Level 8 (for rerolls) adds the best
+unit to the 5-2 board; the optional level-9 max cap upgrades four-costs to 2★ and adds one more unit,
+both scored against the stage-4 lobby with the same seven items. Seal picks for 2-1, 3-2 and 4-2:
+economy and shop Seals are measured by how much they raise the chance to finish by 5-2 in the shop
+simulation (private numbers); combat Seals are ranked by board fit, since the bundled engine has no Seals.

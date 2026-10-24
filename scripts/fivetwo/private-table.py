@@ -99,7 +99,31 @@ sheet(ws, 'Roll policy grid (200 games each, mixed profile)', '"early" = start r
   ['Plan', 'Targets', 'Roll level', 'Start', 'Floor gold', 'All-in round', 'Hit by 5-2', '4-cost tank 2★', 'Avg roll gold'], rows, [I, G0, G0, I, G0, I, P, P, G0], [20, 8, 9, 8, 9, 10, 10, 11, 11])
 ws.auto_filter.ref = f'A4:I{4 + len(rows)}'
 
-# 5. Rules
+# 5. Seals (measured economy effect)
+prog_file = W / 'progression.json'
+if prog_file.exists():
+    prog = json.loads(prog_file.read_text())['rows']
+    seals_by = {}
+    sd = (Path(__file__).resolve().parents[2] / 'seals-data.js').read_text()
+    sd = json.loads(sd[sd.index('{'):sd.rindex('}') + 1])
+    sname = {s['id']: s['name'] for s in sd['seals']}
+    rows, seen = [], set()
+    for rid, p in prog.items():
+        carry = rid.split('-')[1]
+        for m in p.get('sealMeasured', []):
+            key = (carry, m['round'], m['id'])
+            if key in seen: continue
+            seen.add(key); r = len(rows) + 5
+            rows.append([carry, ['2-1', '3-2', '4-2'][m['round']], sname.get(m['id'], m['id']), m['base'], m['with'], f'=E{r}-D{r}'])
+    rows.sort(key=lambda x: (x[0], x[1], -(x[4] - x[3])))
+    for i, row in enumerate(rows): row[5] = f'=E{i + 5}-D{i + 5}'
+    ws = wb.create_sheet('Seals (economy)')
+    sheet(ws, 'Economy and shop Seals: effect on finishing the board by 5-2',
+      'Each Seal is added at its round on top of the Seals already picked earlier in that composition\'s plan, 160 full-game simulations (mixed profile). Combat Seals are not in this table: they are ranked by board fit on the website.',
+      ['Carry line', 'Round', 'Seal', 'Hit by 5-2 without', 'Hit by 5-2 with', 'Change'], rows, [I, I, I, P, P, '+0.0%;-0.0%;0.0%'], [14, 8, 22, 14, 14, 10])
+    ws.auto_filter.ref = f'A4:F{4 + len(rows)}'
+
+# 6. Rules
 ws = wb.create_sheet('Rules used')
 rules = [('Start gold / level', '5 gold, level 2'), ('Base income', '5 per round (not on 1-1 or carousel rounds)'), ('Interest', '1 per 10 gold held, max 5'),
          ('Streak gold', '+1 at 2, +2 at 3, +3 at 5 (win or loss)'), ('PvP win gold', '+1'), ('PvE gold', '2-8 win +3; any stage PvE loss +2'),

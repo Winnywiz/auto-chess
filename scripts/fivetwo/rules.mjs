@@ -72,17 +72,19 @@ export function rng(seed) {
 export function hashSeed(text) { let h = 2166136261; for (const ch of String(text)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
 
 // One shop of five slots, weighted by remaining copies (pool minus all held copies), as in the game.
-export function rollShop(level, remaining, banned, r) {
-  const odds = RULES.odds[level], out = [];
+export function rollShop(level, remaining, banned, r, {ownedK = 1, owned = null, shift = 0} = {}) {
+  let odds = RULES.odds[level]; const out = [];
+  if (shift && odds[3] > 0) { odds = [...odds]; const m = Math.min(shift, odds[0]); odds[0] -= m; odds[3] += m; }
+  const w = l => remaining[l] * (ownedK !== 1 && owned?.[l] ? ownedK : 1);
   for (let s = 0; s < RULES.slots; s++) {
     let x = r() * 100, tier = 1;
     for (let i = 0; i < 5; i++) { if (x < odds[i]) { tier = i + 1; break; } x -= odds[i]; }
     let lines = BY_COST[tier].filter(l => remaining[l] > 0 && !banned?.has(l));
     if (!lines.length) { for (const t of [1, 2, 3, 4, 5].filter(t => t !== tier)) { lines = BY_COST[t].filter(l => remaining[l] > 0 && !banned?.has(l)); if (lines.length && odds[t - 1] > 0) break; } }
-    const total = lines.reduce((n, l) => n + remaining[l], 0);
+    const total = lines.reduce((n, l) => n + w(l), 0);
     if (!total) { out.push(null); continue; }
     let y = r() * total, pick = lines[lines.length - 1];
-    for (const l of lines) { y -= remaining[l]; if (y <= 0) { pick = l; break; } }
+    for (const l of lines) { y -= w(l); if (y <= 0) { pick = l; break; } }
     remaining[pick]--; out.push(pick);
   }
   return out;

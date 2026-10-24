@@ -54,7 +54,7 @@ export async function initCustomBattle({present,invalidate}){
    changed();renderSide(side);
   };
   $('#unit-editor-'+side).onclick=e=>{if(!e.target.closest('[data-remove]'))return;teams[side].splice(selected[side],1);selected[side]=teams[side].length?Math.min(selected[side],teams[side].length-1):-1;changed();render();};
-  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;teams[side]=clone((row.boards.find(b=>b.level===9)??row.boards[0]).team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
+  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;teams[side]=clone(row.boards[0].team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
   $('#import-'+side).onclick=()=>{
    $('#import-side').value=side;$('#builder-payload').value='';$('#import-error').textContent='';$('#builder-import').showModal();$('#builder-payload').focus();
   };

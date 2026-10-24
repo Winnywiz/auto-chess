@@ -72,6 +72,16 @@ for (const c of A.comps) {
   });
 }
 rows.sort((a, b) => b.expected - a.expected);
+// Transition boards, optional max cap and Seal suggestions (scripts/fivetwo/progression.mjs).
+const progFile = new URL('progression.json', W);
+const PROG = fs.existsSync(progFile) ? JSON.parse(fs.readFileSync(progFile)).rows : {};
+const sealRecs = {};
+for (const r of rows) {
+  const p = PROG[r.id]; if (!p) continue;
+  const slim = s => ({level: s.level, team: s.team.map(({line, star, cell, items, assignment}) => ({line, star, cell, items, assignment: assignment ?? 'Support'})), score: s.score, lobby: s.lobby, ...(s.final ? {final: true} : {})});
+  r.stages = p.stages.map(slim); r.cap = {...slim(p.cap), optional: true};
+  sealRecs[r.id] = {[r.level]: p.seals};
+}
 const reference = A.reference.map(r => ({id: `api:${r.id}:s4`, comp: r.id, name: refName(r), tier: r.tier, games: r.n, avg: r.avg, top4: r.top4, level: r.level, team: r.team, traits: r.traits, score: r.score, s4: r.s4, s3: r.s3, expected: r.expected, lowScore: r.lowScore})).sort((a, b) => b.expected - a.expected);
 const C = {
   version: 'v35-52-1', generated: A.generated, gameRules: 35, engineIdentity: prov.identity, model: 'finish-by-5-2', itemBudget: 7, itemSplit: {tank: 3, carry: 3, secondary: 1},
@@ -85,9 +95,15 @@ let out = html.replace(/<script>window\.KANTO_COMPS=\{[^\n]*\};\s*<\/script>/, `
 out = out.replace(/\s*<script>window\.KANTO_GUIDES=\{[^\n]*\};?\s*<\/script>/, '');
 if (out === html) throw Error('No composition data replaced');
 fs.writeFileSync('compositions.html', out);
+if (Object.keys(sealRecs).length) {
+  const src = fs.readFileSync('seals-data.js', 'utf8'), SD = JSON.parse(src.match(/window\.KANTO_SEALS=(\{.*\});?\s*$/s)[1]);
+  SD.recommendations = sealRecs;
+  SD.method = 'Seal picks for the 5-2 compositions. Economy and shop Seals are ranked by how much they speed up finishing the board by 5-2 in the full-game shop simulation; combat Seals by native board fit (roles, active traits, carry traits, positions). Combat Seal effects are not fought in the simulator.';
+  fs.writeFileSync('seals-data.js', 'window.KANTO_SEALS=' + JSON.stringify(SD) + ';\n');
+}
 // Public test record: boards, items and combat results only.
 const record = {version: C.version, engine: prov.identity, generated: C.generated, method: C.method, gauntlet: S.gauntlet.map(g => ({id: g.id, tier: g.tier, games: g.n, weight: g.weight, stage4: g.s4.team, stage3: g.s3?.team ?? null})),
-  rows: rows.map(r => ({id: r.id, name: r.name, strategy: r.strategy, boards: [{level: r.level, team: r.team}], score: r.score, expected: r.expected, tier: r.tier, matchups: r.matchups, altBuild: r.altBuild, lowOptions: r.lowOptions, tanks: r.tanks})),
+  rows: rows.map(r => ({id: r.id, name: r.name, strategy: r.strategy, boards: [{level: r.level, team: r.team}, ...(r.stages ?? []).filter(s => !s.final).map(s => ({level: s.level, team: s.team})), ...(r.cap ? [{level: 9, team: r.cap.team, cap: true}] : [])], score: r.score, expected: r.expected, tier: r.tier, matchups: r.matchups, altBuild: r.altBuild, lowOptions: r.lowOptions, tanks: r.tanks})),
   reference: reference.map(r => ({id: r.id, name: r.name, boards: [{level: r.level, team: r.team}], score: r.score, expected: r.expected}))};
 fs.writeFileSync('data/compositions-52.json', JSON.stringify(record));
 console.log(rows.length, 'rows', Object.entries(rows.reduce((m, r) => (m[r.tier] = (m[r.tier] ?? 0) + 1, m), {})), 'sha', createHash('sha256').update(json).digest('hex').slice(0, 12));
