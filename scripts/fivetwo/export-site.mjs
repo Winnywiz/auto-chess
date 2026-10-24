@@ -34,7 +34,7 @@ function tempoNote(strat, v) {
   const t = v.team.find(u => u.line === v.items.tank), tankName = name(t.line, t.star), four = v.tanks.filter(x => roster[x.line].cost === 4 && x.star === 2);
   const notes = [];
   if (roster[family(t.line)].cost === 4 && t.star === 1 && strat !== 'f8') notes.push(`${tankName} stays 1★: a 2★ four-cost tank is rarely found at level ${STRATEGIES[strat].rollLevel}.`);
-  if (four.length && strat !== 'f8') { const f = four[0], gain = f.score - v.final.score; if (gain > 0.02) notes.push(`If a ${name(f.line, 2)} 2★ appears, it replaces ${tankName} (+${pct(gain)} pts) — don't roll for it.`); }
+  if (four.length && strat !== 'f8') { const f = four[0], gain = f.score - v.final.score; if (gain > 0.02) notes.push(`If a ${name(f.line, 2)} 2★ appears, it replaces ${tankName} (+${pct(gain)} pts). Take it, but don't roll for it.`); }
   const fallback = v.tanks.filter(x => !(x.line === t.line && x.star === t.star) && !(roster[x.line].cost === 4 && x.star === 2))[0];
   if (fallback) notes.push(`No ${tankName}? Use ${name(fallback.line, fallback.star)} ${fallback.star}★ with the same tank items.`);
   return notes;
