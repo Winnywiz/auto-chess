@@ -1,4 +1,8 @@
-# Rebuilding the site data (Version 34)
+# Rebuilding the site data
+
+The current website uses Version 35. Follow [the v35 research workflow](comps-v35/README.md) to refresh compositions, progression, Seals and matchup replays.
+
+## Archived Version 34 workflow
 
 Everything runs on Node 22 or newer with no npm packages. Simulations use every logical CPU
 (`KANTO_WORKERS` overrides the worker count). Large intermediate files go to `work/`, which Git ignores.

@@ -1,0 +1,189 @@
+{
+  "version": 35,
+  "engine": "7f5bfa97bbc126c69f193ec540c4c5a2ff27d4c7f1dd08d7711d3c9c50bbbb0f",
+  "source": "https://einoow.com/playables/kanto-tactics/pk/",
+  "files": [
+    {
+      "path": "media/icons/114.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/114.png",
+      "bytes": 316,
+      "sha256": "dfd2cf2c063f998b3cddb249678af363d1cdf3f87855199ad7a78756f364e784",
+      "fetched": "2026-10-24T03:27:36.243Z"
+    },
+    {
+      "path": "media/icons/137.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/137.png",
+      "bytes": 333,
+      "sha256": "542d9e3df64c162b4859eaed044d10354d8a87ff5000abe6d884cb4667212a11",
+      "fetched": "2026-10-24T03:27:36.220Z"
+    },
+    {
+      "path": "media/icons/139.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/139.png",
+      "bytes": 354,
+      "sha256": "ec46c3fd08a60a8f82d99ebb5a91e2358b063e88da667fce96e2b0a8233bc3ac",
+      "fetched": "2026-10-24T03:27:36.232Z"
+    },
+    {
+      "path": "media/icons/141.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/141.png",
+      "bytes": 519,
+      "sha256": "c98d43e167ff300cc08faa2938c65a80353c7c646a8746971a557e87f99f52db",
+      "fetched": "2026-10-24T03:27:36.265Z"
+    },
+    {
+      "path": "media/icons/31.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/31.png",
+      "bytes": 631,
+      "sha256": "03c3ef86a671320ba1fc68aaa9dae721659535912a33f660631b76bd9c7113eb",
+      "fetched": "2026-10-24T03:27:36.169Z"
+    },
+    {
+      "path": "media/icons/49.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/49.png",
+      "bytes": 604,
+      "sha256": "fbb2683c43e4610e812115d6d05aef2d19ed60402c32c814b728ea7c5940ea58",
+      "fetched": "2026-10-24T03:27:36.170Z"
+    },
+    {
+      "path": "media/icons/57.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/57.png",
+      "bytes": 440,
+      "sha256": "d5b0b24456dda76e8ed12f699e33613717053ff9aa87e452a9d132d3eab1dfbf",
+      "fetched": "2026-10-24T03:27:36.184Z"
+    },
+    {
+      "path": "media/icons/71.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/71.png",
+      "bytes": 591,
+      "sha256": "09b3a34558944eaa62c4f2cf27ffe42598e00033e920d945eb4b7b6575a4fa6c",
+      "fetched": "2026-10-24T03:27:36.192Z"
+    },
+    {
+      "path": "media/icons/9052.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9052.png",
+      "bytes": 618,
+      "sha256": "27be717be82bc90327bc45a07a580a494c6ef7d66feb70d258b09dadc26e4be3",
+      "fetched": "2026-10-24T03:27:36.252Z"
+    },
+    {
+      "path": "media/icons/9053.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9053.png",
+      "bytes": 1249,
+      "sha256": "10d22edb9d8dc9a2cd26348fbe1e6f10bb54299974020bf67c8b5fb99117fc97",
+      "fetched": "2026-10-24T03:27:36.260Z"
+    },
+    {
+      "path": "media/icons/9109.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9109.png",
+      "bytes": 785,
+      "sha256": "873b5370d53664bc0fc4eb67131dd55cdc166734f6d0e5d14f244815e40db50b",
+      "fetched": "2026-10-24T03:27:36.275Z"
+    },
+    {
+      "path": "media/icons/9110.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9110.png",
+      "bytes": 1889,
+      "sha256": "0ae666487e74c7131494e25b4d9b2025db1910acee87fdf09d4100d175b20c52",
+      "fetched": "2026-10-24T03:27:36.278Z"
+    },
+    {
+      "path": "media/icons/9127.png",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/icons/9127.png",
+      "bytes": 1661,
+      "sha256": "3d142fad8aa83b47d11dd6e1c8bf51225b87b2b6fdb057399fab1f1ddfdfc22e",
+      "fetched": "2026-10-24T03:27:36.285Z"
+    },
+    {
+      "path": "media/sprites/114.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/114.gif",
+      "bytes": 48375,
+      "sha256": "577edca1f09da0fcbb566b90600fc973134eea76cc644ebb223a3da1e726bd5b",
+      "fetched": "2026-10-24T03:27:36.211Z"
+    },
+    {
+      "path": "media/sprites/137.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/137.gif",
+      "bytes": 22918,
+      "sha256": "fdc71fd73902f6d5b83bc690e58b2fe6e940db592b0d003939f0db45932f0092",
+      "fetched": "2026-10-24T03:27:36.222Z"
+    },
+    {
+      "path": "media/sprites/139.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/139.gif",
+      "bytes": 79298,
+      "sha256": "bead14b47d4d2c0afafe21d9abb868ab06a41e534ff551ad655027fdd5061f6c",
+      "fetched": "2026-10-24T03:27:36.230Z"
+    },
+    {
+      "path": "media/sprites/141.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/141.gif",
+      "bytes": 38462,
+      "sha256": "5f0d406b3be4f137f2ed97f2520e1ac531288abd47221494db9e4fc3499c1ac5",
+      "fetched": "2026-10-24T03:27:36.236Z"
+    },
+    {
+      "path": "media/sprites/31.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/31.gif",
+      "bytes": 64275,
+      "sha256": "9c7700a33fabbecc1b025dbcbb15a6e148dab153896b638bc36838e8b0377e09",
+      "fetched": "2026-10-24T03:27:36.170Z"
+    },
+    {
+      "path": "media/sprites/49.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/49.gif",
+      "bytes": 72423,
+      "sha256": "d8932090b7798037d58551fe2f837dc2ed2429f6824c366eebfdaa4038dfd50f",
+      "fetched": "2026-10-24T03:27:36.170Z"
+    },
+    {
+      "path": "media/sprites/57.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/57.gif",
+      "bytes": 39544,
+      "sha256": "e4463d5824107207ed926ac149b6e05aaf28f37822937dd1cb4ca5fe07895d13",
+      "fetched": "2026-10-24T03:27:36.184Z"
+    },
+    {
+      "path": "media/sprites/71.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/71.gif",
+      "bytes": 57013,
+      "sha256": "bfd0b15489f67bb8bcc1a1f1417c8450cead00b04aba468f3708e8b2eca85631",
+      "fetched": "2026-10-24T03:27:36.196Z"
+    },
+    {
+      "path": "media/sprites/9052.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9052.gif",
+      "bytes": 63595,
+      "sha256": "2a76dd12ea3c8008da4b1346335516d0379258bbcd29f2ef5be088268029e183",
+      "fetched": "2026-10-24T03:27:36.249Z"
+    },
+    {
+      "path": "media/sprites/9053.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9053.gif",
+      "bytes": 94755,
+      "sha256": "8c5f596a54c9ff95b101642639f61c2c77b7f707cdc68bf6ff8385b861480092",
+      "fetched": "2026-10-24T03:27:36.260Z"
+    },
+    {
+      "path": "media/sprites/9109.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9109.gif",
+      "bytes": 181673,
+      "sha256": "e2b94511e930b1e983c703101b04a1243581d5be25f61eed3c251bbcf52db0c5",
+      "fetched": "2026-10-24T03:27:36.272Z"
+    },
+    {
+      "path": "media/sprites/9110.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9110.gif",
+      "bytes": 447399,
+      "sha256": "16d5ee1c76484ab24040e8f14e7bb328147bd44e266920ae76999f274d3e1401",
+      "fetched": "2026-10-24T03:27:36.284Z"
+    },
+    {
+      "path": "media/sprites/9127.gif",
+      "url": "https://einoow.com/playables/kanto-tactics/pk/sd/9127.gif",
+      "bytes": 85657,
+      "sha256": "835e3a4db2ac74f577a6a5d6546164616a9c217762236da980e790f44b70717f",
+      "fetched": "2026-10-24T03:27:36.284Z"
+    }
+  ]
+}

@@ -36,7 +36,8 @@ for(const p of D.pairs){
 // A broken bootstrap that repeatedly samples a full low-bit PRNG cycle produces collapsed intervals.
 assert(variableIntervals>D.pairs.length/2,'Most nontrivial matchup intervals should retain seed variation');
 // Verify native replay parity and deterministic repeats on a spread of levels, outcomes and sides.
-const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v34'),harness=await import(pathToFileURL(path.join(root,'headless.mjs'))),{Battle}=harness,native={J:harness.route.ps};
+const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v'+ctx.window.KANTO_COMPS.gameRules),harness=await import(pathToFileURL(path.join(root,'headless.mjs'))),{Battle}=harness,native={J:harness.route[ctx.window.KANTO_COMPS.gameRules===35?'Ds':'ps']};
+assert.equal(native.J('Fire',['Grass']),2);assert.equal(native.J('Normal',['Ghost']),0);
 const mirror=team=>team.map(u=>({...u,cell:55-u.cell}));let nativeCases=0;
 for(let i=0;i<D.pairs.length;i+=29){const p=D.pairs[i],a=D.builds[p.level].find(r=>r.id===p.a),b=D.builds[p.level].find(r=>r.id===p.b),f=JSON.parse(fs.readFileSync('analysis/replays/'+p.key+'.json'));
  for(const r of f.replays){let digest;for(let repeat=0;repeat<2;repeat++){
@@ -48,7 +49,8 @@ for(let i=0;i<D.pairs.length;i+=29){const p=D.pairs[i],a=D.builds[p.level].find(
   const next=hash({winner:battle.winner,time:battle.time,rng:battle.rngState,units:battle.units,events:battle.events});if(repeat)assert.equal(next,digest);digest=next;nativeCases++;
  }}
 }
-const nativeHash=createHash('sha256').update(fs.readFileSync(path.join(root,'assets/route-k2DWeEO1.js'))).digest('hex');assert.equal(nativeHash,D.source.nativeHash);assert.equal(nativeHash,P.nativeManifest.files['route-k2DWeEO1.js']);
+const routeFile=fs.readdirSync(path.join(root,'assets')).find(f=>/^route-.*\.js$/.test(f));
+const nativeHash=createHash('sha256').update(fs.readFileSync(path.join(root,'assets',routeFile))).digest('hex');assert.equal(nativeHash,D.source.nativeHash);assert.equal(nativeHash,P.nativeManifest.files[routeFile]);
 for(const type of D.types)for(const def of D.types)assert.equal(D.typeChart[type][def],native.J(type,[def]));
 for(const build of Object.values(D.builds).flat())for(const u of build.team)for(const type of D.types)assert.equal(u.types.reduce((m,t)=>m*D.typeChart[type][t],1),native.J(type,u.types));
 const verification={passed:true,pairs:D.pairs.length,replays,frames,nativeCases,variableIntervals,battles:D.source.totalBattles,verifiedAt:new Date().toISOString()};

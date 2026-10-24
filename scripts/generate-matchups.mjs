@@ -8,9 +8,13 @@ import {createHash} from 'node:crypto';
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import {execFileSync} from 'node:child_process';
 
-const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v34');
+const pageRules=JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).gameRules;
+const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v'+pageRules);
 const harness=await import(pathToFileURL(path.join(root,'headless.mjs')));
-const {Battle}=harness,rosterNative=harness.roster,typeEffect=harness.route.ps;
+if(harness.rules!==pageRules)throw Error('Page and replay engine versions differ');
+const routeFile=fs.readdirSync(path.join(root,'assets')).find(f=>/^route-.*\.js$/.test(f));
+const {Battle}=harness,rosterNative=harness.roster,typeEffect=harness.route[pageRules===35?'Ds':'ps'];
+if(typeof typeEffect!=='function'||typeEffect('Fire',['Grass'])!==2||typeEffect('Normal',['Ghost'])!==0)throw Error('Native type-effectiveness interface changed');
 const hash=x=>createHash('sha256').update(typeof x==='string'?x:JSON.stringify(x)).digest('hex');
 const seedFor=(level,a,b,i)=>parseInt(hash(['sa-matchups-v1',level,a,b,i]).slice(0,8),16);
 const flip=team=>team.map(u=>({...u,cell:Math.floor(u.cell/7)*7+6-u.cell%7}));
@@ -90,7 +94,7 @@ else if(path.resolve(process.argv[1]??'')===fileURLToPath(import.meta.url)){
  try{await Promise.all(workers.map(w=>new Promise((resolve,reject)=>{const send=()=>{if(next===jobs.length){resolve();return;}w.postMessage(jobs[next++]);};w.on('message',m=>{if(m.error)return reject(Error(m.error));results.push(m.result);if(results.length%25===0)console.log(`Completed ${results.length}/${jobs.length} matchups`);send();});w.on('error',reject);send();})));}finally{await Promise.all(workers.map(w=>w.terminate()));}
  results.sort((a,b)=>a.key.localeCompare(b.key));
  const types=Object.keys(data.traits),typeChart=Object.fromEntries(types.map(type=>[type,Object.fromEntries(types.map(def=>[def,typeEffect(type,[def])]))]));
- const manifest={build:harness.build,rules:harness.rules,files:Object.fromEntries(fs.readdirSync(path.join(root,'assets')).filter(f=>f.endsWith('.js')).sort().map(f=>[f,hash(fs.readFileSync(path.join(root,'assets',f),'utf8'))])),downloadedAt:'2026-10-22'},sourceHash=hash(html),source={generated:C.generated,version:C.version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceHash,simulation:'Version 34 / route-k2DWeEO1.js',nativeHash:hash(fs.readFileSync(path.join(root,'assets/route-k2DWeEO1.js'),'utf8')),nativeCaptured:manifest.downloadedAt,generatedAt:new Date().toISOString(),seeds:128,sides:2,battlesPerPair:256,formationChecks:'64 paired seeds × both sides per column flip',totalBattles:jobs.length*512,seconds:round((performance.now()-start)/1000)};
+ const manifest={build:harness.build,rules:harness.rules,files:Object.fromEntries(fs.readdirSync(path.join(root,'assets')).filter(f=>f.endsWith('.js')).sort().map(f=>[f,hash(fs.readFileSync(path.join(root,'assets',f),'utf8'))])),downloadedAt:pageRules===35?'2026-10-23':'2026-10-22'},sourceHash=hash(html),source={generated:C.generated,version:C.version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceHash,simulation:`Version ${harness.rules} / ${routeFile}`,nativeHash:hash(fs.readFileSync(path.join(root,'assets',routeFile),'utf8')),nativeCaptured:manifest.downloadedAt,engineIdentity:harness.identity??null,generatedAt:new Date().toISOString(),seeds:128,sides:2,battlesPerPair:256,formationChecks:'64 paired seeds × both sides per column flip',totalBattles:jobs.length*512,seconds:round((performance.now()-start)/1000)};
  const catalogue=Object.fromEntries(Object.entries(sets).map(([level,rows])=>[level,rows.map(r=>({id:r.id,name:r.name,carry:r.carry,tier:r.tier,strategy:r.strategy,gold:r.purchaseGold,team:r.team.map(u=>{const line=data.roster.find(r=>r.id===u.line),f=line.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:line.traits,skill:f.skill};})}))]));
  fs.writeFileSync(path.join(out,'matchups.json'),JSON.stringify({source,builds:catalogue,types,typeChart,pairs:results}));
  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify({source,nativeManifest:manifest,sourceBuilds:hash(catalogue),pairResults:hash(results)},null,2));

@@ -1,8 +1,8 @@
 # S/A matchup analysis
 
-This dataset compares every distinct pair of existing S- and A-tier builds at each cap: 21 builds at level 8 and 24 at level 9, for 486 matchups. Tier eligibility is taken from the published composition snapshot, not reclassified by the new head-to-head scores.
+This dataset compares every distinct pair of existing S- and A-tier builds at each cap: 19 builds at level 8 and 21 at level 9, for 381 matchups. Tier eligibility is taken from the published composition snapshot, not reclassified by the new head-to-head scores.
 
-Each matchup uses 128 deterministic SHA-256-derived seeds, both board sides, native PvP timing, and the exact published units, stars, items and cells. Two column-flip checks use the first 64 seeds on both sides, keeping all other inputs fixed. There are 248,832 scored native battles on the Version 34 engine. Replays add one recorded run per observed outcome; these recording runs are excluded from the scored-battle count.
+Each matchup uses 128 deterministic SHA-256-derived seeds, both board sides, native PvP timing, and the exact published units, stars, items and cells. Two column-flip checks use the first 64 seeds on both sides, keeping all other inputs fixed. There are 195,072 scored native battles on the Version 35 engine. Replays add one recorded run per observed outcome; these recording runs are excluded from the scored-battle count.
 
 The headline score is `(wins + 0.5 * draws) / 256`. Confidence intervals are empirical 95% bootstrap intervals with the two side outcomes kept together per seed, 1,200 bootstrap replicates. Formation delta intervals resample paired per-seed differences against the same 64-seed baseline. Intervals describe seed variation for these fixed boards and can collapse if no variation is observed. They do not establish a guaranteed matchup or account for all formations.
 
@@ -20,11 +20,11 @@ Damage dealt is actual enemy HP removed, including damage over time; damage take
 
 ## Reproduction
 
-Use Node 22 or newer. `work/native-v34` must hold the Version 34 harness (see `scripts/native/download.py`). Run from the repository root:
+Use Node 22 or newer. `work/native-v35` must hold the Version 35 harness (see `scripts/comps-v35/README.md`). Run from the repository root:
 
 ```sh
 node scripts/generate-matchups.mjs
 node scripts/verify-matchups.mjs
 ```
 
-Both scripts use every logical CPU. The native engine is an external input, not bundled into the website; `provenance.json` records the hash of every game module used. The generator reads build definitions directly from `compositions.html`; rerun after changing eligible boards. The verifier checks all pair counts, tier eligibility, stars/items/cells, result counts, replay frames, hashes, and a spread of native deterministic replay cases. `sourceCommit` identifies the checkout used as the base, and `sourceHash` records the exact composition document bytes at generation time.
+Set `KANTO_WORKERS` to control parallelism. The current verification covers 804 replay examples, 85,252 sampled frames and 58 native deterministic replay cases. The native engine is an external input, not bundled into the website; `provenance.json` records the hash of every game module used. The generator reads build definitions directly from `compositions.html`; rerun after changing eligible boards. The verifier checks all pair counts, tier eligibility, stars/items/cells, result counts, replay frames, hashes, and a spread of native deterministic replay cases. `sourceCommit` identifies the checkout used as the base, and `sourceHash` records the exact composition document bytes at generation time.

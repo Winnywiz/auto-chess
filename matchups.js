@@ -12,7 +12,7 @@ function viewPair(p,id){const rev=p.a!==id;return {score:rev?1-p.score:p.score,i
 function chooseLevel(next=level){
  stop();level=Number(next);for(const button of document.querySelectorAll('[data-level]'))button.setAttribute('aria-pressed',String(Number(button.dataset.level)===level));builds=[...data.builds[level]].sort((x,y)=>x.name.localeCompare(y.name)||x.id.localeCompare(y.id));
  const params=new URLSearchParams(location.hash.slice(1)),oldA=$('#team-a').value||params.get('a'),oldB=$('#team-b').value||params.get('b');
- $('#team-a').value=builds.some(r=>r.id===oldA)?oldA:'adapt-sheet-3';$('#team-b').value=builds.some(r=>r.id===oldB)?oldB:'adapt-sheet-1';
+ $('#team-a').value=builds.some(r=>r.id===oldA)?oldA:builds[0]?.id;$('#team-b').value=builds.some(r=>r.id===oldB)?oldB:builds[1]?.id??builds[0]?.id;
  ensureDifferent('a');render();
 }
 function ensureDifferent(changed){if($('#team-a').value===$('#team-b').value){const other=builds.find(r=>r.id!==$('#team-a').value);$(changed==='a'?'#team-b':'#team-a').value=other.id;}}
@@ -139,7 +139,7 @@ function selectView(view){$('.workspace').dataset.view=view;for(const button of 
 $('.detail-tabs').onclick=e=>{const button=e.target.closest('button[data-view]');if(button)selectView(button.dataset.view);};
 matchMedia('(min-width:851px)').addEventListener('change',e=>{if(e.matches&&$('.workspace').dataset.view==='replay')selectView('stats');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-async function init(){try{const response=await fetch('analysis/matchups.json');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=params.get('level')==='8'?8:9;
+async function init(){try{const response=await fetch('analysis/matchups.json?v=v35-comps-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=params.get('level')==='8'?8:9;
  $('#lab').hidden=false;$('#status').textContent='';chooseLevel();if(params.get('view')==='replay')selectView('replay');
  }catch(e){$('#status').textContent='Could not load matchups. Reload to try again.';}}
 init();

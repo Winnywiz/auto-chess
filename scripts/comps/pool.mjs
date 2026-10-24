@@ -4,9 +4,13 @@ import os from 'node:os';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {pathToFileURL} from 'node:url';
+import path from 'node:path';
 import {engineIdentity} from '../native/identity.mjs';
 export const nativeRoot=new URL(process.env.KANTO_NATIVE_ROOT?`file:///${process.env.KANTO_NATIVE_ROOT.replaceAll('\\','/').replace(/^\//,'').replace(/\/?$/,'/')}`:'../../work/native-v34/',import.meta.url);
-export const workDir=new URL('../../work/comps-v34/',import.meta.url);
+export const workDir=process.env.KANTO_COMPS_WORKDIR
+  ? pathToFileURL(path.resolve(process.env.KANTO_COMPS_WORKDIR)+path.sep)
+  : new URL('../../work/comps-v34/',import.meta.url);
 const cachePath=new URL('pair-cache.json',workDir);
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,32);
 const clean=team=>team.map(u=>({line:u.line,star:u.star,items:[...(u.items??[])],cell:u.cell}));

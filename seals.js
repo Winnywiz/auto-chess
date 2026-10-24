@@ -2,7 +2,7 @@
   'use strict';
   const D=window.KANTO_SEALS,byId=new Map(D.seals.map(s=>[s.id,s]));
   const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const kinds={core:'Core synergy',economy:'Economy/tempo',situational:'Situational'};
+  const kinds={core:'Board fit',economy:'Economy',situational:'Conditional'};
   function resolve(id){const parts=id.split(':'),[key,type]=parts,s=byId.get(key);if(parts.length>2||!s||(type&&(!s.template||!s.types.includes(type))))return null;return {...s,type,name:type?s.name.replace('Trait',type):s.name,description:s.description.replaceAll('{T}',type??'the chosen type')};}
   function pixel(key,cls=''){const index=D.art.index[key];if(index===undefined)return '';return `<span class="seal-pixel ${cls}" style="--atlas-x:${index%D.art.columns};--atlas-y:${Math.floor(index/D.art.columns)}" aria-hidden="true"></span>`;}
   function icon(id,size=32){const s=resolve(id);if(!s)return '';const tier=s.template?s.id.split('-')[1]:null,key=s.hero?'hero:'+s.id:tier?(s.type?'type:'+s.type:'tier:'+tier):D.art.index['doc:'+s.id]!==undefined?'doc:'+s.id:'g:'+s.id;if(D.art.index[key]===undefined)throw Error('Missing Seal artwork: '+id);return `<span class="seal-emblem rarity-${s.rarity}" style="--seal-size:${size}px" aria-hidden="true"><span class="seal-emblem-well">${pixel(key)}</span>${tier&&s.type?pixel('tier:'+tier,'seal-pixel-badge'):''}</span>`;}
