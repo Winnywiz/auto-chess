@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="viridian">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101914"><meta name="description" content="Build two Kanto Tactics teams and simulate their battle with held items and replay charts.">
+  <title>Kanto Tactics | Custom battle</title>
+  <script>try{const t=localStorage.getItem('kanto-theme');if(t==='pallet'||t==='viridian')document.documentElement.dataset.theme=t;}catch{}</script>
+  <link rel="stylesheet" href="matchup-fonts.css"><link rel="stylesheet" href="matchups.css?v=compact-replay-1"><script src="matchups.js?v=custom-battle-1" type="module"></script>
+  <link rel="stylesheet" href="custom-battle.css?v=custom-battle-1">
+</head>
+<body class="matchups-page custom-battle-page" data-mode="custom">
+  <header class="topbar">
+    <div class="brand"><div>KANTO TACTICS</div><select id="theme" class="theme-picker" aria-label="Theme"><option value="viridian">Viridian Forest</option><option value="pallet">Pallet Town</option></select></div>
+    <nav aria-label="Pages"><a class="page-link" href="compositions.html">Compositions</a><a class="page-link" href="builder.html">Builder</a><a class="page-link current" href="matchups.html" aria-current="page">Matchups</a><a class="page-link" href="seals.html">Seals</a></nav>
+  </header>
+  <main>
+    <div class="page-heading"><h1>Custom battle</h1><a class="battle-mode-link" href="matchups.html">Composition matchups ↗</a><div id="level" hidden class="segmented" role="group" aria-label="Team level"><button data-level="8" aria-pressed="false">Level 8</button><button data-level="9" aria-pressed="true">Level 9</button></div></div>
+    <p class="battle-note">Version 35 / Held items active / No Seals</p>
+    <section id="custom-controls" hidden aria-label="Custom teams">
+      <details id="custom-setup" class="custom-setup" open><summary id="setup-summary">Teams</summary>
+        <div class="setup-teams"><section class="setup-team" aria-label="Edit team A">
+          <div class="setup-heading"><h2 class="home-text">Team A</h2><span id="count-a">0/9</span><button id="add-a" type="button">Add Pokémon</button><button id="clear-a" type="button">Clear</button></div>
+          <div class="setup-source"><select id="preset-a" aria-label="Load composition for team A"><option value="">Load composition</option></select><button id="import-a" type="button">Import builder</button></div>
+          <div id="setup-traits-a" class="setup-traits" aria-label="Team A active traits"></div><div class="setup-front">FRONTLINE ↑</div>
+          <div id="board-a" class="setup-board" role="group" aria-label="Team A formation"></div>
+          <p class="setup-help">Select a Pokémon, then an empty hex to move it.</p><div id="unit-editor-a"></div>
+        </section><section class="setup-team" aria-label="Edit team B">
+          <div class="setup-heading"><h2 class="away-text">Team B</h2><span id="count-b">0/9</span><button id="add-b" type="button">Add Pokémon</button><button id="clear-b" type="button">Clear</button></div>
+          <div class="setup-source"><select id="preset-b" aria-label="Load composition for team B"><option value="">Load composition</option></select><button id="import-b" type="button">Import builder</button></div>
+          <div id="setup-traits-b" class="setup-traits" aria-label="Team B active traits"></div><div class="setup-front">FRONTLINE ↑</div>
+          <div id="board-b" class="setup-board" role="group" aria-label="Team B formation"></div>
+          <p class="setup-help">Select a Pokémon, then an empty hex to move it.</p><div id="unit-editor-b"></div>
+        </section></div></details>
+      <form id="simulation-form" class="simulation-toolbar">
+        <label for="battle-seed">Seed<input id="battle-seed" type="number" min="0" max="4294967295" step="1" value="12345" required></label>
+        <label for="battle-runs">Run<select id="battle-runs"><option value="1">1 fight</option><option value="32">32 fights</option><option value="128">128 fights</option></select></label>
+        <button id="simulate" type="submit">Simulate</button><button id="cancel-simulation" type="button" hidden>Cancel</button>
+        <button id="new-seed" type="button">New seed</button><button id="swap-teams" type="button">Swap teams</button><button id="share-battle" type="button">Copy battle link</button><button id="download-replay" type="button" hidden>Save replay</button>
+      </form><p id="run-status" role="status" aria-live="polite"></p>
+    </section>
+    <p id="status" role="status">Loading simulator…</p>
+    <div id="lab" hidden>
+      <section class="versus" hidden aria-label="Choose compositions">
+        <article class="team-card home"><span class="team-label">Team A</span><button id="team-a" class="team-choice" aria-haspopup="dialog" aria-controls="team-picker"></button><div id="roster-a"></div></article>
+        <button id="swap" class="swap" aria-label="Swap compositions" title="Swap teams">⇄</button>
+        <article class="team-card away"><span class="team-label">Team B</span><button id="team-b" class="team-choice" aria-haspopup="dialog" aria-controls="team-picker"></button><div id="roster-b"></div></article>
+      </section>
+      <section id="result" class="result-panel" aria-label="Matchup result" aria-live="polite"></section>
+      <div class="workspace" data-view="stats">
+        <nav class="detail-tabs" aria-label="Matchup details"><button class="replay-tab" data-view="replay" aria-pressed="false">Replay</button><button data-view="stats" aria-pressed="true">Statistics</button><button data-view="types" aria-pressed="false">Types</button><button data-view="events" aria-pressed="false">Events</button></nav>
+        <section class="panel replay-panel" aria-labelledby="replay-heading">
+          <div class="section-heading"><h2 id="replay-heading">Replay</h2><div id="replay-select" class="segmented" role="group" aria-label="Replay example"></div></div><p id="replay-status" role="status"></p>
+          <div class="arena-wrap"><canvas id="arena" width="840" height="780" aria-label="Battle replay with stars and equipped items for each Pokémon."></canvas><div id="battle-outcome" class="battle-outcome" role="status" hidden></div><div class="arena-legend"><span class="home-text">Team A</span><span class="away-text">Team B</span></div></div>
+          <div class="playback"><button id="play" aria-label="Play replay">▶ Play</button><button id="restart" aria-label="Restart replay" title="Restart">↺</button><div id="speed" class="segmented" role="group" aria-label="Playback speed"><button data-speed="0.5" aria-pressed="false">0.5×</button><button data-speed="1" aria-pressed="true">1×</button><button data-speed="2" aria-pressed="false">2×</button><button data-speed="4" aria-pressed="false">4×</button></div><label class="sr-only" for="scrub">Replay time</label><input id="scrub" type="range" min="0" max="100" step="any" value="0"><output id="clock">0.0 / 0.0s</output></div>
+        </section>
+        <div class="panel detail-panel">
+          <section class="battle-stats" data-panel="stats" aria-labelledby="stats-heading">
+            <div class="section-heading"><h2 id="stats-heading">Statistics</h2><div id="stat-scope" class="segmented" role="group" aria-label="Chart time"><button data-scope="final" aria-pressed="true">Full battle</button><button data-scope="current" aria-pressed="false">Replay time</button></div></div>
+            <div class="stat-tabs" role="group" aria-label="Battle statistic"><button data-stat="dealt" aria-pressed="true">Damage</button><button data-stat="taken" aria-pressed="false">Taken</button><button data-stat="healed" aria-pressed="false">Healing</button><button data-stat="shielded" aria-pressed="false">Shields</button><button data-stat="mitigated" aria-pressed="false">Prevented</button></div>
+            <p id="stat-time" class="stat-time"></p>
+            <div class="stat-grid"><div><div class="stat-team-heading home-text"><h3>Team A</h3><output id="stat-total-a"></output></div><ol id="stats-a" class="stat-bars" aria-label="Team A battle statistics"></ol></div><div><div class="stat-team-heading away-text"><h3>Team B</h3><output id="stat-total-b"></output></div><ol id="stats-b" class="stat-bars" aria-label="Team B battle statistics"></ol></div></div>
+          </section>
+          <section data-panel="weaknesses" hidden><h2>Weaknesses</h2><div id="weaknesses"></div><h3 class="subheading">Positioning</h3><div id="formation"></div></section>
+          <section data-panel="types" hidden><h2>Types</h2><div class="type-grid"><div><h3>Team A attacks</h3><div id="types-a"></div></div><div><h3>Team B attacks</h3><div id="types-b"></div></div></div></section>
+          <section data-panel="counters" hidden><h2>Counters</h2><div class="table-scroll"><table class="counter-table"><thead><tr><th>Team B</th><th>Score</th><th>95%</th></tr></thead><tbody id="counter-list"></tbody></table></div></section>
+          <section class="timeline" data-panel="events" hidden><h2>Events</h2><ol id="events" aria-label="Battle events"></ol></section>
+        </div>
+      </div>
+    </div>
+    <p class="sim-credit">Combat engine: <a href="https://einoow.com/playables/kanto-tactics/" target="_blank" rel="noopener">Kanto Tactics by Einoow</a>. Runs in your browser. Neutral weather.</p>
+  </main>
+  <dialog id="team-picker" aria-labelledby="picker-title">
+    <div class="picker-heading"><h2 id="picker-title">Choose a composition</h2><button id="close-picker" aria-label="Close composition picker">✕</button></div>
+    <label class="sr-only" for="picker-search">Search compositions</label><input id="picker-search" type="search" placeholder="Search compositions" autocomplete="off">
+    <div id="picker-list" class="picker-list"></div><p id="picker-empty" hidden>No matching compositions.</p>
+  </dialog>
+  <dialog id="unit-picker" aria-labelledby="unit-picker-title"><div class="picker-heading"><h2 id="unit-picker-title">Add Pokémon</h2><button id="close-units" type="button" aria-label="Close Pokémon picker">✕</button></div><label class="sr-only" for="unit-search">Search Pokémon</label><input id="unit-search" type="search" placeholder="Search Pokémon or trait" autocomplete="off"><div id="unit-options" class="unit-options"></div><p id="unit-empty" hidden>No matching Pokémon.</p></dialog>
+  <dialog id="builder-import" aria-labelledby="import-title"><div class="picker-heading"><h2 id="import-title">Import builder team</h2><button id="close-import" type="button" aria-label="Close builder import">✕</button></div><input id="import-side" type="hidden"><label for="builder-payload">Builder team link</label><textarea id="builder-payload" placeholder="Paste a copied builder team link"></textarea><p id="import-error" role="alert"></p><button id="apply-import" type="button">Import team</button></dialog>
+</body>
+</html>

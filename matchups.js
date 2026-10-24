@@ -1,4 +1,6 @@
 const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const customMode=document.body.dataset.mode==='custom';
+const itemImage=id=>id.startsWith('emblem-')?'media/types/'+id.slice(7)+'.png':'media/items/'+id+'.png';
 const percent=x=>(x*100).toFixed(1)+'%',signed=x=>(x>=0?'+':'')+(x*100).toFixed(1)+' pp',range=x=>x.map(percent).join(' to ');
 let data,level=9,builds=[],a,b,match,reversed=false,replayFile,replay,clock=0,playing=false,lastTick=0,raf=0,loadVersion=0,pickerSide='a';
 const imageCache=new Map(),itemCache=new Map(),replayCache=new Map();
@@ -69,7 +71,7 @@ function setReplay(index){
  for(const button of document.querySelectorAll('[data-replay]'))button.setAttribute('aria-pressed',String(Number(button.dataset.replay)===index));
  const own=reversed?1-replay.side:replay.side;
  $('#events').innerHTML=replay.events.map((e,i)=>({e,i})).filter(({e})=>['cast','cc','faint','end','transform'].includes(e.k)).map(({e,i})=>{const u=replay.units.find(u=>u.uid===(e.src??e.uid));return `<li data-event-time="${e.t}"><button data-event="${i}" title="${u?(u.team===own?'Your ':'Enemy ')+esc(u.name):'Battle'}"><span class="event-time">${e.t.toFixed(1)}s</span>${u?`<img class="${u.team===own?'event-home':'event-away'}" src="media/icons/${u.num}.png" alt="">`:''}<span>${esc(eventText(e))}</span></button></li>`;}).join('');
- for(const u of [...replay.units,...(replay.changes??[])]){if(!imageCache.has(u.num)){const img=new Image();img.src=`media/sprites/${u.num}.gif`;img.onload=()=>draw();imageCache.set(u.num,img);}for(const id of u.items??[])if(!itemCache.has(id)){const img=new Image();img.src=`media/items/${id}.png`;img.onload=()=>draw();itemCache.set(id,img);}}
+ for(const u of [...replay.units,...(replay.changes??[])]){if(!imageCache.has(u.num)){const img=new Image();img.src=`media/sprites/${u.num}.gif`;img.onload=()=>draw();imageCache.set(u.num,img);}for(const id of u.items??[])if(!itemCache.has(id)){const img=new Image();img.src=itemImage(id);img.onload=()=>draw();itemCache.set(id,img);}}
  draw();
 }
 function eventText(e){const name=id=>{const u=replay.units.find(u=>u.uid===id);if(!u)return 'Unknown';const current=(replay.changes??[]).filter(c=>c.uid===id&&c.t<=e.t).at(-1);return current?.name??u.name;};
@@ -77,7 +79,7 @@ function eventText(e){const name=id=>{const u=replay.units.find(u=>u.uid===id);i
  if(e.k==='cc')return `${name(e.uid)} / ${e.cc} ${e.dur?.toFixed(1)??'?'}s`;
  if(e.k==='faint')return `${name(e.uid)} fainted`;
  if(e.k==='transform')return `${name(e.uid)} transformed`;
- if(e.k==='end'){const own=reversed?1-replay.side:replay.side;return e.winner===-1?'Draw':e.winner===own?'Your win':'Opponent win';}
+ if(e.k==='end'){const own=reversed?1-replay.side:replay.side;return e.winner===-1?'Draw':customMode?(e.winner===own?'Team A wins':'Team B wins'):e.winner===own?'Your win':'Opponent win';}
  return e.k;
 }
 const canvas=$('#arena'),ctx=canvas.getContext('2d');
@@ -139,8 +141,22 @@ function selectView(view){$('.workspace').dataset.view=view;for(const button of 
 $('.detail-tabs').onclick=e=>{const button=e.target.closest('button[data-view]');if(button)selectView(button.dataset.view);};
 matchMedia('(min-width:851px)').addEventListener('change',e=>{if(e.matches&&$('.workspace').dataset.view==='replay')selectView('stats');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-async function init(){try{const response=await fetch('analysis/matchups.json?v=v35-comps-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=params.get('level')==='8'?8:9;
+async function init(){try{
+ if(customMode){
+  const {initCustomBattle}=await import('./custom-battle.js?v=custom-battle-1');
+  await initCustomBattle({invalidate:()=>{++loadVersion;stop();replay=null;replayFile=null;$('#lab').hidden=true;},present:(result,game)=>{
+   stop();++loadVersion;reversed=false;data=game;replayFile=result;lastChartKey='';
+   const enrich=team=>team.map(u=>{const r=game.roster.find(r=>r.id===u.line),f=r.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:r.traits,skill:f.skill};});
+   a={team:enrich(result.request.a)};b={team:enrich(result.request.b)};
+   const r=result.replays[0],label=r.value===1?'Team A wins':r.value===0?'Team B wins':'Draw';
+   $('#result').innerHTML=result.n===1?`<div class="custom-verdict"><strong>${label}</strong><span>${r.duration.toFixed(1)}s / Seed ${r.seed}</span></div>`:`<div class="score-block"><div class="score">${percent(result.score)}</div><div><p class="score-label">Team A simulation score</p><span class="interval">${result.n} fights / paired sides</span></div></div><div class="result-counts"><span>${result.wins} A wins</span><span>${result.draws} draws</span><span>${result.losses} B wins</span></div>`;
+   $('#replay-select').innerHTML=result.replays.map((r,i)=>`<button data-replay="${i}" aria-pressed="${i===0}">${r.value===1?'A wins':r.value===0?'B wins':'Draw'} <small>${r.duration.toFixed(1)}s</small></button>`).join('');
+   $('#types-a').innerHTML=typeRows(a,b);$('#types-b').innerHTML=typeRows(b,a);
+   $('#lab').hidden=false;$('#replay-status').textContent='';$('#play').disabled=false;$('#scrub').disabled=false;setReplay(0);selectView(matchMedia('(max-width:850px)').matches?'replay':'stats');
+  }});return;
+ }
+ const response=await fetch('analysis/matchups.json?v=v35-comps-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=params.get('level')==='8'?8:9;
  $('#lab').hidden=false;$('#status').textContent='';chooseLevel();if(params.get('view')==='replay')selectView('replay');
- }catch(e){$('#status').textContent='Could not load matchups. Reload to try again.';}}
+ }catch(e){$('#status').textContent=customMode?'Could not load the simulator. Reload to try again.':'Could not load matchups. Reload to try again.';}}
 init();
 document.fonts.ready.then(()=>draw());
