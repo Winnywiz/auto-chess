@@ -166,3 +166,31 @@
 @media(max-width:650px){.comp-details{scroll-margin-top:115px}.overview-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"board" "resources" "seals";gap:27px}.overview-grid .mini-board{padding-right:8px;gap:6px}.overview-grid .mini-board-row{gap:3px}.overview-grid .board-game-plan p{font-size:14px}.overview-grid .board-actions{display:grid;gap:9px}.overview-grid .board-actions .load-comp{width:100%;justify-content:center}.overview-grid>.comp-resources{padding-top:20px;border-top:1px solid var(--line)}}
 
 .overview-grid>.comp-board-panel{scroll-margin-top:84px}.overview-grid .mini-hex{aspect-ratio:1.15}.overview-grid .board-cell .mini-hex>img{position:absolute;left:7%;top:3%;margin:0;width:86%;height:80%;min-height:0}.overview-grid .mini-star{bottom:6%}@media(max-width:650px){.overview-grid>.comp-board-panel{scroll-margin-top:115px}}
+
+/* 5-2 composition list */
+.tempo-notes { margin: 0 0 18px; padding-left: 18px; font-size: 13px; line-height: 1.65; color: var(--muted); }
+.tempo-notes li { margin-bottom: 6px; }
+.comp-plan > p { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 0 0 18px; }
+.comp-plan > h3 { margin-top: 0; }
+.alt-build { margin-top: 18px; }
+.item-line { display: inline-flex; gap: 3px; align-items: center; }
+.item-line .comp-item img { width: 26px; height: 26px; }
+.pivot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.pivot-grid h3 { font-size: 17px; margin: 0 0 6px; }
+.pivot-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); margin-bottom: 7px; }
+.pivot-row b { display: block; font-size: 14px; font-weight: 600; }
+.pivot-row small { display: block; font-size: 12px; color: var(--muted); margin-top: 3px; }
+.pivot-row strong { color: var(--lime); font-size: 16px; font-weight: 600; white-space: nowrap; }
+.lobby-section { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 18px; }
+.lobby-section > summary { cursor: pointer; font-size: 18px; font-weight: 600; padding: 6px 0; }
+.lobby-section > summary span { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 8px; }
+.lobby-list { display: grid; gap: 12px; margin-top: 12px; }
+.lobby-card { display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 2.6fr) 110px 110px; grid-template-areas: "head units m1 m2" "traits units m1 m2"; gap: 8px 20px; align-items: center; padding: 16px 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.lobby-head { grid-area: head; }
+.lobby-head b { display: block; font-size: 15px; }
+.lobby-head span { font-size: 12px; color: var(--muted); }
+.lobby-card .comp-traits { grid-area: traits; }
+.lobby-card .comp-units { grid-area: units; }
+.lobby-card .lobby-m1 { grid-area: m1; }
+.lobby-card .lobby-m2 { grid-area: m2; }
+@media (max-width: 1050px) { .pivot-grid { grid-template-columns: minmax(0, 1fr); } .lobby-card { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "traits" "units" "m1" "m2"; } }
