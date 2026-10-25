@@ -13,7 +13,7 @@ const isFront = l => range(l) <= 1 && role(l) !== 'assassin';
 const isTank = l => role(l) === 'tank' || (isFront(l) && ['snorlax', 'slowpoke', 'seel', 'onix', 'sandshrew', 'geodude', 'bulbasaur', 'caterpie', 'rhyhorn', 'nidoqueen', 'tangela4', 'machop', 'poliwag'].includes(l));
 const spa = l => (roster[l].forms.at(-1).skill.scale?.spa ?? 0) >= 0.5;
 const canCrit = l => roster[l].forms.some(f => f.skill.canCrit);
-const SHOP = Object.values(roster).filter(r => !r.branchOf && r.id !== 'eevee').map(r => r.id); // Eevee only appears as an evolved carry
+const SHOP = Object.values(roster).filter(r => !r.branchOf).map(r => r.id); // Eevee is allowed: the game's "Keep Eevee" toggle stops it evolving (2★ Bite, 3★ Last Resort)
 const EEVEE = ['vaporeon', 'jolteon', 'flareon'];
 
 // ---------- Meta context ----------
