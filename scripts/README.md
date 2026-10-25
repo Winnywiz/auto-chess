@@ -1,5 +1,7 @@
 # Rebuilding the site data
 
+**Current compositions page:** the finish-by-5-2 study in [fivetwo/README.md](fivetwo/README.md). The v35 cap workflow below still drives the Matchups page.
+
 The current website uses Version 35. Follow [the v35 research workflow](comps-v35/README.md) to refresh compositions, progression, Seals and matchup replays.
 
 ## Archived Version 34 workflow
