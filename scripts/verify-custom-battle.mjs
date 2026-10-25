@@ -22,9 +22,9 @@ const catalogue=JSON.parse(fs.readFileSync('analysis/matchups.json'));let golden
 const spread=[...catalogue.pairs.filter((_,i)=>i%7===0),...catalogue.pairs.filter((_,i)=>i%7!==0)];
 for(const p of process.argv.includes('--engine-only')?[]:spread){
  if(golden===8)break;
- const file=JSON.parse(fs.readFileSync('analysis/replays/'+p.key+'.json')),r=file.replays.find(r=>r.side===0);if(!r)continue;
+ const file=JSON.parse(fs.readFileSync('analysis/replays/'+p.key+'.json')),r=file.replays.find(r=>r.side===0)??file.replays[0];if(!r)continue;
  const a=catalogue.builds[p.level].find(x=>x.id===p.a),b=catalogue.builds[p.level].find(x=>x.id===p.b);
- const q={rules:36,a:a.team,b:b.team,seed:r.seed,runs:1};
+ const q={rules:36,a:r.side===0?a.team:b.team,b:r.side===0?b.team:a.team,seed:r.seed,runs:1};
  const got=simulate(browser,game,q).replays[0];
  for(const k of ['winner','duration','frames','stats','statFields','changes','events'])assert.deepEqual(got[k],r[k],'Golden replay '+p.key+' / '+k);golden++;
 }

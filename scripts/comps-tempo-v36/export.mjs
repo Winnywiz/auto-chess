@@ -13,7 +13,7 @@ const guides={};
 for(const r of final.selected){
  const carry=roster[r.carry].forms[r.carryStar-1].name,upgrades=r.team.filter(u=>u.star===3).map(u=>roster[u.line].forms[2].name+' 3★');
  const base=roster[r.carry].branchOf?roster[roster[r.carry].branchOf]:roster[r.carry];
- const condition=r.conditional?'Commit with six '+base.forms[0].name+' copies and an upgraded frontline by 3-2. ':'';
+ const condition=r.conditional?'Commit with six '+base.forms[0].name+' copies and this upgraded core by 3-2. ':'';
  const plan=upgrades.length?condition+'Roll at '+r.rollLevel+' for '+upgrades.join(' + ')+'. Finish at level '+r.level+' before 5-1.':'Build a 2★ frontline and '+carry+' 2★ at level '+r.level+'. Keep upgraded holders until the replacements are ready.';
  const utility=r.utilityStudy.kind==='keep'?null:(Array.isArray(r.utilityStudy.in)?r.utilityStudy.in:[r.utilityStudy.in]).map(id=>{const s=roster[id].forms[1].skill,effects=[];if(s.heal)effects.push('healing');if(s.shieldAlly)effects.push('shields');if(s.confuse)effects.push('confusion');if(s.kind==='aoeSelf'||s.kind==='aoeTarget')effects.push('area damage');if(s.stun||s.grow?.sleep||s.status==='sleep')effects.push('control');if(s.zone?.status==='paralyze')effects.push('paralysis');if(s.empower?.seq?.some(e=>e.stun))effects.push('control');return roster[id].forms[1].name+(effects.length?' adds '+[...new Set(effects)].join(' and '):' fills the tested support slot');}).join('. ')+'.';
  guides[r.id]={plan,utility,stop:'Use the low-roll option if upgrades miss.',odds:[],alternatives:[],stages:r.options.map(o=>({key:o.key,label:o.label,level:o.level,team:o.team,note:o.note,combat:confirmation.combat[r.id][o.key]}))};
@@ -27,11 +27,11 @@ for(const file of ['compositions.html','builder.html']){
   html=replace(html,'KANTO_COMPS',comps);html=replace(html,'KANTO_GUIDES',guidance);
   const start=html.indexOf('    <p class="patch-note">'),end=html.indexOf('    <div class="comps-filters">',start);if(start<0||end<0)throw Error('Missing page header');
   html=html.slice(0,start)+`    <p class="patch-note">Version 36 / before 5-1 / 7 items</p>
-    <details class="score-guide" id="score-method"><summary>Test details</summary><div><p>32 fresh seeds on both sides. Seven items: three tank, three carry, one secondary. No Seals or weather. Tiers combine 70% reconstructed official-meta opponents and 30% cross-trait boards. Combat results require the stars, items and positions shown.</p><p><a href="https://einoow.com/api/meta/kanto/meta.json" target="_blank" rel="noreferrer">Official meta</a> / <a href="data/compositions-v36-research.json" target="_blank" rel="noreferrer">Combat tests</a>. The API snapshot is v35; all battles here use v36.</p></div></details>
+    <details class="score-guide" id="score-method"><summary>Test details</summary><div><p>Finish score includes missed upgrades from the stated early core. S: 65% or more. A: 50% or more. Full-build combat uses 32 fresh seeds on both sides, seven items and no Seals or weather. These are conditional forecasts, not ranked win rates.</p><p><a href="https://einoow.com/api/meta/kanto/meta.json" target="_blank" rel="noreferrer">Official meta</a> / <a href="data/compositions-v36-research.json" target="_blank" rel="noreferrer">Combat tests</a>. The API snapshot is v35; all battles here use v36.</p></div></details>
 `+html.slice(end);
   html=html.replace(/<button data-strategy="legendary"[^>]*>Level 9<\/button>/,'');
   html=html.replace(/<button data-strategy="([^"]+)"[^>]*>[^<]+<\/button>/g,(button,category)=>rows.some(r=>r.category===category)?button:'');
-  html=html.replace(/<div class="comp-list-header"[^>]*>[^\n]*<\/div>/,'<div class="comp-list-header" aria-hidden="true"><span>Composition</span><span>Team</span><span>vs meta</span><span>Cross-trait</span></div>');
+  html=html.replace(/<div class="comp-list-header"[^>]*>[^\n]*<\/div>/,'<div class="comp-list-header" aria-hidden="true"><span>Composition</span><span>Team</span><span>Finish score</span><span>Full build</span></div>');
  }
  html=html.replaceAll('v35-comps-1','v36-tempo-1').replaceAll('custom-battle-1','v36-tempo-1');fs.writeFileSync(file,html);
 }

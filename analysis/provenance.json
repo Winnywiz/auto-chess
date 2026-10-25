@@ -2,19 +2,19 @@
   "source": {
     "generated": "2026-10-25T04:11:04.808Z",
     "version": "v36-tempo-1",
-    "sourceCommit": "5caa29d5e3f0065e56dba7fbcb097d13bd9169c2",
-    "sourceHash": "0296f1feae443e85a9e7b630049163b59e9a87098cad06b97e1aa2196ac2a322",
+    "sourceCommit": "73bf72b47573fdfc42ef7e341a24e1e841a0136a",
+    "sourceHash": "0a55af224742401fba6a5657b5102c23fc670852c7eb32151ac44ec26b6d192b",
     "simulation": "Version 36 / route-3pHNpNkx.js",
     "nativeHash": "946d8032013b01be82ffd5e00017e2a883b66b31dda065652afa4fa72c48a952",
     "nativeCaptured": "2026-10-25",
     "engineIdentity": "3068967d310c918e1ef6e159e1dddc9bcd319a9ae27a264d753bf5c223b4bc80",
-    "generatedAt": "2026-10-25T04:12:20.485Z",
+    "generatedAt": "2026-10-25T04:19:54.719Z",
     "seeds": 128,
     "sides": 2,
     "battlesPerPair": 256,
     "formationChecks": "64 paired seeds × both sides per column flip",
-    "totalBattles": 39936,
-    "seconds": 28.641,
+    "totalBattles": 7680,
+    "seconds": 5.283,
     "targetRound": "before 5-1",
     "itemBudget": 7
   },
@@ -201,6 +201,6 @@
     },
     "downloadedAt": "2026-10-25"
   },
-  "sourceBuilds": "68bbca0747a00a1ed3577fa8970113f783d9007d522551681c69f5f031373faa",
-  "pairResults": "abf2de5c267123cf357f69f0a24cfdd53f59908e6c7fd93db3cdee1a67a259b0"
+  "sourceBuilds": "3d8be46d573768570f3fc4c7f9cdd0671f5b24d7caab8de9ab87ef45c7a33f9c",
+  "pairResults": "2c49ebe9c9e023b0bf3d725ab4c1db3c42d6e1be2e074ea94a4c6054ca719690"
 }

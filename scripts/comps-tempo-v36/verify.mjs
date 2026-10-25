@@ -18,6 +18,7 @@ function check(b,r,combat){
 }
 for(const r of C.rows){
  assert.equal(r.boards.length,1);assert.equal(r.stages.length,1);assert.equal(r.level,r.boards[0].level);check(r.boards[0],r,r.stages[0]);
+ assert.equal(r.stages[0].score,r.stages[0].finishScore);assert.equal(r.stages[0].tier,r.stages[0].finishScore>=.65?'S':r.stages[0].finishScore>=.5?'A':'B');
  const g=P.rows[r.id];assert(g.plan.includes('before 5-1')||g.plan.includes('2★'));assert(g.stages.some(s=>s.key==='item-pivot'));assert(g.stages.some(s=>s.key==='items-2'));
  const carryItems=r.boards[0].team.find(u=>u.assignment==='Carry').items;
  for(const b of g.stages){check(b,r,b.combat);if(['low-roll','item-pivot','frontline'].includes(b.key))assert.deepEqual(b.team.find(u=>u.assignment==='Carry').items,carryItems,'Same-item alternative changed carry build');}
