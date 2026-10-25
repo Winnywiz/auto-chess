@@ -72,7 +72,6 @@ for (const c of A.comps) {
       id, carry: c.line, variant: k, name: `${name(c.line, carry.star)} / ${top.t} ${top.n}`, category: category[c.strat], strategy: STRATEGIES[c.strat].label,
       rollLevel: STRATEGIES[c.strat].rollLevel, level: team.length, targets: [c.line, ...(v.extras ?? [])],
       tier: tierOf(v.expected), expected: v.expected, score: v.final.score, s4: v.final.s4, s3: v.final.s3, lowScore: v.lowBest.score,
-      ...consistency(v.realized),
       value: boardValue(team), traits: traitLabel(team), team,
       items: {carry: v.items.carry, tank: v.items.tankItems, tankUnit: v.items.tank, second: v.items.second, secondItem: v.items.secondItem},
       altBuild: v.alt ? {items: v.alt.items, score: v.alt.score} : null,
@@ -84,6 +83,8 @@ for (const c of A.comps) {
     });
   });
 }
+// Boards copied from the Toongcha list are not published on this site.
+for (let i = rows.length - 1; i >= 0; i--) if (rows[i].source) rows.splice(i, 1);
 rows.sort((a, b) => b.expected - a.expected);
 { // At most four builds per carry, best expected first, distinct ids.
   const per = new Map(), ids = new Set();

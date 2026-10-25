@@ -150,7 +150,9 @@ function roles(team, carry) {
 
 // ---------- Scoring ----------
 const G = gauntlet();
-const S4 = G.map(x => ({board: x.s4, w: x.weight})), S3 = G.filter(x => x.s3).map(x => ({board: x.s3, w: x.weight}));
+let S4 = G.map(x => ({board: x.s4, w: x.weight})), S3 = G.filter(x => x.s3).map(x => ({board: x.s3, w: x.weight}));
+// LOBBY=counter: score against the realized Toongcha boards instead (counter search).
+if (process.env.LOBBY === 'counter') { const L = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/brother/counters.json', import.meta.url))).lobby; S4 = L.map((l, i) => ({board: {id: 'tkt-real-' + i, team: l.team}, w: l.w})); S3 = S4; }
 async function score(boards, {nSeeds = 1, salt = 's', s3 = false} = {}) {
   const sd = seeds(nSeeds, salt), pairs = [];
   for (const b of boards) { for (const o of S4) pairs.push({a: b, b: o.board.team, seeds: sd}); if (s3) for (const o of S3) pairs.push({a: b, b: o.board.team, seeds: sd}); }
