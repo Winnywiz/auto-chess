@@ -155,8 +155,8 @@ async function init(){try{
    $('#lab').hidden=false;$('#replay-status').textContent='';$('#play').disabled=false;$('#scrub').disabled=false;setReplay(0);selectView(matchMedia('(max-width:850px)').matches?'replay':'stats');
   }});return;
  }
- const response=await fetch('analysis/matchups.json?v=v36-tempo-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=data.source.targetRound?48:params.get('level')==='8'?8:9;
- if(data.source.targetRound)$('#level').innerHTML='<button data-level="48" aria-pressed="true">Before 5-1</button>';
+ const response=await fetch('analysis/matchups.json?v=v36-52-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=data.source.targetRound?(data.source.cutoff??48):params.get('level')==='8'?8:9;
+ if(data.source.targetRound)$('#level').innerHTML=`<button data-level="${data.source.cutoff??48}" aria-pressed="true">${data.source.targetRound==='5-2'?'Finish by 5-2':'Before 5-1'}</button>`;
  $('#lab').hidden=false;$('#status').textContent='';chooseLevel();if(params.get('view')==='replay')selectView('replay');
  }catch(e){$('#status').textContent=customMode?'Could not load the simulator. Reload to try again.':'Could not load matchups. Reload to try again.';}}
 init();

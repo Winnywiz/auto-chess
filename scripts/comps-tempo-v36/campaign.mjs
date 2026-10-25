@@ -1,7 +1,7 @@
 // Real native shops, opponents, income, rewards, XP and elimination up to before 5-1.
 import {H,data,roster,items,code,army,mass,copies,hash} from './native.mjs';
 const metric=()=>({buy:0,sell:0,roll:0,xp:0,otherSpend:0,otherEarned:0,earned:data.economy.startGold,rolls:0,errors:{}});
-export function campaign(seed,{plan=null,seat=0,turn=null,trace=false,seals=false}={}){
+export function campaign(seed,{plan=null,seat=0,turn=null,trace=false,seals=false,cutoff=48}={}){
  const game=H.LocalMatch.create(seed,{level:'elite',seals:seals?'ranked':false}),ids=game.st.seats.map(s=>s.id),controlled=ids[seat%ids.length];
  const bots=Object.fromEntries(ids.map(id=>[id,H.planner.makeBot({id,profile:'elite',seed:parseInt(hash(['tempo-native-v1',seed,id]).slice(0,8),16)})]));
  game.st.bots={};game.st.next={};
@@ -33,7 +33,7 @@ export function campaign(seed,{plan=null,seat=0,turn=null,trace=false,seals=fals
   for(const p of game.st.m.t.players){const delta=p.s.gold-before[p.id];ledgers[p.id].earned+=delta;}
  };
  const close=()=>{if(seals)game.st.bots=bots;game.closeRound();game.st.bots={};game.st.next={};};
- while(!game.over&&code(game)<=48){
+ while(!game.over&&code(game)<=cutoff){
   if(++rounds>60)throw Error('Round guard');
   if(game.st.stage==='carousel'){finishTransition(close);continue;}
   if(game.st.stage!=='planning')throw Error('Unexpected phase');
@@ -50,7 +50,7 @@ export function campaign(seed,{plan=null,seat=0,turn=null,trace=false,seals=fals
     ...(trace&&id===controlled?{state:structuredClone(game.st),bot:structuredClone(bot)}:{})};
    paths[id].push(snapshot);
   }
-  game.st.me=controlled;if(code(game)===48)break;
+  game.st.me=controlled;if(code(game)===cutoff)break;
   finishTransition(()=>{game.startCombat();if(game.st.stage==='combat')close();});
  }
  const players=game.st.m.t.players.map(p=>({id:p.id,place:p.place,alive:p.place===null,ledger:ledgers[p.id],path:paths[p.id]}));

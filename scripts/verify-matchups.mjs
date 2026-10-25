@@ -14,7 +14,7 @@ let expectedPairs=0,replays=0,frames=0,variableIntervals=0;
 for(const item of ctx.window.KANTO_DATA.items)assert.equal(D.itemNames[item.id],item.name,'Native item name '+item.id);
 const seen=new Set();
 const finish=!!ctx.window.KANTO_COMPS.targetRound;
-for(const level of finish?[48]:[8,9]){
+for(const level of finish?[ctx.window.KANTO_COMPS.cutoff??48]:[8,9]){
  const eligible=ctx.window.KANTO_COMPS.rows.filter(r=>['S','A'].includes((finish?r.stages[0]:r.stages.find(s=>s.level===level)).tier));
  assert.deepEqual([...D.builds[level].map(r=>r.id)].sort(),[...eligible.map(r=>r.id)].sort());
  expectedPairs+=eligible.length*(eligible.length-1)/2;

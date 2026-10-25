@@ -1,3 +1,4 @@
+if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).model==='finish-5-2-v36'){await import('./comps-52-v36/verify-ui.mjs');process.exit(0);}
 if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).gameRules===36){await import('./comps-tempo-v36/verify-ui.mjs');process.exit(0);}
 // Pure source/data integration checks. This does not launch or automate a browser.
 import fs from 'node:fs';
