@@ -4476,7 +4476,8 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
   }
 }
 </style>
-  </head>
+  <script src="team-code.js?v=kt1-1"></script>
+</head>
   <body>
     <header class="topbar">
       <div class="brand">
@@ -4555,7 +4556,7 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
                   title="Undo (Ctrl+Z)"
                 >
                   ↶</button
-                ><button id="clear" class="text-button">Clear</button>
+                ><button id="copy-team-code" class="text-button" title="Copy this formation for the game planner">Copy team code</button><button id="clear" class="text-button">Clear</button>
               </div>
             </div>
             <div class="field">
@@ -5685,6 +5686,8 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
         e.target.close();
     }
   };
+  $("#copy-team-code").onclick = () => void window.KantoTeamCode.copyFrom($("#copy-team-code"), () =>
+    window.KantoTeamCode.encode(Object.entries(state.board).map(([cell,u]) => ({...u,cell:Number(cell)})), {rules:L.data?.rules ?? window.KANTO_DATA.rules ?? 36, coordinates:"planner"}));
   $("#copy-link").onclick = async () => {
     const payload = btoa(unescape(encodeURIComponent(JSON.stringify(state)))),
       url = location.href.split("#")[0] + "#team=" + payload;
