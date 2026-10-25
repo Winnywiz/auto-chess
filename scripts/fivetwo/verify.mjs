@@ -45,8 +45,8 @@ const clean = t => t.map(u => ({line: u.line, star: u.star, cell: u.cell, items:
 let replayed = 0;
 for (const r of [C.rows[0], C.rows[Math.floor(C.rows.length / 2)], C.rows.at(-1)]) {
   const m = r.matchups.find(m => m.stage === 4), ref = C.reference.find(x => x.id === m.id);
-  const sd = seeds(8, r.finalSalt);
+  const sd = seeds(r.finalSeeds ?? 8, r.finalSalt), F = sd.length * 2;
   let p = 0; for (const s of sd) { p += one(clean(r.team), clean(ref.team), s); p += 1 - one(clean(ref.team), clean(r.team), s); }
-  assert.ok(Math.abs(p / 16 - m.score) < 1e-3, `${r.id} replay ${p / 16} vs ${m.score}`); replayed++;
+  assert.ok(Math.abs(p / F - m.score) < 1e-3, `${r.id} replay ${p / F} vs ${m.score}`); replayed++;
 }
 console.log(JSON.stringify({rows: C.rows.length, reference: C.reference.length, replayed, tiers: C.rows.reduce((m, r) => (m[r.tier] = (m[r.tier] ?? 0) + 1, m), {})}));

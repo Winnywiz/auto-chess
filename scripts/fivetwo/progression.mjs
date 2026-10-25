@@ -53,7 +53,13 @@ async function earlyBoard(r, L) {
   const i = sc.indexOf(Math.max(...sc));
   return {level: L, team: boards[i], score: sc[i], lobby: 'stage 3'};
 }
-async function addUnit(r, base, L, {upgradeFours = false, lobby = S4, salt}) {
+async function addUnit(r, base, L, opts) {
+  // Add units one at a time until the board has L units.
+  let cur = {team: base, score: null};
+  do { cur = await addOne(r, cur.team, L, {...opts, upgradeFours: opts.upgradeFours && cur.team === base, salt: opts.salt + '|' + cur.team.length}); } while (cur.team.length < L);
+  return cur;
+}
+async function addOne(r, base, L, {upgradeFours = false, lobby = S4, salt}) {
   const have = new Set(base.map(u => family(u.line)));
   let team0 = base.map(u => ({...u}));
   if (upgradeFours) team0 = team0.map(u => cost(u.line) === 4 ? {...u, star: 2} : u);
@@ -70,7 +76,7 @@ const ECON_KINDS = new Set(['shop', 'xpBuy', 'xpRound', 'income', 'incomeRoll', 
 const isEcon = s => s.effects.every(e => ECON_KINDS.has(e.k)) && !s.effects.some(e => e.k === 'shop' && (e.shinyK || e.traitFirst || e.slots || e.legendAt));
 const ROUNDS = [R(2, 1), R(3, 2), R(4, 2)];
 function planFor(r) {
-  const curves = {'reroll-1': [[R(2, 1), 4], [R(2, 5), 5]], 'reroll-2': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6]], 'reroll-3': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 1), 6], [R(3, 5), 7]], 'fast-8': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6], [R(3, 5), 7], [R(4, 2), 8]]};
+  const curves = {'reroll-1': [[R(2, 1), 4], [R(2, 5), 5]], 'reroll-2': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6]], 'reroll-12': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6]], 'reroll-3': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 1), 6], [R(3, 5), 7]], 'fast-8': [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6], [R(3, 5), 7], [R(4, 2), 8]]};
   const levels = curves[r.category], at = levels.at(-1);
   return {levels, rollLevel: at[1], rollFrom: at[0], floor: 50, allInAt: R(4, 5), levelAfter: true, levelKeep: 20, maxLevel: r.level + 1,
     needs: r.team.map(u => ({line: family(u.line), copies: 3 ** (u.star - 1), priority: r.targets.includes(u.line) ? 0 : u.assignment === 'Tank' ? 1 : 2}))};

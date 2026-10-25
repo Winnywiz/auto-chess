@@ -76,7 +76,7 @@ for i, (k, v) in enumerate(recs):
 
 # 3. Per composition
 ws = wb.create_sheet('Per composition')
-strat = {'r1': 'Reroll 1-cost (roll at 5)', 'r2': 'Reroll 2-cost (roll at 6)', 'r3': 'Reroll 3-cost (roll at 7)', 'f8': 'Fast 8'}
+strat = {'r12': 'Reroll 1-2 cost (roll at 6, level 7)', 'r12s': 'Reroll 1-2 cost (stay 6)', 'r1': 'Reroll 1-cost (roll at 5)', 'r2': 'Reroll 2-cost (roll at 6)', 'r3': 'Reroll 3-cost (roll at 7)', 'f8': 'Fast 8'}
 rows = []
 for c in analysis['comps']:
     for v in sorted(c['variants'], key=lambda v: -v['expected']):
@@ -85,10 +85,10 @@ for c in analysis['comps']:
         r = len(rows) + 5
         rows.append([name(c['line'], 3 if c['strat'] != 'f8' else 2), strat[c['strat']], targets, v['traits'], 'steady (extras at 2★)' if v.get('steady') else 'as searched',
                      v['pHit'], ct['core'], w['core'], l['core'], o['tank'], o['full'], o['rollGold'], f'=L{r}/2', o['unitGold'], o['xpGold'], f'=L{r}+N{r}+O{r}',
-                     o['rollGoldMedianOnHit'], o['medianDone'], o['level'], o['goldLeft'], v['final']['score'], v['lowBest']['score'], f'=F{r}*U{r}+(1-F{r})*V{r}'])
+                     o['rollGoldMedianOnHit'], o['medianDone'], o['level'], o['goldLeft'], v['final']['score'], v['lowBest']['score'], v['expected']])
 a, b = sheet(ws, 'Per composition: gold used and rolls needed to finish by 5-2',
-  'Exact board needs (carry and extra targets at 3★, others at their shown stars) simulated from 1-1 with that strategy\'s level curve and best roll policy (3-cost rerolls: the better of level 7 at 4-1 or at 3-5), 300 games (mixed), 150 per other profile. "Full board" = every unit at its shown star. Expected 5-2 combat = hit rate × full-board score + miss rate × best low-roll score (this is what sets the website tier).',
-  ['Carry', 'Strategy', '3★ targets', 'Traits', 'Variant', 'Core hit by 5-2', 'Core hit, contested', 'Core hit, win-streak', 'Core hit, lose-streak', 'Tank at shown star', 'Full board', 'Avg roll gold', 'Avg rolls', 'Avg unit gold', 'Avg XP gold', 'Avg total spent', 'Median roll gold when hit', 'Median hit round', 'Avg level 5-2', 'Avg gold left 5-2', 'Full-board combat', 'Low-roll combat', 'Expected 5-2 combat'],
+  'Exact board needs (carry and extra targets at 3★, others at their shown stars) simulated from 1-1 with that strategy\'s level curve and best roll policy (3-cost rerolls: the better of level 7 at 4-1 or at 3-5), 300 games (mixed), 150 per other profile. "Full board" = every unit at its shown star. Expected 5-2 = the boards actually held at 5-2 in 200 simulated games (copies found, level reached), fought and weighted by frequency (this sets the website tier). Core hit = every 3★ target found.',
+  ['Carry', 'Strategy', '3★ targets', 'Traits', 'Variant', 'Core hit by 5-2', 'Core hit, contested', 'Core hit, win-streak', 'Core hit, lose-streak', 'Tank at shown star', 'Full board', 'Avg roll gold', 'Avg rolls', 'Avg unit gold', 'Avg XP gold', 'Avg total spent', 'Median roll gold when hit', 'Median hit round', 'Avg level 5-2', 'Avg gold left 5-2', 'Full-board combat', 'Low-roll combat', 'Expected 5-2 (realized boards)'],
   rows, [I, I, I, I, I, P, P, P, P, P, P, G0, G0, G0, G0, G0, G0, I, '0.00', G0, P, P, P], [14, 22, 26, 34, 18, 10, 10, 10, 10, 10, 9, 9, 8, 9, 8, 10, 11, 9, 8, 9, 10, 10, 10])
 ws.auto_filter.ref = f'A4:W{b}'
 
@@ -142,7 +142,30 @@ if gpt_file.exists():
       ['GPT board', 'GPT strategy', 'GPT tier', 'Their score (their lobby)', 'GPT board on our lobby', 'Our board', 'Our strategy', 'Our tier', 'Our full board', 'Difference', 'Our expected 5-2'],
       rows, [I, I, I, P, P, I, I, I, P, '+0.0%;-0.0%;0.0%', P], [24, 16, 8, 12, 12, 24, 16, 8, 11, 10, 11])
 
-# 7. Rules
+# 7. Toongcha boards (brother's list) on the same lobby and 5-2 model
+bro_file = W / 'brother' / 'compare.json'
+if bro_file.exists():
+    bro = json.loads(bro_file.read_text())
+    rows = []
+    for b in sorted(bro['theirs'], key=lambda b: -b['expected']):
+        r = len(rows) + 5
+        rows.append([b['name'], b['set'], b.get('tier') or '', (b['theirWr'] or 0) / 100, b['score'], b['reach'], b['expected'], b['lowScore'], b['traits']])
+    ws = wb.create_sheet('Toongcha boards')
+    sheet(ws, "Toongcha v36 boards on this run's lobby",
+      'Exact boards (units, stars, items, cells). Full board: 16 seeds on both sides vs the 18+18 lobby. Reach: share of 300 simulated games with every 3★ target and the level by 5-2. Expected 5-2: the realized boards actually held at 5-2, fought and weighted (same model as our list). Their win rate is their own site number on their own lobby.',
+      ['Board', 'Their list', 'Their tier', 'Their win rate', 'Full board (our lobby)', 'Everything by 5-2', 'Expected 5-2', 'All targets one star lower', 'Traits'],
+      rows, [I, I, I, P, P, P, P, P, I], [28, 8, 8, 11, 12, 12, 11, 12, 40])
+    rows = []
+    names = {b['id']: b['name'] for b in bro['theirs']}
+    for m in bro['matrix']:
+        avg = sum(x['score'] for x in m['vs']) / len(m['vs']); worst = min(m['vs'], key=lambda x: x['score'])
+        rows.append([m['name'], m['tier'], m['expected'], avg, names[worst['id']], worst['score']])
+    ws = wb.create_sheet('Ours vs Toongcha')
+    sheet(ws, 'Our lead builds vs every Toongcha board, full boards head to head',
+      '16 fights per pair (8 seeds on both sides). Full boards on both sides, so greedy boards with many 3★ units look stronger here than they are at 5-2 on average.',
+      ['Our build', 'Our tier', 'Our expected 5-2', 'Average vs their 16 boards', 'Worst matchup', 'Worst score'], rows, [I, I, P, P, I, P], [28, 8, 12, 14, 28, 10])
+
+# 8. Rules
 ws = wb.create_sheet('Rules used')
 rules = [('Start gold / level', '5 gold, level 2'), ('Base income', '5 per round (not on 1-1 or carousel rounds)'), ('Interest', '1 per 10 gold held, max 5'),
          ('Streak gold', '+1 at 2, +2 at 3, +3 at 5 (win or loss)'), ('PvP win gold', '+1'), ('PvE gold', '2-8 win +3; any stage PvE loss +2'),

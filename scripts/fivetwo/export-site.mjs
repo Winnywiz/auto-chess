@@ -12,8 +12,8 @@ const prov = JSON.parse(fs.readFileSync(new URL('../../simulation/provenance.jso
 const meta = JSON.parse(fs.readFileSync(new URL('meta.json', W)));
 const name = (line, star) => roster[line].forms[Math.min(star, roster[line].forms.length) - 1].name;
 const pct = x => Math.round(x * 100);
-const tierOf = e => e >= 0.70 ? 'S' : e >= 0.58 ? 'A' : e >= 0.45 ? 'B' : 'C';
-const category = {r1: 'reroll-1', r2: 'reroll-2', r3: 'reroll-3', f8: 'fast-8'};
+const tierOf = e => e >= 0.75 ? 'S' : e >= 0.65 ? 'A' : e >= 0.55 ? 'B' : 'C';
+const category = {r1: 'reroll-1', r12: 'reroll-12', r12s: 'reroll-12', r2: 'reroll-2', r3: 'reroll-3', f8: 'fast-8'};
 const items = Object.fromEntries(JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url))).items.map(i => [i.id, i]));
 const itemName = id => items[id]?.name ?? id;
 const list = ids => { const c = {}; for (const i of ids) c[i] = (c[i] ?? 0) + 1; return Object.entries(c).map(([i, n]) => itemName(i) + (n > 1 ? ' ×' + n : '')).join(', '); };
@@ -23,8 +23,10 @@ function assign(team, v) {
   return team.map(u => ({line: u.line, star: u.star, cell: u.cell, items: [...u.items], assignment: u.line === v.carryLine ? 'Carry' : u.line === v.items.tank ? 'Tank' : u.line === v.items.second ? 'Secondary' : (v.extras ?? []).includes(u.line) ? 'Upgrade' : 'Support'}));
 }
 function plan(strat, v, carry) {
-  const S2 = STRATEGIES[strat], targets = [carry, ...(v.extras ?? [])].map(l => name(l, 3)).join(' and ');
+  const S2 = STRATEGIES[strat], tn = [carry, ...(v.extras ?? [])].map(l => name(l, 3)), targets = tn.length > 1 ? tn.slice(0, -1).join(', ') + ' and ' + tn.at(-1) : tn[0];
   const hold = carry === 'vaporeon' ? ' Buy Eevee copies; when they combine, hold a Special Attack item (Calcium or Choice Specs) on Eevee and keep Water active so it evolves into Vaporeon.' : '';
+  if (strat === 'r12s') return `Level 6 by 3-2 and stay there: every gold goes into rolls for ${targets} 3★ (one- and two-cost). Do not level before 5-2; each 3★ you hit is worth more than a level.${hold}`;
+  if (strat === 'r12') return `Level 6 by 3-2 and roll for ${targets} 3★, mixing one- and two-cost upgrades. Every extra 3★ you hit makes the board stronger; stop at 4-5 and level to 7.${hold}`;
   if (strat === 'r1') return `Level 5 by 2-5 and slow-roll for ${targets} 3★. After the upgrade, level toward 7 for 5-2.${hold}`;
   if (strat === 'r2') return `Level 6 by 3-2 and slow-roll for ${targets} 3★. Stop at 4-5 at the latest, then level to 7.${hold}`;
   if (strat === 'r3') return `Play strongest board to 4-1, level 7 and roll for ${targets} 3★. One three-cost 3★ is the realistic limit by 5-2.`;
@@ -46,6 +48,7 @@ function lowNote(v, carry) {
   return {text: `If ${miss} misses, replace it with ${name(lb.holder, lb.star)} ${lb.star}★ holding ${list(v.items.carry)}.`, holder: lb.holder, star: lb.star, score: lb.score, keep: v.keepScore};
 }
 
+const TKT_SETS = (() => { try { const d = JSON.parse(fs.readFileSync(new URL('brother/tkt-data.json', W))); return new Set([...d.comps, ...d.pool, ...d.neu].map(c => c.units.map(u => u.l).sort().join())); } catch { return new Set(); } })();
 const rows = [];
 for (const c of A.comps) {
   const seen = new Set();
@@ -55,7 +58,7 @@ for (const c of A.comps) {
     const team = assign(v.team, v), carry = team.find(u => u.assignment === 'Carry');
     const act = activeTraits(team).sort((a, b) => b.tier - a.tier || b.n - a.n), ct = roster[c.line].traits;
     const top = act.find(x => ct.includes(x.t)) ?? act[0];
-    const id = `52-${c.line}-${top.t.toLowerCase()}-${top.n}${k ? '-' + 'abc'[k] : ''}`;
+    const id = `52-${c.line}-${top.t.toLowerCase()}-${top.n}${c.strat === 'r12' ? '-mix' : c.strat === 'r12s' ? '-six' : ''}${k ? '-' + 'abc'[k] : ''}`;
     const per = v.final.per.map(p => ({id: p.id, stage: p.stage, score: Math.round(p.score * 1000) / 1000}));
     rows.push({
       id, carry: c.line, variant: k, name: `${name(c.line, carry.star)} / ${top.t} ${top.n}`, category: category[c.strat], strategy: STRATEGIES[c.strat].label,
@@ -65,14 +68,21 @@ for (const c of A.comps) {
       items: {carry: v.items.carry, tank: v.items.tankItems, tankUnit: v.items.tank, second: v.items.second, secondItem: v.items.secondItem},
       altBuild: v.alt ? {items: v.alt.items, score: v.alt.score} : null,
       carryOptions: v.items.rankedCarry.slice(0, 4).map(x => ({items: x.items, score: x.score})),
-      plan: plan(c.strat, v, c.line), tempo: tempoNote(c.strat, v), lowRoll: lowNote(v, c.line),
+      plan: plan(c.strat, v, c.line), ...(TKT_SETS.has(v.team.map(u => u.line).sort().join()) ? {source: 'Toongcha list'} : {}), tempo: tempoNote(c.strat, v), lowRoll: lowNote(v, c.line),
       lowOptions: v.low.slice(0, 4).map(x => ({kind: x.kind, holder: x.holder, star: x.star, score: x.score})),
       tanks: v.tanks.slice(0, 5).map(x => ({line: x.line, star: x.star, score: x.score})),
-      matchups: per, finalSalt: 'final|' + c.line,
+      matchups: per, finalSalt: v.finalSalt ?? 'final|' + c.line, finalSeeds: v.finalSeeds ?? 8,
     });
   });
 }
 rows.sort((a, b) => b.expected - a.expected);
+{ // At most four builds per carry, best expected first, distinct ids.
+  const per = new Map(), ids = new Set();
+  for (let i = rows.length - 1; i >= 0; i--) {} 
+  const kept = [];
+  for (const r of rows) { const n = per.get(r.carry) ?? 0; if (n >= 4) continue; let id = r.id, k = 2; while (ids.has(id)) id = r.id + '-' + k++; r.id = id; ids.add(id); per.set(r.carry, n + 1); kept.push(r); }
+  rows.length = 0; rows.push(...kept);
+}
 // Transition boards, optional max cap and Seal suggestions (scripts/fivetwo/progression.mjs).
 const progFile = new URL('progression.json', W);
 const PROG = fs.existsSync(progFile) ? JSON.parse(fs.readFileSync(progFile)).rows : {};
@@ -87,7 +97,7 @@ const reference = A.reference.map(r => ({id: `api:${r.id}:s4`, comp: r.id, name:
 const C = {
   version: 'v36-52-2', generated: A.generated, gameRules: 36, engineIdentity: prov.identity, model: 'finish-by-5-2', itemBudget: 7, itemSplit: {tank: 3, carry: 3, secondary: 1},
   apiGenerated: meta.generated, apiRules: meta.rules, lobbyBoards: reference.length,
-  method: 'Version 36. Boards are the realistic 5-2 board for each plan: reroll targets at 3★, other three-cost or cheaper units at 2★, four-costs at 1★ unless the plan is Fast 8, five-costs only at level 8. Seven finished items: three on the tank, three on the carry and one on a secondary carry. Combat score: 8 fresh seeds on both sides, version 36 engine, against ranked-meta boards rebuilt from the official API stage snapshots (80% stage-4 lobby, 20% stage-3 lobby), weighted by popularity. Tier uses the expected 5-2 score, which blends the full board with the best low-roll fallback by how often the upgrade is found in a full-game shop simulation.',
+  method: 'Version 36. Boards are the realistic 5-2 board for each plan: reroll targets at 3★, other three-cost or cheaper units at 2★, four-costs at 1★ unless the plan is Fast 8, five-costs only at level 8. Seven finished items: three on the tank, three on the carry and one on a secondary carry. Combat score: 8 fresh seeds on both sides, version 36 engine, against ranked-meta boards rebuilt from the official API stage snapshots (80% stage-4 lobby, 20% stage-3 lobby), weighted by popularity. Tier uses the expected 5-2 score: 200 full-game shop simulations record which copies and level each game actually has at 5-2, and the most common of those real boards are fought and weighted by how often they occur.',
   rows, reference,
 };
 const html = fs.readFileSync('compositions.html', 'utf8');

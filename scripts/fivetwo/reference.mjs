@@ -5,6 +5,7 @@ import {family, startPool} from './combat.mjs';
 import {score, cost, isFront} from './search.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
+import {planOf, realizedScore} from './realized.mjs';
 
 const W = new URL('../../work/fiveTwo36/', import.meta.url);
 const A = JSON.parse(fs.readFileSync(new URL('analysis.json', W)));
@@ -25,7 +26,8 @@ for (const r of A.reference) {
   const low = r.team.map(u => targets.includes(u.line) ? {...u, star: u.star - 1} : u);
   const lowScore = (await score([low], {nSeeds: 2, salt: 'reflow|' + r.id, s3: true}))[0].score;
   const p = ok / N;
-  Object.assign(r, {targets, pTargets: core / N, pReach: p, lowScore, expected: p * r.score + (1 - p) * lowScore});
+  const real = await realizedScore(r.team.map(u => ({...u, items: [...u.items]})), planOf(r.team, {targets, rollLevel: key === 4 ? 8 : key === 3 ? 7 : key === 2 || targets.length >= 4 ? 6 : 5}), score, {n: 200, max: 8, nSeeds: 3, salt: 'ref-real|' + r.id});
+  Object.assign(r, {targets, pTargets: core / N, pReach: p, lowScore, expected: real.expected});
   console.log(r.id, r.traits, 'score', r.score.toFixed(3), 'reach', p.toFixed(2), 'low', lowScore.toFixed(3), 'exp', r.expected.toFixed(3));
 }
 fs.writeFileSync(new URL('analysis.json', W), JSON.stringify(A, null, 1));

@@ -203,3 +203,4 @@
 @media (max-width: 1050px) { .overview-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "board board" "resources guide"; } }
 @media (max-width: 650px) { .overview-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "board" "guide" "resources"; } }
 .comp-guide .comp-seals { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+.source-tag { margin-left: 6px; opacity: .8; }

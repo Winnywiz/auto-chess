@@ -40,13 +40,17 @@ function cooccur(carry) {
   return acc;
 }
 
-const GPT = (() => { try { return JSON.parse(fs.readFileSync(new URL('../../compositions-gpt.html', import.meta.url), 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).rows; } catch { return []; } })();
+const TKT = (() => { try { const d = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/brother/tkt-data.json', import.meta.url))); return [...d.comps, ...d.pool, ...d.neu].map((c, i) => { const k = c.units.find(u => u.r === 'c'); return {id: 'tkt-' + i, src: 'tkt:', carry: k?.l, team: c.units.map(u => ({line: u.l, star: u.s}))}; }); } catch { return []; } })();
+const GPT0 = (() => { try { return JSON.parse(fs.readFileSync(new URL('../../compositions-gpt.html', import.meta.url), 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).rows; } catch { return []; } })();
+const GPT = [...GPT0, ...TKT];
 // ---------- Strategy definitions ----------
 export const STRATEGIES = {
-  r1: {key: 'r1', label: 'Reroll 1-cost', rollLevel: 5, finalLevel: 7, carryCost: 1, carryStar: 3, extra: [0, 1, 2], extraCost: 1},
-  r2: {key: 'r2', label: 'Reroll 2-cost', rollLevel: 6, finalLevel: 7, carryCost: 2, carryStar: 3, extra: [0, 1], extraCost: 2},
-  r3: {key: 'r3', label: 'Reroll 3-cost', rollLevel: 7, finalLevel: 7, carryCost: 3, carryStar: 3, extra: [0], extraCost: 3},
-  f8: {key: 'f8', label: 'Fast 8', rollLevel: 8, finalLevel: 8, carryCost: 4, carryStar: 2, extra: [0], extraCost: 4},
+  r1: {key: 'r1', label: 'Reroll 1-cost', rollLevel: 5, finalLevel: 7, carryCost: 1, carryStar: 3, extra: [0, 1, 2, 3, 4], extraCost: [1]},
+  r12s: {key: 'r12s', label: 'Reroll 1-2 cost, stay 6', rollLevel: 6, finalLevel: 6, carryCost: 1, carryStar: 3, extra: [2, 3, 4, 5], extraCost: [1, 2]},
+  r12: {key: 'r12', label: 'Reroll 1-2 cost', rollLevel: 6, finalLevel: 7, carryCost: 1, carryStar: 3, extra: [1, 2, 3, 4], extraCost: [1, 2]},
+  r2: {key: 'r2', label: 'Reroll 2-cost', rollLevel: 6, finalLevel: 7, carryCost: 2, carryStar: 3, extra: [0, 1, 2], extraCost: [2]},
+  r3: {key: 'r3', label: 'Reroll 3-cost', rollLevel: 7, finalLevel: 7, carryCost: 3, carryStar: 3, extra: [0], extraCost: [3]},
+  f8: {key: 'f8', label: 'Fast 8', rollLevel: 8, finalLevel: 8, carryCost: 4, carryStar: 2, extra: [0], extraCost: [4]},
 };
 function starFor(line, strat, {carry, extras, tank2}) {
   if (line === carry) return strat.carryStar;
@@ -85,7 +89,8 @@ function rnd(seed) { let s = seed >>> 0; return () => { s = Math.imul(s ^ (s >>>
 function buildCandidates(carryLine, strat, level, count) {
   const shopCarry = family(carryLine), co = cooccur(carryLine === 'vaporeon' ? 'vaporeon' : carryLine);
   const eligible = SHOP.filter(l => l !== shopCarry && cost(l) <= maxCost(strat, level) && !(cost(l) === 5 && level < 8));
-  const extraPool = eligible.filter(l => cost(l) === strat.extraCost);
+  const isExtra = l => strat.extraCost.includes(cost(l)) && cost(l) <= 3;
+  const extraPool = eligible.filter(isExtra);
   const out = new Map();
   const add = (lines, extras, tank2, src) => {
     const team0 = [carryLine, ...lines].map(line => ({line}));
@@ -100,15 +105,16 @@ function buildCandidates(carryLine, strat, level, count) {
     const lines = c.units.filter(v => v.line !== carryLine && roster[v.line] && !roster[v.line].branchOf && eligible.includes(v.line)).sort((a, b) => (b.share ?? 0) - (a.share ?? 0)).map(v => v.line);
     const picked = [...new Set(lines)].slice(0, level - 1);
     if (picked.length < level - 1) continue;
-    const ex = strat.extra.at(-1) ? picked.filter(l => cost(l) === strat.extraCost && c.units.find(v => v.line === l)?.star === 3).slice(0, strat.extra.at(-1)) : [];
+    const ex = strat.extra.at(-1) ? picked.filter(l => isExtra(l) && c.units.find(v => v.line === l)?.star === 3).slice(0, strat.extra.at(-1)) : [];
     add(picked, ex, undefined, 'meta:' + c.id);
   }
   // 1b. The GPT v36 boards (backup page) for the same carry, adapted to this level and star rules.
   for (const g of GPT.filter(g => g.carry === carryLine)) {
     const others = g.team.filter(u => u.line !== carryLine && eligible.includes(u.line)).sort((a, b) => cost(b.line) * b.star - cost(a.line) * a.star).map(u => u.line);
-    if (others.length < level - 1) continue;
+    const co2 = cooccur(carryLine);
+    while (others.length < level - 1) { const pool = eligible.filter(l => !others.includes(l) && l !== shopCarry); if (!pool.length) break; others.push(pool.map(l => [l, heuristic([{line: carryLine, star: 3}, ...others.map(x => ({line: x, star: 2})), {line: l, star: 2}], co2, carryLine)]).sort((a, b) => b[1] - a[1])[0][0]); }
     const picked = others.slice(0, level - 1);
-    add(picked, picked.filter(l => cost(l) === strat.extraCost && g.team.find(u => u.line === l)?.star === 3).slice(0, strat.extra.at(-1)), undefined, 'gpt:' + g.id);
+    add(picked, picked.filter(l => isExtra(l) && g.team.find(u => u.line === l)?.star === 3).slice(0, strat.extra.at(-1)), undefined, (g.src ?? 'gpt:') + g.id);
   }
   // 2. Randomized trait-greedy boards.
   const r = rnd(hashStr(carryLine + strat.key + level));
@@ -128,7 +134,9 @@ function buildCandidates(carryLine, strat, level, count) {
     const ex = lines.filter(l => extraPool.includes(l)).sort(() => r() - 0.5).slice(0, nExtra);
     add(lines, ex, undefined, 'greedy');
   }
-  return [...out.values()].sort((a, b) => b.h - a.h).slice(0, count);
+  const all = [...out.values()];
+  const seeded = all.filter(c => /^(gpt|tkt):/.test(c.src));
+  return [...seeded, ...all.filter(c => !seeded.includes(c)).sort((a, b) => b.h - a.h)].slice(0, Math.max(count, seeded.length + 4));
 }
 function hashStr(s) { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
 
@@ -243,8 +251,8 @@ function carryList() {
     if (r.id === 'eevee') continue;
     if (r.branchOf && r.branchOf === 'eevee') { list.push({line: r.id, strat: 'r2'}); continue; }
     if (isTank(r.id) && !['slowpoke', 'seel', 'geodude', 'bulbasaur', 'machop', 'poliwag', 'snorlax'].includes(r.id)) continue;
-    if (c === 1) list.push({line: r.id, strat: 'r1'});
-    else if (c === 2) list.push({line: r.id, strat: 'r2'});
+    if (c === 1) { list.push({line: r.id, strat: 'r1'}); list.push({line: r.id, strat: 'r12'}); list.push({line: r.id, strat: 'r12s'}); }
+    else if (c === 2) { list.push({line: r.id, strat: 'r2'}); list.push({line: r.id, strat: 'r12'}); list.push({line: r.id, strat: 'r12s'}); }
     else if (c === 3) list.push({line: r.id, strat: 'r3'});
     else if (c === 4 && role(r.id) !== 'support') list.push({line: r.id, strat: 'f8'});
   }
@@ -254,12 +262,13 @@ function carryList() {
 async function main() {
   startPool();
   const only = process.env.ONLY ? process.env.ONLY.split(',') : null;
-  const carries = carryList().filter(c => !only || only.includes(c.line));
+  const strats = process.env.STRATS ? process.env.STRATS.split(',') : null;
+  const carries = carryList().filter(c => (!only || only.includes(c.line)) && (!strats || strats.includes(c.strat)));
   log('gauntlet', S4.length, 'stage-4 boards,', S3.length, 'stage-3 boards; carries', carries.length);
   // Stage A: screen every carry with its top heuristic candidates.
   // Resume: reuse the saved screen and finished carries from an interrupted run.
-  const resume = process.env.RESUME && fs.existsSync(new URL('screen.json', OUT));
-  const screened = resume ? JSON.parse(fs.readFileSync(new URL('screen.json', OUT))) : [];
+  const resume = process.env.RESUME && fs.existsSync(new URL(process.env.SCREEN_FILE ?? 'screen.json', OUT));
+  const screened = resume ? JSON.parse(fs.readFileSync(new URL(process.env.SCREEN_FILE ?? 'screen.json', OUT))) : [];
   for (const {line, strat} of resume ? [] : carries) {
     const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 10);
     if (!cands.length) continue;
@@ -268,14 +277,14 @@ async function main() {
     screened.push({line, strat, best: best.score, team: best.team});
     log('screen', line, strat, best.score.toFixed(3), traitLabel(best.team));
   }
-  fs.writeFileSync(new URL('screen.json', OUT), JSON.stringify(screened, null, 1));
+  fs.writeFileSync(new URL(process.env.SCREEN_FILE ?? 'screen.json', OUT), JSON.stringify(screened, null, 1));
   // Keep the strongest carries per strategy.
-  const keepPer = {r1: 8, r2: 9, r3: 6, f8: 8};
+  const keepPer = {r1: 8, r12: 8, r12s: 12, r2: 9, r3: 6, f8: 8};
   const keep = Object.keys(STRATEGIES).flatMap(k => screened.filter(s => s.strat === k).sort((a, b) => b.best - a.best).slice(0, only ? 99 : keepPer[k]));
   // Stage B: deeper board search, items and variants.
-  const results = resume && fs.existsSync(new URL('search.json', OUT)) ? JSON.parse(fs.readFileSync(new URL('search.json', OUT))).results : [];
+  const results = resume && fs.existsSync(new URL(process.env.SEARCH_FILE ?? 'search.json', OUT)) ? JSON.parse(fs.readFileSync(new URL(process.env.SEARCH_FILE ?? 'search.json', OUT))).results : [];
   for (const {line, strat} of keep) {
-    if (results.some(r => r.line === line)) continue;
+    if (results.some(r => r.line === line && r.strat === strat)) continue;
     const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 30);
     const res = await score(cands.map(c => equip(c, line).team), {salt: 'search|' + line});
     const ranked = cands.map((c, i) => ({...c, ...res[i]})).sort((a, b) => b.score - a.score);
@@ -309,7 +318,7 @@ async function main() {
     const finals = await score(out.map(o => o.team), {nSeeds: 8, salt: 'final|' + line, s3: true});
     results.push({line, strat, notes, variants: out.map((o, i) => ({...o, final: finals[i], traits: traitLabel(o.team), value: boardValue(o.team)}))});
     log('final', line, strat, finals.map(f => f.score.toFixed(3)).join(' / '), traitLabel(out[0].team));
-    fs.writeFileSync(new URL('search.json', OUT), JSON.stringify({gauntlet: G.map(x => ({id: x.comp.id, tier: x.comp.tier, n: x.comp.n, avg: x.comp.avg, weight: x.weight, s4: x.s4, s3: x.s3})), results}, null, 1));
+    fs.writeFileSync(new URL(process.env.SEARCH_FILE ?? 'search.json', OUT), JSON.stringify({gauntlet: G.map(x => ({id: x.comp.id, tier: x.comp.tier, n: x.comp.n, avg: x.comp.avg, weight: x.weight, s4: x.s4, s3: x.s3})), results}, null, 1));
   }
   process.exit(0);
 }
