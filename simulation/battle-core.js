@@ -2,7 +2,7 @@
 const round=n=>Math.round(n*1000)/1000;
 export const mirror=team=>team.map(u=>({...u,cell:55-u.cell,items:[...u.items]}));
 export function validateRequest(input,data,{allowEmpty=false}={}){
- if(!input||input.rules!==35)throw Error('This simulator uses version 35.');
+ if(!input||input.rules!==data.rules)throw Error('This simulator uses version '+data.rules+'.');
  const lines=new Map(data.roster.map(r=>[r.id,r])),items=new Set(data.items.map(i=>i.id));
  const teams=['a','b'].map(side=>{
   const team=input[side];if(!Array.isArray(team)||team.length<(allowEmpty?0:1)||team.length>9)throw Error('Each team needs 1 to 9 Pokémon.');
@@ -16,7 +16,7 @@ export function validateRequest(input,data,{allowEmpty=false}={}){
  });
  if(!Number.isInteger(input.seed)||input.seed<0||input.seed>4294967295)throw Error('Seed must be a whole number from 0 to 4294967295.');
  if(![1,32,128].includes(input.runs))throw Error('Choose 1, 32 or 128 fights.');
- return {rules:35,a:teams[0],b:teams[1],seed:input.seed,runs:input.runs};
+ return {rules:data.rules,a:teams[0],b:teams[1],seed:input.seed,runs:input.runs};
 }
 function fight(engine,request,seed,side,record,data){
  const home=side?request.b:request.a,away=mirror(side?request.a:request.b);
@@ -55,5 +55,5 @@ export function simulate(engine,data,input,progress=()=>{}){
   if(replay.value!==chosen.value||replay.duration!==chosen.duration)throw Error('Replay does not match its scored fight.');
   replays.push(replay);
  }
- return {rules:35,identity:engine.identity,request,wins:trials.filter(t=>t.value===1).length,losses:trials.filter(t=>t.value===0).length,draws:trials.filter(t=>t.value===.5).length,n:trials.length,score:trials.reduce((s,t)=>s+t.value,0)/trials.length,replays};
+ return {rules:data.rules,identity:engine.identity,request,wins:trials.filter(t=>t.value===1).length,losses:trials.filter(t=>t.value===0).length,draws:trials.filter(t=>t.value===.5).length,n:trials.length,score:trials.reduce((s,t)=>s+t.value,0)/trials.length,replays};
 }

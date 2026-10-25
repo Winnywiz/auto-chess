@@ -4,28 +4,28 @@ const clone=x=>JSON.parse(JSON.stringify(x));
 const coord=cell=>'ABCD'[Math.floor((cell-28)/7)]+(cell%7+1);
 const itemImage=id=>id.startsWith('emblem-')?'media/types/'+id.slice(7)+'.png':'media/items/'+id+'.png';
 export async function initCustomBattle({present,invalidate}){
- const response=await fetch('simulation/data-v35.json?v=custom-battle-1');if(!response.ok)throw Error('Combat data unavailable');
+ const response=await fetch('simulation/data-v36.json?v=v36-tempo-1');if(!response.ok)throw Error('Combat data unavailable');
  const game=await response.json(),lines=new Map(game.roster.map(r=>[r.id,r]));
  const sorted=[...game.roster].sort((a,b)=>a.cost-b.cost||a.forms[0].name.localeCompare(b.forms[0].name));
  let teams={a:[{line:'vaporeon',star:2,cell:52,items:['choice-specs','focus-sash']},{line:'snorlax',star:2,cell:31,items:['leftovers']}],b:[{line:'kabutops',star:2,cell:31,items:['scope-lens','focus-sash']},{line:'tangela4',star:2,cell:30,items:['rocky-helmet']}]};
  const selected={a:0,b:0};let picking='a',pickCell=null,worker=null,timer=null,generation=0,busy=false,lastResult=null,presets=[];
  const form=u=>lines.get(u.line).forms[u.star-1];
- const request=()=>({rules:35,...clone(teams),seed:$('#battle-seed').value.trim()===''?NaN:Number($('#battle-seed').value),runs:Number($('#battle-runs').value)});
+ const request=()=>({rules:36,...clone(teams),seed:$('#battle-seed').value.trim()===''?NaN:Number($('#battle-seed').value),runs:Number($('#battle-runs').value)});
  const notify=text=>{$('#run-status').textContent=text;};
  function shutdown(){worker?.terminate();worker=null;clearTimeout(timer);timer=null;busy=false;$('#simulate').disabled=false;$('#cancel-simulation').hidden=true;}
  function changed(){generation++;shutdown();invalidate();lastResult=null;$('#download-replay').hidden=true;if(new URLSearchParams(location.hash.slice(1)).has('battle'))history.replaceState(null,'',location.pathname+location.search);notify('Simulate to update the replay.');save();}
- function save(){try{localStorage.setItem('kanto-custom-v35',JSON.stringify(request()));}catch{}}
+ function save(){try{localStorage.setItem('kanto-custom-v36',JSON.stringify(request()));}catch{}}
  function restore(value){const q=validateRequest(value,game,{allowEmpty:true});teams={a:q.a,b:q.b};$('#battle-seed').value=q.seed;$('#battle-runs').value=q.runs;}
  try{
   const encoded=new URLSearchParams(location.hash.slice(1)).get('battle');
   if(encoded){if(encoded.length>16000)throw Error('This battle link is too large.');restore(JSON.parse(atob(encoded)));}
-  else{const saved=localStorage.getItem('kanto-custom-v35');if(saved)restore(JSON.parse(saved));}
+  else{const saved=localStorage.getItem('kanto-custom-v36');if(saved)restore(JSON.parse(saved));}
  }catch{notify('Could not restore that setup. The example teams are shown.');}
  function renderSide(side){
   const team=teams[side],current=team[selected[side]],letter=side.toUpperCase();
   $('#count-'+side).textContent=team.length+'/9';$('#add-'+side).disabled=team.length>=9;$('#clear-'+side).disabled=!team.length;
   const counts={};for(const line of new Set(team.map(u=>u.line)))for(const t of lines.get(line).traits)counts[t]=(counts[t]??0)+1;
-  $('#setup-traits-'+side).innerHTML='<span class="trait-caption" title="Before item effects and Mew’s adaptation">Base traits</span>'+Object.entries(counts).filter(([t,n])=>n>=game.traits[t].thresholds[0]).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<span title="${esc(t)} ${n}"><img src="media/types/${t.toLowerCase()}.png" alt="${esc(t)}">${n}</span>`).join('');
+  $('#setup-traits-'+side).innerHTML='<span class="trait-caption" title="Before item effects">Base traits</span>'+Object.entries(counts).filter(([t,n])=>n>=game.traits[t].thresholds[0]).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<span title="${esc(t)} ${n}"><img src="media/types/${t.toLowerCase()}.png" alt="${esc(t)}">${n}</span>`).join('');
   const cells=Array.from({length:28},(_,i)=>{
    const cell=i+28,index=team.findIndex(u=>u.cell===cell),u=team[index],f=u&&form(u);
    return `<button type="button" class="setup-hex ${u?'occupied':''} ${index===selected[side]?'selected':''}" data-cell="${cell}" data-side="${side}" aria-pressed="${!!u&&index===selected[side]}" aria-label="Team ${letter}, ${coord(cell)}${u?', '+esc(f.name)+', '+u.star+' stars':', empty'}" title="${u?esc(f.name):coord(cell)}">${u?`<img src="media/sprites/${f.num}.gif" alt=""><span class="setup-stars">${'★'.repeat(u.star)}</span><span class="setup-gear">${u.items.map(id=>`<img src="${itemImage(id)}" alt="${esc(game.items.find(i=>i.id===id).name)}">`).join('')}</span>`:`<span class="hex-coordinate">${coord(cell)}</span>`}</button>`;
@@ -54,7 +54,7 @@ export async function initCustomBattle({present,invalidate}){
    changed();renderSide(side);
   };
   $('#unit-editor-'+side).onclick=e=>{if(!e.target.closest('[data-remove]'))return;teams[side].splice(selected[side],1);selected[side]=teams[side].length?Math.min(selected[side],teams[side].length-1):-1;changed();render();};
-  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;teams[side]=clone(row.boards.find(b=>b.level===9).team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
+  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;const board=row.boards.find(b=>b.level===(row.level??9))??row.boards.at(-1);teams[side]=clone(board.team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
   $('#import-'+side).onclick=()=>{
    $('#import-side').value=side;$('#builder-payload').value='';$('#import-error').textContent='';$('#builder-import').showModal();$('#builder-payload').focus();
   };
@@ -73,7 +73,7 @@ export async function initCustomBattle({present,invalidate}){
    const encoded=text.includes('#team=')?text.split('#team=')[1]:text.replace(/^#?team=/,'');
    const payload=JSON.parse(atob(encoded));if(payload.v!==1||!payload.board||Array.isArray(payload.board))throw Error('Paste a builder team link.');
    const team=Object.entries(payload.board).map(([cell,u])=>({line:u.line,star:u.star,items:u.items??[],cell:Number(cell)+28})),side=$('#import-side').value;
-   validateRequest({rules:35,a:team,b:team,seed:0,runs:1},game);teams[side]=team;selected[side]=0;changed();render();$('#builder-import').close();
+   validateRequest({rules:36,a:team,b:team,seed:0,runs:1},game);teams[side]=team;selected[side]=0;changed();render();$('#builder-import').close();
   }catch(error){$('#import-error').textContent=error.message==='Invalid character'?'Paste a valid builder team link.':error.message;}
  };
  $('#swap-teams').onclick=()=>{teams={a:teams.b,b:teams.a};selected.a=selected.b=0;changed();render();};
@@ -84,13 +84,13 @@ export async function initCustomBattle({present,invalidate}){
   catch(error){notify(error.name==='NotAllowedError'?'Copy the battle link from the address bar.':error.message);}
  };
  $('#download-replay').onclick=()=>{
-  if(!lastResult)return;const url=URL.createObjectURL(new Blob([JSON.stringify(lastResult)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='kanto-v35-battle-'+lastResult.request.seed+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  if(!lastResult)return;const url=URL.createObjectURL(new Blob([JSON.stringify(lastResult)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='kanto-v36-battle-'+lastResult.request.seed+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  };
  $('#cancel-simulation').onclick=()=>{generation++;shutdown();notify('Simulation cancelled.');};
  $('#simulation-form').onsubmit=e=>{
   e.preventDefault();if(busy)return;let q;try{q=validateRequest(request(),game);}catch(error){notify(error.message);return;}
   save();invalidate();lastResult=null;$('#download-replay').hidden=true;busy=true;$('#simulate').disabled=true;$('#cancel-simulation').hidden=false;const id=++generation;notify('Loading combat engine…');
-  try{worker=new Worker(new URL('./simulation/battle-worker.js?v=custom-battle-1',import.meta.url),{type:'module'});}catch{shutdown();notify('This browser could not start the simulator. Try a current browser.');return;}
+  try{worker=new Worker(new URL('./simulation/battle-worker.js?v=v36-tempo-1',import.meta.url),{type:'module'});}catch{shutdown();notify('This browser could not start the simulator. Try a current browser.');return;}
   timer=setTimeout(()=>{if(id!==generation)return;generation++;shutdown();notify('Simulation timed out. Try fewer fights.');},45000);
   worker.onerror=e=>{if(id!==generation)return;e.preventDefault();shutdown();notify('Could not load the combat engine. Reload to try again.');};
   worker.onmessage=({data:message})=>{
@@ -104,7 +104,7 @@ export async function initCustomBattle({present,invalidate}){
  };
  window.addEventListener('pagehide',()=>{generation++;shutdown();});
  render();$('#custom-controls').hidden=false;$('#status').textContent='';
- fetch('data/compositions-v35-research.json?v=v35-comps-1').then(r=>{if(!r.ok)throw Error();return r.json();}).then(p=>{
+ fetch('data/compositions-v36-research.json?v=v36-tempo-1').then(r=>{if(!r.ok)throw Error();return r.json();}).then(p=>{
   if(p.engine!==game.identity)return;presets=p.rows;for(const side of ['a','b'])$('#preset-'+side).innerHTML='<option value="">Load composition</option>'+presets.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('');
  }).catch(()=>{for(const side of ['a','b'])$('#preset-'+side).hidden=true;});
 }

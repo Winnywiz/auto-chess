@@ -1,3 +1,4 @@
+if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).gameRules===36){await import('./comps-tempo-v36/verify.mjs');process.exit(0);}
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';

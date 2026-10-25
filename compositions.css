@@ -10,6 +10,11 @@
 .composition-panel { min-width: 0; }
 .overview-grid { display: grid; grid-template-columns: minmax(190px, .9fr) minmax(340px, 1.8fr) minmax(190px, .9fr); gap: 28px; }
 .overview-grid > * { min-width: 0; }
+.compositions-page .comp-board-panel .mini-board { max-width: 560px; margin-inline: auto; }
+.compositions-page .seal-kind::before { display: none; }
+.compositions-page .comp-list-header,.compositions-page .comp-summary { grid-template-columns: 210px minmax(0,1fr) 90px 90px; }
+@media(max-width:1390px){.compositions-page .comp-summary{grid-template-columns:minmax(0,1fr) 100px 100px}}
+@media(max-width:650px){.compositions-page .comp-summary{grid-template-columns:1fr 1fr}.compositions-page .comp-title,.compositions-page .comp-lineup{grid-column:1/-1}}
 .overview-grid .comp-board-panel { grid-row: auto; }
 .overview-grid .comp-variants { grid-row: auto; }
 .comp-trait { cursor: help; }

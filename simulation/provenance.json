@@ -1,20 +1,20 @@
 {
-  "rules": 35,
-  "identity": "7f5bfa97bbc126c69f193ec540c4c5a2ff27d4c7f1dd08d7711d3c9c50bbbb0f",
+  "rules": 36,
+  "identity": "3068967d310c918e1ef6e159e1dddc9bcd319a9ae27a264d753bf5c223b4bc80",
   "source": "https://einoow.com/playables/kanto-tactics/",
   "attribution": "Kanto Tactics combat engine © 2026 Einoow. Original copyright notices retained.",
   "bundler": "esbuild 0.28.2",
-  "engineSHA256": "d7ef502c0abd777d7fb1b046182bf2bc73d4d1c522d7584715eb70f59dffbd28",
+  "engineSHA256": "739de6e5512bbe7f43a6f257e3732ce907ecbd531cf284a56219278f0bd675a8",
   "inputs": {
     "rolldown-runtime-B29-hMYW.js": "d8360e90f559a6e984ac66d66e5cafd30c97c8b4bcc122379eb70985d7279fd4",
-    "start-BW-PfRUJ.js": "2a726b888038fc7bf9f6a8e33f7dff382b8a4d90c7a07f16edf6ffaa7e495d78",
-    "core-xrlSeiRW.js": "f2b0677fab2a24244a8802151fcd0732db2a2db3087427b07001934f83f65346",
+    "start-BW-PfRUJ.js": "3a925cf58c9e9a78e953e6c3f1fbb3eae096109cf4e1596496fc4221b5ef808a",
+    "core-Ch5nXLMW.js": "23fb309a4ed4452a2e17a2d81672cec09936a111ef5e279b06eaedce350b1c34",
     "music-wVX0PewO.js": "24a8c56d449556add218fb1818e31bff8bf51efc2d00d8a80f15be45819fcc47",
     "lang-D4kb6qpP.js": "c52add9d829ea52f6eb605f04c25453de0783ce230cd63d6603d00f230fd94e3",
-    "roster-D3-xKS1r.js": "50d1bfb9b956dfc7dbe7edb2ed2a7974f1c9b9933ad796a110d093d451fb4b95",
+    "roster-BKmCA401.js": "20f712911e4a03eb06164caaf882ea80cb49ebe71540c2690dd19f2243b8694b",
     "toolsAllowed-Dzl2XiAS.js": "bc0feab333135505a0bd1f4bfa0f3c762ee0d9125a1c97a7ab3c5f2c7d2f3bee",
     "defineProperty-BWWC-6eR.js": "08fe24d2fd14023969124811d767c29671bd2aecccad7d4ac741e7f5e4b2aec0",
-    "route-DCzOBUMZ.js": "aea8f10223a84b03f30063eba3ef905338c14946d30411213a024413fbdbda4e"
+    "route-3pHNpNkx.js": "946d8032013b01be82ffd5e00017e2a883b66b31dda065652afa4fa72c48a952"
   },
   "adapters": [
     "Archived verified game data, without session envelope",
