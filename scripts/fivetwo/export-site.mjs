@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {roster, family, traitLabel, activeTraits, boardValue} from './combat.mjs';
 import {STRATEGIES} from './search.mjs';
 
-const W = new URL('../../work/fiveTwo/', import.meta.url);
+const W = new URL('../../work/fiveTwo36/', import.meta.url);
 const A = JSON.parse(fs.readFileSync(new URL('analysis.json', W)));
 const S = JSON.parse(fs.readFileSync(new URL('search.json', W)));
 const prov = JSON.parse(fs.readFileSync(new URL('../../simulation/provenance.json', import.meta.url)));
@@ -14,7 +14,7 @@ const name = (line, star) => roster[line].forms[Math.min(star, roster[line].form
 const pct = x => Math.round(x * 100);
 const tierOf = e => e >= 0.70 ? 'S' : e >= 0.58 ? 'A' : e >= 0.45 ? 'B' : 'C';
 const category = {r1: 'reroll-1', r2: 'reroll-2', r3: 'reroll-3', f8: 'fast-8'};
-const items = Object.fromEntries(JSON.parse(fs.readFileSync(new URL('../../simulation/data-v35.json', import.meta.url))).items.map(i => [i.id, i]));
+const items = Object.fromEntries(JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url))).items.map(i => [i.id, i]));
 const itemName = id => items[id]?.name ?? id;
 const list = ids => { const c = {}; for (const i of ids) c[i] = (c[i] ?? 0) + 1; return Object.entries(c).map(([i, n]) => itemName(i) + (n > 1 ? ' ×' + n : '')).join(', '); };
 const refName = r => { const t = activeTraits(r.team).sort((a, b) => b.tier - a.tier || b.n - a.n)[0]; const carry = r.team.find(u => u.items.length === 3 && roster[u.line].role !== 'tank') ?? r.team.find(u => u.items.length === 3); return `${name(carry.line, carry.star)} / ${t.t} ${t.n}`; };
@@ -53,7 +53,8 @@ for (const c of A.comps) {
     .filter(v => { const k = v.team.map(u => u.line + u.star).sort().join(); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 3);
   vs.forEach((v, k) => {
     const team = assign(v.team, v), carry = team.find(u => u.assignment === 'Carry');
-    const top = activeTraits(team).sort((a, b) => b.tier - a.tier || b.n - a.n)[0];
+    const act = activeTraits(team).sort((a, b) => b.tier - a.tier || b.n - a.n), ct = roster[c.line].traits;
+    const top = act.find(x => ct.includes(x.t)) ?? act[0];
     const id = `52-${c.line}-${top.t.toLowerCase()}-${top.n}${k ? '-' + 'abc'[k] : ''}`;
     const per = v.final.per.map(p => ({id: p.id, stage: p.stage, score: Math.round(p.score * 1000) / 1000}));
     rows.push({
@@ -84,9 +85,9 @@ for (const r of rows) {
 }
 const reference = A.reference.map(r => ({id: `api:${r.id}:s4`, comp: r.id, name: refName(r), tier: r.tier, games: r.n, avg: r.avg, top4: r.top4, level: r.level, team: r.team, traits: r.traits, score: r.score, s4: r.s4, s3: r.s3, expected: r.expected, lowScore: r.lowScore})).sort((a, b) => b.expected - a.expected);
 const C = {
-  version: 'v35-52-1', generated: A.generated, gameRules: 35, engineIdentity: prov.identity, model: 'finish-by-5-2', itemBudget: 7, itemSplit: {tank: 3, carry: 3, secondary: 1},
+  version: 'v36-52-2', generated: A.generated, gameRules: 36, engineIdentity: prov.identity, model: 'finish-by-5-2', itemBudget: 7, itemSplit: {tank: 3, carry: 3, secondary: 1},
   apiGenerated: meta.generated, apiRules: meta.rules, lobbyBoards: reference.length,
-  method: 'Boards are the realistic 5-2 board for each plan: reroll targets at 3★, other three-cost or cheaper units at 2★, four-costs at 1★ unless the plan is Fast 8, five-costs only at level 8. Seven finished items: three on the tank, three on the carry and one on a secondary carry. Combat score: 4 fresh seeds on both sides against ranked-meta boards rebuilt from the official API stage snapshots (80% stage-4 lobby, 20% stage-3 lobby), weighted by popularity. Tier uses the expected 5-2 score, which blends the full board with the best low-roll fallback by how often the upgrade is found in a full-game shop simulation.',
+  method: 'Version 36. Boards are the realistic 5-2 board for each plan: reroll targets at 3★, other three-cost or cheaper units at 2★, four-costs at 1★ unless the plan is Fast 8, five-costs only at level 8. Seven finished items: three on the tank, three on the carry and one on a secondary carry. Combat score: 8 fresh seeds on both sides, version 36 engine, against ranked-meta boards rebuilt from the official API stage snapshots (80% stage-4 lobby, 20% stage-3 lobby), weighted by popularity. Tier uses the expected 5-2 score, which blends the full board with the best low-roll fallback by how often the upgrade is found in a full-game shop simulation.',
   rows, reference,
 };
 const html = fs.readFileSync('compositions.html', 'utf8');

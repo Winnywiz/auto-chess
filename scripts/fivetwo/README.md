@@ -1,9 +1,19 @@
-# Finish-by-5-2 composition study (Version 35)
+# Finish-by-5-2 composition study (Version 36)
 
 The compositions page ranks the board each plan realistically has at 5-2, not a level-9 cap.
 Run from the repository root with Node 22+. Combat uses the repository's pinned
-`simulation/engine-v35.js`; no external game modules are needed. Save the official meta response
-to `work/fiveTwo/meta.json` first.
+`simulation/engine-v36.js` and `simulation/data-v36.json`; no external game modules are needed.
+Save the official meta response to `work/fiveTwo36/meta.json` first. The v36 economy differs from
+v35 only in the XP table (7->8 36, 8->9 56). The previous GPT v36 page is kept as
+`compositions-gpt.html` and its boards are fed to the search as extra candidates
+(`gpt-compare.mjs` scores them unchanged on the same lobby).
+
+After the swap search, every board goes through clean-up passes (`refine` in `search.mjs`):
+a trait one short of its next breakpoint is offered a unit that completes it; utility and support
+units (Chansey, Jigglypuff, Psyduck, Porygon, Ditto...) and one-unit passives (Ghost, Dragon,
+Electric pairs) are tried in every support slot; and every 1★ unit is replaced by the best 2★
+alternative unless the 1★ unit is more than 1.5 points better. Final scores use 8 seeds on both
+sides against 18 lobby boards per stage (short API snapshots are filled to their level).
 
 ```sh
 node scripts/fivetwo/budget-study.mjs      # gold audit + how many 3★ targets fit per reroll cost

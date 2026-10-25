@@ -6,7 +6,7 @@ import {score, gear, placeHint, isFront, isTank, spa, cost, SHOP, S4, S3, G, STR
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed, label} from './rules.mjs';
 
-const OUT = new URL('../../work/fiveTwo/', import.meta.url);
+const OUT = new URL('../../work/fiveTwo36/', import.meta.url);
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 const search = JSON.parse(fs.readFileSync(new URL('search.json', OUT)));
 const budget = JSON.parse(fs.readFileSync(new URL('budget.json', OUT)));
@@ -29,7 +29,7 @@ function planFor(strat, team, carry, extras, curveKey = strat) {
   const type = strat === 'f8' ? '4-cost' : `${S.carryCost}-cost`;
   const pol = bestPolicy(type, 1 + extras.length, strat === 'f8' ? 8 : lv);
   const reach = curves[curveKey].at(-1)[0], rollFrom = pol.from === 'early' ? reach : reach + 2;
-  const needs = team.map(u => ({line: family(u.line), copies: 3 ** (u.star - 1), priority: u.line === carry || extras.includes(u.line) ? 0 : (isFront(u.line) && u.items.length) ? 1 : 2}));
+  const needs = team.map(u => ({line: family(u.line), copies: 3 ** (u.star - 1), priority: u.line === carry || extras.includes(u.line) || (u.star === 1 && cost(u.line) >= 4) ? 0 : (isFront(u.line) && u.items.length) ? 1 : 2}));
   return {levels: curves[curveKey], rollLevel: lv, rollFrom, floor: pol.floor, allInAt: Math.max(at(pol.allIn), rollFrom), needs, levelAfter: true, levelKeep: 20, maxLevel: S.finalLevel + 1, policy: pol};
 }
 function acquisition(strat, team, carry, extras, curveKey) {
@@ -64,7 +64,7 @@ async function main() {
     const expanded = [...r.variants];
     for (const v of r.variants) if ((v.extras ?? []).length) {
       const team = v.team.map(u => v.extras.includes(u.line) ? {...u, star: 2} : u);
-      expanded.push({...v, team, extras: [], src: v.src + '+steady', steady: true, final: (await score([team], {nSeeds: 4, salt: 'final|' + r.line, s3: true}))[0]});
+      expanded.push({...v, team, extras: [], src: v.src + '+steady', steady: true, final: (await score([team], {nSeeds: 8, salt: 'final|' + r.line, s3: true}))[0]});
     }
     for (const v of expanded) {
       const carry = r.line, extras = v.extras ?? [];
@@ -74,7 +74,7 @@ async function main() {
         const swap = v.items.rankedCarry.find(x => okSet(x.items));
         v.items.carry = swap.items;
         v.team = v.team.map(u => u.line === carry ? {...u, items: [...swap.items]} : u);
-        v.final = (await score([v.team], {nSeeds: 4, salt: 'final|' + carry, s3: true}))[0];
+        v.final = (await score([v.team], {nSeeds: 8, salt: 'final|' + carry, s3: true}))[0];
       }
       if (v.items.alt && !okSet(v.items.alt)) v.items.alt = v.items.rankedCarry.find(x => okSet(x.items) && x.items.join() !== v.items.carry.join())?.items ?? null;
       v.items.rankedCarry = v.items.rankedCarry.filter(x => okSet(x.items));
@@ -115,7 +115,7 @@ async function main() {
       const tanks = tankBoards.map((b, i) => ({line: b.line, star: b.star, score: tankScores[i].score})).sort((a, b) => b.score - a.score);
       // Alternative carry build on the final board.
       const altTeam = v.items.alt ? team.map(u => u.line === carry ? {...u, items: [...v.items.alt]} : u) : null;
-      const altScore = altTeam ? (await score([altTeam], {nSeeds: 4, salt: 'alt|' + carry, s3: true}))[0] : null;
+      const altScore = altTeam ? (await score([altTeam], {nSeeds: 8, salt: 'alt|' + carry, s3: true}))[0] : null;
       // Acquisition by 5-2.
       const acq = acquisition(r.strat, team, carry, extras);
       const acqEarly = r.strat === 'r3' ? acquisition(r.strat, team, carry, extras, 'r3early') : null;

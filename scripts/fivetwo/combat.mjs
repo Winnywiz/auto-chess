@@ -1,9 +1,9 @@
-// Combat helpers on the repository's pinned Version 35 engine bundle (simulation/engine-v35.js).
+// Combat helpers on the repository's pinned Version 35 engine bundle (simulation/engine-v36.js).
 import fs from 'node:fs';
 import os from 'node:os';
 import {Worker} from 'node:worker_threads';
 
-export const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v35.json', import.meta.url)));
+export const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url)));
 export const roster = Object.fromEntries(data.roster.map(r => [r.id, r]));
 export const items = Object.fromEntries(data.items.map(i => [i.id, i]));
 export const traitRules = data.traits;

@@ -1,19 +1,19 @@
 // 5-2 composition search: realistic stars at the finishing level, seven items
 // (three tank, three carry, one secondary carry), scored against reconstructed ranked lobbies.
 import fs from 'node:fs';
-import {roster, family, FULL, traitCounts, activeTraits, traitLabel, arrange, seeds, scoreMany, startPool, boardValue} from './combat.mjs';
+import {roster, family, FULL, traitCounts, activeTraits, traitLabel, arrange, seeds, scoreMany, startPool, boardValue, traitRules} from './combat.mjs';
 import {gauntlet, meta} from './opponents.mjs';
 
-const OUT = new URL('../../work/fiveTwo/', import.meta.url);
+const OUT = new URL('../../work/fiveTwo36/', import.meta.url);
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
-const FLEX = new Set(['staryu', 'charmander', 'nidoran', 'poliwag', 'sandshrew', 'ponyta', 'growlithe', 'slowpoke', 'scyther', 'cubone', 'snorlax', 'articuno', 'zapdos', 'moltres']);
+const FLEX = new Set(['charmander', 'nidoran', 'pikachu', 'poliwag', 'sandshrew', 'ponyta', 'growlithe', 'slowpoke', 'scyther', 'cubone', 'snorlax', 'staryu', 'articuno', 'zapdos', 'moltres', 'venomoth', 'victreebel', 'nidoqueen']);
 const cost = l => roster[family(l)].cost;
 const range = l => roster[l].range, role = l => roster[l].role;
 const isFront = l => range(l) <= 1 && role(l) !== 'assassin';
 const isTank = l => role(l) === 'tank' || (isFront(l) && ['snorlax', 'slowpoke', 'seel', 'onix', 'sandshrew', 'geodude', 'bulbasaur', 'caterpie', 'rhyhorn', 'nidoqueen', 'tangela4', 'machop', 'poliwag'].includes(l));
 const spa = l => (roster[l].forms.at(-1).skill.scale?.spa ?? 0) >= 0.5;
 const canCrit = l => roster[l].forms.some(f => f.skill.canCrit);
-const SHOP = Object.values(roster).filter(r => !r.branchOf).map(r => r.id);
+const SHOP = Object.values(roster).filter(r => !r.branchOf && r.id !== 'eevee').map(r => r.id); // Eevee only appears as an evolved carry
 const EEVEE = ['vaporeon', 'jolteon', 'flareon'];
 
 // ---------- Meta context ----------
@@ -40,6 +40,7 @@ function cooccur(carry) {
   return acc;
 }
 
+const GPT = (() => { try { return JSON.parse(fs.readFileSync(new URL('../../compositions-gpt.html', import.meta.url), 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).rows; } catch { return []; } })();
 // ---------- Strategy definitions ----------
 export const STRATEGIES = {
   r1: {key: 'r1', label: 'Reroll 1-cost', rollLevel: 5, finalLevel: 7, carryCost: 1, carryStar: 3, extra: [0, 1, 2], extraCost: 1},
@@ -102,6 +103,13 @@ function buildCandidates(carryLine, strat, level, count) {
     const ex = strat.extra.at(-1) ? picked.filter(l => cost(l) === strat.extraCost && c.units.find(v => v.line === l)?.star === 3).slice(0, strat.extra.at(-1)) : [];
     add(picked, ex, undefined, 'meta:' + c.id);
   }
+  // 1b. The GPT v36 boards (backup page) for the same carry, adapted to this level and star rules.
+  for (const g of GPT.filter(g => g.carry === carryLine)) {
+    const others = g.team.filter(u => u.line !== carryLine && eligible.includes(u.line)).sort((a, b) => cost(b.line) * b.star - cost(a.line) * a.star).map(u => u.line);
+    if (others.length < level - 1) continue;
+    const picked = others.slice(0, level - 1);
+    add(picked, picked.filter(l => cost(l) === strat.extraCost && g.team.find(u => u.line === l)?.star === 3).slice(0, strat.extra.at(-1)), undefined, 'gpt:' + g.id);
+  }
   // 2. Randomized trait-greedy boards.
   const r = rnd(hashStr(carryLine + strat.key + level));
   for (let i = 0; i < count * 6 && out.size < count * 3; i++) {
@@ -163,7 +171,7 @@ async function optimizeItems(c, carryLine) {
   const singleBoards = singles.map(i => arrange(gear(c.team, carryLine, base.tank, base.second, [i, i, i].slice(0, 1).concat(defaultCarry(carryLine).filter(x => x !== i).slice(0, 2)), TANK_SETS[0], defaultSecond(base.second ?? carryLine)), {carry: carryLine, hint: placeHint}));
   const sScore = await score(singleBoards, {salt: 'single|' + carryLine});
   const topSingles = singles.map((i, k) => [i, sScore[k].score]).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => x[0]);
-  const carrySets = combos(topSingles, 3);
+  const carrySets = combos(topSingles, 3).filter(s => s.filter(i => i === 'focus-sash').length <= 1);
   const cBoards = carrySets.map(set => arrange(gear(c.team, carryLine, base.tank, base.second, set, TANK_SETS[0], defaultSecond(base.second ?? carryLine)), {carry: carryLine, hint: placeHint}));
   const cScore = await score(cBoards, {nSeeds: 2, salt: 'carry|' + carryLine});
   const rankedCarry = carrySets.map((s, k) => ({items: s, score: cScore[k].score})).sort((a, b) => b.score - a.score);
@@ -179,6 +187,52 @@ async function optimizeItems(c, carryLine) {
   const differs = (a, b) => { const x = [...a]; let same = 0; for (const i of b) { const j = x.indexOf(i); if (j >= 0) { same++; x.splice(j, 1); } } return 3 - same; };
   const alt = rankedCarry.find(s => differs(s.items, bestCarry) >= 2) ?? rankedCarry[1];
   return {tank: base.tank, second: base.second, carry: bestCarry, tankItems: rankedTank[0].items, secondItem: rankedSecond[0]?.item ?? null, alt: alt?.items ?? null, rankedCarry: rankedCarry.slice(0, 6), rankedTank: rankedTank.slice(0, 4), rankedSecond: rankedSecond.slice(0, 3)};
+}
+
+// ---------- Board clean-up passes ----------
+// Utility and support units, and one-unit passive trait activators, tested in every support slot.
+const UTILITY = ['chansey', 'jigglypuff', 'psyduck', 'porygon3', 'ditto', 'gastly', 'dratini', 'pikachu', 'voltorb', 'magnemite', 'electabuzz', 'abra', 'slowpoke', 'seel', 'omastar', 'exeggcute'];
+const label = t => t.map(u => u.line + u.star).join(' ');
+async function refine(top, line, S, notes) {
+  const eligibleAll = SHOP.filter(l => cost(l) <= maxCost(S, S.finalLevel) && !(cost(l) === 5 && S.finalLevel < 8) && l !== family(line));
+  const mk = (team, src) => ({...top, team, extras: top.extras.filter(x => team.some(u => u.line === x)), src: top.src + '+' + src});
+  const slots = () => top.team.map((u, i) => i).filter(i => top.team[i].line !== line && !top.extras.includes(top.team[i].line));
+  const tankLine = () => roles(top.team, line).tank;
+  const tryBoards = async (cands, tag, accept) => {
+    if (!cands.length) return false;
+    const uniq = [...new Map(cands.map(c => [label(c.team), c])).values()].slice(0, 30);
+    const res = await score(uniq.map(c => equip(c, line).team), {nSeeds: 2, salt: tag + '|' + line});
+    const best = uniq.map((c, i) => ({...c, ...res[i]})).sort((a, b) => b.score - a.score)[0];
+    if (best && accept(best)) { notes.push(`${tag}: ${label(best.team)} ${(top.score * 100).toFixed(1)} -> ${(best.score * 100).toFixed(1)}`); top = best; return true; }
+    return false;
+  };
+  // Re-score the start on the same 2-seed basis so comparisons are fair.
+  top = {...top, ...(await score([equip(top, line).team], {nSeeds: 2, salt: 'base|' + line}))[0]};
+  for (let pass = 0; pass < 2; pass++) {
+    // (a) Breakpoints: a trait one short of its next breakpoint gets a unit that completes it.
+    const counts = traitCounts(top.team), cands = [];
+    for (const [t, n] of Object.entries(counts)) {
+      const next = traitRules[t].thresholds.find(x => x > n); if (next !== n + 1) continue;
+      for (const i of slots()) for (const l of eligibleAll.filter(l => roster[l].traits.includes(t) && !top.team.some(u => family(u.line) === family(l)))) {
+        const team = top.team.map((u, k) => k === i ? {line: l, star: starFor(l, S, {carry: line, extras: top.extras})} : u);
+        if (traitCounts(team)[t] >= next && team.some(u => isFront(u.line) && u.line !== line)) cands.push(mk(team, 'breakpoint ' + t + ' ' + next));
+      }
+    }
+    const co = cooccur(line);
+    await tryBoards(cands.sort((a, b) => heuristic(b.team, co, line) - heuristic(a.team, co, line)), 'breakpoint', b => b.score > top.score + 0.01);
+    // (b) Utility units and passive traits.
+    const util = [];
+    for (const i of slots()) { if (top.team[i].line === tankLine()) continue; for (const l of UTILITY.filter(l => !top.team.some(u => family(u.line) === family(l)) && eligibleAll.includes(l))) util.push(mk(top.team.map((u, k) => k === i ? {line: l, star: starFor(l, S, {carry: line, extras: top.extras})} : u), 'utility ' + l)); }
+    await tryBoards(util.sort((a, b) => heuristic(b.team, co, line) - heuristic(a.team, co, line)), 'utility', b => b.score > top.score + 0.01);
+    // (c) One-star units: prefer a two-star alternative unless the one-star unit is clearly better.
+    for (const i of slots()) {
+      const u = top.team[i]; if (u.star !== 1) continue;
+      const alts = eligibleAll.filter(l => cost(l) <= 3 && !top.team.some(v => family(v.line) === family(l))).map(l => mk(top.team.map((v, k) => k === i ? {line: l, star: 2} : v), 'two-star for ' + u.line)).filter(c => c.team.some(v => isFront(v.line) && v.line !== line));
+      const ok = await tryBoards(alts.sort((a, b) => heuristic(b.team, co, line) - heuristic(a.team, co, line)), 'two-star', b => b.score >= top.score - 0.015);
+      if (!ok) notes.push(`kept ${u.line} 1-star: no two-star alternative within 1.5 pts`);
+    }
+  }
+  return top;
 }
 
 // ---------- Carries ----------
@@ -203,9 +257,11 @@ async function main() {
   const carries = carryList().filter(c => !only || only.includes(c.line));
   log('gauntlet', S4.length, 'stage-4 boards,', S3.length, 'stage-3 boards; carries', carries.length);
   // Stage A: screen every carry with its top heuristic candidates.
-  const screened = [];
-  for (const {line, strat} of carries) {
-    const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 6);
+  // Resume: reuse the saved screen and finished carries from an interrupted run.
+  const resume = process.env.RESUME && fs.existsSync(new URL('screen.json', OUT));
+  const screened = resume ? JSON.parse(fs.readFileSync(new URL('screen.json', OUT))) : [];
+  for (const {line, strat} of resume ? [] : carries) {
+    const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 10);
     if (!cands.length) continue;
     const res = await score(cands.map(c => equip(c, line).team), {salt: 'screen|' + line});
     const best = cands.map((c, i) => ({...c, ...res[i]})).sort((a, b) => b.score - a.score)[0];
@@ -214,11 +270,12 @@ async function main() {
   }
   fs.writeFileSync(new URL('screen.json', OUT), JSON.stringify(screened, null, 1));
   // Keep the strongest carries per strategy.
-  const keepPer = {r1: 7, r2: 8, r3: 7, f8: 6};
+  const keepPer = {r1: 8, r2: 9, r3: 6, f8: 8};
   const keep = Object.keys(STRATEGIES).flatMap(k => screened.filter(s => s.strat === k).sort((a, b) => b.best - a.best).slice(0, only ? 99 : keepPer[k]));
   // Stage B: deeper board search, items and variants.
-  const results = [];
+  const results = resume && fs.existsSync(new URL('search.json', OUT)) ? JSON.parse(fs.readFileSync(new URL('search.json', OUT))).results : [];
   for (const {line, strat} of keep) {
+    if (results.some(r => r.line === line)) continue;
     const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 30);
     const res = await score(cands.map(c => equip(c, line).team), {salt: 'search|' + line});
     const ranked = cands.map((c, i) => ({...c, ...res[i]})).sort((a, b) => b.score - a.score);
@@ -238,15 +295,19 @@ async function main() {
       const better = shortlist.map((c, i) => ({...c, ...sres[i]})).sort((a, b) => b.score - a.score)[0];
       if (better && better.score > top.score + 0.01) top = better; else break;
     }
-    const variants = [top, ...ranked.filter(r => r !== top && r.team.filter(u => !top.team.some(v => v.line === u.line)).length >= 2)].slice(0, 2);
+    const notes = [];
+    top = await refine(top, line, S, notes);
+    let second = ranked.find(r => r !== top && r.team.filter(u => !top.team.some(v => v.line === u.line)).length >= 2);
+    if (second) { second = await refine(second, line, S, notes); if (second.team.filter(u => !top.team.some(v => v.line === u.line)).length < 2) second = null; }
+    const variants = [top, second].filter(Boolean);
     const out = [];
     for (const v of variants) {
       const it = await optimizeItems(v, line);
       const team = arrange(gear(v.team, line, it.tank, it.second, it.carry, it.tankItems, it.secondItem), {carry: line, hint: placeHint});
       out.push({team, extras: v.extras, src: v.src, items: it});
     }
-    const finals = await score(out.map(o => o.team), {nSeeds: 4, salt: 'final|' + line, s3: true});
-    results.push({line, strat, variants: out.map((o, i) => ({...o, final: finals[i], traits: traitLabel(o.team), value: boardValue(o.team)}))});
+    const finals = await score(out.map(o => o.team), {nSeeds: 8, salt: 'final|' + line, s3: true});
+    results.push({line, strat, notes, variants: out.map((o, i) => ({...o, final: finals[i], traits: traitLabel(o.team), value: boardValue(o.team)}))});
     log('final', line, strat, finals.map(f => f.score.toFixed(3)).join(' / '), traitLabel(out[0].team));
     fs.writeFileSync(new URL('search.json', OUT), JSON.stringify({gauntlet: G.map(x => ({id: x.comp.id, tier: x.comp.tier, n: x.comp.n, avg: x.comp.avg, weight: x.weight, s4: x.s4, s3: x.s3})), results}, null, 1));
   }

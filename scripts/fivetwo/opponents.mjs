@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {roster, family, arrange, FULL} from './combat.mjs';
 
-const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo/meta.json', import.meta.url)));
+const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/meta.json', import.meta.url)));
 const validLine = l => !!roster[l];
 const mode = levels => { const tot = levels.reduce((s, l) => s + l.share, 0); let best = levels[0]; for (const l of levels) if (l.share > best.share) best = l; return {level: best.level, dist: Object.fromEntries(levels.map(l => [l.level, l.share / tot]))}; };
 const frontish = l => roster[l].range <= 1 && roster[l].role !== 'assassin';
@@ -33,6 +33,13 @@ export function snapshot(comp, stage, {maxLevel = 8} = {}) {
     if (!validLine(u.line) || seen.has(u.line) || team.length >= L) continue;
     seen.add(u.line); team.push({line: u.line, star: Math.min(3, Math.max(1, u.star))});
   }
+  // Short snapshots are filled to their level from the comp's own most-used final units.
+  for (const u of [...comp.units].sort((a, b) => (b.share ?? 0) - (a.share ?? 0))) {
+    if (team.length >= L) break;
+    if (!validLine(u.line) || seen.has(u.line)) continue;
+    const c = roster[family(u.line)].cost; if (c === 5 && L < 8) continue;
+    seen.add(u.line); team.push({line: u.line, star: Math.max(1, Math.min(u.star, c >= 5 ? 1 : c === 4 ? 2 : 3)), filled: true});
+  }
   if (team.length < Math.min(L, 4)) return null;
   const hint = {};
   for (const c of [...(comp.placement?.cells ?? [])].sort((a, b) => b.share - a.share)) if (hint[c.line] === undefined && !Object.values(hint).includes(c.cell + 28)) hint[c.line] = c.cell + 28;
@@ -40,12 +47,12 @@ export function snapshot(comp, stage, {maxLevel = 8} = {}) {
   return {id: `api:${comp.id}:s${stage}`, comp: comp.id, stage, level: L, levelDist: dist, n: g.n, tier: comp.tier, avg: comp.avg, top4: comp.top4, games: comp.n, trait: comp.name, team: arrange(plan.team, {carry: plan.carry, hint}), carry: plan.carry, tank: plan.tank};
 }
 
-export function gauntlet({count = 18, minGames = 250} = {}) {
+export function gauntlet({count = 18, minGames = 150} = {}) {
   const chosen = [];
   for (const c of [...meta.comps].filter(c => c.guide && c.n >= minGames).sort((a, b) => b.n - a.n)) {
     const s4 = snapshot(c, 4); if (!s4) continue;
     const lines = new Set(s4.team.map(u => family(u.line)));
-    if (chosen.some(o => o.s4.team.filter(u => lines.has(family(u.line))).length >= 5)) continue;
+    if (chosen.some(o => o.s4.team.filter(u => lines.has(family(u.line))).length >= 6)) continue;
     const s3 = snapshot(c, 3);
     chosen.push({comp: c, s4, s3, weight: Math.sqrt(c.n)});
     if (chosen.length >= count) break;

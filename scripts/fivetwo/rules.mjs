@@ -1,5 +1,5 @@
-// Version 35 PvP economy and shop rules, transcribed from the public game build
-// (shop/route modules, read as data, 2026-10-25). Seals and boons are not modelled.
+// Version 36 PvP economy and shop rules, transcribed from the public game build
+// (shop/route modules, read as data, 2026-10-25; v36 shop module checked). Seals and boons are not modelled.
 import fs from 'node:fs';
 
 export const RULES = {
@@ -15,7 +15,7 @@ export const RULES = {
   xpPerRound: 2,
   xpBuy: {cost: 4, amount: 4},
   // XP needed at level L to reach L+1 (PvP table).
-  xpTable: {1: 2, 2: 4, 3: 8, 4: 12, 5: 16, 6: 24, 7: 40, 8: 66},
+  xpTable: {1: 2, 2: 4, 3: 8, 4: 12, 5: 16, 6: 24, 7: 36, 8: 56}, // v36: 7->8 36, 8->9 56
   // PvP shop odds by level, percent for cost 1..5.
   odds: {
     1: [100, 0, 0, 0, 0], 2: [100, 0, 0, 0, 0], 3: [75, 25, 0, 0, 0],
@@ -56,7 +56,7 @@ export function income(gold, streak, wonPvp) {
   return RULES.baseIncome + interest + s + (wonPvp ? RULES.winGold : 0);
 }
 
-const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v35.json', import.meta.url)));
+const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url)));
 export const ROSTER = Object.fromEntries(data.roster.map(r => [r.id, r]));
 export const SHOP_LINES = data.roster.filter(r => !r.branchOf);
 export const family = line => ROSTER[line]?.branchOf ?? line;

@@ -2,12 +2,12 @@
 // no private economy numbers on the website, and exact replay of sampled combat results.
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import * as engine from '../../simulation/engine-v35.js';
+import * as engine from '../../simulation/engine-v36.js';
 import {seeds} from './combat.mjs';
 
 const html = fs.readFileSync('compositions.html', 'utf8');
 const C = JSON.parse(html.match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);
-const data = JSON.parse(fs.readFileSync('simulation/data-v35.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync('simulation/data-v36.json', 'utf8'));
 const record = JSON.parse(fs.readFileSync('data/compositions-52.json', 'utf8'));
 const roster = Object.fromEntries(data.roster.map(r => [r.id, r])), items = Object.fromEntries(data.items.map(i => [i.id, i]));
 const cost = l => roster[roster[l].branchOf ?? l].cost;
@@ -45,8 +45,8 @@ const clean = t => t.map(u => ({line: u.line, star: u.star, cell: u.cell, items:
 let replayed = 0;
 for (const r of [C.rows[0], C.rows[Math.floor(C.rows.length / 2)], C.rows.at(-1)]) {
   const m = r.matchups.find(m => m.stage === 4), ref = C.reference.find(x => x.id === m.id);
-  const sd = seeds(4, r.finalSalt);
+  const sd = seeds(8, r.finalSalt);
   let p = 0; for (const s of sd) { p += one(clean(r.team), clean(ref.team), s); p += 1 - one(clean(ref.team), clean(r.team), s); }
-  assert.ok(Math.abs(p / 8 - m.score) < 1e-3, `${r.id} replay ${p / 8} vs ${m.score}`); replayed++;
+  assert.ok(Math.abs(p / 16 - m.score) < 1e-3, `${r.id} replay ${p / 16} vs ${m.score}`); replayed++;
 }
 console.log(JSON.stringify({rows: C.rows.length, reference: C.reference.length, replayed, tiers: C.rows.reduce((m, r) => (m[r.tier] = (m[r.tier] ?? 0) + 1, m), {})}));

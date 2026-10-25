@@ -6,7 +6,7 @@ import {score, cost, isFront} from './search.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
 
-const W = new URL('../../work/fiveTwo/', import.meta.url);
+const W = new URL('../../work/fiveTwo36/', import.meta.url);
 const A = JSON.parse(fs.readFileSync(new URL('analysis.json', W)));
 const curves = {
   1: [[R(2, 1), 4], [R(2, 5), 5]], 2: [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6]], 3: [[R(2, 1), 4], [R(2, 5), 5], [R(3, 2), 6], [R(4, 1), 7]],

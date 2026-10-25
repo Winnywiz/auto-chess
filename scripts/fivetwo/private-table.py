@@ -7,11 +7,11 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.comments import Comment
 
-W = Path(__file__).resolve().parents[2] / 'work' / 'fiveTwo'
+W = Path(__file__).resolve().parents[2] / 'work' / 'fiveTwo36'
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else W / 'kanto-5-2-gold-and-rolls.xlsx'
 budget = json.loads((W / 'budget.json').read_text())
 analysis = json.loads((W / 'analysis.json').read_text())
-data = json.loads((Path(__file__).resolve().parents[2] / 'simulation' / 'data-v35.json').read_text())
+data = json.loads((Path(__file__).resolve().parents[2] / 'simulation' / 'data-v36.json').read_text())
 roster = {r['id']: r for r in data['roster']}
 name = lambda l, s: roster[l]['forms'][min(s, len(roster[l]['forms'])) - 1]['name']
 
@@ -47,7 +47,7 @@ for k, v in budget['audit'].items():
     rows.append([{'none': 'No levelling (hoard)', '5': 'Level 5 by 2-5', '6': 'Level 6 by 3-2', '7': 'Level 7 by 4-1', '8': 'Level 8 by 4-2'}[v['curve']], v['profile'], v['games'],
                  v['earned'], v['interest'], v['streak'], v['earned'] - v['interest'] - v['streak'], v['xpGold'], f'=D{r}-H{r}', v['goldAt31'], v['goldAt42'], v['level']])
 a, b = sheet(ws, 'Gold audit: average gold per game up to 5-2',
-  'Native v35 PvP economy, no unit purchases: start 5 gold, +5 base, interest 1 per 10 (max 5), streak +1/+2/+3 at 2/3/5, +1 per PvP win, PvE gold, no income on carousel rounds. Win/loss profiles: win ≈72%, mixed 50%, lose ≈28% per PvP round, with streak persistence. Column I = gold you can spend on units and rolls by 5-2 (earned minus XP bought).',
+  'Native v36 PvP economy, no unit purchases: start 5 gold, +5 base, interest 1 per 10 (max 5), streak +1/+2/+3 at 2/3/5, +1 per PvP win, PvE gold, no income on carousel rounds. Win/loss profiles: win ≈72%, mixed 50%, lose ≈28% per PvP round, with streak persistence. Column I = gold you can spend on units and rolls by 5-2 (earned minus XP bought).',
   ['Level curve', 'Win/loss profile', 'Games', 'Gold earned by 5-2', 'from interest', 'from streaks', 'base + wins + PvE', 'Gold spent on XP', 'Spendable on units + rolls', 'Gold held at 3-1 (no spend)', 'Gold held at 4-2 (no spend)', 'Level at 5-2'],
   rows, [I, I, G0, G1, G1, G1, G1, G1, G1, G1, G1, '0.00'], [22, 14, 8, 14, 12, 12, 14, 12, 16, 14, 14, 10])
 ws.cell(row=b + 2, column=1, value='Mixed-profile average spendable gold').font = BOLD
@@ -65,11 +65,11 @@ a, b = sheet(ws, 'How many 3★ targets fit in one 5-2 budget',
   'Full-game simulation from 1-1 to 5-2 planning, 400 games per row (mixed profile), shared pool with 7 opponents drawn from the official ranked meta. Targets are random lines of that cost; a random four-cost tank is chased alongside. "Contested" = one opponent builds the same targets. Policy picked from an 18-policy grid (highest hit rate, then least roll gold).',
   ['Plan', '3★ targets (4-cost: 2★)', 'Roll level', 'Best roll policy', 'Hit by 5-2', 'Hit, contested', 'Hit, win-streak', 'Hit, lose-streak', '4-cost tank 2★ by 5-2', 'Avg gold on rolls', 'Avg rolls', 'Avg gold on units', 'Avg gold units + rolls', 'Median roll gold when hit', '80th pct roll gold when hit', 'Median hit round', 'Avg level at 5-2'],
   rows, [I, G0, G0, I, P, P, P, P, P, G0, G0, G0, G0, G0, G0, I, '0.00'], [20, 11, 8, 30, 10, 10, 10, 10, 11, 10, 9, 10, 11, 12, 12, 10, 9])
-recs = [('1-cost reroll', '2 targets at 3★ (≈82% by 5-2). A third drops to ≈66%; four ≈59%.'),
-        ('2-cost reroll', '1 target at 3★ (≈82-85%). Two ≈70%; three ≈46% (2% if contested).'),
-        ('3-cost reroll', '1 target only, and it is unreliable by 5-2 (≈33% at level 7). Treat a 3-cost 3★ as a bonus, not the plan.'),
-        ('Fast 8', 'One 4-cost 2★ carry plus a 4-cost 2★ tank (≈86%). Two 4-cost 2★ carries ≈69%.'),
-        ('Frontline', 'A 4-cost 2★ tank at level 5-6 is found in only 6-25% of games: plan a 3-cost 2★ or 1-cost 3★ tank instead.')]
+recs = [('1-cost reroll', '1-2 targets at 3★ (≈93% / ≈80% by 5-2 at level 5). Three ≈71%, four ≈64%; with one contested line, two drop to ≈51%.'),
+        ('2-cost reroll', '1 target at 3★ (≈87-89%). Two ≈66-74%; three ≈49% (≈3% if contested). Best number: 1, a second only if uncontested.'),
+        ('3-cost reroll', '1 target only, and it is unreliable by 5-2 (≈38% at level 7). Treat a 3-cost 3★ as a bonus, not the plan.'),
+        ('Fast 8', 'One 4-cost 2★ carry plus a 4-cost 2★ tank (≈89% / ≈84%). Two 4-cost 2★ carries ≈75%. v36 XP (7→8 36, 8→9 56) helps Fast 8 slightly.'),
+        ('Frontline', 'A 4-cost 2★ tank at level 5-6 shows up in only ≈2-26% of games: plan a 3-cost 2★ or 1-cost 3★ tank instead.')]
 ws.cell(row=b + 2, column=1, value='Best number of targets').font = BOLD
 for i, (k, v) in enumerate(recs):
     ws.cell(row=b + 3 + i, column=1, value=k).font = BOLD; ws.cell(row=b + 3 + i, column=2, value=v).font = BODY
@@ -123,14 +123,33 @@ if prog_file.exists():
       ['Carry line', 'Round', 'Seal', 'Hit by 5-2 without', 'Hit by 5-2 with', 'Change'], rows, [I, I, I, P, P, '+0.0%;-0.0%;0.0%'], [14, 8, 22, 14, 14, 10])
     ws.auto_filter.ref = f'A4:F{4 + len(rows)}'
 
-# 6. Rules
+# 6. GPT backup boards vs this run, same lobby and seeds
+gpt_file = W / 'gpt-compare.json'
+if gpt_file.exists():
+    import re
+    gpt = json.loads(gpt_file.read_text())
+    html = (Path(__file__).resolve().parents[2] / 'compositions.html').read_text()
+    ours = json.loads(re.search(r'window\.KANTO_COMPS=(\{[^\n]*\});', html).group(1))['rows']
+    best = {}
+    for r in ours: best.setdefault(r['carry'], r)
+    rows = []
+    for g in gpt:
+        o = best.get(g['carry']); r = len(rows) + 5
+        rows.append([g['name'], g['strategy'], g['tier'], g['theirScore'], g['ourLobbyScore'], o['name'] if o else 'not in this run', o['strategy'] if o else '', o['tier'] if o else '', o['score'] if o else None, f'=IF(I{r}="","",I{r}-E{r})', o['expected'] if o else None])
+    ws = wb.create_sheet('GPT vs this run')
+    sheet(ws, 'GPT v36 boards (backup page) vs this run, same carry',
+      'GPT boards are scored exactly as published (units, stars, items, cells) against this run\'s lobby with 8 seeds on both sides. "Their score" is GPT\'s own number on its 18-board lobby. Our board is the lead build for the same carry.',
+      ['GPT board', 'GPT strategy', 'GPT tier', 'Their score (their lobby)', 'GPT board on our lobby', 'Our board', 'Our strategy', 'Our tier', 'Our full board', 'Difference', 'Our expected 5-2'],
+      rows, [I, I, I, P, P, I, I, I, P, '+0.0%;-0.0%;0.0%', P], [24, 16, 8, 12, 12, 24, 16, 8, 11, 10, 11])
+
+# 7. Rules
 ws = wb.create_sheet('Rules used')
 rules = [('Start gold / level', '5 gold, level 2'), ('Base income', '5 per round (not on 1-1 or carousel rounds)'), ('Interest', '1 per 10 gold held, max 5'),
          ('Streak gold', '+1 at 2, +2 at 3, +3 at 5 (win or loss)'), ('PvP win gold', '+1'), ('PvE gold', '2-8 win +3; any stage PvE loss +2'),
-         ('Reroll', '2 gold'), ('Buy XP', '4 gold for 4 XP'), ('Passive XP', '+2 per round except carousel'), ('XP to next level', '2→3: 4, 3→4: 8, 4→5: 12, 5→6: 16, 6→7: 24, 7→8: 40, 8→9: 66'),
+         ('Reroll', '2 gold'), ('Buy XP', '4 gold for 4 XP'), ('Passive XP', '+2 per round except carousel'), ('XP to next level', '2→3: 4, 3→4: 8, 4→5: 12, 5→6: 16, 6→7: 24, 7→8: 36, 8→9: 56 (v36)'),
          ('Shop odds (1/2/3/4/5-cost %)', 'L4 65/30/5/0/0 · L5 58/32/9/1/0 · L6 42/40/15/3/0 · L7 22/32/34/12/0 · L8 14/22/32/26/6 · L9 5/12/26/35/22'),
          ('Copies per line', '1-cost 29, 2-cost 22, 3-cost 18, 4-cost 10, 5-cost 9'), ('Rounds to 5-2', '1-1…1-3, then 8 per stage (2-4, 3-4, 4-4 carousel; 2-8, 3-8, 4-8 PvE), 5-1, 5-2'),
-         ('Eevee', 'Vaporeon needs 9 Eevee copies (2-cost pool shared with Jolteon/Flareon players)'), ('Source', 'Public Kanto Tactics v35 build (shop/route modules), read 25 Oct 2026; meta API generated ' + budget.get('generated', '')[:10])]
+         ('Eevee', 'Vaporeon needs 9 Eevee copies (2-cost pool shared with Jolteon/Flareon players)'), ('Source', 'Public Kanto Tactics v36 build (shop/route modules), read 25 Oct 2026; v36 engine in simulation/engine-v36.js; meta API generated ' + budget.get('generated', '')[:10])]
 ws['A1'] = 'Economy rules used in the simulation'; ws['A1'].font = TITLE
 for i, (k, v) in enumerate(rules, 3):
     ws.cell(row=i, column=1, value=k).font = BOLD; ws.cell(row=i, column=2, value=v).font = BODY

@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import {RULES, round, roundIndex, FIVE_TWO, addXp, income, family, cost, rollShop, SHOP_LINES, rng} from './rules.mjs';
 
-const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo/meta.json', import.meta.url)));
+const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/meta.json', import.meta.url)));
 const metaComps = meta.comps.filter(c => c.n >= 10).map(c => ({
   id: c.id, n: c.n,
   units: c.units.filter(u => (u.share ?? 0) >= 35 && family(u.line) && cost(u.line)).map(u => ({line: family(u.line), star: u.star, cost: cost(u.line)})),

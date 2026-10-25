@@ -8,7 +8,7 @@ import {S3, S4, placeHint, isFront, isTank, cost, SHOP, heuristic, cooccur} from
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
 
-const W = new URL('../../work/fiveTwo/', import.meta.url);
+const W = new URL('../../work/fiveTwo36/', import.meta.url);
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 const html = fs.readFileSync('compositions.html', 'utf8');
 const C = JSON.parse(html.match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);

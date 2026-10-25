@@ -54,7 +54,7 @@ export async function initCustomBattle({present,invalidate}){
    changed();renderSide(side);
   };
   $('#unit-editor-'+side).onclick=e=>{if(!e.target.closest('[data-remove]'))return;teams[side].splice(selected[side],1);selected[side]=teams[side].length?Math.min(selected[side],teams[side].length-1):-1;changed();render();};
-  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;const board=row.boards.find(b=>b.level===(row.level??9))??row.boards.at(-1);teams[side]=clone(board.team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
+  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;const board=row.boards[0];teams[side]=clone(board.team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
   $('#import-'+side).onclick=()=>{
    $('#import-side').value=side;$('#builder-payload').value='';$('#import-error').textContent='';$('#builder-import').showModal();$('#builder-payload').focus();
   };
@@ -104,7 +104,7 @@ export async function initCustomBattle({present,invalidate}){
  };
  window.addEventListener('pagehide',()=>{generation++;shutdown();});
  render();$('#custom-controls').hidden=false;$('#status').textContent='';
- fetch('data/compositions-v36-research.json?v=v36-tempo-1').then(r=>{if(!r.ok)throw Error();return r.json();}).then(p=>{
-  if(p.engine!==game.identity)return;presets=p.rows;for(const side of ['a','b'])$('#preset-'+side).innerHTML='<option value="">Load composition</option>'+presets.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('');
+ fetch('data/compositions-52.json?v=v36-52-2').then(r=>{if(!r.ok)throw Error();return r.json();}).then(p=>{
+  if(p.engine!==game.identity)return;presets=[...p.rows.map(r=>({...r,name:r.name+' (5-2)'})),...p.reference.map(r=>({...r,name:'Ranked meta: '+r.name}))];for(const side of ['a','b'])$('#preset-'+side).innerHTML='<option value="">Load composition</option>'+presets.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('');
  }).catch(()=>{for(const side of ['a','b'])$('#preset-'+side).hidden=true;});
 }

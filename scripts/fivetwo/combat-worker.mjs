@@ -1,5 +1,5 @@
 import {parentPort} from 'node:worker_threads';
-import * as engine from '../../simulation/engine-v35.js';
+import * as engine from '../../simulation/engine-v36.js';
 const mirror = t => t.map(u => ({...u, cell: 55 - u.cell, items: [...u.items]}));
 function one(a, b, seed) {
   const battle = new engine.Battle(a.map(u => ({...u, items: [...u.items]})), mirror(b), seed, null);

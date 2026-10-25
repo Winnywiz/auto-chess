@@ -1,9 +1,9 @@
+if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).model==='finish-by-5-2'){await import('./fivetwo/verify.mjs');process.exit(0);}
 if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).model==='finish-5-2-v36'){await import('./comps-52-v36/verify.mjs');process.exit(0);}
 if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).gameRules===36){await import('./comps-tempo-v36/verify.mjs');process.exit(0);}
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).model==='finish-by-5-2'){await import('./fivetwo/verify.mjs');process.exit(0);}
 if(JSON.parse(fs.readFileSync('compositions.html','utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).gameRules===35){await import('./comps-v35/verify.mjs');process.exit(0);}
 const read=name=>{const html=fs.readFileSync(name,'utf8');return Object.fromEntries(['KANTO_DATA','KANTO_BIS',...(name==='compositions.html'?['KANTO_COMPS','KANTO_GUIDES']:[])].map(k=>[k,JSON.parse(html.match(new RegExp(`window\\.${k}=(\\{[^\\n]*\\});`))[1])]));};
 const site=read('compositions.html'),builder=read('builder.html');
