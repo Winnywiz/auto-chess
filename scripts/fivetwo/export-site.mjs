@@ -49,6 +49,14 @@ function lowNote(v, carry) {
 }
 
 const TKT_SETS = (() => { try { const d = JSON.parse(fs.readFileSync(new URL('brother/tkt-data.json', W))); return new Set([...d.comps, ...d.pool, ...d.neu].map(c => c.units.map(u => u.l).sort().join())); } catch { return new Set(); } })();
+// Consistency from the realized 5-2 boards: the score of a bad game (20th percentile) and how often the board wins at least 75%.
+function consistency(real) {
+  if (!real?.patterns?.length) return {};
+  const ps = [...real.patterns].sort((a, b) => a.score - b.score), total = ps.reduce((s, p) => s + p.share, 0);
+  let acc = 0, floor = ps.at(-1).score;
+  for (const p of ps) { acc += p.share; if (acc >= 0.2 * total) { floor = p.score; break; } }
+  return {badGame: floor, strongShare: ps.filter(p => p.score >= 0.75).reduce((s, p) => s + p.share, 0) / total};
+}
 const rows = [];
 for (const c of A.comps) {
   const seen = new Set();
@@ -64,6 +72,7 @@ for (const c of A.comps) {
       id, carry: c.line, variant: k, name: `${name(c.line, carry.star)} / ${top.t} ${top.n}`, category: category[c.strat], strategy: STRATEGIES[c.strat].label,
       rollLevel: STRATEGIES[c.strat].rollLevel, level: team.length, targets: [c.line, ...(v.extras ?? [])],
       tier: tierOf(v.expected), expected: v.expected, score: v.final.score, s4: v.final.s4, s3: v.final.s3, lowScore: v.lowBest.score,
+      ...consistency(v.realized),
       value: boardValue(team), traits: traitLabel(team), team,
       items: {carry: v.items.carry, tank: v.items.tankItems, tankUnit: v.items.tank, second: v.items.second, secondItem: v.items.secondItem},
       altBuild: v.alt ? {items: v.alt.items, score: v.alt.score} : null,
