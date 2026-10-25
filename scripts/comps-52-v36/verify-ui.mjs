@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const html=fs.readFileSync('compositions.html','utf8'),elements=new Map();
+const filters=[...html.matchAll(/<button data-strategy="([^"]*)"/g)].map(m=>m[1]);assert.equal(filters.length,new Set(filters).size,'Repeated strategy filter');assert(filters.includes('fast-7')&&filters.includes('fast-8')&&filters.includes('reroll-3'));
 const element=key=>{if(!elements.has(key))elements.set(key,{value:'',content:'',innerHTML:'',hidden:true,dataset:{},style:{},classList:{toggle(){}},getBoundingClientRect:()=>({left:10,bottom:20}),offsetWidth:350,offsetHeight:360});return elements.get(key);};
 const context={console,document:{documentElement:{dataset:{theme:'viridian'}},querySelector:element,querySelectorAll:()=>[],addEventListener(){}},location:{hash:''},URLSearchParams,requestAnimationFrame(){},localStorage:{setItem(){}},innerWidth:1440,innerHeight:900,btoa:s=>Buffer.from(s,'binary').toString('base64'),unescape,encodeURIComponent};context.window=context;context.addEventListener=()=>{};vm.createContext(context);
 for(const s of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g))if(s[2]&&!s[2].startsWith('try{'))vm.runInContext(s[2],context);

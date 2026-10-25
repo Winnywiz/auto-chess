@@ -36,6 +36,7 @@ const first=html.indexOf('    <p class="patch-note">'),last=html.indexOf('    <d
 html=html.slice(0,first)+`    <p class="patch-note">Version 36 / finish by 5-2 / seven items</p>
     <details class="score-guide" id="score-method"><summary>Test details</summary><div><p>Full board and low roll: 32 fresh seeds on both sides against 18 reference boards, using v36, seven items and no Seals or weather.</p><p>The 5-2 forecast includes missed upgrades, conditional on the early core in each plan. It is not a ranked win rate. S starts at 65%, A at 50%. Early progression is illustrative; optional caps are scored separately.</p><p>Trait badges count Pokémon; the tooltip shows the active breakpoint. References come from the <a href="https://einoow.com/api/meta/kanto/meta.json" target="_blank" rel="noreferrer">official v35 meta snapshot</a>. <a href="data/compositions-v36-research.json" target="_blank" rel="noreferrer">Combat tests ↗</a></p></div></details>
 `+html.slice(last);
+html=html.replace(/<button data-strategy="fast-7"[^>]*>Fast 7<\/button>/g,'');
 html=html.replace(/<button data-strategy="fast-8"/, '<button data-strategy="fast-7" aria-pressed="false">Fast 7</button><button data-strategy="fast-8"');
 html=html.replace('Ranked meta boards at the same point','Meta reference boards');
 html=html.replaceAll('v35-52-2','v36-52-1').replaceAll('v35-52-1','v36-52-1');
