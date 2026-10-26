@@ -24,7 +24,7 @@
     ? Object.fromEntries(Object.entries(value).slice(0, 12).map(([key, item]) => [text(key),
       typeof item === 'string' ? item.slice(0, 80) : (typeof item === 'number' || typeof item === 'boolean' ? item : null)])) : {};
   const cloneBoard = value => Array.isArray(value) ? value.slice(0, 12).map(unit => ({
-    cell: Number(unit.cell), line: text(unit.line) || 'Unknown', star: Math.max(1, Math.min(3, Number(unit.star) || 1)),
+    cell: Number(unit.cell), line: text(unit.line) || 'Unknown', star: Math.max(1, Math.min(3, Number(unit.star) || 1)), ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}),
     num: Number.isFinite(Number(unit.num)) && Number(unit.num) > 0 ? Number(unit.num) : null,
     items: Array.isArray(unit.items) ? unit.items.slice(0, 3).map(text) : [], shiny: !!unit.shiny,
   })).filter(unit => Number.isInteger(unit.cell) && unit.cell >= 0 && unit.cell < 56) : [];
@@ -185,7 +185,7 @@
     if (round.boardLocked || isCombat(snapshot.stage)) return;
     const step = {board: compact(snapshot.own.board, 'cell'), bench: compact(snapshot.own.bench, 'slot')};
     round.bench = Array.isArray(snapshot.own.bench) ? snapshot.own.bench.slice(0, 9).map(unit => ({slot: Number(unit.slot) || 0,
-      line: text(unit.line), star: Number(unit.star) || 1, num: unit.num ?? null, items: (unit.items ?? []).slice(0, 3).map(text)})) : round.bench ?? [];
+      line: text(unit.line), star: Number(unit.star) || 1, ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}), num: unit.num ?? null, items: (unit.items ?? []).slice(0, 3).map(text)})) : round.bench ?? [];
     round.plan = Array.isArray(round.plan) ? round.plan : [];
     const last = round.plan.at(-1);
     if (last && JSON.stringify([last.board, last.bench]) === JSON.stringify([step.board, step.bench])) return;

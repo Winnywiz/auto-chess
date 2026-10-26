@@ -40,15 +40,18 @@
   function sealIcon(id, size = 28) {
     const base = String(id ?? '').split(':')[0];
     const info = DATA.seals?.[base];
-    const art = DATA.sealArt;
+    let art = DATA.sealArt;
+    const parameter=String(id??'').split(':')[1],key=info?.hero?'hero:'+base:info?.template?(parameter?'type:'+parameter:'tier:'+base.split('-')[1]):art?.index?.['doc:'+base]!==undefined?'doc:'+base:'g:'+base;
+    if(art?.index&&art.index[key]===undefined)art=art.legacy;
+    const iconIndex=art?.index?art.index[key]:info?.icon;
     const icon = el('span', 'seal-icon');
     icon.style.width = icon.style.height = `${size}px`;
-    if (info && Number.isInteger(info.icon) && art) {
-      const scale = size / art.size;
-      const col = info.icon % art.columns;
-      const row = Math.floor(info.icon / art.columns);
+    if (info && Number.isInteger(iconIndex) && art) {
+      const scale = size / (art.size??32);
+      const col = iconIndex % art.columns;
+      const row = Math.floor(iconIndex / art.columns);
       icon.style.backgroundImage = `url("${url(art.file)}")`;
-      icon.style.backgroundSize = `${art.columns * art.size * scale}px ${art.rows * art.size * scale}px`;
+      icon.style.backgroundSize = `${art.columns * (art.size??32) * scale}px ${art.rows * (art.size??32) * scale}px`;
       icon.style.backgroundPosition = `-${col * size}px -${row * size}px`;
     } else {
       const type = String(id ?? '').split(':')[1];

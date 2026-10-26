@@ -615,7 +615,8 @@ function fightText(value) {
 function castName(event) {
   const meta = battleNodes[String(event.src ?? event.uid)]?.meta;
   const transforming = /^(mew|ditto)$/.test(String(meta?.line ?? ''));
-  const english = !transforming && meta ? unitForm(meta.line, meta.star)?.skill?.name ?? KantoTips.findUnit(meta.line, meta.star)?.form?.skill?.name : null;
+  const chosen = meta?.form && KANTO_TIP_DATA.units[meta.line]?.flex?.[meta.form]?.[meta.star-1]?.name;
+  const english = chosen || (!transforming && meta ? unitForm(meta.line, meta.star)?.skill?.name ?? KantoTips.findUnit(meta.line, meta.star)?.form?.skill?.name : null);
   return english || fightText(event.name) || 'Ability';
 }
 const CC_TEXT = {freeze: 'Frozen', airborne: 'Airborne', fear: 'Feared', recharge: 'Recharging', sleep: 'Asleep', stun: 'Stunned',
@@ -1250,7 +1251,7 @@ function renderShop(round) {
 
 // Re-fight: open a round in the website's custom battle simulator (same link format as its "Copy link").
 const SIM_URL = 'https://winnywiz.github.io/auto-chess/battle.html';
-const SIM_RULES = 37;
+const SIM_RULES = 38;
 function simTeam(units) {
   const lines = globalThis.KANTO_TIP_DATA?.units ?? {};
   const items = globalThis.KANTO_TIP_DATA?.items ?? {};
@@ -1261,7 +1262,7 @@ function simTeam(units) {
     if (!lines[unit.line] || !Number.isInteger(cell) || cell < 28 || cell > 55 || cells.has(cell)) continue;
     cells.add(cell);
     team.push({line: unit.line, star: Math.max(1, Math.min(3, Number(unit.star) || 1)),
-      items: (unit.items ?? []).filter(item => items[item] && items[item].kind !== 'tool').slice(0, 3), cell});
+      ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}),items: (unit.items ?? []).filter(item => items[item] && items[item].kind !== 'tool').slice(0, 3), cell});
     if (team.length === 9) break;
   }
   return team;
@@ -1361,7 +1362,7 @@ function fightFoeBoard(battle) {
   const foes = battle.meta.filter(unit => Number(unit.team) !== Number(battle.myTeam) && Number.isFinite(Number(unit.cell)));
   if (!foes.length) return null;
   const flip = Number(battle.myTeam) === 1;
-  return foes.map(unit => ({cell: flip ? 55 - Number(unit.cell) : Number(unit.cell), line: unit.line, star: unit.star, items: unit.items ?? [], num: unit.num || null}));
+  return foes.map(unit => ({cell: flip ? 55 - Number(unit.cell) : Number(unit.cell), line: unit.line, star: unit.star, items: unit.items ?? [], ...(unit.form?{form:unit.form}:{}), num: unit.num || null}));
 }
 
 // Who you fought: the game's own pairing, else the recorder's match, else the board that matches the fight's foe team.

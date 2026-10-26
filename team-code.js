@@ -1,5 +1,5 @@
-// KT1 planner interchange, checked against Einoow's v37 teamCode module.
-// Source: https://einoow.com/playables/kanto-tactics/assets/teamCode-CspHej04.js
+// KT1 planner interchange, checked against Einoow's v38 teamCode module.
+// Source: https://einoow.com/playables/kanto-tactics/assets/teamCode-Nj05RPSR.js
 // Rules describe the source board, not the version of the receiving planner.
 (() => {
   'use strict';

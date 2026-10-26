@@ -11,7 +11,9 @@ export function validateRequest(input,data,{allowEmpty=false}={}){
    if(!u||!lines.has(u.line)||!Number.isInteger(u.star)||u.star<1||u.star>3)throw Error('Choose a valid Pokémon and star level.');
    if(!Number.isInteger(u.cell)||u.cell<28||u.cell>55||cells.has(u.cell))throw Error('Each Pokémon needs its own hex.');cells.add(u.cell);
    if(!Array.isArray(u.items)||u.items.length>3||[...u.items].some(i=>!items.has(i)))throw Error('Choose up to 3 held items per Pokémon.');
-   return {line:u.line,star:u.star,cell:u.cell,items:[...u.items]};
+   const form=u.form;
+   if(form!=null&&form!==''){if(data.rules<38||!['phys','spec'].includes(form)||!lines.get(u.line).flex?.stars.includes(u.star))throw Error('Choose a valid ability for this Pokemon.');}
+   return {line:u.line,star:u.star,cell:u.cell,items:[...u.items],...(form?{form}:{})};
   });
  });
  if(!Number.isInteger(input.seed)||input.seed<0||input.seed>4294967295)throw Error('Seed must be a whole number from 0 to 4294967295.');
@@ -29,7 +31,7 @@ function fight(engine,request,seed,side,record,data){
   stats.push([round(battle.time),...battle.units.flatMap(u=>[round(u.dealt),round(u.taken),round(u.healed),round(u.shielded),round(u.mitigated)])]);
  };
  const roster=new Map(data.roster.map(r=>[r.id,r]));
- const units=record?battle.units.map(u=>({uid:u.uid,team:u.team,line:u.line,star:u.star,num:u.num,name:roster.get(u.line).forms[u.star-1].name,types:u.types,traits:u.traits,maxHp:u.maxHp,maxMana:u.maxMana,items:u.items,carry:false})):[];
+ const units=record?battle.units.map(u=>({uid:u.uid,team:u.team,line:u.line,star:u.star,...(data.rules>=38&&u.flexForm?{form:u.flexForm}:{}),num:u.num,name:roster.get(u.line).forms[u.star-1].name,types:u.types,traits:u.traits,maxHp:u.maxHp,maxMana:u.maxMana,items:u.items,carry:false})):[];
  if(record)sample();let steps=0;
  while(!battle.over){battle.step();if(record&&++steps%6===0)sample();else if(!record)steps++;if(steps>15000)throw Error('The fight exceeded its time limit.');}
  const value=battle.winner===-1?.5:battle.winner===side?1:0;

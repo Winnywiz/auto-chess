@@ -1,29 +1,29 @@
 {
-  "rules": 37,
-  "identity": "fb1bff100c684889ca0e0371f8d43b884a0f6d625a4c55a3cb496493ac2a5fab",
+  "rules": 38,
+  "identity": "a76511cb1a926690b8dadaf605a3816edaf17497f7b539e78a3cb505e2cdcd94",
   "source": "https://einoow.com/playables/kanto-tactics/",
   "attribution": "Kanto Tactics combat engine © 2026 Einoow. Original copyright notices retained.",
   "bundler": "esbuild 0.28.2",
-  "engineSHA256": "09811f0f5f9a874c20995bc35935f9d62de98c3f15a2678fce0c5061ec2f3afc",
+  "engineSHA256": "cf2c6657fb0fb3ddd2ff168c9d4e83d251a2008ae7216a52420ee47ad525aa99",
   "inputs": {
     "rolldown-runtime-B29-hMYW.js": "d8360e90f559a6e984ac66d66e5cafd30c97c8b4bcc122379eb70985d7279fd4",
-    "start-BgFvnBRp.js": "4e2dd46c401b0933233f19bf299ce42a095e803eab624db537c264dfdce368fa",
-    "core-DNY5ou7x.js": "b99fce35e6bb3b2ec932c95a2d97baa552fc4d534417c83654978778fa32fd63",
+    "start-BFx_XDwW.js": "f8aa45df24764344ba3ecc6ac6dc8503b710b4bc98de1390163724b87e4c57c7",
+    "core-Brw9MUJy.js": "5b83f810569bb1d51761e9efec4ea6b874133a06072621fa5e918671d286a7b8",
     "music-wVX0PewO.js": "24a8c56d449556add218fb1818e31bff8bf51efc2d00d8a80f15be45819fcc47",
     "lang-D4kb6qpP.js": "c52add9d829ea52f6eb605f04c25453de0783ce230cd63d6603d00f230fd94e3",
-    "roster-Dl8XdKmf.js": "67e0cd2f13a80e4929f9ef7f82b45253f8b537d3ba00a620a96ba4753d1ef7ab",
+    "roster-sccKldBx.js": "41e1ea58b1370e010fded4d87c5b4980fcde4aa0d3f04bb33813aa5b106bb2a3",
     "toolsAllowed-Dzl2XiAS.js": "bc0feab333135505a0bd1f4bfa0f3c762ee0d9125a1c97a7ab3c5f2c7d2f3bee",
     "defineProperty-BWWC-6eR.js": "08fe24d2fd14023969124811d767c29671bd2aecccad7d4ac741e7f5e4b2aec0",
-    "route-Jt6V21Va.js": "eb2d37d9e3f9c83b34535a31b271124937994ca7abafa177ef5fb201f8e64fec"
+    "route-CQifoag8.js": "32ea1e5478fd96b1ef8320b81099ef40f4419fc0598714549fb6c44df9877c68"
   },
   "adapters": [
     "Archived verified game data, without session envelope",
-    "Route re-exports its internal type-effectiveness function (Xe)",
+    "Route re-exports its internal type-effectiveness function (Qe)",
     "Core language preloader stub",
     "English-only language state, without UI or translation downloads"
   ],
   "seals": false,
   "weather": null,
-  "dataSHA256": "8feb135f76df4b4716aea693ddedc51d5746d528d5b863008525d03edd0fa300",
+  "dataSHA256": "9e8b927497c6bf01b3491bea8ae278e882408f1e4474d43eab44009320539723",
   "anchoredForms": 58
 }

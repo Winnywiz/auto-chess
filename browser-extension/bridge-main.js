@@ -53,6 +53,7 @@
       uid: unit.uid, team: Number(unit.team) || 0,
       line: String(unit.line ?? unit.id ?? unit.name ?? 'Unknown').slice(0, 80),
       star: Math.max(1, Math.min(3, roundInt(unit.star || 1))),
+      ...(['phys','spec'].includes(unit.flexForm??unit.form)?{form:unit.flexForm??unit.form}:{}),
       num: roundInt(unit.num), name: String(unit.name ?? unit.line ?? 'Unknown').slice(0, 80),
       maxHp: roundInt(unit.maxHp), maxMana: roundInt(unit.maxMana), cell: roundInt(unit.from ?? unit.cell),
       items: Array.isArray(unit.items) ? unit.items.slice(0, 3).map(item => String(typeof item === 'string' ? item : item?.id ?? '')).filter(Boolean) : [],
@@ -224,7 +225,7 @@
       return {
         cell: number,
         line: String(unit.line ?? unit.id ?? unit.name ?? 'Unknown'),
-        star: Number(unit.star ?? 1),
+        star: Number(unit.star ?? 1), ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}),
         num: numberOrNull(unit.num),
         items: Array.isArray(unit.items) ? unit.items.map(item => typeof item === 'string' ? item : item?.id).filter(Boolean).map(String) : [],
         shiny: !!unit.shiny,
@@ -239,7 +240,7 @@
     return bench.map((unitId, slot) => {
       const unit = unitId && typeof unitId === 'object' ? unitId : units[unitId];
       if (!unit) return null;
-      return {slot, line: String(unit.line ?? unit.id ?? 'Unknown'), star: Number(unit.star ?? 1), num: numberOrNull(unit.num),
+      return {slot, line: String(unit.line ?? unit.id ?? 'Unknown'), star: Number(unit.star ?? 1), ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}), num: numberOrNull(unit.num),
         items: Array.isArray(unit.items) ? unit.items.map(item => typeof item === 'string' ? item : item?.id).filter(Boolean).map(String) : []};
     }).filter(Boolean);
   }

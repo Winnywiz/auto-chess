@@ -33,9 +33,11 @@ The extension reads only the game state exposed to the current player. It does n
 
 ## Planning, bench and Re-fight
 
+Version 1.8.0 records v38 manual ability choices and preserves them in Re-fight links. Existing recordings remain available.
+
 - Each round keeps your board and bench after every buy, sell, move or upgrade. The slider in **Your formation** steps through them; the last step is the board you fought with.
 - Shops are read on every game state change, not only every 0.6s, so fast rerolls are all recorded.
-- **Re-fight** opens the round in the website's battle simulator (`battle.html`) with both boards, items and positions from the start of the fight. The website simulator runs the v37 engine after the local website update is published.
+- **Re-fight** opens the round in the website's battle simulator (`battle.html`) with both boards, items and positions from the start of the fight. The website simulator runs the v38 engine.
 - The fight log lists casts, crowd control, faints and the result with the unit's sprite, its HP at that moment, and the skill name. Skill areas and cast lines are drawn on the board during playback.
 
 ## Storage and fights

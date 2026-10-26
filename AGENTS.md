@@ -3,6 +3,11 @@
 Read `docs/composition-search.md` before composition work. The full local owner specification is `docs/composition-search-configuration-and-rules.md`; it is excluded from publication because it contains private figures.
 The owner's current request takes priority over historical descriptions in that document.
 
+- Current request, 27 October 2026: update v38 runtime, extension and game metadata first. Do not run a composition search or change the composition ranking now.
+- Runtime v38 does not make the archived v37 study current. Before any future study, port and verify the v38 round, shop and acquisition rules and manual skill choices. Do not reuse the v37 budget model as if it were v38.
+- Future composition studies must be provided as a Windows launcher for the owner to execute. Do not start those studies autonomously.
+- Future item search must allow every legal finished item on every holder, with repeats except stacked Focus Sash. No role-specific item whitelist or preset tank-set limit. Beam pruning is approximate and must not be described as exhaustive joint enumeration.
+
 - The owner approved both original and proposed searches, their head-to-head comparison, and a push on 26 October 2026.
 - Report the verified comparison and list changes before pushing. The owner authorized the push on 26 October 2026.
 - No browser use without explicit permission. Ask before deleting files.
