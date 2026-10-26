@@ -1,5 +1,6 @@
 // Apply v38 runtime compatibility. No composition study is run.
 import fs from 'node:fs';
+if(fs.readFileSync('custom-battle.js','utf8').includes('let rules=38;')&&fs.readFileSync('builder.html','utf8').includes('data-skill-form')&&JSON.parse(fs.readFileSync('browser-extension/manifest.json')).version==='1.8.0'){console.log('v38 runtime compatibility is already applied.');process.exit(0);}
 const edit=(file,fn)=>{const before=fs.readFileSync(file,'utf8'),after=fn(before);if(after!==before)fs.writeFileSync(file,after);};
 edit('simulation/battle-worker.js',s=>s.replace('[36,37]','[36,37,38]'));
 edit('simulation/battle-core.js',s=>s.replace('return {line:u.line,star:u.star,cell:u.cell,items:[...u.items]};',`const form=u.form;
