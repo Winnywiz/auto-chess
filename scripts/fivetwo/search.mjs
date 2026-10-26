@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {roster, family, FULL, traitCounts, activeTraits, traitLabel, arrange, seeds, scoreMany, startPool, boardValue, traitRules} from './combat.mjs';
 import {gauntlet, meta} from './opponents.mjs';
 
-const OUT = new URL('../../work/fiveTwo36/', import.meta.url);
+import {OUT as OUT, isMain} from './paths.mjs';
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 const FLEX = new Set(['charmander', 'nidoran', 'pikachu', 'poliwag', 'sandshrew', 'ponyta', 'growlithe', 'slowpoke', 'scyther', 'cubone', 'snorlax', 'staryu', 'articuno', 'zapdos', 'moltres', 'venomoth', 'victreebel', 'nidoqueen']);
 const cost = l => roster[family(l)].cost;
@@ -14,6 +14,8 @@ const isTank = l => role(l) === 'tank' || (isFront(l) && ['snorlax', 'slowpoke',
 const spa = l => (roster[l].forms.at(-1).skill.scale?.spa ?? 0) >= 0.5;
 const canCrit = l => roster[l].forms.some(f => f.skill.canCrit);
 const SHOP = Object.values(roster).filter(r => !r.branchOf).map(r => r.id); // Eevee is allowed: the game's "Keep Eevee" toggle stops it evolving (2★ Bite, 3★ Last Resort)
+const LEGENDARIES=new Set(['articuno','zapdos','moltres','mewtwo','mew']);
+const legalFinish=line=>!LEGENDARIES.has(family(line));
 const EEVEE = ['vaporeon', 'jolteon', 'flareon'];
 
 // ---------- Meta context ----------
@@ -40,9 +42,9 @@ function cooccur(carry) {
   return acc;
 }
 
-const TKT = (() => { try { const d = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/brother/tkt-data.json', import.meta.url))); return [...d.comps, ...d.pool, ...d.neu].map((c, i) => { const k = c.units.find(u => u.r === 'c'); return {id: 'tkt-' + i, src: 'tkt:', carry: k?.l, team: c.units.map(u => ({line: u.l, star: u.s}))}; }); } catch { return []; } })();
+const TKT = (() => { try { const d = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo37/brother/tkt-data.json', import.meta.url))); return [...d.comps, ...d.pool, ...d.neu].map((c, i) => { const k = c.units.find(u => u.r === 'c'); return {id: 'tkt-' + i, src: 'tkt:', carry: k?.l, team: c.units.map(u => ({line: u.l, star: u.s}))}; }); } catch { return []; } })();
 const GPT0 = (() => { try { return JSON.parse(fs.readFileSync(new URL('../../compositions-gpt.html', import.meta.url), 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]).rows; } catch { return []; } })();
-const GPT = [...GPT0, ...TKT];
+const GPT = [...GPT0]; // Outside lists may be compared separately, never imported into candidate generation.
 // ---------- Strategy definitions ----------
 export const STRATEGIES = {
   r1: {key: 'r1', label: 'Reroll 1-cost', rollLevel: 5, finalLevel: 7, carryCost: 1, carryStar: 3, extra: [0, 1, 2, 3, 4], extraCost: [1]},
@@ -88,7 +90,7 @@ function heuristic(team, co, carry) {
 function rnd(seed) { let s = seed >>> 0; return () => { s = Math.imul(s ^ (s >>> 15), 2246822507) ^ Math.imul(s ^ (s >>> 13), 3266489909); s ^= s >>> 16; return (s >>> 0) / 4294967296; }; }
 function buildCandidates(carryLine, strat, level, count) {
   const shopCarry = family(carryLine), co = cooccur(carryLine === 'vaporeon' ? 'vaporeon' : carryLine);
-  const eligible = SHOP.filter(l => l !== shopCarry && cost(l) <= maxCost(strat, level) && !(cost(l) === 5 && level < 8));
+  const eligible = SHOP.filter(l => legalFinish(l) && l !== shopCarry && cost(l) <= maxCost(strat, level) && !(cost(l) === 5 && level < 8));
   const isExtra = l => strat.extraCost.includes(cost(l)) && cost(l) <= 3;
   const extraPool = eligible.filter(isExtra);
   const out = new Map();
@@ -152,7 +154,7 @@ function roles(team, carry) {
 const G = gauntlet();
 let S4 = G.map(x => ({board: x.s4, w: x.weight})), S3 = G.filter(x => x.s3).map(x => ({board: x.s3, w: x.weight}));
 // LOBBY=counter: score against the realized Toongcha boards instead (counter search).
-if (process.env.LOBBY === 'counter') { const L = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/brother/counters.json', import.meta.url))).lobby; S4 = L.map((l, i) => ({board: {id: 'tkt-real-' + i, team: l.team}, w: l.w})); S3 = S4; }
+if (process.env.LOBBY === 'counter') { const L = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo37/brother/counters.json', import.meta.url))).lobby; S4 = L.map((l, i) => ({board: {id: 'tkt-real-' + i, team: l.team}, w: l.w})); S3 = S4; }
 async function score(boards, {nSeeds = 1, salt = 's', s3 = false} = {}) {
   const sd = seeds(nSeeds, salt), pairs = [];
   for (const b of boards) { for (const o of S4) pairs.push({a: b, b: o.board.team, seeds: sd}); if (s3) for (const o of S3) pairs.push({a: b, b: o.board.team, seeds: sd}); }
@@ -169,7 +171,12 @@ async function score(boards, {nSeeds = 1, salt = 's', s3 = false} = {}) {
 
 function equip(c, carryLine, items) {
   const {tank, second} = roles(c.team, carryLine);
-  return {tank, second, team: arrange(gear(c.team, carryLine, tank, second, items?.carry ?? defaultCarry(carryLine), items?.tank ?? TANK_SETS[0], items?.second ?? defaultSecond(second ?? carryLine)), {carry: carryLine, hint: placeHint})};
+  const team=normalizeStars(c.team,carryLine,tank);
+  return {tank, second, team: arrange(gear(team, carryLine, tank, second, items?.carry ?? defaultCarry(carryLine), items?.tank ?? TANK_SETS[0], items?.second ?? defaultSecond(second ?? carryLine)), {carry: carryLine, hint: placeHint})};
+}
+function normalizeStars(team,carry,tank){
+ if(cost(carry)!==4)return team;
+ return team.map(u=>cost(u.line)===4?{...u,star:u.line===carry||u.line===tank?2:1}:u);
 }
 function combos(pool, k) { const out = []; const rec = (start, cur) => { if (cur.length === k) { out.push([...cur]); return; } for (let i = start; i < pool.length; i++) { cur.push(pool[i]); rec(i, cur); cur.pop(); } }; rec(0, []); return out; }
 
@@ -204,14 +211,17 @@ async function optimizeItems(c, carryLine) {
 const UTILITY = ['chansey', 'jigglypuff', 'psyduck', 'porygon3', 'ditto', 'gastly', 'dratini', 'pikachu', 'voltorb', 'magnemite', 'electabuzz', 'abra', 'slowpoke', 'seel', 'omastar', 'exeggcute'];
 const label = t => t.map(u => u.line + u.star).join(' ');
 async function refine(top, line, S, notes) {
-  const eligibleAll = SHOP.filter(l => cost(l) <= maxCost(S, S.finalLevel) && !(cost(l) === 5 && S.finalLevel < 8) && l !== family(line));
+  const eligibleAll = SHOP.filter(l => legalFinish(l) && cost(l) <= maxCost(S, S.finalLevel) && !(cost(l) === 5 && S.finalLevel < 8) && l !== family(line));
   const mk = (team, src) => ({...top, team, extras: top.extras.filter(x => team.some(u => u.line === x)), src: top.src + '+' + src});
   const slots = () => top.team.map((u, i) => i).filter(i => top.team[i].line !== line && !top.extras.includes(top.team[i].line));
   const tankLine = () => roles(top.team, line).tank;
   const tryBoards = async (cands, tag, accept) => {
     if (!cands.length) return false;
     const uniq = [...new Map(cands.map(c => [label(c.team), c])).values()].slice(0, 30);
-    const res = await score(uniq.map(c => equip(c, line).team), {nSeeds: 2, salt: tag + '|' + line});
+    const sameSalt = tag + '|' + line;
+    const baseScore = (await score([equip(top, line).team], {nSeeds:2,salt:sameSalt}))[0];
+    top = {...top,...baseScore};
+    const res = await score(uniq.map(c => equip(c, line).team), {nSeeds: 2, salt: sameSalt});
     const best = uniq.map((c, i) => ({...c, ...res[i]})).sort((a, b) => b.score - a.score)[0];
     if (best && accept(best)) { notes.push(`${tag}: ${label(best.team)} ${(top.score * 100).toFixed(1)} -> ${(best.score * 100).toFixed(1)}`); top = best; return true; }
     return false;
@@ -250,6 +260,7 @@ function carryList() {
   const list = [];
   for (const r of Object.values(roster)) {
     const c = r.cost;
+    if (r.anchorK) continue; // Original search uses the original evolving/branch carry catalogue.
     if (r.id === 'eevee') continue;
     if (r.branchOf && r.branchOf === 'eevee') { list.push({line: r.id, strat: 'r2'}); continue; }
     if (isTank(r.id) && !['slowpoke', 'seel', 'geodude', 'bulbasaur', 'machop', 'poliwag', 'snorlax'].includes(r.id)) continue;
@@ -271,7 +282,7 @@ async function main() {
   // Resume: reuse the saved screen and finished carries from an interrupted run.
   const resume = process.env.RESUME && fs.existsSync(new URL(process.env.SCREEN_FILE ?? 'screen.json', OUT));
   const screened = resume ? JSON.parse(fs.readFileSync(new URL(process.env.SCREEN_FILE ?? 'screen.json', OUT))) : [];
-  for (const {line, strat} of resume ? [] : carries) {
+  for (const {line, strat} of carries.filter(c=>!screened.some(s=>s.line===c.line&&s.strat===c.strat))) {
     const S = STRATEGIES[strat], cands = buildCandidates(line, S, S.finalLevel, 10);
     if (!cands.length) continue;
     const res = await score(cands.map(c => equip(c, line).team), {salt: 'screen|' + line});
@@ -294,7 +305,7 @@ async function main() {
     let top = ranked[0];
     for (let round = 0; round < 2; round++) {
       const swaps = [];
-      const eligible = SHOP.filter(l => cost(l) <= maxCost(S, S.finalLevel) && !(cost(l) === 5 && S.finalLevel < 8) && !top.team.some(u => family(u.line) === family(l)) && l !== family(line));
+      const eligible = SHOP.filter(l => legalFinish(l) && cost(l) <= maxCost(S, S.finalLevel) && !(cost(l) === 5 && S.finalLevel < 8) && !top.team.some(u => family(u.line) === family(l)) && l !== family(line));
       for (let i = 1; i < top.team.length; i++) for (const l of eligible) {
         const team = top.team.map((u, k) => k === i ? {line: l, star: starFor(l, S, {carry: line, extras: top.extras, tank2: top.tank2})} : u);
         if (!team.some(u => isFront(u.line) && u.line !== line)) continue;
@@ -302,6 +313,7 @@ async function main() {
       }
       const co = cooccur(line);
       const shortlist = swaps.map(s => ({...s, h: heuristic(s.team, co, line)})).sort((a, b) => b.h - a.h).slice(0, 24);
+      top = {...top,...(await score([equip(top,line).team],{salt:'swap'+round+'|'+line}))[0]};
       const sres = await score(shortlist.map(c => equip(c, line).team), {salt: 'swap' + round + '|' + line});
       const better = shortlist.map((c, i) => ({...c, ...sres[i]})).sort((a, b) => b.score - a.score)[0];
       if (better && better.score > top.score + 0.01) top = better; else break;
@@ -313,6 +325,7 @@ async function main() {
     const variants = [top, second].filter(Boolean);
     const out = [];
     for (const v of variants) {
+      v.team=normalizeStars(v.team,line,roles(v.team,line).tank);
       const it = await optimizeItems(v, line);
       const team = arrange(gear(v.team, line, it.tank, it.second, it.carry, it.tankItems, it.secondItem), {carry: line, hint: placeHint});
       out.push({team, extras: v.extras, src: v.src, items: it});
@@ -324,5 +337,5 @@ async function main() {
   }
   process.exit(0);
 }
-if (import.meta.url === `file://${process.argv[1]}`) main();
-export {buildCandidates, roles, equip, score, optimizeItems, gear, placeHint, S4, S3, G, isFront, isTank, spa, defaultCarry, defaultSecond, TANK_SETS, starFor, cost, SHOP, cooccur, heuristic, maxCost};
+if (isMain(import.meta.url)) main().catch(error=>{console.error(error);process.exit(1);});
+export {buildCandidates, roles, equip, score, optimizeItems, gear, placeHint, S4, S3, G, isFront, isTank, spa, defaultCarry, defaultSecond, TANK_SETS, starFor, cost, SHOP, cooccur, heuristic, maxCost, carryList, combos, refine, ATK_POOL, SPA_POOL, FLEX, canCrit, legalFinish, normalizeStars};

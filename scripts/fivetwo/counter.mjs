@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {startPool, scoreMany, seeds, traitLabel} from './combat.mjs';
 import {realizedBoards, planOf} from './realized.mjs';
 import {cost} from './search.mjs';
-const W = 'work/fiveTwo36/';
+const W = 'work/fiveTwo37/';
 const bro = JSON.parse(fs.readFileSync(W + 'brother/compare.json'));
 const A = JSON.parse(fs.readFileSync(W + 'analysis.json'));
 const C = JSON.parse(fs.readFileSync('compositions.html', 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);

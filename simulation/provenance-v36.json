@@ -1,0 +1,26 @@
+{
+  "rules": 36,
+  "identity": "3068967d310c918e1ef6e159e1dddc9bcd319a9ae27a264d753bf5c223b4bc80",
+  "source": "https://einoow.com/playables/kanto-tactics/",
+  "attribution": "Kanto Tactics combat engine © 2026 Einoow. Original copyright notices retained.",
+  "bundler": "esbuild 0.28.2",
+  "engineSHA256": "739de6e5512bbe7f43a6f257e3732ce907ecbd531cf284a56219278f0bd675a8",
+  "inputs": {
+    "rolldown-runtime-B29-hMYW.js": "d8360e90f559a6e984ac66d66e5cafd30c97c8b4bcc122379eb70985d7279fd4",
+    "start-BW-PfRUJ.js": "3a925cf58c9e9a78e953e6c3f1fbb3eae096109cf4e1596496fc4221b5ef808a",
+    "core-Ch5nXLMW.js": "23fb309a4ed4452a2e17a2d81672cec09936a111ef5e279b06eaedce350b1c34",
+    "music-wVX0PewO.js": "24a8c56d449556add218fb1818e31bff8bf51efc2d00d8a80f15be45819fcc47",
+    "lang-D4kb6qpP.js": "c52add9d829ea52f6eb605f04c25453de0783ce230cd63d6603d00f230fd94e3",
+    "roster-BKmCA401.js": "20f712911e4a03eb06164caaf882ea80cb49ebe71540c2690dd19f2243b8694b",
+    "toolsAllowed-Dzl2XiAS.js": "bc0feab333135505a0bd1f4bfa0f3c762ee0d9125a1c97a7ab3c5f2c7d2f3bee",
+    "defineProperty-BWWC-6eR.js": "08fe24d2fd14023969124811d767c29671bd2aecccad7d4ac741e7f5e4b2aec0",
+    "route-3pHNpNkx.js": "946d8032013b01be82ffd5e00017e2a883b66b31dda065652afa4fa72c48a952"
+  },
+  "adapters": [
+    "Archived verified game data, without session envelope",
+    "Core language preloader stub",
+    "English-only language state, without UI or translation downloads"
+  ],
+  "seals": false,
+  "weather": null
+}

@@ -6,7 +6,7 @@ import {score, cost, isFront, placeHint} from './search.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
 import {planOf, realizedScore} from './realized.mjs';
-const W = 'work/fiveTwo36/brother/';
+const W = 'work/fiveTwo37/brother/';
 const T = JSON.parse(fs.readFileSync(W + 'tkt-data.json'));
 const C = JSON.parse(fs.readFileSync('compositions.html', 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);
 const theirs = [...T.comps.map(c => ({...c, set: 'comps'})), ...T.pool.map(c => ({...c, set: 'pool'})), ...T.neu.map(c => ({...c, set: 'neu'}))].map((c, i) => ({

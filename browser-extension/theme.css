@@ -1,0 +1,62 @@
+/* Same tokens as the Kanto Tactics site (matchups.css): Viridian Forest by default, Pallet Town on request. */
+:root{
+  color-scheme:dark;
+  font-family:"DM Sans",sans-serif;
+  font-synthesis:none;
+  --bg:#101914;
+  --surface:#19251e;
+  --raised:#223227;
+  --line:#344538;
+  --line-soft:#26352b;
+  --ink:#e8efdf;
+  --muted:#afbea5;
+  --accent:#c9dfa0;
+  --on-accent:#101914;
+  --home:#c9dfa0;
+  --away:#e6aa96;
+  --gold:#e7c184;
+  --rare:#c4adf0;
+  --topbar:#141f19;
+  --stage:#0d150f;
+  --stage-hex:#1a271f;
+  --stage-hex-home:#1f3324;
+  --home-soft:#c9dfa03a;
+  --away-soft:#e6aa963a;
+  --hex:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+html[data-theme=pallet]{
+  --bg:#171f30;
+  --surface:#222c3e;
+  --raised:#2b384e;
+  --line:#3d4b63;
+  --line-soft:#2f3b51;
+  --ink:#f1e9df;
+  --muted:#bec6d5;
+  --accent:#e8ad97;
+  --on-accent:#171f30;
+  --home:#b8d9cf;
+  --away:#efb69e;
+  --gold:#f0cc9a;
+  --topbar:#1c2638;
+  --stage:#121927;
+  --stage-hex:#1f2a3d;
+  --stage-hex-home:#22344a;
+  --home-soft:#b8d9cf3a;
+  --away-soft:#efb69e3a;
+}
+*{box-sizing:border-box;scrollbar-color:var(--line) transparent;scrollbar-width:thin}
+[hidden]{display:none !important}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.num{font-variant-numeric:tabular-nums}
+.place{display:inline-flex;align-items:baseline;justify-content:center;min-width:44px;font-size:22px;font-weight:700;line-height:1;color:var(--muted)}
+.place sup{position:relative;top:-8px;margin-left:1px;font-size:11px;font-weight:600;vertical-align:baseline}
+.place.first{color:var(--gold)}
+.place.top{color:var(--home)}
+.place.bottom{color:var(--away)}
+.place.live{font-size:13px;color:var(--accent)}
+.place.left{font-size:13px;color:var(--muted)}
+.spark{display:block;overflow:visible}
+.spark polyline{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.spark line{stroke:var(--line);stroke-width:1;vector-effect:non-scaling-stroke}
+.theme-picker{min-height:30px;padding:5px 10px;border:1px solid var(--line);border-radius:6px;background:var(--raised);color:var(--ink);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}

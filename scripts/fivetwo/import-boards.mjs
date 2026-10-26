@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import {startPool, traitLabel, boardValue, roster, family} from './combat.mjs';
 import {score, isFront} from './search.mjs';
-const T = JSON.parse(fs.readFileSync('work/fiveTwo36/brother/tkt-data.json'));
+const T = JSON.parse(fs.readFileSync('work/fiveTwo37/brother/tkt-data.json'));
 const cost = l => roster[family(l)].cost;
 const boards = [...T.comps, ...T.pool, ...T.neu];
 startPool();
@@ -20,5 +20,5 @@ for (const [i, c] of boards.entries()) {
   results.push({line: carry.l, strat, notes: ['imported from Toongcha: ' + c.name], variants: [{team, extras, src: 'tkt-import:' + c.name, items: {tank: tank.l, second: second?.l ?? null, carry: [...carry.it], tankItems: [...tank.it], secondItem: second?.it?.[0] ?? null, alt: null, rankedCarry: [{items: [...carry.it], score: final.score}], rankedTank: [], rankedSecond: []}, final, traits: traitLabel(team), value: boardValue(team)}]});
   console.log('import', c.name, strat, (final.score * 100).toFixed(1));
 }
-fs.writeFileSync('work/fiveTwo36/search-import.json', JSON.stringify({results}, null, 1));
+fs.writeFileSync('work/fiveTwo37/search-import.json', JSON.stringify({results}, null, 1));
 process.exit(0);

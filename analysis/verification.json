@@ -1,10 +1,10 @@
 {
   "passed": true,
-  "pairs": 78,
-  "replays": 155,
-  "frames": 14493,
-  "nativeCases": 12,
-  "variableIntervals": 74,
-  "battles": 39936,
-  "verifiedAt": "2026-10-25T05:10:27.648Z"
+  "pairs": 1035,
+  "replays": 2252,
+  "frames": 264373,
+  "nativeCases": 154,
+  "variableIntervals": 973,
+  "battles": 529920,
+  "verifiedAt": "2026-10-26T16:41:49.343Z"
 }

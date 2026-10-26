@@ -3,6 +3,7 @@
 import {roster, family, arrange} from './combat.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
+import {availableForm} from './forms.mjs';
 
 const cost = l => roster[family(l)].cost;
 const isFront = l => roster[l].range <= 1 && roster[l].role !== 'assassin';
@@ -29,17 +30,17 @@ export function realizedBoards(team, plan, {n = 200, salt = 'realize', contest =
   for (let i = 0; i < n; i++) {
     const x = simulate(plan, {seed: hashSeed(`${salt}|${i}`), contest});
     hitAll += x.hit;
-    let units = team.map(u => ({...u, items: [...u.items], star: Math.min(u.star, starOf(x.owned[family(u.line)] ?? 0))})).filter(u => u.star > 0);
-    units.sort((a, b) => prio(team.find(t => t.line === a.line)) - prio(team.find(t => t.line === b.line)));
+    let units = team.map(u => {const star=Math.min(u.star,starOf(x.owned[family(u.line)]??0));return {...u,targetLine:u.line,line:availableForm(u.line,star),items:[...u.items],star};}).filter(u => u.star > 0);
+    units.sort((a, b) => prio(team.find(t => t.line === a.targetLine)) - prio(team.find(t => t.line === b.targetLine)));
     units = units.slice(0, Math.max(1, Math.min(x.level, team.length)));
     // Items of a missing holder move to the closest replacement on the board.
-    const present = new Set(units.map(u => u.line));
-    for (const h of team.filter(u => u.items.length && !present.has(u.line))) {
+    const present = new Set(units.map(u => family(u.line)));
+    for (const h of team.filter(u => u.items.length && !present.has(family(u.line)))) {
       const front = isFront(h.line), to = units.filter(u => !u.items.length).sort((a, b) => (isFront(b.line) === front) - (isFront(a.line) === front) || cost(b.line) * b.star - cost(a.line) * a.star)[0];
       if (to) to.items = [...h.items];
     }
     const key = units.map(u => u.line + u.star).sort().join(',');
-    if (!patterns.has(key)) patterns.set(key, {key, n: 0, team: arrange(units, {carry: carry?.line, hint: Object.fromEntries(team.map(u => [u.line, u.cell]))})});
+    if (!patterns.has(key)) patterns.set(key, {key, n: 0, team: arrange(units, {carry: units.find(u=>u.targetLine===carry?.line)?.line, hint: Object.fromEntries(units.map(u => [u.line, u.cell]))})});
     patterns.get(key).n++;
   }
   return {patterns: [...patterns.values()].sort((a, b) => b.n - a.n), hitAll: hitAll / n, n};

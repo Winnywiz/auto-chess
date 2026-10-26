@@ -1,5 +1,5 @@
 // How many three-star targets fit in one 5-2 budget, per reroll cost, and how often a
-// four-cost two-star tank appears on the way. Results stay local in work/fiveTwo36/.
+// four-cost two-star tank appears on the way. Results stay local in work/fiveTwo37/.
 import fs from 'node:fs';
 import {simulate, goldAudit, roundIndex as R, FIVE_TWO} from './acquire.mjs';
 import {BY_COST, hashSeed, label} from './rules.mjs';
@@ -71,4 +71,4 @@ for (const cfg of configs) {
   out.configs.push({...cfg, best: best.pol, grid: grid.map(g => ({...g.pol, hit: g.hit, tank4: g.tank4, rollGold: g.rollGold})), confirm});
   console.log(cfg.type, 'k=' + cfg.k, 'L' + cfg.level, JSON.stringify(best.pol), 'hit', confirm['mixed|open'].hit.toFixed(3), 'contested', confirm['mixed|contested'].hit.toFixed(3), 'tank4', confirm['mixed|open'].tank4.toFixed(3), 'rollGold', confirm['mixed|open'].rollGold.toFixed(0));
 }
-fs.writeFileSync(new URL('../../work/fiveTwo36/budget.json', import.meta.url), JSON.stringify(out, null, 1));
+fs.writeFileSync(new URL('../../work/fiveTwo37/budget.json', import.meta.url), JSON.stringify(out, null, 1));

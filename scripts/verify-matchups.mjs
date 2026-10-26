@@ -13,12 +13,14 @@ for(const key of ['KANTO_DATA','KANTO_COMPS'])vm.runInContext([...html.matchAll(
 let expectedPairs=0,replays=0,frames=0,variableIntervals=0;
 for(const item of ctx.window.KANTO_DATA.items)assert.equal(D.itemNames[item.id],item.name,'Native item name '+item.id);
 const seen=new Set();
-const finish=!!ctx.window.KANTO_COMPS.targetRound;
-for(const level of finish?[ctx.window.KANTO_COMPS.cutoff??48]:[8,9]){
- const eligible=ctx.window.KANTO_COMPS.rows.filter(r=>['S','A'].includes((finish?r.stages[0]:r.stages.find(s=>s.level===level)).tier));
+const realized=ctx.window.KANTO_COMPS.model==='finish-by-5-2';
+const finish=realized||!!ctx.window.KANTO_COMPS.targetRound;
+if(realized)assert.equal(D.source.version,ctx.window.KANTO_COMPS.version,'Matchup catalogue is stale. Regenerate only after approval to run the study.');
+for(const level of finish?[realized?52:ctx.window.KANTO_COMPS.cutoff??48]:[8,9]){
+ const eligible=ctx.window.KANTO_COMPS.rows.filter(r=>['S','A'].includes((realized?r:finish?r.stages[0]:r.stages.find(s=>s.level===level)).tier));
  assert.deepEqual([...D.builds[level].map(r=>r.id)].sort(),[...eligible.map(r=>r.id)].sort());
  expectedPairs+=eligible.length*(eligible.length-1)/2;
- for(const r of D.builds[level]){const originalRow=eligible.find(x=>x.id===r.id),original=finish?originalRow.boards[0]:originalRow.boards.find(b=>b.level===level);assert(r.team.reduce((n,u)=>n+u.items.length,0)<=(ctx.window.KANTO_COMPS.itemBudget??6),'Replay exceeds the scored item budget: '+r.id);assert.equal(JSON.stringify(r.team.map(({line,star,items,cell})=>({line,star,items,cell}))),JSON.stringify(original.team.map(({line,star,items,cell})=>({line,star,items,cell}))));}
+ for(const r of D.builds[level]){const originalRow=eligible.find(x=>x.id===r.id),original=realized?originalRow:finish?originalRow.boards[0]:originalRow.boards.find(b=>b.level===level);assert(r.team.reduce((n,u)=>n+u.items.length,0)<=(ctx.window.KANTO_COMPS.itemBudget??6),'Replay exceeds the scored item budget: '+r.id);assert.equal(JSON.stringify(r.team.map(({line,star,items,cell})=>({line,star,items,cell}))),JSON.stringify(original.team.map(({line,star,items,cell})=>({line,star,items,cell}))));}
 }
 assert.equal(D.pairs.length,expectedPairs);
 for(const p of D.pairs){
@@ -38,7 +40,7 @@ for(const p of D.pairs){
 // A broken bootstrap that repeatedly samples a full low-bit PRNG cycle produces collapsed intervals.
 assert(variableIntervals>D.pairs.length/2,'Most nontrivial matchup intervals should retain seed variation');
 // Verify native replay parity and deterministic repeats on a spread of levels, outcomes and sides.
-const rules=ctx.window.KANTO_COMPS.gameRules,root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v'+rules),harness=await import(pathToFileURL(path.join(root,'headless.mjs'))),{Battle}=harness,native={J:harness.route[rules===36?'Es':rules===35?'Ds':'ps']};
+const rules=ctx.window.KANTO_COMPS.gameRules,root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v'+rules),harness=await import(pathToFileURL(path.join(root,'headless.mjs'))),{Battle}=harness,native={J:rules===37?(await import('../simulation/engine-v37.js')).effectiveness:harness.route[rules===36?'Es':rules===35?'Ds':'ps']};
 assert.equal(native.J('Fire',['Grass']),2);assert.equal(native.J('Normal',['Ghost']),0);
 const mirror=team=>team.map(u=>({...u,cell:55-u.cell}));let nativeCases=0;
 for(let i=0;i<D.pairs.length;i+=29){const p=D.pairs[i],a=D.builds[p.level].find(r=>r.id===p.a),b=D.builds[p.level].find(r=>r.id===p.b),f=JSON.parse(fs.readFileSync('analysis/replays/'+p.key+'.json'));

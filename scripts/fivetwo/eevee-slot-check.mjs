@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import {startPool, traitLabel, arrange} from './combat.mjs';
 import {score, placeHint} from './search.mjs';
-const old = JSON.parse(fs.readFileSync('work/fiveTwo36/search-backup.json')).results;
+const old = JSON.parse(fs.readFileSync('work/fiveTwo37/search-backup.json')).results;
 const C = JSON.parse(fs.readFileSync('compositions.html', 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);
 const clean = t => t.map(({line, star, cell, items}) => ({line, star, cell, items: [...items]}));
 startPool();

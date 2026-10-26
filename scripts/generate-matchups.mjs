@@ -13,7 +13,7 @@ const root=path.resolve(process.env.KANTO_NATIVE_ROOT||'work/native-v'+pageRules
 const harness=await import(pathToFileURL(path.join(root,'headless.mjs')));
 if(harness.rules!==pageRules)throw Error('Page and replay engine versions differ');
 const routeFile=fs.readdirSync(path.join(root,'assets')).find(f=>/^route-.*\.js$/.test(f));
-const {Battle}=harness,rosterNative=harness.roster,typeEffect=harness.route[pageRules===36?'Es':pageRules===35?'Ds':'ps'];
+const {Battle}=harness,rosterNative=harness.roster,typeEffect=pageRules===37?(await import('../simulation/engine-v37.js')).effectiveness:harness.route[pageRules===37?'__effectiveness':pageRules===36?'Es':pageRules===35?'Ds':'ps'];
 if(typeof typeEffect!=='function'||typeEffect('Fire',['Grass'])!==2||typeEffect('Normal',['Ghost'])!==0)throw Error('Native type-effectiveness interface changed');
 const hash=x=>createHash('sha256').update(typeof x==='string'?x:JSON.stringify(x)).digest('hex');
 const seedFor=(level,a,b,i)=>parseInt(hash(['sa-matchups-v1',level,a,b,i]).slice(0,8),16);
@@ -86,8 +86,9 @@ else if(path.resolve(process.argv[1]??'')===fileURLToPath(import.meta.url)){
  const html=fs.readFileSync('compositions.html','utf8'),ctx=vm.createContext({window:{}});
  for(const key of ['KANTO_DATA','KANTO_COMPS']){const s=[...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].find(m=>m[1].trim().startsWith('window.'+key+'='));if(!s)throw Error('Missing '+key);vm.runInContext(s[1],ctx);}
  const {KANTO_DATA:data,KANTO_COMPS:C}=ctx.window,sets={},jobs=[];
- for(const r of C.rows)for(const b of r.boards)if(b.team.reduce((n,u)=>n+u.items.length,0)>(C.itemBudget??6))throw Error('Board exceeds scored item budget: '+r.id+' L'+b.level);
- for(const level of C.targetRound?[C.cutoff??48]:[8,9]){sets[level]=C.rows.filter(r=>['S','A'].includes((C.targetRound?r.stages[0]:r.stages.find(s=>s.level===level))?.tier)).map(r=>{const score=C.targetRound?r.stages[0]:r.stages.find(s=>s.level===level);return {...r,...(C.targetRound?r.boards[0]:r.boards.find(b=>b.level===level)),tier:score.tier};});for(let i=0;i<sets[level].length;i++)for(let j=i+1;j<sets[level].length;j++)jobs.push({level,a:sets[level][i],b:sets[level][j]});}
+ const realized=C.model==='finish-by-5-2';
+ for(const r of C.rows)for(const b of realized?[r]:r.boards)if(b.team.reduce((n,u)=>n+u.items.length,0)>(C.itemBudget??6))throw Error('Board exceeds scored item budget: '+r.id+' L'+b.level);
+ for(const level of realized?[52]:C.targetRound?[C.cutoff??48]:[8,9]){sets[level]=C.rows.filter(r=>['S','A'].includes(realized?r.tier:(C.targetRound?r.stages[0]:r.stages.find(s=>s.level===level))?.tier)).map(r=>{if(realized)return r;const score=C.targetRound?r.stages[0]:r.stages.find(s=>s.level===level);return {...r,...(C.targetRound?r.boards[0]:r.boards.find(b=>b.level===level)),tier:score.tier};});for(let i=0;i<sets[level].length;i++)for(let j=i+1;j<sets[level].length;j++)jobs.push({level,a:sets[level][i],b:sets[level][j]});}
  const out=path.resolve('analysis');fs.mkdirSync(path.join(out,'replays'),{recursive:true});
  const start=performance.now(),results=[];let next=0;const workers=Array.from({length:Math.min(os.availableParallelism(),Number(process.env.KANTO_WORKERS)||64)},()=>new Worker(new URL(import.meta.url),{workerData:{data,out}}));
  console.log(JSON.stringify({pairs:jobs.length,builds:Object.fromEntries(Object.entries(sets).map(([k,v])=>[k,v.length])),battles:jobs.length*512}));
@@ -95,7 +96,7 @@ else if(path.resolve(process.argv[1]??'')===fileURLToPath(import.meta.url)){
  results.sort((a,b)=>a.key.localeCompare(b.key));
  const types=Object.keys(data.traits),typeChart=Object.fromEntries(types.map(type=>[type,Object.fromEntries(types.map(def=>[def,typeEffect(type,[def])]))]));
  const manifest={build:harness.build,rules:harness.rules,files:Object.fromEntries(fs.readdirSync(path.join(root,'assets')).filter(f=>f.endsWith('.js')).sort().map(f=>[f,hash(fs.readFileSync(path.join(root,'assets',f),'utf8'))])),downloadedAt:JSON.parse(fs.readFileSync(path.join(root,'manifest.json'),'utf8')).saved.slice(0,10)},sourceHash=hash(html),source={generated:C.generated,version:C.version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceHash,simulation:`Version ${harness.rules} / ${routeFile}`,nativeHash:hash(fs.readFileSync(path.join(root,'assets',routeFile),'utf8')),nativeCaptured:manifest.downloadedAt,engineIdentity:harness.identity??null,generatedAt:new Date().toISOString(),seeds:128,sides:2,battlesPerPair:256,formationChecks:'64 paired seeds × both sides per column flip',totalBattles:jobs.length*512,seconds:round((performance.now()-start)/1000)};
- Object.assign(source,{targetRound:C.targetRound??null,cutoff:C.cutoff??null,itemBudget:C.itemBudget??6});
+ Object.assign(source,{targetRound:realized?'5-2':C.targetRound??null,cutoff:realized?52:C.cutoff??null,itemBudget:C.itemBudget??6});
  const catalogue=Object.fromEntries(Object.entries(sets).map(([level,rows])=>[level,rows.map(r=>({id:r.id,name:r.name,carry:r.carry,tier:r.tier,strategy:r.strategy,level:r.level,team:r.team.map(u=>{const line=data.roster.find(r=>r.id===u.line),f=line.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:line.traits,skill:f.skill};})}))]));
  fs.writeFileSync(path.join(out,'matchups.json'),JSON.stringify({source,builds:catalogue,itemNames:Object.fromEntries(data.items.map(i=>[i.id,i.name])),types,typeChart,pairs:results}));
  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify({source,nativeManifest:manifest,sourceBuilds:hash(catalogue),pairResults:hash(results)},null,2));

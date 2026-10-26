@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kanto Tactics replays</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="viewer.css">
+  <script src="shared.js"></script>
+  <script src="viewer-data.js" defer></script>
+  <script src="tooltip-data.js" defer></script>
+  <script src="tooltips.js" defer></script>
+  <script src="fight-text.js" defer></script>
+  <script src="comp.js" defer></script>
+  <script src="viewer.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><a href="viewer.html">KANTO TACTICS</a><select id="theme" class="theme-picker" aria-label="Theme"><option value="viridian">Viridian Forest</option><option value="pallet">Pallet Town</option></select></div>
+    <div class="top-actions">
+      <button id="import" class="button" type="button" hidden>Import Replay</button>
+      <button id="export-all" class="button" type="button" hidden>Export All</button>
+      <button id="export" class="button" type="button" hidden>Export Replay</button>
+      <button id="delete" class="button danger" type="button" hidden>Delete replay</button>
+      <input id="import-file" type="file" accept=".json,.html,.htm,application/json,text/html" multiple hidden>
+    </div>
+  </header>
+
+  <main>
+    <section id="library-view" class="library-view">
+      <div class="library-head"><h1>Replays</h1></div>
+      <div class="match-list-head" aria-hidden="true"><span>Place</span><span>Played</span><span>Final composition</span><span>Board value</span><span>Gold earned</span><span>Rolls</span></div>
+      <div id="library-list" class="match-list"></div>
+      <p id="library-empty" class="empty" hidden>No replays yet. Play an online match and it appears here.</p>
+      <p id="import-status" class="note" hidden></p>
+    </section>
+
+    <section id="replay-view" class="replay-view" hidden>
+      <div class="match-head">
+        <a class="back-link" href="viewer.html">All replays</a>
+        <span id="replay-place" class="match-place"></span>
+        <h1 id="replay-title">Online match</h1>
+        <p id="replay-meta" class="meta"></p>
+        <button id="replay-seed" class="seed-chip" type="button" hidden></button>
+        <span id="demo-banner" class="demo-banner" hidden>Sample data</span>
+      </div>
+
+      <section class="spine" aria-label="Rounds">
+        <div id="round-tabs" class="round-tabs"></div>
+        <div class="spine-side">
+          <div class="spine-nav">
+            <button id="previous" class="button icon" type="button" aria-label="Previous round">‹</button>
+            <strong id="round-label" class="num">-</strong>
+            <button id="next" class="button icon" type="button" aria-label="Next round">›</button>
+          </div>
+          <p class="spine-legend"><span class="key won">Won</span><span class="key lost">Lost</span><span class="key draw">Draw</span><span class="key none">No fight</span><span class="key pve">PvE</span></p>
+        </div>
+        <input id="round-range" type="range" min="0" max="0" value="0" aria-label="Replay round" class="visually-hidden" tabindex="-1">
+      </section>
+
+      <div class="replay-grid">
+        <section id="battle-card" class="panel battle-card">
+          <div class="battle-heading">
+            <div><h2 id="battle-title">Fight</h2><p id="battle-subtitle" class="meta"></p></div>
+            <div class="battle-heading-actions"><a id="refight" class="button small" target="_blank" rel="noopener" hidden>Re-fight</a><strong id="battle-result" class="battle-result"></strong></div>
+          </div>
+          <div class="screen">
+            <div class="battle-stage-viewport"><div id="battle-stage" class="battle-stage"><div id="battle-hexes"></div><svg id="battle-zones" width="540" height="520" aria-hidden="true"></svg><div id="battle-units"></div><div id="battle-fx"></div><div id="battle-banner" class="battle-banner"></div></div></div>
+            <div class="battle-controls">
+              <button id="battle-play" class="play" type="button" disabled>Play</button>
+              <button id="battle-restart" class="ctl" type="button" disabled aria-label="Restart fight" title="Restart fight">↺</button>
+              <input id="battle-scrub" type="range" min="0" max="1000" value="0" aria-label="Fight timeline" disabled>
+              <span id="battle-time" class="battle-time num">-</span>
+              <select id="battle-speed" class="ctl" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select>
+            </div>
+          </div>
+          <div id="battle-seals" class="chips battle-seals"></div>
+          <p id="battle-note" class="note"></p>
+        </section>
+
+        <div class="col-mid">
+          <aside class="panel battle-side" aria-label="Fight totals">
+            <div id="metric-tabs" class="metric-tabs" role="group" aria-label="Fight totals to show">
+              <button type="button" data-metric="dealt" class="selected">Damage</button><button type="button" data-metric="taken">Taken</button><button type="button" data-metric="heal">Healing</button><button type="button" data-metric="shield">Shields</button>
+            </div>
+            <div id="metric-legend" class="metric-legend"></div>
+            <div id="metric-list" class="metric-list"></div>
+          </aside>
+        </div>
+
+        <div class="col-right">
+          <article class="panel board-card mine-card">
+            <div class="board-heading"><h2>Your formation</h2><span id="my-board-info" class="meta"></span></div>
+            <div id="plan-bar" class="plan-bar" hidden><input id="plan-step" type="range" min="0" max="0" value="0" aria-label="Planning step"><span id="plan-label" class="meta"></span></div>
+            <div id="my-board" class="board mine"></div>
+            <div id="my-bench" class="bench" aria-label="Bench"></div>
+          </article>
+          <article class="panel board-card foe-card">
+            <div class="board-heading">
+              <label class="opponent-pick"><span class="visually-hidden">Opponent</span><select id="opponent-select"></select></label>
+              <span id="opponent-info" class="meta"></span>
+            </div>
+            <h2 id="opponent-title" class="visually-hidden">Opponent formation</h2>
+            <div id="opponent-board" class="board foe"></div>
+          </article>
+          <section class="panel shop-panel" aria-label="Shop">
+            <div class="shop-head"><h2>Shop</h2><span id="shop-summary" class="meta"></span></div>
+            <div id="shop-found" class="shop-found"></div>
+            <div id="shop-list" class="shop-list"></div>
+          </section>
+          <section class="panel ledger" aria-label="Round economy">
+            <h2>Gold</h2>
+            <dl class="ledger-grid">
+              <div><dt>Start</dt><dd id="gold-start" class="num">-</dd></div>
+              <div class="plus"><dt>Earned</dt><dd id="gold-earned" class="num">-</dd></div>
+              <div class="plus"><dt>Sold</dt><dd id="sales" class="num">-</dd></div>
+              <div class="minus"><dt>Spent</dt><dd id="gold-spent" class="num">-</dd></div>
+              <div class="total"><dt>End</dt><dd id="gold-end" class="num">-</dd></div>
+            </dl>
+            <dl class="ledger-facts">
+              <div><dt>Interest</dt><dd id="interest-earned" class="num">-</dd></div>
+              <div><dt>Rolls</dt><dd id="rolls" class="num">-</dd></div>
+              <div><dt>Rolls so far</dt><dd id="total-rolls" class="num">-</dd></div>
+              <div><dt>Avg earned</dt><dd id="average-earned" class="num">-</dd></div>
+            </dl>
+            <h3>Seal</h3>
+            <div id="seals" class="chips"></div>
+            <section id="actions-card" class="actions-card"><h3>Actions</h3><div id="action-list" class="action-list"></div></section>
+          </section>
+          <section class="panel log-panel">
+            <h3>Fight log</h3>
+            <div id="battle-event-list" class="battle-event-list"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

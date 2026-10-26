@@ -5,3 +5,5 @@
 __pycache__/
 *.pyc
 *.xlsx
+# Owner's full research specification includes private economy study figures.
+/docs/composition-search-configuration-and-rules.md

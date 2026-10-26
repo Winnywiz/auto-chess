@@ -3,16 +3,19 @@
 // level 8 and the cap against the stage-4 lobby. Seal economy effects are measured with the
 // full-game shop simulation (kept private); combat Seals are ranked by board fit.
 import fs from 'node:fs';
+import path from 'node:path';
 import {roster, family, arrange, activeTraits, traitCounts, scoreMany, seeds, startPool, traitRules} from './combat.mjs';
 import {S3, S4, placeHint, isFront, isTank, cost, SHOP, heuristic, cooccur} from './search.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
+import {availableForm} from './forms.mjs';
+import {acquisitionPool} from './acquire-pool.mjs';
 
-const W = new URL('../../work/fiveTwo36/', import.meta.url);
+import {OUT as W} from './paths.mjs';
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
-const html = fs.readFileSync('compositions.html', 'utf8');
+const html = fs.readFileSync(path.join(process.env.SITE_DIR??'.','compositions.html'), 'utf8');
 const C = JSON.parse(html.match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);
-const sealSrc = fs.readFileSync('seals-data.js', 'utf8');
+const sealSrc = fs.readFileSync(fs.existsSync(path.join(process.env.SITE_DIR??'.','seals-data.js'))?path.join(process.env.SITE_DIR??'.','seals-data.js'):'seals-data.js', 'utf8');
 const SEALS = JSON.parse(sealSrc.match(/window\.KANTO_SEALS=(\{.*\});?\s*$/s)[1]);
 const NS = Number(process.env.NS ?? 160);
 
@@ -34,24 +37,39 @@ function withItems(team, r) {
   const carry = r.team.find(u => u.assignment === 'Carry'), tank = r.team.find(u => u.assignment === 'Tank'), second = r.team.find(u => u.assignment === 'Secondary');
   const out = team.map(u => ({...u, items: []}));
   const put = (line, items) => { const u = out.find(x => x.line === line); if (u) { u.items = [...items]; return true; } return false; };
-  put(carry.line, carry.items);
-  if (!put(tank.line, tank.items)) { const f = out.filter(u => u.line !== carry.line && isFront(u.line)).sort((a, b) => isTank(b.line) - isTank(a.line) || cost(b.line) * b.star - cost(a.line) * a.star)[0]; if (f) f.items = [...tank.items]; }
+  const carryLine=r.transitionCarry??carry.line;
+  put(carryLine, carry.items);
+  if (!put(tank.line, tank.items)) { const f = out.filter(u => u.line !== carryLine && isFront(u.line)).sort((a, b) => isTank(b.line) - isTank(a.line) || cost(b.line) * b.star - cost(a.line) * a.star)[0]; if (f) f.items = [...tank.items]; }
   if (second && !put(second.line, second.items)) { const s = out.find(u => !u.items.length && u.line !== carry.line && !isTank(u.line)); if (s) s.items = [...second.items]; }
-  return out.map(u => ({...u, assignment: u.line === carry.line ? 'Carry' : u.items.length === 3 ? 'Tank' : u.items.length === 1 ? 'Secondary' : r.targets.includes(u.line) ? 'Upgrade' : 'Support'}));
+  return out.map(u => ({...u, assignment: u.line === carryLine ? 'Carry' : u.items.length === 3 ? 'Tank' : u.items.length === 1 ? 'Secondary' : r.targets.includes(u.line) ? 'Upgrade' : 'Support'}));
 }
 const hints = team => ({...placeHint, ...Object.fromEntries(team.map(u => [u.line, u.cell]))});
 function subsets(arr, k) { const out = []; const rec = (i, cur) => { if (cur.length === k) { out.push([...cur]); return; } for (let j = i; j < arr.length; j++) { cur.push(arr[j]); rec(j + 1, cur); cur.pop(); } }; rec(0, []); return out; }
 
 async function earlyBoard(r, L) {
-  const carry = r.team.find(u => u.assignment === 'Carry');
-  const rest = r.team.filter(u => u !== carry && !(cost(u.line) === 5 && L < 8) && !(cost(u.line) === 4 && L <= 5));
-  let pool = rest.length >= L - 1 ? rest : r.team.filter(u => u !== carry);
+  const plannedCarry = r.team.find(u => u.assignment === 'Carry');
+  let carry=plannedCarry;
+  const rest = r.team.filter(u => u !== plannedCarry && !(cost(u.line) === 5 && L < 8) && !(cost(u.line) === 4 && L <= 5));
   const co = cooccur(r.carry);
-  const opts = subsets(pool, L - 1).map(s => { const team = [carry, ...s].map(u => ({line: u.line, star: starAt(u, L, r)})); const h = heuristic(team, co, r.carry) + (team.some(u => u.line === r.team.find(x => x.assignment === 'Tank').line) ? 1.5 : 0) + (team.filter(u => isFront(u.line)).length >= 2 ? 1 : -2); return {team, h}; }).sort((a, b) => b.h - a.h).slice(0, 4);
-  const boards = opts.map(o => arrange(withItems(o.team, r), {carry: r.carry, hint: hints(r.team)}));
+  if(L<=5&&cost(carry.line)>=4){
+    const holders=SHOP.filter(l=>cost(l)<=3&&!rest.some(u=>family(u.line)===family(l))).sort((a,b)=>
+      roster[b].traits.filter(t=>roster[plannedCarry.line].traits.includes(t)).length-roster[a].traits.filter(t=>roster[plannedCarry.line].traits.includes(t)).length||
+      Number(roster[b].range>=3=== (roster[plannedCarry.line].range>=3))-Number(roster[a].range>=3=== (roster[plannedCarry.line].range>=3))||cost(b)-cost(a));
+    carry={line:holders[0],star:2};
+  }
+  const pool=[...rest];
+  while(pool.length<L-1){
+    const used=new Set([family(carry.line),...pool.map(u=>family(u.line))]);
+    const options=SHOP.filter(l=>cost(l)<=3&&!used.has(family(l))).sort((a,b)=>heuristic([carry,...pool,{line:b,star:2}],co,r.carry)-heuristic([carry,...pool,{line:a,star:2}],co,r.carry));
+    pool.push({line:options[0],star:2});
+  }
+  if(!pool.some(u=>isFront(u.line))){const l=SHOP.filter(l=>cost(l)<=3&&isFront(l)&&family(l)!==family(carry.line)).sort((a,b)=>cost(b)-cost(a))[0];pool.push({line:l,star:2});}
+  const actualCarry=availableForm(carry.line,starAt(carry,L,r));
+  const opts = subsets(pool, L - 1).map(s => { const team = [carry, ...s].map(u => {const star=starAt(u,L,r);return {line:availableForm(u.line,star),star};}); const h = heuristic(team, co, r.carry) + (team.some(u => u.line === r.team.find(x => x.assignment === 'Tank').line) ? 1.5 : 0) + (team.filter(u => isFront(u.line)).length >= 2 ? 1 : -2); return {team, h}; }).filter(o=>o.team.some(u=>u.line!==actualCarry&&isFront(u.line))).sort((a, b) => b.h - a.h).slice(0, 4);
+  const boards = opts.map(o => arrange(withItems(o.team, {...r,transitionCarry:actualCarry}), {carry: actualCarry, hint: hints(r.team)}));
   const sc = await vs(boards, S3, 2, `prog|${r.id}|${L}`);
   const i = sc.indexOf(Math.max(...sc));
-  return {level: L, team: boards[i], score: sc[i], lobby: 'stage 3'};
+  return {level:L,team:boards[i],score:null,illustrative:true,lobby:'unscored transition'};
 }
 async function addUnit(r, base, L, opts) {
   // Add units one at a time until the board has L units.
@@ -81,7 +99,7 @@ function planFor(r) {
   return {levels, rollLevel: at[1], rollFrom: at[0], floor: 50, allInAt: R(4, 5), levelAfter: true, levelKeep: 20, maxLevel: r.level + 1,
     needs: r.team.map(u => ({line: family(u.line), copies: 3 ** (u.star - 1), priority: r.targets.includes(u.line) ? 0 : u.assignment === 'Tank' ? 1 : 2}))};
 }
-function hitRate(plan, seals, salt) { let h = 0; for (let i = 0; i < NS; i++) h += simulate(plan, {seed: hashSeed(`${salt}|${i}`), seals}).hit; return h / NS; }
+function hitRate(plan,seals,salt){return acquisitionPool().run({plan,seals,salt,n:NS});}
 function fit(s, r, k) {
   const team = r.team, roles = team.map(u => roster[u.line].role), carry = team.find(u => u.assignment === 'Carry'), cr = roster[carry.line].role;
   const active = activeTraits(team), traitsOf = l => roster[l].traits, counts = traitCounts(team);
@@ -116,49 +134,50 @@ function fit(s, r, k) {
   return {v};
 }
 const econCache = new Map();
-async function sealPlan(r, salt) {
-  const plan = planFor(r), base = hitRate(plan, [], salt), picks = [], alternatives = [], measured = [];
-  let chosen = [];
-  for (let k = 0; k < 3; k++) {
-    const offer = SEALS.seals.filter(s => s.rarity === k + 1 && (!s.picks || s.picks.includes(k)) && !chosen.some(c => c.excl && c.excl === s.excl));
-    const scored = [];
-    const ref = econCache.has(`${r.carry}|${k}|ref`) ? econCache.get(`${r.carry}|${k}|ref`) : hitRate(plan, chosen.map((c, i) => ({at: ROUNDS[i], effects: c.effects, k: i})), salt + '|' + k);
-    econCache.set(`${r.carry}|${k}|ref`, ref);
-    for (const s of offer) {
-      if (isEcon(s)) {
-        const key = `${r.carry}|${k}|${s.id}`;
-        if (econCache.has(key)) { scored.push({s, kind: 'economy', v: econCache.get(key)}); continue; }
-        const p = hitRate(plan, [...chosen.map((c, i) => ({at: ROUNDS[i], effects: c.effects, k: i})), {at: ROUNDS[k], effects: s.effects, k}], salt + '|' + k);
-        measured.push({round: k, id: s.id, base: ref, with: p});
-        const v = (p - ref) * (r.category === 'fast-8' ? 40 : 70); econCache.set(key, v);
-        scored.push({s, kind: 'economy', v});
-      } else { const f = fit(s, r, k); if (f.v >= 0) scored.push({s, kind: 'core', v: f.v}); }
-    }
-    scored.sort((a, b) => b.v - a.v);
-    const top = scored[0];
-    picks.push({id: top.s.id, kind: top.kind, round: SEALS.rounds[k]});
-    alternatives.push(scored.slice(1, 4).map(x => ({id: x.s.id, kind: x.kind})));
-    chosen.push(top.s);
-  }
-  return {plan: {picks, alternatives}, measured, base};
+async function sealPlan(r,salt){
+ const plan=planFor(r),base=await hitRate(plan,[],salt),picks=[],alternatives=[],measured=[];
+ let chosen=[];
+ for(let k=0;k<3;k++){
+  const offer=SEALS.seals.filter(s=>s.rarity===k+1&&(!s.picks||s.picks.includes(k))&&!chosen.some(c=>c.excl&&c.excl===s.excl));
+  const prior=chosen.map((c,i)=>({at:ROUNDS[i],effects:c.effects,k:i}));
+  const prefix=JSON.stringify([plan,prior,k,salt]);
+  const cached=(key,seals)=>{const id=prefix+'|'+key;if(!econCache.has(id))econCache.set(id,hitRate(plan,seals,salt+'|'+k));return econCache.get(id);};
+  const ref=await cached('ref',prior);
+  const scored=(await Promise.all(offer.map(async s=>{
+   if(isEcon(s)){
+    const value=await cached(s.id,[...prior,{at:ROUNDS[k],effects:s.effects,k}]);
+    measured.push({round:k,id:s.id,base:ref,with:value});
+    return {s,kind:'economy',v:(value-ref)*(r.category==='fast-8'?40:70)};
+   }
+   const f=fit(s,r,k);return f.v>=0?{s,kind:'core',v:f.v}:null;
+  }))).filter(Boolean).sort((a,b)=>b.v-a.v);
+  const top=scored[0];picks.push({id:top.s.id,kind:top.kind,round:SEALS.rounds[k]});
+  alternatives.push(scored.slice(1,4).map(x=>({id:x.s.id,kind:x.kind})));chosen.push(top.s);
+ }
+ return {plan:{picks,alternatives},measured,base};
 }
 
 async function main() {
   startPool();
   const only = process.env.ONLY ? new Set(process.env.ONLY.split(',')) : null;
   const file = new URL('progression.json', W);
-  const out = only && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)) : {generated: new Date().toISOString(), rows: {}};
+  const out = (only || process.env.RESUME) && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)) : {generated: new Date().toISOString(), rows: {}};
   for (const r of C.rows) {
     if (only && !only.has(r.carry)) continue;
-    const stages = [];
-    for (let L = 5; L < r.level; L++) stages.push(await earlyBoard(r, L));
-    stages.push({level: r.level, team: r.team, score: r.score, lobby: 'stage 4', final: true});
-    let last = r.team;
-    if (r.level < 8) { const s8 = await addUnit(r, r.team, 8, {salt: `l8|${r.id}`}); stages.push(s8); last = s8.team; }
-    const cap = await addUnit(r, last, 9, {upgradeFours: true, salt: `cap|${r.id}`});
+    if(process.env.RESUME&&out.rows[r.id]?.sealVersion===2)continue;
+    const previous=out.rows[r.id];
+    let stages=previous?.stages,cap=previous?.cap;
+    if(!stages||!cap){
+      stages=[];
+      for(let L=5;L<r.level;L++)stages.push(await earlyBoard(r,L));
+      stages.push({level:r.level,team:r.team,score:r.score,lobby:'stage 4',final:true});
+      let last=r.team;
+      if(r.level<8){const s8=await addUnit(r,r.team,8,{salt:'l8|'+r.id});stages.push(s8);last=s8.team;}
+      cap=await addUnit(r,last,9,{upgradeFours:true,salt:'cap|'+r.id});
+    }
     const seals = await sealPlan(r, `seal|${r.carry}`);
-    out.rows[r.id] = {stages, cap: {...cap, optional: true}, seals: seals.plan, sealMeasured: seals.measured, sealBase: seals.base};
-    log(r.id, stages.map(s => `L${s.level}:${(s.score * 100).toFixed(0)}`).join(' '), 'cap', (cap.score * 100).toFixed(0), 'seals', seals.plan.picks.map(p => p.id).join(','));
+    out.rows[r.id] = {sealVersion:2,stages, cap: {...cap, optional: true}, seals: seals.plan, sealMeasured: seals.measured, sealBase: seals.base};
+    log(r.id, stages.map(s => `L${s.level}:${(Number.isFinite(s.score)?(s.score*100).toFixed(0):'unscored')}`).join(' '), 'cap', (cap.score * 100).toFixed(0), 'seals', seals.plan.picks.map(p => p.id).join(','));
     fs.writeFileSync(file, JSON.stringify(out, null, 1));
   }
   process.exit(0);

@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Private gold / roll workbook for the 5-2 study. Writes outside the website (work/fiveTwo/)."""
-import json, sys
+"""Private gold / roll workbook for the 5-2 study. Writes outside the website (work/fiveTwo37/)."""
+import json, sys, os
 from pathlib import Path
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.comments import Comment
 
-W = Path(__file__).resolve().parents[2] / 'work' / 'fiveTwo36'
+W = Path(os.environ['STUDY_DIR']).resolve() if os.environ.get('STUDY_DIR') else Path(__file__).resolve().parents[2] / 'work' / 'fiveTwo37'
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else W / 'kanto-5-2-gold-and-rolls.xlsx'
-budget = json.loads((W / 'budget.json').read_text())
-analysis = json.loads((W / 'analysis.json').read_text())
-data = json.loads((Path(__file__).resolve().parents[2] / 'simulation' / 'data-v36.json').read_text())
+budget = json.loads((W / 'budget.json').read_text(encoding='utf-8'))
+analysis = json.loads((W / 'analysis.json').read_text(encoding='utf-8'))
+data = json.loads((Path(__file__).resolve().parents[2] / 'work' / 'engine-v37' / 'data-v37.json').read_text(encoding='utf-8'))
 roster = {r['id']: r for r in data['roster']}
 name = lambda l, s: roster[l]['forms'][min(s, len(roster[l]['forms'])) - 1]['name']
 
@@ -47,7 +47,7 @@ for k, v in budget['audit'].items():
     rows.append([{'none': 'No levelling (hoard)', '5': 'Level 5 by 2-5', '6': 'Level 6 by 3-2', '7': 'Level 7 by 4-1', '8': 'Level 8 by 4-2'}[v['curve']], v['profile'], v['games'],
                  v['earned'], v['interest'], v['streak'], v['earned'] - v['interest'] - v['streak'], v['xpGold'], f'=D{r}-H{r}', v['goldAt31'], v['goldAt42'], v['level']])
 a, b = sheet(ws, 'Gold audit: average gold per game up to 5-2',
-  'Native v36 PvP economy, no unit purchases: start 5 gold, +5 base, interest 1 per 10 (max 5), streak +1/+2/+3 at 2/3/5, +1 per PvP win, PvE gold, no income on carousel rounds. Win/loss profiles: win ≈72%, mixed 50%, lose ≈28% per PvP round, with streak persistence. Column I = gold you can spend on units and rolls by 5-2 (earned minus XP bought).',
+  'Native v37 PvP economy, no unit purchases: start 5 gold, +5 base, interest 1 per 10 (max 5), streak +1/+2/+3 at 2/3/5, +1 per PvP win, PvE gold, no income on carousel rounds. Win/loss profiles: win ≈72%, mixed 50%, lose ≈28% per PvP round, with streak persistence. Column I = gold you can spend on units and rolls by 5-2 (earned minus XP bought).',
   ['Level curve', 'Win/loss profile', 'Games', 'Gold earned by 5-2', 'from interest', 'from streaks', 'base + wins + PvE', 'Gold spent on XP', 'Spendable on units + rolls', 'Gold held at 3-1 (no spend)', 'Gold held at 4-2 (no spend)', 'Level at 5-2'],
   rows, [I, I, G0, G1, G1, G1, G1, G1, G1, G1, G1, '0.00'], [22, 14, 8, 14, 12, 12, 14, 12, 16, 14, 14, 10])
 ws.cell(row=b + 2, column=1, value='Mixed-profile average spendable gold').font = BOLD
@@ -62,17 +62,10 @@ for c in budget['configs']:
     rows.append([c['type'], c['k'], c['level'], f"{c['best']['from']} / floor {c['best']['floor']} / all-in {c['best']['allIn']}",
                  o['hit'], ct['hit'], w['hit'], l['hit'], o['tank4'], o['rollGold'], f'=J{r}/2', o['unitGold'], f'=J{r}+L{r}', o['hitRollMedian'], o['hitRollP80'], o['medianDone'], o['level']])
 a, b = sheet(ws, 'How many 3★ targets fit in one 5-2 budget',
-  'Full-game simulation from 1-1 to 5-2 planning, 400 games per row (mixed profile), shared pool with 7 opponents drawn from the official ranked meta. Targets are random lines of that cost; a random four-cost tank is chased alongside. "Contested" = one opponent builds the same targets. Policy picked from an 18-policy grid (highest hit rate, then least roll gold).',
+  'Full-game simulation from 1-1 to 5-2 planning, ' + str(budget['NB']) + ' games per confirmation row (mixed profile), shared pool with 7 opponents drawn from the official ranked meta. Targets are random lines of that cost; a random four-cost tank is chased alongside. "Contested" = one opponent builds the same targets. Policy picked from an 18-policy grid (highest hit rate, then least roll gold).',
   ['Plan', '3★ targets (4-cost: 2★)', 'Roll level', 'Best roll policy', 'Hit by 5-2', 'Hit, contested', 'Hit, win-streak', 'Hit, lose-streak', '4-cost tank 2★ by 5-2', 'Avg gold on rolls', 'Avg rolls', 'Avg gold on units', 'Avg gold units + rolls', 'Median roll gold when hit', '80th pct roll gold when hit', 'Median hit round', 'Avg level at 5-2'],
   rows, [I, G0, G0, I, P, P, P, P, P, G0, G0, G0, G0, G0, G0, I, '0.00'], [20, 11, 8, 30, 10, 10, 10, 10, 11, 10, 9, 10, 11, 12, 12, 10, 9])
-recs = [('1-cost reroll', '1-2 targets at 3★ (≈93% / ≈80% by 5-2 at level 5). Three ≈71%, four ≈64%; with one contested line, two drop to ≈51%.'),
-        ('2-cost reroll', '1 target at 3★ (≈87-89%). Two ≈66-74%; three ≈49% (≈3% if contested). Best number: 1, a second only if uncontested.'),
-        ('3-cost reroll', '1 target only, and it is unreliable by 5-2 (≈38% at level 7). Treat a 3-cost 3★ as a bonus, not the plan.'),
-        ('Fast 8', 'One 4-cost 2★ carry plus a 4-cost 2★ tank (≈89% / ≈84%). Two 4-cost 2★ carries ≈75%. v36 XP (7→8 36, 8→9 56) helps Fast 8 slightly.'),
-        ('Frontline', 'A 4-cost 2★ tank at level 5-6 shows up in only ≈2-26% of games: plan a 3-cost 2★ or 1-cost 3★ tank instead.')]
-ws.cell(row=b + 2, column=1, value='Best number of targets').font = BOLD
-for i, (k, v) in enumerate(recs):
-    ws.cell(row=b + 3 + i, column=1, value=k).font = BOLD; ws.cell(row=b + 3 + i, column=2, value=v).font = BODY
+# Interpret the current run's table above; do not reuse earlier-run recommendation figures.
 
 # 3. Per composition
 ws = wb.create_sheet('Per composition')
@@ -87,7 +80,7 @@ for c in analysis['comps']:
                      v['pHit'], ct['core'], w['core'], l['core'], o['tank'], o['full'], o['rollGold'], f'=L{r}/2', o['unitGold'], o['xpGold'], f'=L{r}+N{r}+O{r}',
                      o['rollGoldMedianOnHit'], o['medianDone'], o['level'], o['goldLeft'], v['final']['score'], v['lowBest']['score'], v['expected']])
 a, b = sheet(ws, 'Per composition: gold used and rolls needed to finish by 5-2',
-  'Exact board needs (carry and extra targets at 3★, others at their shown stars) simulated from 1-1 with that strategy\'s level curve and best roll policy (3-cost rerolls: the better of level 7 at 4-1 or at 3-5), 300 games (mixed), 150 per other profile. "Full board" = every unit at its shown star. Expected 5-2 = the boards actually held at 5-2 in 200 simulated games (copies found, level reached), fought and weighted by frequency (this sets the website tier). Core hit = every 3★ target found.',
+  'Exact board needs (carry and extra targets at 3★, others at their shown stars) simulated from 1-1 with that strategy\'s level curve and best roll policy (3-cost rerolls: the better of level 7 at 4-1 or at 3-5), 400 games (mixed), 200 per other profile. "Full board" = every unit at its shown star. Expected 5-2 = the boards actually held at 5-2 in 200 simulated games (copies found, level reached), fought and weighted by frequency (this sets the website tier). Core hit = every 3★ target found.',
   ['Carry', 'Strategy', '3★ targets', 'Traits', 'Variant', 'Core hit by 5-2', 'Core hit, contested', 'Core hit, win-streak', 'Core hit, lose-streak', 'Tank at shown star', 'Full board', 'Avg roll gold', 'Avg rolls', 'Avg unit gold', 'Avg XP gold', 'Avg total spent', 'Median roll gold when hit', 'Median hit round', 'Avg level 5-2', 'Avg gold left 5-2', 'Full-board combat', 'Low-roll combat', 'Expected 5-2 (realized boards)'],
   rows, [I, I, I, I, I, P, P, P, P, P, P, G0, G0, G0, G0, G0, G0, I, '0.00', G0, P, P, P], [14, 22, 26, 34, 18, 10, 10, 10, 10, 10, 9, 9, 8, 9, 8, 10, 11, 9, 8, 9, 10, 10, 10])
 ws.auto_filter.ref = f'A4:W{b}'
@@ -95,16 +88,16 @@ ws.auto_filter.ref = f'A4:W{b}'
 # 4. Policy grid
 ws = wb.create_sheet('Policy grid')
 rows = [[c['type'], c['k'], c['level'], g['from'], g['floor'], g['allIn'], g['hit'], g['tank4'], g['rollGold']] for c in budget['configs'] for g in c['grid']]
-sheet(ws, 'Roll policy grid (200 games each, mixed profile)', '"early" = start rolling the round the roll level is reached; "late" = two rounds later. Floor = gold kept while slow-rolling; from the all-in round the floor is 0.',
+sheet(ws, 'Roll policy grid (' + str(budget['N']) + ' games each, mixed profile)', '"early" = start rolling the round the roll level is reached; "late" = two rounds later. Floor = gold kept while slow-rolling; from the all-in round the floor is 0.',
   ['Plan', 'Targets', 'Roll level', 'Start', 'Floor gold', 'All-in round', 'Hit by 5-2', '4-cost tank 2★', 'Avg roll gold'], rows, [I, G0, G0, I, G0, I, P, P, G0], [20, 8, 9, 8, 9, 10, 10, 11, 11])
 ws.auto_filter.ref = f'A4:I{4 + len(rows)}'
 
 # 5. Seals (measured economy effect)
 prog_file = W / 'progression.json'
 if prog_file.exists():
-    prog = json.loads(prog_file.read_text())['rows']
+    prog = json.loads(prog_file.read_text(encoding='utf-8'))['rows']
     seals_by = {}
-    sd = (Path(__file__).resolve().parents[2] / 'seals-data.js').read_text()
+    sd = (Path(__file__).resolve().parents[2] / 'seals-data.js').read_text(encoding='utf-8')
     sd = json.loads(sd[sd.index('{'):sd.rindex('}') + 1])
     sname = {s['id']: s['name'] for s in sd['seals']}
     rows, seen = [], set()
@@ -127,8 +120,8 @@ if prog_file.exists():
 gpt_file = W / 'gpt-compare.json'
 if gpt_file.exists():
     import re
-    gpt = json.loads(gpt_file.read_text())
-    html = (Path(__file__).resolve().parents[2] / 'compositions.html').read_text()
+    gpt = json.loads(gpt_file.read_text(encoding='utf-8'))
+    html = (Path(__file__).resolve().parents[2] / 'compositions.html').read_text(encoding='utf-8')
     ours = json.loads(re.search(r'window\.KANTO_COMPS=(\{[^\n]*\});', html).group(1))['rows']
     best = {}
     for r in ours: best.setdefault(r['carry'], r)
@@ -145,7 +138,7 @@ if gpt_file.exists():
 # 7. Toongcha boards (brother's list) on the same lobby and 5-2 model
 bro_file = W / 'brother' / 'compare.json'
 if bro_file.exists():
-    bro = json.loads(bro_file.read_text())
+    bro = json.loads(bro_file.read_text(encoding='utf-8'))
     rows = []
     for b in sorted(bro['theirs'], key=lambda b: -b['expected']):
         r = len(rows) + 5
@@ -169,10 +162,10 @@ if bro_file.exists():
 ws = wb.create_sheet('Rules used')
 rules = [('Start gold / level', '5 gold, level 2'), ('Base income', '5 per round (not on 1-1 or carousel rounds)'), ('Interest', '1 per 10 gold held, max 5'),
          ('Streak gold', '+1 at 2, +2 at 3, +3 at 5 (win or loss)'), ('PvP win gold', '+1'), ('PvE gold', '2-8 win +3; any stage PvE loss +2'),
-         ('Reroll', '2 gold'), ('Buy XP', '4 gold for 4 XP'), ('Passive XP', '+2 per round except carousel'), ('XP to next level', '2→3: 4, 3→4: 8, 4→5: 12, 5→6: 16, 6→7: 24, 7→8: 36, 8→9: 56 (v36)'),
+         ('Reroll', '2 gold'), ('Buy XP', '4 gold for 4 XP'), ('Passive XP', '+2 per round except carousel'), ('XP to next level', '2→3: 4, 3→4: 8, 4→5: 12, 5→6: 16, 6→7: 24, 7→8: 36, 8→9: 56 (v37)'),
          ('Shop odds (1/2/3/4/5-cost %)', 'L4 65/30/5/0/0 · L5 58/32/9/1/0 · L6 42/40/15/3/0 · L7 22/32/34/12/0 · L8 14/22/32/26/6 · L9 5/12/26/35/22'),
          ('Copies per line', '1-cost 29, 2-cost 22, 3-cost 18, 4-cost 10, 5-cost 9'), ('Rounds to 5-2', '1-1…1-3, then 8 per stage (2-4, 3-4, 4-4 carousel; 2-8, 3-8, 4-8 PvE), 5-1, 5-2'),
-         ('Eevee', 'Vaporeon needs 9 Eevee copies (2-cost pool shared with Jolteon/Flareon players)'), ('Source', 'Public Kanto Tactics v36 build (shop/route modules), read 25 Oct 2026; v36 engine in simulation/engine-v36.js; meta API generated ' + budget.get('generated', '')[:10])]
+         ('Eevee', 'Vaporeon needs 9 Eevee copies (2-cost pool shared with Jolteon/Flareon players)'), ('Source', 'Verified Kanto Tactics v37 build (shop/route modules); engine in work/engine-v37/engine-v37.js; meta API generated ' + budget.get('generated', '')[:10])]
 ws['A1'] = 'Economy rules used in the simulation'; ws['A1'].font = TITLE
 for i, (k, v) in enumerate(rules, 3):
     ws.cell(row=i, column=1, value=k).font = BOLD; ws.cell(row=i, column=2, value=v).font = BODY

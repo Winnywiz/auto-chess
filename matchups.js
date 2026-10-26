@@ -143,7 +143,7 @@ matchMedia('(min-width:851px)').addEventListener('change',e=>{if(e.matches&&$('.
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 async function init(){try{
  if(customMode){
-  const {initCustomBattle}=await import('./custom-battle.js?v=custom-battle-1');
+  const {initCustomBattle}=await import('./custom-battle.js?v=v37-1');
   await initCustomBattle({invalidate:()=>{++loadVersion;stop();replay=null;replayFile=null;$('#lab').hidden=true;},present:(result,game)=>{
    stop();++loadVersion;reversed=false;data=game;replayFile=result;lastChartKey='';
    const enrich=team=>team.map(u=>{const r=game.roster.find(r=>r.id===u.line),f=r.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:r.traits,skill:f.skill};});
@@ -155,7 +155,7 @@ async function init(){try{
    $('#lab').hidden=false;$('#replay-status').textContent='';$('#play').disabled=false;$('#scrub').disabled=false;setReplay(0);selectView(matchMedia('(max-width:850px)').matches?'replay':'stats');
   }});return;
  }
- const response=await fetch('analysis/matchups.json?v=v36-52-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=data.source.targetRound?(data.source.cutoff??48):params.get('level')==='8'?8:9;
+ const response=await fetch('analysis/matchups.json?v=v37-compared-1');if(!response.ok)throw Error('Matchup data unavailable');data=await response.json();const params=new URLSearchParams(location.hash.slice(1));level=data.source.targetRound?(data.source.cutoff??48):params.get('level')==='8'?8:9;
  if(data.source.targetRound)$('#level').innerHTML=`<button data-level="${data.source.cutoff??48}" aria-pressed="true">${data.source.targetRound==='5-2'?'Finish by 5-2':'Before 5-1'}</button>`;
  $('#lab').hidden=false;$('#status').textContent='';chooseLevel();if(params.get('view')==='replay')selectView('replay');
  }catch(e){$('#status').textContent=customMode?'Could not load the simulator. Reload to try again.':'Could not load matchups. Reload to try again.';}}

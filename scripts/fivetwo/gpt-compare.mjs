@@ -11,5 +11,5 @@ for (const r of rows) {
   out.push({id: r.id, name: r.name, carry: r.carry, strategy: r.strategy, tier: r.tier, theirExpected: r.expected, theirScore: r.score, ourLobbyScore: s.score, s4: s.s4, s3: s.s3, team});
   console.log(r.tier, r.name, r.strategy, 'their', (r.score * 100).toFixed(1), 'our lobby', (s.score * 100).toFixed(1));
 }
-fs.writeFileSync('work/fiveTwo36/gpt-compare.json', JSON.stringify(out, null, 1));
+fs.writeFileSync('work/fiveTwo37/gpt-compare.json', JSON.stringify(out, null, 1));
 process.exit(0);

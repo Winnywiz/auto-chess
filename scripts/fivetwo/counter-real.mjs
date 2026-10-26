@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {startPool, scoreMany, seeds, roster, family} from './combat.mjs';
 import {realizedBoards, planOf} from './realized.mjs';
-const W = 'work/fiveTwo36/';
+const W = 'work/fiveTwo37/';
 const {lobby, ours} = JSON.parse(fs.readFileSync(W + 'brother/counters.json'));
 const C = JSON.parse(fs.readFileSync('compositions.html', 'utf8').match(/window\.KANTO_COMPS=(\{[^\n]*\});/)[1]);
 const cost = l => roster[family(l)].cost;

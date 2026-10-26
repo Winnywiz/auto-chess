@@ -3,7 +3,7 @@ import {startPool, traitLabel} from './combat.mjs';
 import {score} from './search.mjs';
 import {simulate, roundIndex as R} from './acquire.mjs';
 import {hashSeed} from './rules.mjs';
-const old = JSON.parse(fs.readFileSync('work/fiveTwo36/search-backup.json')).results;
+const old = JSON.parse(fs.readFileSync('work/fiveTwo37/search-backup.json')).results;
 const base = old.find(r => r.line === 'oddish').variants.find(v => v.team.some(u => u.line === 'eevee')).team.map(({line, star, cell, items}) => ({line, star, cell, items: [...items]}));
 startPool();
 const boards = [{label: 'Eevee 2★ board as found', team: base}];

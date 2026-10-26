@@ -1,9 +1,10 @@
-// Combat helpers on the repository's pinned Version 35 engine bundle (simulation/engine-v36.js).
+// Combat helpers on the hash-verified native Version 37 engine.
 import fs from 'node:fs';
 import os from 'node:os';
 import {Worker} from 'node:worker_threads';
 
-export const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url)));
+export {data} from './engine.mjs';
+import {data} from './engine.mjs';
 export const roster = Object.fromEntries(data.roster.map(r => [r.id, r]));
 export const items = Object.fromEntries(data.items.map(i => [i.id, i]));
 export const traitRules = data.traits;
@@ -13,7 +14,7 @@ export const family = line => roster[line]?.branchOf ?? line;
 
 export function traitCounts(team) {
   const seen = new Set(), c = {};
-  for (const u of team) { if (seen.has(u.line)) continue; seen.add(u.line); for (const t of roster[u.line].traits) c[t] = (c[t] ?? 0) + 1; }
+  for (const u of team) { const f = family(u.line); if (seen.has(f)) continue; seen.add(f); for (const t of roster[u.line].traits) c[t] = (c[t] ?? 0) + 1; }
   return c;
 }
 export function activeTraits(team) {
@@ -44,16 +45,33 @@ export function startPool(n = Math.max(1, Math.min(os.cpus().length, Number(proc
   const queue = [], busy = new Map();
   let id = 0;
   const pump = w => { const job = queue.shift(); if (!job) { busy.delete(w); return; } busy.set(w, job); w.postMessage({id: job.id, batch: job.batch}); };
-  for (const w of workers) w.on('message', m => { const job = busy.get(w); job.resolve(m.results); pump(w); });
+  for (const w of workers) {
+    w.on('message', m => { const job = busy.get(w); if(m.error)job.reject(Error(m.error));else job.resolve(m.results); pump(w); });
+    w.on('error',error=>{busy.get(w)?.reject(error);for(const job of queue.splice(0))job.reject(error);});
+  }
   pool = {
-    run(batch) { return new Promise(resolve => { queue.push({id: id++, batch, resolve}); for (const w of workers) if (!busy.has(w)) { pump(w); break; } }); },
+    run(batch) { return new Promise((resolve,reject) => { queue.push({id: id++, batch, resolve,reject}); for (const w of workers) if (!busy.has(w)) { pump(w); break; } }); },
     close() { for (const w of workers) w.terminate(); pool = null; },
   };
   return pool;
 }
 // Score many (a, b) pairings; chunked so both workers stay busy.
-export async function scoreMany(pairs, chunk = 6) {
-  const p = startPool(), parts = [];
-  for (let i = 0; i < pairs.length; i += chunk) parts.push(p.run(pairs.slice(i, i + chunk).map(x => ({a: clean(x.a), b: clean(x.b), seeds: x.seeds}))));
-  return (await Promise.all(parts)).flat();
+const combatCache=new Map();
+export async function scoreMany(pairs, chunk = 32) {
+  const p=startPool(),pending=new Map(),requests=[];
+  for(const pair of pairs){
+    const a=clean(pair.a),b=clean(pair.b),sa=JSON.stringify(a),sb=JSON.stringify(b),flip=sa>sb;
+    const prefix=flip?sb+'|'+sa:sa+'|'+sb;
+    const keys=pair.seeds.map(seed=>{
+      const key=prefix+'|'+seed;
+      if(!combatCache.has(key)&&!pending.has(key))pending.set(key,{a:flip?b:a,b:flip?a:b,seeds:[seed]});
+      return key;
+    });requests.push({keys,flip});
+  }
+  const entries=[...pending],parts=[];
+  for(let i=0;i<entries.length;i+=chunk)parts.push(p.run(entries.slice(i,i+chunk).map(([,job])=>job)));
+  const results=(await Promise.all(parts)).flat();entries.forEach(([key],i)=>combatCache.set(key,results[i]));
+  const values=requests.map(({keys,flip})=>{const value=keys.reduce((sum,key)=>sum+combatCache.get(key),0)/keys.length;return flip?1-value:value;});
+  if(combatCache.size>150000){const keys=combatCache.keys();let remove=combatCache.size-100000;while(remove-->0)combatCache.delete(keys.next().value);}
+  return values;
 }

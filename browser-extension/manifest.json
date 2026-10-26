@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Kanto Tactics Replay Recorder",
+  "version": "1.7.0",
+  "description": "Automatically save local, round-by-round replays of Kanto Tactics matches.",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Kanto Tactics Replays",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://einoow.com/kanto-tactics*",
+        "https://einoow.com/playables/kanto-tactics/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://einoow.com/playables/kanto-tactics/*"
+      ],
+      "js": [
+        "bridge-main.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ]
+}

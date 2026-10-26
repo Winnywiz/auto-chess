@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kanto Tactics replays</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="popup.css">
+  <script src="shared.js"></script>
+  <script src="viewer-data.js" defer></script>
+  <script src="tooltip-data.js" defer></script>
+  <script src="tooltips.js" defer></script>
+  <script src="comp.js" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <header class="head"><span class="brand">KANTO TACTICS</span><span class="sub">Replays</span></header>
+  <section class="status" aria-live="polite">
+    <p class="state"><span id="status-dot" class="dot"></span><strong id="status-title">Checking the game…</strong></p>
+    <p id="status-copy" class="copy"></p>
+  </section>
+  <button id="open-library" class="primary" type="button">Open replays</button>
+  <section class="recent-head"><h2>Recent</h2><span id="count" class="num">0 saved</span></section>
+  <div id="recent" class="recent"></div>
+</body>
+</html>

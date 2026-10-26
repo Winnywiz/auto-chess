@@ -1,4 +1,4 @@
-// Version 36 PvP economy and shop rules, transcribed from the public game build
+// Version 37 PvP economy and shop rules, transcribed from the public game build
 // (shop/route modules, read as data, 2026-10-25; v36 shop module checked). Seals and boons are not modelled.
 import fs from 'node:fs';
 
@@ -56,7 +56,11 @@ export function income(gold, streak, wonPvp) {
   return RULES.baseIncome + interest + s + (wonPvp ? RULES.winGold : 0);
 }
 
-const data = JSON.parse(fs.readFileSync(new URL('../../simulation/data-v36.json', import.meta.url)));
+import {data} from './engine.mjs';
+const nativeEconomy = JSON.parse(fs.readFileSync(new URL('../../work/native-v37/data.json', import.meta.url))).economy;
+for (const key of ['players','startGold','startLevel','baseIncome','winGold','streakGold','interestStep','interestMax','rerollCost','xpPerRound','xpTable','odds']) {
+  if (JSON.stringify(RULES[key]) !== JSON.stringify(nativeEconomy[key])) throw Error('Version 37 economy mismatch: ' + key);
+}
 export const ROSTER = Object.fromEntries(data.roster.map(r => [r.id, r]));
 export const SHOP_LINES = data.roster.filter(r => !r.branchOf);
 export const family = line => ROSTER[line]?.branchOf ?? line;

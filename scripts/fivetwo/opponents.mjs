@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {roster, family, arrange, FULL} from './combat.mjs';
 
-const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo36/meta.json', import.meta.url)));
+const meta = JSON.parse(fs.readFileSync(new URL('../../work/fiveTwo37/meta.json', import.meta.url)));
 const validLine = l => !!roster[l];
 const mode = levels => { const tot = levels.reduce((s, l) => s + l.share, 0); let best = levels[0]; for (const l of levels) if (l.share > best.share) best = l; return {level: best.level, dist: Object.fromEntries(levels.map(l => [l.level, l.share / tot]))}; };
 const frontish = l => roster[l].range <= 1 && roster[l].role !== 'assassin';
@@ -13,7 +13,7 @@ function itemPlan(comp, team) {
   const sorted = [...team].sort((a, b) => weight(b.line) - weight(a.line));
   const carry = sorted.find(u => !frontish(u.line) || roster[u.line].role !== 'tank') ?? sorted[0];
   const tank = sorted.find(u => u !== carry && frontish(u.line)) ?? team.find(u => u !== carry && frontish(u.line));
-  const second = sorted.find(u => u !== carry && u !== tank && weight(u.line) > 0);
+  const second = sorted.find(u => u !== carry && u !== tank && weight(u.line) > 0) ?? sorted.find(u => u !== carry && u !== tank);
   const top = (line, n, fallback) => { const ids = itemsOf(line).map(i => i.id); const out = [...ids.slice(0, n)]; while (out.length < n) out.push(fallback[out.length % fallback.length]); return out; };
   const spa = l => (roster[l].forms.at(-1).skill.scale?.spa ?? 0) >= 0.5;
   const out = team.map(u => ({...u, items: []}));
@@ -30,15 +30,15 @@ export function snapshot(comp, stage, {maxLevel = 8} = {}) {
   const {level, dist} = mode(g.levels);
   const L = Math.min(maxLevel, level), seen = new Set(), team = [];
   for (const u of [...g.units].sort((a, b) => b.share - a.share)) {
-    if (!validLine(u.line) || seen.has(u.line) || team.length >= L) continue;
-    seen.add(u.line); team.push({line: u.line, star: Math.min(3, Math.max(1, u.star))});
+    if (!validLine(u.line) || seen.has(family(u.line)) || team.length >= L || (roster[family(u.line)].cost === 5 && L < 8)) continue;
+    seen.add(family(u.line)); team.push({line: u.line, star: Math.min(3, Math.max(1, u.star))});
   }
   // Short snapshots are filled to their level from the comp's own most-used final units.
   for (const u of [...comp.units].sort((a, b) => (b.share ?? 0) - (a.share ?? 0))) {
     if (team.length >= L) break;
-    if (!validLine(u.line) || seen.has(u.line)) continue;
+    if (!validLine(u.line) || seen.has(family(u.line))) continue;
     const c = roster[family(u.line)].cost; if (c === 5 && L < 8) continue;
-    seen.add(u.line); team.push({line: u.line, star: Math.max(1, Math.min(u.star, c >= 5 ? 1 : c === 4 ? 2 : 3)), filled: true});
+    seen.add(family(u.line)); team.push({line: u.line, star: Math.max(1, Math.min(u.star, c >= 5 ? 1 : c === 4 ? 2 : 3)), filled: true});
   }
   if (team.length < Math.min(L, 4)) return null;
   const hint = {};
