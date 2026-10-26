@@ -1251,23 +1251,24 @@ function renderShop(round) {
 
 // Re-fight: open a round in the website's custom battle simulator (same link format as its "Copy link").
 const SIM_URL = 'https://winnywiz.github.io/auto-chess/battle.html';
-const SIM_RULES = 38;
+const SIM_RULES = 39;
 function simTeam(units) {
   const lines = globalThis.KANTO_TIP_DATA?.units ?? {};
   const items = globalThis.KANTO_TIP_DATA?.items ?? {};
+  if (globalThis.KantoReplayCompat?.hasUnsupportedUnits(units, lines)) return null;
   const cells = new Set();
   const team = [];
   for (const unit of units) {
     const cell = Number(unit.cell);
-    if (!lines[unit.line] || !Number.isInteger(cell) || cell < 28 || cell > 55 || cells.has(cell)) continue;
+    if (!lines[unit.line] || !Number.isInteger(cell) || cell < 28 || cell > 55 || cells.has(cell)) return null;
     cells.add(cell);
     team.push({line: unit.line, star: Math.max(1, Math.min(3, Number(unit.star) || 1)),
       ...(['phys','spec'].includes(unit.form)?{form:unit.form}:{}),items: (unit.items ?? []).filter(item => items[item] && items[item].kind !== 'tool').slice(0, 3), cell});
-    if (team.length === 9) break;
+    if (team.length === 9 && units.length > 9) return null;
   }
-  return team;
+  return team.length === units.length ? team : null;
 }
-function refightRequest(round, battle) {
+function refightBoards(round, battle) {
   let mine = [];
   let theirs = [];
   if (battle?.meta?.length) {
@@ -1279,17 +1280,46 @@ function refightRequest(round, battle) {
     mine = round.ownBoard ?? [];
     theirs = foughtOpponent(round, null).player?.board ?? [];
   }
+  return {mine, theirs};
+}
+function refightUnavailable(round, battle, boards = refightBoards(round, battle)) {
+  if (round?.fight?.pve) return 'PvE fights cannot be re-fought in the PvP simulator.';
+  const units = [...boards.mine, ...boards.theirs];
+  const metadata = globalThis.KANTO_TIP_DATA?.units ?? {};
+  if (globalThis.KantoReplayCompat?.hasUnsupportedUnits(units, metadata)) {
+    const adventureOnly = units.some(unit => metadata[unit.line]?.pvpEligible === false || metadata[unit.line]?.mode === 'adventure');
+    return adventureOnly ? 'Adventure-only units cannot be re-fought in the PvP simulator.' : 'This board has a unit unavailable in the PvP simulator.';
+  }
+  return '';
+}
+function refightRequest(round, battle) {
+  const boards = refightBoards(round, battle);
+  if (refightUnavailable(round, battle, boards)) return null;
+  const {mine, theirs} = boards;
   const a = simTeam(mine);
   const b = simTeam(theirs);
-  if (!a.length || !b.length) return null;
+  if (!a?.length || !b?.length) return null;
   let seed = 0x811c9dc5;
   for (const char of `${current?.seed ?? current?.id}|${round.key ?? round.label}`) seed = Math.imul(seed ^ char.charCodeAt(0), 0x01000193) >>> 0;
   return {rules: SIM_RULES, a, b, seed, runs: 32};
 }
 function updateRefight(round, battle) {
   const link = $('#refight');
-  const request = refightRequest(round, battle);
+  const boards = refightBoards(round, battle);
+  const unavailable = refightUnavailable(round, battle, boards);
+  const request = unavailable ? null : refightRequest(round, battle);
+  if (unavailable) {
+    link.hidden = demoMode;
+    link.removeAttribute('href');
+    link.textContent = 'PvP only';
+    link.setAttribute('aria-disabled', 'true');
+    link.title = unavailable;
+    return;
+  }
   link.hidden = !request || demoMode;
+  link.textContent = 'Re-fight';
+  link.removeAttribute('aria-disabled');
+  link.removeAttribute('title');
   if (!request) { link.removeAttribute('href'); return; }
   link.href = `${SIM_URL}#${new URLSearchParams({battle: btoa(JSON.stringify(request))})}`;
   link.title = `Open round ${round.label || ''} in the battle simulator: both boards, items and positions`;

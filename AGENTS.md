@@ -5,8 +5,8 @@ The owner's current request takes priority over historical descriptions in that 
 
 - Persistent workflow preference (27 October 2026): the parent agent orchestrates and reviews; delegate implementation to gpt-6-luna at max reasoning. Ask the owner before substituting a model when the requested model is unavailable.
 
-- Current request, 27 October 2026: update v38 runtime, extension and game metadata first. Do not run a composition search or change the composition ranking now.
-- Runtime v38 does not make the archived v37 study current. Before any future study, port and verify the v38 round, shop and acquisition rules and manual skill choices. Do not reuse the v37 budget model as if it were v38.
+- Current request, 27 October 2026: update v39 runtime, extension and game metadata first. Do not run a composition search or change the composition ranking now.
+- Runtime v39 does not make the archived v37 study current. Before any future study, port and verify the v39 round, shop and acquisition rules and manual skill choices. Do not reuse the v37 budget model as if it were v39.
 - Future composition studies must be provided as a Windows launcher for the owner to execute. Do not start those studies autonomously.
 - Future item search must allow every legal finished item on every holder, with repeats except stacked Focus Sash. No role-specific item whitelist or preset tank-set limit. Beam pruning is approximate and must not be described as exhaustive joint enumeration.
 

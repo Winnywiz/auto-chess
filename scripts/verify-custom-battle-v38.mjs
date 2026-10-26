@@ -6,7 +6,7 @@ import {simulate,validateRequest} from '../simulation/battle-core.js';
 import * as native from '../work/native-v38/headless.mjs';
 const game=JSON.parse(fs.readFileSync('simulation/data-v38.json'));
 const reference={Battle:native.Battle,translate:native.roster.x,rules:native.rules,identity:native.identity};
-const provenance=JSON.parse(fs.readFileSync('simulation/provenance.json'));
+const provenance=JSON.parse(fs.readFileSync('simulation/provenance-v38.json'));
 assert.equal(provenance.rules,38);
 assert.equal(provenance.engineSHA256,createHash('sha256').update(fs.readFileSync('simulation/engine-v38.js')).digest('hex'));
 assert.equal(game.identity,native.identity);assert.equal(browser.identity,native.identity);
