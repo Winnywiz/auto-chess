@@ -4694,6 +4694,45 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
   const data = globalThis.KANTO_DATA,
     lines = Object.fromEntries(data.roster.map((r) => [r.id, r])),
     items = Object.fromEntries(data.items.map((r) => [r.id, r]));
+  const familyOf = (line) => line.branchOf ?? line.id;
+  const anchorBaseOf = (line) => (line.anchorK ? line.branchOf ?? line.id : line.id);
+  const anchorLegal = (line, star) =>
+    line.id.endsWith("-a0") ? star >= 1 : line.id.endsWith("-a1") ? star >= 2 : false;
+  function anchorOptions(lineId, star) {
+    const line = lines[lineId];
+    if (!line) return [];
+    const base = anchorBaseOf(line);
+    if (!lines[base]) return [];
+    return [
+      base,
+      ...data.roster
+        .filter((r) => r.anchorK && anchorBaseOf(r) === base && anchorLegal(r, star))
+        .sort((a, b) => a.id.localeCompare(b.id))
+        .map((r) => r.id),
+    ];
+  }
+  function setAnchor(unit, lineId) {
+    if (!anchorOptions(unit.line, unit.star).includes(lineId))
+      throw new Error("That native form is not available at this star level.");
+    unit.line = lineId;
+    const line = lines[lineId];
+    if (unit.form && !(line.flex?.stars.includes(unit.star) && ["phys", "spec"].includes(unit.form)))
+      delete unit.form;
+    return unit;
+  }
+  function setStar(unit, star) {
+    if (![1, 2, 3].includes(star)) throw new Error("Choose a star level from one to three.");
+    unit.star = star;
+    const line = lines[unit.line];
+    if (line.anchorK && !anchorLegal(line, star)) {
+      const base = anchorBaseOf(line);
+      unit.line = data.roster.find((r) => r.anchorK && anchorBaseOf(r) === base && anchorLegal(r, star))?.id ?? base;
+    }
+    const selectedLine = lines[unit.line];
+    if (unit.form && !(selectedLine.flex?.stars.includes(star) && ["phys", "spec"].includes(unit.form)))
+      delete unit.form;
+    return unit;
+  }
   function equip(current, id) {
     if (!Object.hasOwn(items, id)) throw new Error("Unknown item.");
     const next = [...current];
@@ -4768,8 +4807,10 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
     const counts = {};
     const seen = new Set();
     for (const u of Object.values(board)) {
-      if (!u || !lines[u.line] || seen.has(u.line)) continue;
-      seen.add(u.line);
+      if (!u || !lines[u.line]) continue;
+      const family = familyOf(lines[u.line]);
+      if (seen.has(family)) continue;
+      seen.add(family);
       for (const t of lines[u.line].traits) counts[t] = (counts[t] ?? 0) + 1;
     }
     return Object.entries(data.traits).map(([name, r]) => {
@@ -4798,6 +4839,8 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
     const unit = (u) => {
       if (!u || !Object.hasOwn(lines, u.line) || ![1, 2, 3].includes(u.star))
         throw new Error("This team contains an unknown Pokémon or star level.");
+      if (lines[u.line].anchorK && !anchorLegal(lines[u.line], u.star))
+        throw new Error("This anchored form is not available at that star level.");
       const held = u.items ?? [];
       if (
         !Array.isArray(held) ||
@@ -4856,6 +4899,11 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
   globalThis.TeamLogic = {
     traits,
     clean,
+    familyOf,
+    anchorBaseOf,
+    anchorOptions,
+    setAnchor,
+    setStar,
     lines,
     items,
     equip,
@@ -5342,8 +5390,9 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
     const u = found.u,
       r = lineOf(u),
       f = formOf(u),
-      branches = r.id === "eevee" || r.branchOf === "eevee";
-    el.innerHTML = `<div class="inspector-content"><div class="inspector-top"><span class="eyebrow">DETAILS</span><button class="bis-jump" data-show-bis>BIS items ↓</button><img width="28" height="20" style="object-fit:contain;image-rendering:pixelated" src="${media("icons/" + f.num + ".png")}" alt="${esc(f.name)} icon"></div><div class="selected-card"><div class="selected-art">${art(u, state.mode, 78)}</div><div><div class="selected-name">${esc(f.name)}</div><div class="selected-meta">${r.role} / ${r.cost} gold / ${found.kind === "board" ? "Deployed" : "Benched"}</div><div class="selected-traits">${miniTraits(r.traits)}</div></div></div><div class="star-controls" aria-label="Star level">${[1, 2, 3].map((n) => `<button data-upgrade="${n}" data-skill-unit="${u.id}" data-star="${n}" class="${u.star === n ? "active" : ""}" aria-pressed="${u.star === n}" aria-label="Set ${n} star">${"★".repeat(n)}</button>`).join("")}</div>${branches ? `<select class="branch-select" id="branch" aria-label="Eevee evolution branch">${["eevee", "vaporeon", "jolteon", "flareon"].map((id) => `<option value="${id}" ${u.line === id ? "selected" : ""}>${L.lines[id].forms[1].name} / ${L.lines[id].traits.join(" / ")}</option>`).join("")}</select>` : ""}${r.flex?.stars.includes(u.star)?`<label>Ability<select class="branch-select" data-skill-form aria-label="Selected ability"><option value="">Automatic from items</option>${['phys','spec'].map(mode=>`<option value="${mode}" ${u.form===mode?'selected':''}>${esc(r.flex[mode][u.star-1].name)}</option>`).join('')}</select></label>`:''}${inspectorExtras(u)}</div><div class="inspector-bottom"><button class="text-button" id="move-unit">${found.kind === "board" ? "Move to bench ↓" : "Deploy to board ↑"}</button><button class="text-button remove-unit" id="remove-unit">Remove ×</button></div>`;
+      branches = r.id === "eevee" || r.branchOf === "eevee",
+      anchors = L.anchorOptions(u.line, u.star);
+    el.innerHTML = `<div class="inspector-content"><div class="inspector-top"><span class="eyebrow">DETAILS</span><button class="bis-jump" data-show-bis>BIS items ↓</button><img width="28" height="20" style="object-fit:contain;image-rendering:pixelated" src="${media("icons/" + f.num + ".png")}" alt="${esc(f.name)} icon"></div><div class="selected-card"><div class="selected-art">${art(u, state.mode, 78)}</div><div><div class="selected-name">${esc(f.name)}</div><div class="selected-meta">${r.role} / ${r.cost} gold / ${found.kind === "board" ? "Deployed" : "Benched"}</div><div class="selected-traits">${miniTraits(r.traits)}</div></div></div><div class="star-controls" aria-label="Star level">${[1, 2, 3].map((n) => `<button data-upgrade="${n}" data-skill-unit="${u.id}" data-star="${n}" class="${u.star === n ? "active" : ""}" aria-pressed="${u.star === n}" aria-label="Set ${n} star">${"★".repeat(n)}</button>`).join("")}</div>${branches ? `<select class="branch-select" id="branch" aria-label="Eevee evolution branch">${["eevee", "vaporeon", "jolteon", "flareon"].map((id) => `<option value="${id}" ${u.line === id ? "selected" : ""}>${L.lines[id].forms[1].name} / ${L.lines[id].traits.join(" / ")}</option>`).join("")}</select>` : ""}${anchors.length > 1 ? `<label>Native form<select class="branch-select" id="anchoring" aria-label="Native anchoring form">${anchors.map((id) => `<option value="${esc(id)}" ${u.line === id ? "selected" : ""}>${id === L.familyOf(r) ? "Normal evolution" : "Anchored form"}: ${esc(L.lines[id].forms[u.star - 1].name)}</option>`).join("")}</select></label>` : ""}${r.flex?.stars.includes(u.star)?`<label>Ability<select class="branch-select" data-skill-form aria-label="Selected ability"><option value="">Automatic from items</option>${['phys','spec'].map(mode=>`<option value="${mode}" ${u.form===mode?'selected':''}>${esc(r.flex[mode][u.star-1].name)}</option>`).join('')}</select></label>`:''}${inspectorExtras(u)}</div><div class="inspector-bottom"><button class="text-button" id="move-unit">${found.kind === "board" ? "Move to bench ↓" : "Deploy to board ↑"}</button><button class="text-button remove-unit" id="remove-unit">Remove ×</button></div>`;
     el.querySelectorAll("[data-suggest-item]").forEach(
       (b) => (b.onclick = () => equipItem(b.dataset.suggestItem)),
     );
@@ -5380,15 +5429,18 @@ html[data-theme="pallet"] .hex.empty .plus { color: #cddbf033; }
       (b) =>
         (b.onclick = () =>
           commit(() => {
-            find(selected).u.star = +b.dataset.evolve;
+            L.setStar(find(selected).u, +b.dataset.evolve);
           })),
     );
     el.querySelectorAll("[data-upgrade]").forEach(
       (b) =>
         (b.onclick = () =>
           commit(() => {
-            find(selected).u.star = +b.dataset.upgrade;
+            L.setStar(find(selected).u, +b.dataset.upgrade);
           })),
+    );
+    el.querySelector("#anchoring")?.addEventListener("change", (e) =>
+      commit(() => L.setAnchor(find(selected).u, e.target.value)),
     );
     el.querySelector('[data-skill-form]')?.addEventListener('change',e=>commit(()=>{const unit=find(selected).u;if(e.target.value)unit.form=e.target.value;else delete unit.form;}));
     el.querySelector("#remove-unit").onclick = removeSelected;

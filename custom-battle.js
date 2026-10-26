@@ -3,6 +3,23 @@ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 const clone=x=>JSON.parse(JSON.stringify(x));
 const coord=cell=>'ABCD'[Math.floor((cell-28)/7)]+(cell%7+1);
 const itemImage=id=>id.startsWith('emblem-')?'media/types/'+id.slice(7)+'.png':'media/items/'+id+'.png';
+const anchorFamily=line=>line.branchOf??line.id;
+const anchorBase=line=>line.anchorK?line.branchOf??line.id:line.id;
+export function anchorLegalAt(line,star){return line.id.endsWith('-a0')?star>=1:line.id.endsWith('-a1')?star>=2:false;}
+export function availableStars(line){return !line.anchorK?[1,2,3]:line.id.endsWith('-a0')?[1,2,3]:line.id.endsWith('-a1')?[2,3]:[];}
+export function initialStar(line){return line.anchorK&&line.id.endsWith('-a1')?2:1;}
+export function normalizeAnchoredUnit(unit,lines){
+ const line=lines.get(unit.line);if(!line?.anchorK||anchorLegalAt(line,unit.star))return{...unit};
+ const family=anchorBase(line),replacement=[...lines.values()].find(r=>r.anchorK&&anchorBase(r)===family&&anchorLegalAt(r,unit.star));
+ const normalized={...unit,line:replacement?.id??family},selected=lines.get(normalized.line);
+ if(normalized.form&&!(selected.flex?.stars.includes(unit.star)&&['phys','spec'].includes(normalized.form)))delete normalized.form;
+ return normalized;
+}
+export function distinctTraitCounts(team,lines){
+ const counts={},seen=new Set();
+ for(const unit of team){const line=lines.get(unit.line);if(!line)continue;const family=anchorFamily(line);if(seen.has(family))continue;seen.add(family);for(const trait of line.traits)counts[trait]=(counts[trait]??0)+1;}
+ return counts;
+}
 export async function initCustomBattle({present,invalidate}){
  let rules=38;
  try{const encoded=new URLSearchParams(location.hash.slice(1)).get('battle');if(encoded&&encoded.length<=16000){const version=JSON.parse(atob(encoded)).rules;if([36,37,38].includes(version))rules=version;}}catch{}
@@ -17,7 +34,7 @@ export async function initCustomBattle({present,invalidate}){
  function shutdown(){worker?.terminate();worker=null;clearTimeout(timer);timer=null;busy=false;$('#simulate').disabled=false;$('#cancel-simulation').hidden=true;}
  function changed(){generation++;shutdown();invalidate();lastResult=null;$('#download-replay').hidden=true;if(new URLSearchParams(location.hash.slice(1)).has('battle'))history.replaceState(null,'',location.pathname+location.search);notify('Simulate to update the replay.');save();}
  function save(){try{localStorage.setItem(`kanto-custom-v${rules}`,JSON.stringify(request()));}catch{}}
- function restore(value){const q=validateRequest(value,game,{allowEmpty:true});teams={a:q.a,b:q.b};$('#battle-seed').value=q.seed;$('#battle-runs').value=q.runs;}
+ function restore(value){const normalized={...value,a:(value.a??[]).map(u=>normalizeAnchoredUnit(u,lines)),b:(value.b??[]).map(u=>normalizeAnchoredUnit(u,lines))};const q=validateRequest(normalized,game,{allowEmpty:true});teams={a:q.a,b:q.b};$('#battle-seed').value=q.seed;$('#battle-runs').value=q.runs;}
  try{
   const encoded=new URLSearchParams(location.hash.slice(1)).get('battle');
   if(encoded){if(encoded.length>16000)throw Error('This battle link is too large.');restore(JSON.parse(atob(encoded)));}
@@ -26,14 +43,14 @@ export async function initCustomBattle({present,invalidate}){
  function renderSide(side){
   const team=teams[side],current=team[selected[side]],letter=side.toUpperCase();
   $('#count-'+side).textContent=team.length+'/9';$('#add-'+side).disabled=team.length>=9;$('#clear-'+side).disabled=!team.length;
-  const counts={};for(const line of new Set(team.map(u=>u.line)))for(const t of lines.get(line).traits)counts[t]=(counts[t]??0)+1;
+  const counts=distinctTraitCounts(team,lines);
   $('#setup-traits-'+side).innerHTML='<span class="trait-caption" title="Before item effects">Base traits</span>'+Object.entries(counts).filter(([t,n])=>n>=game.traits[t].thresholds[0]).sort((a,b)=>b[1]-a[1]).map(([t,n])=>`<span title="${esc(t)} ${n}"><img src="media/types/${t.toLowerCase()}.png" alt="${esc(t)}">${n}</span>`).join('');
   const cells=Array.from({length:28},(_,i)=>{
    const cell=i+28,index=team.findIndex(u=>u.cell===cell),u=team[index],f=u&&form(u);
    return `<button type="button" class="setup-hex ${u?'occupied':''} ${index===selected[side]?'selected':''}" data-cell="${cell}" data-side="${side}" aria-pressed="${!!u&&index===selected[side]}" aria-label="Team ${letter}, ${coord(cell)}${u?', '+esc(f.name)+', '+u.star+' stars':', empty'}" title="${u?esc(f.name):coord(cell)}">${u?`<img src="media/sprites/${f.num}.gif" alt=""><span class="setup-stars">${'★'.repeat(u.star)}</span><span class="setup-gear">${u.items.map(id=>`<img src="${itemImage(id)}" alt="${esc(game.items.find(i=>i.id===id).name)}">`).join('')}</span>`:`<span class="hex-coordinate">${coord(cell)}</span>`}</button>`;
   });
   $('#board-'+side).innerHTML=Array.from({length:4},(_,row)=>'<div class="setup-row '+(row%2?'offset':'')+'">'+cells.slice(row*7,row*7+7).join('')+'</div>').join('');
-  $('#unit-editor-'+side).innerHTML=current?`<div class="selected-unit"><img src="media/icons/${form(current).num}.png" alt=""><b>${esc(form(current).name)}</b><span>${coord(current.cell)}</span><button type="button" data-remove="${side}" aria-label="Remove ${esc(form(current).name)} from team ${letter}">Remove</button></div><div class="unit-settings"><label>Stars<select data-star="${side}" aria-label="Team ${letter} selected Pokémon stars">${[1,2,3].map(n=>`<option value="${n}" ${n===current.star?'selected':''}>${n}★</option>`).join('')}</select></label>${rules>=38&&lines.get(current.line).flex?.stars.includes(current.star)?`<label>Ability<select data-form="${side}" aria-label="Team ${letter} selected ability"><option value="">Automatic from items</option>${['phys','spec'].map(mode=>`<option value="${mode}" ${current.form===mode?'selected':''}>${esc(lines.get(current.line).flex[mode][current.star-1].name)}</option>`).join('')}</select></label>`:''}${[0,1,2].map(slot=>`<label>Item ${slot+1}<select data-item="${side}" data-slot="${slot}" aria-label="Team ${letter} held item ${slot+1}"><option value="">None</option>${['full','part','emblem'].map(kind=>`<optgroup label="${{full:'Finished items',part:'Components',emblem:'Emblems'}[kind]}">${game.items.filter(i=>i.kind===kind).map(i=>`<option value="${i.id}" ${current.items[slot]===i.id?'selected':''}>${esc(i.name)}</option>`).join('')}</optgroup>`).join('')}</select></label>`).join('')}</div><div class="held-effects">${current.items.map(id=>{const i=game.items.find(i=>i.id===id);return `<span title="${esc(i.name+': '+i.short)}"><img src="${itemImage(id)}" alt=""><span><b>${esc(i.name)}</b> ${esc(i.tiny??i.short??'')}</span></span>`;}).join('')}</div>`:'<p class="empty-team">Add a Pokémon to start.</p>';
+  $('#unit-editor-'+side).innerHTML=current?`<div class="selected-unit"><img src="media/icons/${form(current).num}.png" alt=""><b>${esc(form(current).name)}</b><span>${coord(current.cell)}</span><button type="button" data-remove="${side}" aria-label="Remove ${esc(form(current).name)} from team ${letter}">Remove</button></div><div class="unit-settings"><label>Stars<select data-star="${side}" aria-label="Team ${letter} selected Pokémon stars">${availableStars(lines.get(current.line)).map(n=>`<option value="${n}" ${n===current.star?'selected':''}>${n}★</option>`).join('')}</select></label>${rules>=38&&lines.get(current.line).flex?.stars.includes(current.star)?`<label>Ability<select data-form="${side}" aria-label="Team ${letter} selected ability"><option value="">Automatic from items</option>${['phys','spec'].map(mode=>`<option value="${mode}" ${current.form===mode?'selected':''}>${esc(lines.get(current.line).flex[mode][current.star-1].name)}</option>`).join('')}</select></label>`:''}${[0,1,2].map(slot=>`<label>Item ${slot+1}<select data-item="${side}" data-slot="${slot}" aria-label="Team ${letter} held item ${slot+1}"><option value="">None</option>${['full','part','emblem'].map(kind=>`<optgroup label="${{full:'Finished items',part:'Components',emblem:'Emblems'}[kind]}">${game.items.filter(i=>i.kind===kind).map(i=>`<option value="${i.id}" ${current.items[slot]===i.id?'selected':''}>${esc(i.name)}</option>`).join('')}</optgroup>`).join('')}</select></label>`).join('')}</div><div class="held-effects">${current.items.map(id=>{const i=game.items.find(i=>i.id===id);return `<span title="${esc(i.name+': '+i.short)}"><img src="${itemImage(id)}" alt=""><span><b>${esc(i.name)}</b> ${esc(i.tiny??i.short??'')}</span></span>`;}).join('')}</div>`:'<p class="empty-team">Add a Pokémon to start.</p>';
  }
  function render(){for(const side of ['a','b'])renderSide(side);$('#setup-summary').textContent=`Teams / ${teams.a.length} vs ${teams.b.length}`;}
  function openUnits(side,cell=null){if(teams[side].length>=9)return;picking=side;pickCell=cell;$('#unit-picker-title').textContent='Add to team '+side.toUpperCase();$('#unit-search').value='';renderUnits();$('#unit-picker').showModal();$('#unit-search').focus();}
@@ -52,12 +69,12 @@ export async function initCustomBattle({present,invalidate}){
   $('#unit-editor-'+side).onchange=e=>{
    const u=teams[side][selected[side]];if(!u)return;
    if(e.target.dataset.form){if(e.target.value)u.form=e.target.value;else delete u.form;}
-   else if(e.target.dataset.star)u.star=Number(e.target.value);
+   else if(e.target.dataset.star){u.star=Number(e.target.value);Object.assign(u,normalizeAnchoredUnit(u,lines));}
    else if(e.target.dataset.item){const slots=[...u.items];slots[Number(e.target.dataset.slot)]=e.target.value;u.items=slots.filter(Boolean);}else return;
    changed();renderSide(side);
   };
   $('#unit-editor-'+side).onclick=e=>{if(!e.target.closest('[data-remove]'))return;teams[side].splice(selected[side],1);selected[side]=teams[side].length?Math.min(selected[side],teams[side].length-1):-1;changed();render();};
-  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;const board=row.boards[0];teams[side]=clone(board.team).map(({line,star,cell,items})=>({line,star,cell,items}));selected[side]=0;e.target.value='';changed();render();};
+  $('#preset-'+side).onchange=e=>{const row=presets.find(r=>r.id===e.target.value);if(!row)return;const board=row.boards[0];teams[side]=clone(board.team).map(({line,star,cell,items,form})=>normalizeAnchoredUnit({line,star,cell,items,...form?{form}:{}},lines));selected[side]=0;e.target.value='';changed();render();};
   $('#import-'+side).onclick=()=>{
    $('#import-side').value=side;$('#builder-payload').value='';$('#import-error').textContent='';$('#builder-import').showModal();$('#builder-payload').focus();
   };
@@ -66,7 +83,7 @@ export async function initCustomBattle({present,invalidate}){
   const button=e.target.closest('[data-add-line]');if(!button)return;const r=lines.get(button.dataset.addLine),occupied=new Set(teams[picking].map(u=>u.cell));
   const preference=r.range<=2?[31,30,32,29,33,28,34]:[52,53,51,54,50,55,49];
   const cell=pickCell??[...preference,...Array.from({length:28},(_,i)=>i+28)].find(c=>!occupied.has(c));
-  teams[picking].push({line:r.id,star:1,items:[],cell});selected[picking]=teams[picking].length-1;changed();render();$('#unit-picker').close();$('#add-'+picking).focus();
+  teams[picking].push({line:r.id,star:initialStar(r),items:[],cell});selected[picking]=teams[picking].length-1;changed();render();$('#unit-picker').close();$('#add-'+picking).focus();
  };
  $('#unit-search').oninput=renderUnits;$('#close-units').onclick=()=>$('#unit-picker').close();
  $('#close-import').onclick=()=>$('#builder-import').close();
@@ -75,7 +92,7 @@ export async function initCustomBattle({present,invalidate}){
    const text=$('#builder-payload').value.trim();if(text.length>20000)throw Error('This setup is too large.');
    const encoded=text.includes('#team=')?text.split('#team=')[1]:text.replace(/^#?team=/,'');
    const payload=JSON.parse(atob(encoded));if(payload.v!==1||!payload.board||Array.isArray(payload.board))throw Error('Paste a builder team link.');
-   const team=Object.entries(payload.board).map(([cell,u])=>({line:u.line,star:u.star,items:u.items??[],...(u.form?{form:u.form}:{}),cell:Number(cell)+28})),side=$('#import-side').value;
+   const team=Object.entries(payload.board).map(([cell,u])=>normalizeAnchoredUnit({line:u.line,star:u.star,items:u.items??[],...(u.form?{form:u.form}:{}),cell:Number(cell)+28},lines)),side=$('#import-side').value;
    validateRequest({rules,a:team,b:team,seed:0,runs:1},game);teams[side]=team;selected[side]=0;changed();render();$('#builder-import').close();
   }catch(error){$('#import-error').textContent=error.message==='Invalid character'?'Paste a valid builder team link.':error.message;}
  };
