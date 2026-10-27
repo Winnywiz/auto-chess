@@ -16,6 +16,8 @@ assert.equal(bundled.rules,40);assert.equal(bundled.identity,game.identity);
 assert.equal(provenance.engineSHA256,sha('work/engine-v40/engine-v40.js'));
 assert.equal(provenance.dataSHA256,sha('work/engine-v40/data-v40.json'));
 assert.equal(sha('work/engine-v40/data-v40.json'),sha('simulation/data-v40.json'));
+assert.equal(sha('simulation/provenance-v39.json'),'998732e2ae64d840276af64a7e7ef925417343ba8aeb6915b8dcdcfbca352cd8');
+assert.equal(JSON.parse(fs.readFileSync('simulation/provenance-v39.json','utf8')).rules,39);
 const worker=fs.readFileSync('simulation/battle-worker.js','utf8');
 const custom=fs.readFileSync('custom-battle.js','utf8');
 assert(worker.includes('[36,37,38,39,40].includes(version)'));
@@ -102,6 +104,6 @@ const verification={passed:true,rules:40,identity:game.identity,pvpRoster:game.r
   adventureAnchors:game.adventureAnchors.length,changedData:{machamp396:true,parasectGrowth09:true,kakunaSpikes20:true,gloomMultiplier095:true,
     poisonBoundaries:[50,120,170],tailwindGust:true,stubbornFishBackAnchor:true},poisonCombatThresholds:[2,4,6],
   mewCharge85:chargeChecks,boardWideMewCopy:true,manualForms:['phys','spec'],battleCoreManualForm:true,
-  runtimeWiring:true,browserUsed:false,studyRun:false,published:false};
+  runtimeWiring:true,legacy39ProvenancePreserved:true,browserUsed:false,studyRun:false,published:false};
 fs.writeFileSync('work/engine-v40/runtime-verification.json',JSON.stringify(verification,null,2)+'\n');
 console.log(JSON.stringify(verification));
