@@ -1,7 +1,7 @@
 import {simulate} from './battle-core.js';
 const runtimes=new Map();
 function runtime(version){
- if(![36,37,38,39].includes(version))throw Error('Unsupported simulator version.');
+ if(![36,37,38,39,40].includes(version))throw Error('Unsupported simulator version.');
  if(!runtimes.has(version))runtimes.set(version,Promise.all([
   import(`./engine-v${version}.js`),
   fetch(new URL(`data-v${version}.json`,import.meta.url)).then(r=>{if(!r.ok)throw Error('Could not load combat data.');return r.json();})

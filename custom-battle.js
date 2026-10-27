@@ -21,9 +21,9 @@ export function distinctTraitCounts(team,lines){
  return counts;
 }
 export async function initCustomBattle({present,invalidate}){
- let rules=39;
- try{const encoded=new URLSearchParams(location.hash.slice(1)).get('battle');if(encoded&&encoded.length<=16000){const version=JSON.parse(atob(encoded)).rules;if([36,37,38,39].includes(version))rules=version;}}catch{}
- const response=await fetch(`simulation/data-v${rules}.json?v=v39-1`);if(!response.ok)throw Error('Combat data unavailable');
+ let rules=40;
+ try{const encoded=new URLSearchParams(location.hash.slice(1)).get('battle');if(encoded&&encoded.length<=16000){const version=JSON.parse(atob(encoded)).rules;if([36,37,38,39,40].includes(version))rules=version;}}catch{}
+ const response=await fetch(`simulation/data-v${rules}.json?v=v40-1`);if(!response.ok)throw Error('Combat data unavailable');
  const game=await response.json(),lines=new Map(game.roster.map(r=>[r.id,r]));
  const sorted=[...game.roster].sort((a,b)=>a.cost-b.cost||a.forms[0].name.localeCompare(b.forms[0].name));
  let teams={a:[{line:'vaporeon',star:2,cell:52,items:['choice-specs','focus-sash']},{line:'snorlax',star:2,cell:31,items:['leftovers']}],b:[{line:'kabutops',star:2,cell:31,items:['scope-lens','focus-sash']},{line:'tangela4',star:2,cell:30,items:['rocky-helmet']}]};
@@ -110,7 +110,7 @@ export async function initCustomBattle({present,invalidate}){
  $('#simulation-form').onsubmit=e=>{
   e.preventDefault();if(busy)return;let q;try{q=validateRequest(request(),game);}catch(error){notify(error.message);return;}
   save();invalidate();lastResult=null;$('#download-replay').hidden=true;busy=true;$('#simulate').disabled=true;$('#cancel-simulation').hidden=false;const id=++generation;notify('Loading combat engine…');
-  try{worker=new Worker(new URL('./simulation/battle-worker.js?v=v39-1',import.meta.url),{type:'module'});}catch{shutdown();notify('This browser could not start the simulator. Try a current browser.');return;}
+  try{worker=new Worker(new URL('./simulation/battle-worker.js?v=v40-1',import.meta.url),{type:'module'});}catch{shutdown();notify('This browser could not start the simulator. Try a current browser.');return;}
   timer=setTimeout(()=>{if(id!==generation)return;generation++;shutdown();notify('Simulation timed out. Try fewer fights.');},45000);
   worker.onerror=e=>{if(id!==generation)return;e.preventDefault();shutdown();notify('Could not load the combat engine. Reload to try again.');};
   worker.onmessage=({data:message})=>{

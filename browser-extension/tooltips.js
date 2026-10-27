@@ -41,7 +41,9 @@
     const base = String(id ?? '').split(':')[0];
     const info = DATA.seals?.[base];
     let art = DATA.sealArt;
-    const parameter=String(id??'').split(':')[1],key=info?.hero?'hero:'+base:info?.template?(parameter?'type:'+parameter:'tier:'+base.split('-')[1]):art?.index?.['doc:'+base]!==undefined?'doc:'+base:'g:'+base;
+    const parameter=String(id??'').split(':')[1];
+    let key=info?.hero?'hero:'+base:info?.template?(parameter?'type:'+parameter:'tier:'+base.split('-')[1]):art?.index?.['doc:'+base]!==undefined?'doc:'+base:'g:'+base;
+    if(info?.hero&&art?.index?.[key]===undefined&&art?.index?.['g:'+base]!==undefined)key='g:'+base;
     if(art?.index&&art.index[key]===undefined)art=art.legacy;
     const iconIndex=art?.index?art.index[key]:info?.icon;
     const icon = el('span', 'seal-icon');

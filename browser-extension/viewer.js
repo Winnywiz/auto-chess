@@ -1251,7 +1251,7 @@ function renderShop(round) {
 
 // Re-fight: open a round in the website's custom battle simulator (same link format as its "Copy link").
 const SIM_URL = 'https://winnywiz.github.io/auto-chess/battle.html';
-const SIM_RULES = 39;
+const SIM_RULES = 40;
 function simTeam(units) {
   const lines = globalThis.KANTO_TIP_DATA?.units ?? {};
   const items = globalThis.KANTO_TIP_DATA?.items ?? {};

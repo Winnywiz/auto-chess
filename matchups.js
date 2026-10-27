@@ -143,7 +143,7 @@ matchMedia('(min-width:851px)').addEventListener('change',e=>{if(e.matches&&$('.
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 async function init(){try{
  if(customMode){
-  const {initCustomBattle}=await import('./custom-battle.js?v=v39-anchor-1');
+  const {initCustomBattle}=await import('./custom-battle.js?v=v40-anchor-1');
   await initCustomBattle({invalidate:()=>{++loadVersion;stop();replay=null;replayFile=null;$('#lab').hidden=true;},present:(result,game)=>{
    stop();++loadVersion;reversed=false;data=game;replayFile=result;lastChartKey='';
    const enrich=team=>team.map(u=>{const r=game.roster.find(r=>r.id===u.line),f=r.forms[u.star-1];return {...u,name:f.name,num:f.num,types:f.types,traits:r.traits,skill:f.skill};});

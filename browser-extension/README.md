@@ -33,11 +33,11 @@ The extension reads only the game state exposed to the current player. It does n
 
 ## Planning, bench and Re-fight
 
-Version 1.9.0 uses the v39 PvP simulator and keeps native ability choices in replay links. Adventure-only anchors remain replay metadata and are unavailable in PvP Re-fight.
+Version 1.10.0 uses the v40 PvP simulator and keeps native ability choices in replay links. Adventure-only anchors remain replay metadata and are unavailable in PvP Re-fight.
 
 - Each round keeps your board and bench after every buy, sell, move or upgrade. The slider in **Your formation** steps through them; the last step is the board you fought with.
 - Shops are read on every game state change, not only every 0.6s, so fast rerolls are all recorded.
-- **Re-fight** opens the round in the website's battle simulator (`battle.html`) with both boards, items and positions from the start of the fight. The website simulator runs the v39 PvP engine. Adventure-only anchors are recognized as replay metadata but cannot be sent to the PvP simulator.
+- **Re-fight** opens the round in the website's battle simulator (`battle.html`) with both boards, items and positions from the start of the fight. The website simulator runs the v40 PvP engine. Adventure-only anchors are recognized as replay metadata but cannot be sent to the PvP simulator.
 - The fight log lists casts, crowd control, faints and the result with the unit's sprite, its HP at that moment, and the skill name. Skill areas and cast lines are drawn on the board during playback.
 
 ## Storage and fights

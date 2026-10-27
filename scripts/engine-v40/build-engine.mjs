@@ -1,0 +1,57 @@
+// Build the verified v40 combat engine without importing login, sockets, or the native planner.
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+import {route as nativeRoute} from '../../work/native-v40/headless.mjs';
+const rules=40,root=path.resolve('work/native-v40'),out=path.resolve('work/engine-v40');
+const port=JSON.parse(fs.readFileSync(path.join(root,'offline-port.json')));
+const hash=x=>createHash('sha256').update(x).digest('hex');
+if(port.version!==rules||!port.bootstrapSignatureVerified||!port.bootstrapDecoderParity)throw Error('Verified Version 40 native snapshot required');
+const battleCandidates=Object.entries(nativeRoute).filter(([,value])=>typeof value==='function'&&typeof value.prototype?.start==='function'&&typeof value.prototype?.step==='function');
+if(battleCandidates.length!==1)throw Error('Native Battle export is ambiguous');
+const battleExport=battleCandidates[0][0];
+const routeSource=fs.readFileSync(path.join(root,'assets',port.names.route),'utf8');
+const exportsStart=routeSource.lastIndexOf('export{'),exportsEnd=routeSource.lastIndexOf('}');
+if(exportsStart<0||exportsEnd<exportsStart)throw Error('Native route export list is missing');
+const routeExports=routeSource.slice(exportsStart+7,exportsEnd).split(',').map(part=>{const [local,alias]=part.trim().split(' as ');return[local,alias??local];});
+const battleLocal=routeExports.find(([,name])=>name===battleExport)?.[0];
+if(!battleLocal)throw Error('Cannot map Battle export to its native binding');
+const classPosition=routeSource.indexOf(battleLocal+'=class');
+if(classPosition<0)throw Error('Cannot locate native Battle class definition');
+const lazyPattern=new RegExp('function\\s+([A-Za-z_$][\\w$]*)\\(\\)\\{return\\(\\1=e\\(\\(\\(\\)=>\\{','g');
+const lazyInitializers=[...routeSource.matchAll(lazyPattern)].filter(match=>match.index<classPosition);
+const battleInitializer=lazyInitializers.at(-1)?.[1];
+const initializerExport=routeExports.find(([local])=>local===battleInitializer)?.[1];
+if(!initializerExport)throw Error('Cannot discover native Battle initializer export');
+const original=JSON.parse(fs.readFileSync(path.join(root,'data.json'),'utf8'));
+for(const [file,digest]of Object.entries(port.files))if(hash(fs.readFileSync(path.join(root,'assets',file)))!==digest)throw Error('Changed native module: '+file);
+const raw=fs.readFileSync(path.join(root,'boot.txt'),'utf8');
+if(hash(raw)!==port.bootstrapSHA256)throw Error('Changed archived data');
+const body=raw.slice(raw.indexOf('\n',raw.indexOf('\n')+1)+1);
+const adapter=fs.readFileSync(path.join(root,'offline-bootstrap.mjs'),'utf8');
+const decoder=adapter.slice(adapter.indexOf('const references=[];'),adapter.indexOf('const parts=decode('));
+const shim=decoder+`const parts=decode(${body}).parts;export const a=name=>{if(!Object.hasOwn(parts,name))throw Error('Unknown game data');return parts[name]};export const n=()=>{},o=n,i=n,r=n,t=n;`;
+const {build,version}=await import(process.env.ESBUILD??'../../work/battle-tools/node_modules/esbuild/lib/main.js');
+fs.mkdirSync(out,{recursive:true});
+const result=await build({stdin:{contents:`import{x as translate}from './${port.names.roster}';const route=await import('./${port.names.route}');route['${initializerExport}']();const Battle=route['${battleExport}'];if(typeof Battle!=='function')throw Error('Native Battle initializer did not register the class');const nativeTypeChart=${JSON.stringify(original.typeChart)};export function effectiveness(type,defenders){const targets=Array.isArray(defenders)?defenders:(defenders==null?[]:[defenders]);return targets.reduce((value,target)=>value*(nativeTypeChart[type]?.[target]??1),1)};export{Battle,translate};export const rules=${rules},identity=${JSON.stringify(port.engineFingerprint)};`,resolveDir:path.join(root,'assets'),sourcefile:'combat-entry.mjs'},
+ bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true,legalComments:'inline',metafile:true,write:false,
+ plugins:[{name:'combat-only',setup(b){
+  b.onLoad({filter:/start-[^/\\]+\.js$/},()=>({contents:shim,loader:'js'}));
+  b.onLoad({filter:/core-[^/\\]+\.js$/},()=>({contents:'export const n=(f)=>f();export const r=()=>{};',loader:'js'}));
+  const noOpExports=file=>{const source=fs.readFileSync(file,'utf8'),begin=source.lastIndexOf('export{'),end=source.lastIndexOf('}');if(begin<0||end<begin)throw Error('Cannot inspect native UI exports: '+path.basename(file));const names=[...new Set(source.slice(begin+7,end).split(',').map(part=>(part.split(' as ').at(-1)??'').trim()).filter(Boolean))];const aliases=names.map(name=>'stub as '+name).join(',');return{contents:'const stub=Object.assign(()=>["en"],{subscribe:()=>()=>{},getState:()=>({lang:"en"}),setState:()=>{},[Symbol.iterator]:function*(){yield "en"}});export{'+aliases+'};',loader:'js'};};
+  b.onLoad({filter:/lang-[^/\\]+\.js$/},a=>noOpExports(a.path));
+  b.onLoad({filter:/(pt|ja|fr|zh|ru|de|it|vi|id|th|tr|pl|ko|content|apply)-[^/\\]+\.js$/},a=>noOpExports(a.path));
+ }}]});
+const bytes=result.outputFiles[0].contents;
+fs.writeFileSync(path.join(out,'engine-v'+rules+'.js'),bytes);
+const data={rules,identity:port.engineFingerprint,roster:original.roster.map(line=>({...line,forms:line.forms.map(({itemFit,...form})=>form)})),adventureAnchors:original.anchors.filter(line=>!line.pvpEligible),typeChart:original.typeChart,items:original.items.filter(item=>item.kind!=='tool'),traits:original.traits};
+const combat=await import(pathToFileURL(path.join(out,'engine-v'+rules+'.js')));
+assert.equal(typeof combat.Battle,'function','Standalone bundle must export a usable native Battle class');
+for(const attack of Object.keys(original.typeChart))for(const defense of Object.keys(original.typeChart))assert.equal(combat.effectiveness(attack,[defense]),original.typeChart[attack][defense],`${attack} → ${defense}`);
+assert.equal(combat.effectiveness('Fire',['Grass','Water']),original.typeChart.Fire.Grass*original.typeChart.Fire.Water);
+fs.writeFileSync(path.join(out,'data-v'+rules+'.json'),JSON.stringify(data));
+const inputs=Object.keys(result.metafile.inputs).filter(name=>name!=='combat-entry.mjs').map(name=>path.basename(name));
+fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify({rules,identity:port.engineFingerprint,source:'https://einoow.com/playables/kanto-tactics/',attribution:'Kanto Tactics combat engine © 2026 Einoow. Original copyright notices retained.',bundler:'esbuild '+version,engineSHA256:hash(bytes),battleExport,battleInitializerExport:initializerExport,inputs:Object.fromEntries(inputs.filter(name=>port.files[name]).map(name=>[name,port.files[name]])),adapters:['Archived verified game data, without session envelope','Native Battle initializer discovered structurally from the class assignment and route export map','Battle export discovered from the native route namespace by its start/step interface','Public effectiveness helper multiplies values from the verified native type chart','Core language preloader stub','English-only language state, without UI or translation downloads'],pvpAnchors:original.anchors.filter(line=>line.pvpEligible).length,adventureAnchors:original.anchors.filter(line=>!line.pvpEligible).length,adventureAnchorMode:'metadata only; not registered in PvP Battle roster',seals:false,weather:null},null,2)+'\n');
+console.log(JSON.stringify({engineBytes:bytes.length,dataBytes:fs.statSync(path.join(out,'data-v'+rules+'.json')).size,inputs:inputs.length,identity:port.engineFingerprint,pvpRoster:data.roster.length,pvpAnchors:original.anchors.filter(line=>line.pvpEligible).length,adventureAnchors:data.adventureAnchors.length,battleExport,battleInitializerExport:initializerExport}));
